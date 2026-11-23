@@ -1,0 +1,24 @@
+@startuml c4_contexto
+' 5.7 Diagrama C4, nivel 1 (contexto). Estado real de develop (Sprint 3). Regenerar: ver docs/diagramas/README.md
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+title Contexto del ERP de D'Onofrio (núcleo de la Fase 1)
+
+Person(gerencia, "Gerencia y jefes de área", "Gerente general, jefe de ventas, de almacén, de producción y compras. Ven dashboards y operan su área")
+Person(operativos, "Personal operativo", "Vendedor, cajero del PdV, inspector de calidad, liquidador (CD Arequipa) y contador. Un usuario por rol (HU-04)")
+Person(ti, "Equipo de desarrollo y TI", "Evelyn y Orlando: desarrollan, despliegan y atienden la mesa de servicios TI")
+
+System(erp, "ERP D'Onofrio", "Odoo 19.0 Community + donofrio_base sobre PostgreSQL 16, en contenedores Docker: ventas, CRM, PdV, inventario con lotes y FEFO, producción, compras, facturación con IGV, RR. HH. y mesa de servicios")
+
+System_Ext(github, "GitHub", "Repositorio público, Actions (CI: lint, test, replica, backup, proxy), releases y registro de imágenes GHCR")
+System_Ext(correo, "Servidor de correo saliente", "Lo necesita el código de verificación por correo (auth_totp_mail). No se configuró uno en el proyecto: la app TOTP funciona sin él")
+System_Ext(sunat, "SUNAT / OSE", "Envío electrónico de comprobantes. NO implementado: l10n_pe_edi es Enterprise; la numeración es la de Odoo")
+
+Rel(gerencia, erp, "Consulta dashboards y pedidos; 2FA obligatorio para el gerente", "HTTPS (navegador)")
+Rel(operativos, erp, "Registra ventas, recepciones, órdenes de producción y facturas", "HTTPS (navegador)")
+Rel(ti, erp, "Administra, respalda y restaura", "Docker Compose, scripts/")
+Rel(ti, github, "Abre PR, revisa y publica releases", "git, HTTPS")
+Rel(github, erp, "Entrega la imagen etiquetada y el zip del código", "GHCR, Releases")
+Rel(erp, correo, "Códigos de verificación (opcional)", "SMTP")
+Rel_D(erp, sunat, "Comprobantes electrónicos (trabajo futuro)", "OSE")
+@enduml

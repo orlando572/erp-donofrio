@@ -1,0 +1,123 @@
+modulo,origen,instalacion,nivel,depende_de
+donofrio_base,propio,propio,12,auditlog auth_password_policy auth_totp_mail base crm hr hr_org_chart l10n_pe mrp point_of_sale product_expiry project purchase purchase_stock sale spreadsheet_dashboard_account spreadsheet_dashboard_sale spreadsheet_dashboard_stock_account stock
+base,base,depends directo de donofrio_base,0,
+auditlog,oca,depends directo de donofrio_base,1,base
+uom,odoo,depends transitivo,1,base
+web,odoo,depends transitivo,1,base
+auth_totp,odoo,depends transitivo,2,web
+barcodes,odoo,depends transitivo,2,web
+base_setup,odoo,depends transitivo,2,base web
+bus,odoo,depends transitivo,2,base web
+google_address_autocomplete,odoo,depends transitivo,2,web
+http_routing,odoo,depends transitivo,2,web
+iot_base,odoo,depends transitivo,2,web
+onboarding,odoo,depends transitivo,2,web
+resource,odoo,depends transitivo,2,base web
+utm,odoo,depends transitivo,2,base web
+web_hierarchy,odoo,depends transitivo,2,web
+web_tour,odoo,depends transitivo,2,web
+auth_password_policy,odoo,depends directo de donofrio_base,3,base_setup web
+barcodes_gs1_nomenclature,odoo,depends transitivo,3,barcodes uom
+html_editor,odoo,depends transitivo,3,base bus web
+iap,odoo,depends transitivo,3,base_setup web
+mail,odoo,depends transitivo,4,base base_setup bus html_editor web_tour
+analytic,odoo,depends transitivo,5,base mail uom
+auth_signup,odoo,depends transitivo,5,base_setup mail web
+auth_totp_mail,odoo,depends directo de donofrio_base,5,auth_totp mail
+calendar,odoo,depends transitivo,5,base mail
+contacts,odoo,depends transitivo,5,base mail
+iap_mail,odoo,depends transitivo,5,iap mail
+phone_validation,odoo,depends transitivo,5,base mail
+product,odoo,depends transitivo,5,base mail uom
+rating,odoo,depends transitivo,5,mail
+resource_mail,odoo,depends transitivo,5,mail resource
+sales_team,odoo,depends transitivo,5,base mail
+base_address_extended,odoo,depends transitivo,6,base contacts
+partner_autocomplete,odoo,depends transitivo,6,iap_mail
+portal,odoo,depends transitivo,6,auth_signup html_editor http_routing mail web
+digest,odoo,depends transitivo,7,mail portal resource
+payment,odoo,depends transitivo,7,onboarding portal
+spreadsheet,odoo,depends transitivo,7,bus portal web
+account,odoo,depends transitivo,8,analytic base_setup digest onboarding portal product
+crm,odoo,depends directo de donofrio_base,8,base_setup calendar contacts digest mail phone_validation resource sales_team utm web_tour
+hr,odoo,depends directo de donofrio_base,8,base_setup digest phone_validation resource_mail web
+project,odoo,depends directo de donofrio_base,8,analytic base_setup digest mail portal rating resource web web_tour
+spreadsheet_dashboard,odoo,depends transitivo,8,spreadsheet
+stock,odoo,depends directo de donofrio_base,8,barcodes_gs1_nomenclature digest product
+account_debit_note,odoo,depends transitivo,9,account
+account_payment,odoo,depends transitivo,9,account payment
+base_vat,odoo,depends transitivo,9,account
+hr_org_chart,odoo,depends directo de donofrio_base,9,hr web_hierarchy
+mrp,odoo,depends directo de donofrio_base,9,product resource stock
+product_expiry,odoo,depends directo de donofrio_base,9,stock
+purchase,odoo,depends directo de donofrio_base,9,account
+spreadsheet_dashboard_account,odoo,depends directo de donofrio_base,9,account spreadsheet_dashboard
+stock_account,odoo,depends transitivo,9,account stock
+l10n_latam_base,odoo,depends transitivo,10,base_vat contacts
+l10n_latam_invoice_document,odoo,depends transitivo,10,account account_debit_note
+point_of_sale,odoo,depends directo de donofrio_base,10,barcodes digest google_address_autocomplete html_editor iot_base partner_autocomplete phone_validation resource stock_account
+purchase_stock,odoo,depends directo de donofrio_base,10,purchase stock_account
+sale,odoo,depends directo de donofrio_base,10,account_payment sales_team utm
+spreadsheet_dashboard_stock_account,odoo,depends directo de donofrio_base,10,spreadsheet_dashboard stock_account
+l10n_pe,odoo,depends directo de donofrio_base,11,account account_debit_note base_address_extended base_vat l10n_latam_base l10n_latam_invoice_document
+spreadsheet_dashboard_sale,odoo,depends directo de donofrio_base,11,sale spreadsheet_dashboard
+account_add_gln,odoo,auto_install,,account
+account_edi_ubl_cii,odoo,auto_install,,account
+api_doc,odoo,auto_install,,web
+auth_passkey,odoo,auto_install,,base_setup web
+auth_passkey_portal,odoo,auto_install,,auth_passkey portal
+auth_password_policy_portal,odoo,auto_install,,auth_password_policy portal
+auth_password_policy_signup,odoo,auto_install,,auth_password_policy auth_signup
+auth_totp_portal,odoo,auto_install,,auth_totp portal
+base_import,odoo,auto_install,,web
+base_import_module,odoo,auto_install,,web
+base_install_request,odoo,auto_install,,mail
+calendar_sms,odoo,auto_install,,calendar sms
+crm_iap_enrich,odoo,auto_install,,iap_crm iap_mail
+crm_iap_mine,odoo,auto_install,,iap_crm iap_mail
+crm_sms,odoo,auto_install,,crm sms
+google_gmail,odoo,auto_install,,mail
+hr_calendar,odoo,auto_install,,calendar hr
+hr_homeworking,odoo,auto_install,,hr
+hr_homeworking_calendar,odoo,auto_install,,calendar hr_homeworking
+hr_skills,odoo,auto_install,,hr
+iap_crm,odoo,auto_install,,crm iap_mail
+l10n_pe_pos,odoo,auto_install,,l10n_pe point_of_sale
+mail_bot,odoo,auto_install,,mail
+mail_bot_hr,odoo,auto_install,,hr mail_bot
+microsoft_outlook,odoo,auto_install,,mail
+mrp_account,odoo,auto_install,,mrp stock_account
+mrp_product_expiry,odoo,auto_install,,mrp product_expiry
+portal_rating,odoo,auto_install,,portal rating
+pos_hr,odoo,auto_install,,hr point_of_sale
+pos_mrp,odoo,auto_install,,mrp point_of_sale
+pos_online_payment,odoo,auto_install,,account_payment point_of_sale
+privacy_lookup,odoo,auto_install,,mail
+project_account,odoo,auto_install,,account project
+project_hr_skills,odoo,auto_install,,hr_skills project
+project_mrp,odoo,auto_install,,mrp project
+project_mrp_account,odoo,auto_install,,mrp_account project_mrp
+project_purchase,odoo,auto_install,,project_account purchase
+project_purchase_stock,odoo,auto_install,,project_purchase project_stock
+project_sms,odoo,auto_install,,project sms
+project_stock,odoo,auto_install,,project stock
+project_stock_account,odoo,auto_install,,project_stock stock_account
+project_todo,odoo,auto_install,,project
+purchase_edi_ubl_bis3,odoo,auto_install,,account_edi_ubl_cii purchase
+purchase_mrp,odoo,auto_install,,mrp purchase_stock
+rpc,odoo,auto_install,,base
+sale_crm,odoo,auto_install,,crm sale
+sale_edi_ubl,odoo,auto_install,,account_edi_ubl_cii sale
+sale_mrp,odoo,auto_install,,mrp sale_stock
+sale_purchase,odoo,auto_install,,purchase sale
+sale_purchase_stock,odoo,auto_install,,purchase_stock sale_purchase sale_stock
+sale_sms,odoo,auto_install,,sale sms
+sale_stock,odoo,auto_install,,sale stock_account
+sale_stock_product_expiry,odoo,auto_install,,product_expiry sale_stock
+sms,odoo,auto_install,,base iap_mail mail phone_validation
+snailmail,odoo,auto_install,,iap_mail mail
+snailmail_account,odoo,auto_install,,account snailmail
+spreadsheet_account,odoo,auto_install,,account spreadsheet
+spreadsheet_dashboard_pos_hr,odoo,auto_install,,pos_hr spreadsheet_dashboard
+stock_sms,odoo,auto_install,,sms stock
+web_unsplash,odoo,auto_install,,base_setup html_editor

@@ -1,0 +1,40 @@
+@startuml c4_contenedores
+' 5.7 Diagrama C4, nivel 2 (contenedores). Salen de docker-compose.yml y docker/. Regenerar: ver docs/diagramas/README.md
+!include <C4/C4_Container>
+LAYOUT_WITH_LEGEND()
+title Contenedores del ERP de D'Onofrio (docker-compose.yml, proyecto erp-donofrio)
+
+Person(usuario, "Usuario del ERP", "Chrome, Firefox o Edge")
+Person(ti, "TI / DBeaver", "Consulta la BD solo desde localhost")
+
+System_Boundary(compose, "Docker Compose · una sola PC (un nodo)") {
+    Container(nginx, "nginx", "nginx:stable · perfil proxy", "TLS 1.2/1.3, redirección 80→443, HSTS y CSP, gzip, caché de assets, /web/database/ bloqueado (404). Puertos 8080 y 8443")
+    Container(odoo, "odoo", "erp-donofrio/odoo:19.0 (FROM odoo:19.0-20261112 + auditlog OCA)", "Servidor web y ORM de Odoo con donofrio_base. HTTP 8069 y websocket 8072, solo en 127.0.0.1. workers 0 en desarrollo y 2 con proxy_mode en el despliegue protegido; list_db = False")
+    ContainerDb(db, "db (primario)", "postgres:16", "Base de datos 'donofrio'. Rol 'odoo' sin superusuario, rol 'replicador'. wal_level = replica, scram-sha-256. Puerto 5432 en 127.0.0.1")
+    ContainerDb(replica, "db-replica", "postgres:16 · perfil replica", "Standby en caliente, solo lectura, streaming asíncrono con slot donofrio_replica. Puerto 5433 en 127.0.0.1")
+    ContainerDb(filestore, "odoo-data", "Volumen Docker", "Filestore: adjuntos y sesiones (/var/lib/odoo)")
+    ContainerDb(pgdata, "pgdata / pgdata-replica", "Volúmenes Docker", "Datos de PostgreSQL del primario y de la réplica")
+}
+
+Container(respaldos, "backups/", "Carpeta del equipo anfitrión", "scripts/backup.sh: dump -Fc + filestore + sumas SHA-256, retención de 7 días. scripts/restore.sh restaura en una BD nueva")
+
+System_Boundary(gh, "GitHub") {
+    Container(actions, "GitHub Actions", "ubuntu-24.04", "ci.yml: lint, test, replica, backup, proxy. perf.yml (manual): k6 y ZAP. release.yml: imagen y zip")
+    Container(ghcr, "GHCR", "ghcr.io/orlando572/erp-donofrio", "Imagen con Odoo, auditlog y los módulos propios, una por tag vX.Y.Z")
+}
+
+Rel(usuario, nginx, "Usa el ERP", "HTTPS 8443")
+Rel(nginx, odoo, "Proxy inverso", "HTTP 8069 y /websocket → 8072")
+Rel(usuario, odoo, "Solo en desarrollo (sin Nginx)", "HTTP 127.0.0.1:8069")
+Rel(odoo, db, "Lee y escribe", "SQL, psycopg2, 5432")
+Rel(db, replica, "Envía el WAL", "Streaming replication")
+Rel(odoo, filestore, "Adjuntos", "Sistema de archivos")
+Rel(db, pgdata, "Persiste", "")
+Rel(ti, db, "Consulta", "5432")
+Rel(ti, replica, "Consulta (solo lectura)", "5433")
+Rel(ti, respaldos, "backup.sh y restore.sh", "docker compose exec")
+Rel(respaldos, db, "pg_dump -Fc", "")
+Rel(respaldos, filestore, "tar del filestore", "")
+Rel(actions, ghcr, "Publica la imagen probada", "docker push")
+Rel(ghcr, odoo, "Imagen etiquetada: sirve para correr sin montar ./addons y para volver a un tag anterior (docs/dev/release.md)", "docker pull")
+@enduml
