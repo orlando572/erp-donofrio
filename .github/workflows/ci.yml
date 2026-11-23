@@ -1,0 +1,48 @@
+name: CI
+
+# HU-02 (06 §6.4): en cada PR y en cada push a develop/main, más una corrida semanal de regresión.
+on:
+  pull_request:
+  push:
+    branches: [develop, main]
+  schedule:
+    - cron: '0 11 * * 1'   # lunes 06:00 hora de Lima
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patrones legacy de Odoo (falla si hay alguno)
+        run: scripts/check_legacy.sh
+      - name: Ruff
+        run: |
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install --quiet ruff==0.8.4
+          "$RUNNER_TEMP/venv/bin/ruff" check addons
+
+  test:
+    name: test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preparar .env (valores de desarrollo del repo)
+        run: cp .env.example .env
+      - name: Construir la imagen de Odoo
+        run: docker compose build odoo
+      - name: Instalar los módulos y correr sus tests (falla si hay ERROR, test rojo o 0 pruebas)
+        run: scripts/test.sh
+      - name: Registro de los contenedores (solo si falló)
+        if: failure()
+        run: docker compose logs --no-color --tail=200
