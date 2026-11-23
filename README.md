@@ -39,6 +39,16 @@ Detalles:
 - Los módulos de `addons/` se montan en el contenedor en modo lectura. El aviso «invalid addons directory '/mnt/extra-addons'» desaparece cuando exista `donofrio_base`.
 - La imagen de Odoo tiene la etiqueta fechada fija en `docker/odoo/Dockerfile` (`odoo:19.0-20261112`) para que ambas PC y el CI usen exactamente la misma.
 
+## Pruebas y CI
+
+```bash
+scripts/test.sh                  # instala todos los módulos de addons/ en una BD temporal y corre sus tests
+scripts/test.sh donofrio_base    # solo ese módulo
+scripts/check_legacy.sh          # patrones legacy de Odoo
+```
+
+`scripts/test.sh` imprime solo los errores y falla si hay `ERROR`/`FAIL`, si Odoo no termina bien o si no corrió ninguna prueba. El workflow [`.github/workflows/ci.yml`](.github/workflows/ci.yml) ejecuta lo mismo en cada PR y en cada push a `develop` y `main` (jobs `lint` y `test`), además de una corrida semanal.
+
 ## Preparar tu PC
 
 El proyecto se trabaja en **Linux**: Ubuntu nativo o **Ubuntu dentro de WSL2** en Windows.
