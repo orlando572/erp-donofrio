@@ -11,9 +11,10 @@ Todos los datos (RUC, clientes, empleados, precios) son ficticios.
     'category': 'Customizations',
     'version': '19.0.1.0.0',
     'license': 'LGPL-3',
-    'depends': ['base', 'l10n_pe'],
+    'depends': ['base', 'l10n_pe', 'stock'],
     'data': [
         'data/compania_data.xml',
+        'data/almacenes_data.xml',
     ],
     'post_init_hook': 'post_init_hook',
     'installable': True,
