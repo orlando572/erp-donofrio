@@ -1,0 +1,40 @@
+# Material del docente (no se sube al repo)
+docs/TF_LineamientosProyectoFinal.pdf
+docs/TEMPLATE - INFORME PROYECTO FINAL.docx
+docs/*.pdf
+docs/*.docx
+docs/~$*
+
+# Secretos y entorno local
+.env
+*.pem
+*.key
+secrets/
+.claude/settings.local.json
+
+# Python / Odoo
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Datos generados
+backups/
+*.dump
+filestore/
+pgdata/
+
+# Resultados de pruebas y reportes locales
+scripts/perf/results/
+lighthouse-*.json
+zap-report.*
+
+# Editor / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+node_modules/
