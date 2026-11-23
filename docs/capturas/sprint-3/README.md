@@ -57,3 +57,13 @@ Tomadas el 23/11/2026 en la BD `donofrio` con los datos de demostración. Son la
 | `S3-4.6_pantalla_pedido_de_venta` | Pedido de venta S00437 (lista «Heladero», IGV 18 %, entrega y facturas ligadas) |
 | `S3-4.6_reporte_nota_de_entrega` | PDF de la nota de entrega AQP/OUT/00230, con el logo y los datos de la compañía |
 | `S3-4.6_reporte_orden_de_produccion` | PDF de la orden de producción WH/MO/00188 con sus operaciones y códigos de barras |
+
+## Evidencias de la sección 6 del informe (Orlando)
+
+Extraídas el 23/11/2026 con `gh` y `git` en modo de solo lectura (no cambian el repositorio) y con `scripts/test.sh` en un proyecto de Compose aparte.
+
+| Archivo | Sección | Qué contiene |
+|---|---|---|
+| `S3-informe6_evidencia_github.txt` | 6.4 a 6.6 | Configuración del repositorio (métodos de fusión permitidos), protección de `develop` y `main` (`enforce_admins`), ramas remotas, resumen de los 49 PR, ejecuciones y jobs de GitHub Actions, y la ausencia de releases, tags y paquete GHCR |
+| `S3-informe6_prs_fusionados.tsv` | 6.6 y trazabilidad | Una fila por PR fusionado: autor, quién fusionó, método (squash o merge commit), aprobación del otro integrante, rama, fecha, commits y merges de `develop`. La lee `scripts/trazabilidad.py` |
+| `S3-informe6_evidencia_tests.txt` | 6.10 | `scripts/test.sh donofrio_base` (136 pruebas, 0 fallidas, 125 s), pruebas por archivo, `check_legacy.sh` y `ruff` |
