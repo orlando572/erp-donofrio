@@ -6,7 +6,7 @@
 
 "El ciclo vender-comprar-producir-facturar funciona de punta a punta con datos."
 
-**Resultado: cumplido en el código.** Las 9 HU del sprint están fusionadas en `develop` (30 de 30 puntos: Evelyn 14, Orlando 11 y 5 compartidos de HU-16) y las cuatro épicas (#136, #137, #138 y #139) están cerradas. El CI de `develop` (`lint` y `test`) está en verde en el último commit, el merge del PR #180. Falta la documentación de Evelyn del sprint (ver «Pendiente»).
+**Resultado: cumplido en el código.** Las 9 HU del sprint están fusionadas en `develop` (30 de 30 puntos: Evelyn 14, Orlando 11 y 5 compartidos de HU-16) y las cuatro épicas (#136, #137, #138 y #139) están cerradas. El CI de `develop` (`lint` y `test`) está en verde en el último commit, el merge del PR #180. La documentación de Evelyn del sprint también está fusionada (PR #181).
 
 ## Incremento mostrado
 
@@ -28,6 +28,8 @@
 
 **Documentación de Orlando (DoD 8):** BPMN TO-BE de producción (sin y con M1) y de recepción y despacho, fichas CU005 a CU008, 4.3.2, 4.3.3 y borrador del manual de instalación (PR #177).
 
+**Documentación de Evelyn (DoD 8):** BPMN TO-BE de venta B2B, compra de insumos y heladero (estándar y con M2), wireframes y mockups de 12 pantallas (incluidas las de la Fase 2), CU011 y CU012 (compras y facturación) y la sección 4.2.9 con el cronograma y el Gantt (PR #181).
+
 ## Cómo se demuestra
 
 1. `cp .env.example .env && docker compose up -d --build && scripts/init_db.sh`.
@@ -40,7 +42,6 @@
 
 ## Pendiente y deuda técnica
 
-- **Documentación de Evelyn del sprint** (05 §5.2): BPMN TO-BE de ventas, heladeros y compras, wireframes y mockups de todas las pantallas (incluidas las de la F2), fichas de CU y 4.2.9. Su PR está en preparación; no hay otra entrega pendiente de HU.
 - **FEFO en el punto de venta (RNF005):** el cajero escribe el lote y Odoo estándar no comprueba su vencimiento. Decisión del 23/11: limitación declarada de la Fase 1 (CU005 y RNF005), sin restricción propia.
 - **PDF de la boleta:** la plantilla estándar la titula «Factura» y rotula «RUC» al DNI. Se declara como limitación; no hay envío a SUNAT (el EDI es Enterprise).
 - **Datos `noupdate`:** las recetas ajustadas en HU-14 obligan a recrear la base en cada PC. Orlando la recreó; Evelyn ya lo hizo con HU-16.

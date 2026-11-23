@@ -12,7 +12,7 @@ Formato asíncrono. Se publica también como comentario en el issue «Dailies» 
   - Documentación: BPMN TO-BE de producción (sin y con M1) y de recepción y despacho, fichas de CU005 a CU008, 4.3.2, 4.3.3 y el borrador del manual de instalación (#177).
   - Actualicé la checklist de la épica #138, pasé #137, #138 y #139 a «Hecho» en el Project y redacté la Review y la Retro del sprint.
 - **Qué haré:**
-  - Esperar el PR con la documentación de Evelyn del S2 y revisarlo.
+  - La documentación de Evelyn del S2 ya está fusionada (#181).
   - Hacer la demo cruzada con Evelyn y pedirle la decisión del PO sobre el incremento.
   - Pasar al Sprint 3 (calidad del núcleo) y preparar el Gate 0.
 - **Qué me bloquea:**
