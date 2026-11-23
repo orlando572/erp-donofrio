@@ -1,0 +1,13 @@
+; Plantilla de configuración de Odoo. entrypoint.sh reemplaza ${ODOO_DB} y ${ODOO_ADMIN_PASSWD}.
+; La conexión a PostgreSQL (db_host, db_user, db_password) la pone el entrypoint oficial desde HOST/USER/PASSWORD.
+[options]
+addons_path = /mnt/extra-addons
+data_dir = /var/lib/odoo
+admin_passwd = ${ODOO_ADMIN_PASSWD}
+; Gestor de bases de datos deshabilitado (RNF009): la BD se crea con scripts/init_db.sh
+list_db = False
+dbfilter = ^${ODOO_DB}$
+; Dentro del contenedor debe escuchar en todas las interfaces; el compose solo lo publica en 127.0.0.1
+http_interface = 0.0.0.0
+; Desarrollo: un solo proceso. El perfil de producción (HU-27) sube workers y activa proxy_mode.
+workers = 0

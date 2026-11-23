@@ -1,0 +1,59 @@
+# ERP D'Onofrio: Odoo 19.0 Community + PostgreSQL 16 (06 §6.5).
+# Uso: cp .env.example .env && docker compose up -d && scripts/init_db.sh
+# Los perfiles replica, proxy y tools llegan en HU-25 y HU-27.
+name: erp-donofrio
+
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Falta POSTGRES_PASSWORD en .env}
+      POSTGRES_DB: postgres
+      # Los lee init-usuario-odoo.sh (solo la primera vez que se crea el volumen)
+      ODOO_DB_USER: ${ODOO_DB_USER:-odoo}
+      ODOO_DB_PASSWORD: ${ODOO_DB_PASSWORD:?Falta ODOO_DB_PASSWORD en .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres/primary/init-usuario-odoo.sh:/docker-entrypoint-initdb.d/10-usuario-odoo.sh:ro
+    ports:
+      # Solo en localhost, para DBeaver
+      - "127.0.0.1:${DB_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  odoo:
+    build: ./docker/odoo
+    image: erp-donofrio/odoo:19.0
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # Variables del entrypoint oficial de la imagen de Odoo
+      HOST: db
+      USER: ${ODOO_DB_USER:-odoo}
+      PASSWORD: ${ODOO_DB_PASSWORD:?Falta ODOO_DB_PASSWORD en .env}
+      # Las usa docker/odoo/entrypoint.sh para generar odoo.conf
+      ODOO_DB: ${ODOO_DB:-donofrio}
+      ODOO_ADMIN_PASSWD: ${ODOO_ADMIN_PASSWD:?Falta ODOO_ADMIN_PASSWD en .env}
+    volumes:
+      - ./addons:/mnt/extra-addons:ro
+      - odoo-data:/var/lib/odoo
+    ports:
+      - "127.0.0.1:${ODOO_PORT:-8069}:8069"
+      - "127.0.0.1:${ODOO_LONGPOLLING_PORT:-8072}:8072"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8069/web/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  pgdata:
+  odoo-data:
