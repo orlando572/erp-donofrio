@@ -186,6 +186,12 @@ def configurar_facturacion(env):
     terminados = env['product.template'].search([
         ('categ_id', 'child_of', env.ref('donofrio_base.cat_terminados').id)])
     terminados.write({'taxes_id': [(6, 0, igv.ids)]})
+    # Compras: los insumos llevan IGV 18 % (crédito fiscal); el precio del proveedor va sin IGV
+    igv_compras = env['account.chart.template'].with_company(compania).ref('purchase_tax_igv_18', raise_if_not_found=False)
+    if igv_compras:
+        env['product.template'].search([
+            ('categ_id', 'child_of', env.ref('donofrio_base.cat_insumos').id)
+        ]).write({'supplier_taxes_id': [(6, 0, igv_compras.ids)]})
 
     Diario = env['account.journal']
     facturas = env.ref('donofrio_base.diario_facturas', raise_if_not_found=False)

@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HU-16: 30 clientes ficticios por canal (03 §3.3 a): distribuidores regionales, autoservicios, bodegas y
+     heladeros-concesionarios. Los RUC tienen dígito verificador válido y los DNI son inventados. Cada cliente trae
+     su lista de precios y su plazo de pago; el equipo de ventas sale de su categoría (canal). Todo es ficticio (proyecto académico). -->
+<odoo noupdate="1">
+
+    <record id="cat_distribuidor" model="res.partner.category"><field name="name">Distribuidor regional</field></record>
+    <record id="cat_autoservicio" model="res.partner.category"><field name="name">Autoservicio</field></record>
+    <record id="cat_bodega" model="res.partner.category"><field name="name">Bodega</field></record>
+    <record id="cat_heladero" model="res.partner.category"><field name="name">Heladero concesionario</field></record>
+
+    <record id="cli_dist_andina" model="res.partner">
+        <field name="name">Distribuidora Andina Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20410079195</field>
+        <field name="street">Av. de la Cultura 1100</field>
+        <field name="city">Cusco</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">dist.andina@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_distribuidor'))]"/>
+        <field name="property_product_pricelist" ref="lista_mayorista"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_30days"/>
+    </record>
+
+    <record id="cli_dist_altiplano" model="res.partner">
+        <field name="name">Comercial del Altiplano Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20410158389</field>
+        <field name="street">Jr. Lima 450</field>
+        <field name="city">Puno</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">dist.altiplano@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_distribuidor'))]"/>
+        <field name="property_product_pricelist" ref="lista_mayorista"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_30days"/>
+    </record>
+
+    <record id="cli_dist_sur" model="res.partner">
+        <field name="name">Distribuidora del Sur Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20410237572</field>
+        <field name="street">Av. Bolognesi 820</field>
+        <field name="city">Tacna</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">dist.sur@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_distribuidor'))]"/>
+        <field name="property_product_pricelist" ref="lista_mayorista"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_30days"/>
+    </record>
+
+    <record id="cli_dist_norte" model="res.partner">
+        <field name="name">Comercial Norte Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20410316766</field>
+        <field name="street">Av. España 2300</field>
+        <field name="city">Trujillo</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">dist.norte@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_distribuidor'))]"/>
+        <field name="property_product_pricelist" ref="lista_mayorista"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_30days"/>
+    </record>
+
+    <record id="cli_dist_costa" model="res.partner">
+        <field name="name">Distribuciones Costa Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20410395950</field>
+        <field name="street">Calle Bolívar 310</field>
+        <field name="city">Ica</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">dist.costa@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_distribuidor'))]"/>
+        <field name="property_product_pricelist" ref="lista_mayorista"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_30days"/>
+    </record>
+
+    <record id="cli_dist_oriente" model="res.partner">
+        <field name="name">Comercial Oriente Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20410475147</field>
+        <field name="street">Jr. Tacna 780</field>
+        <field name="city">Pucallpa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">dist.oriente@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_distribuidor'))]"/>
+        <field name="property_product_pricelist" ref="lista_mayorista"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_30days"/>
+    </record>
+
+    <record id="cli_auto_super" model="res.partner">
+        <field name="name">Supermercado Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20410554331</field>
+        <field name="street">Av. Javier Prado 1500</field>
+        <field name="city">Lima</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">auto.super@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_autoservicio'))]"/>
+        <field name="property_product_pricelist" ref="lista_mayorista"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_15days"/>
+    </record>
+
+    <record id="cli_auto_tiendas" model="res.partner">
+        <field name="name">Tiendas Ejemplo Perú SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20410633524</field>
+        <field name="street">Av. Arequipa 3200</field>
+        <field name="city">Lima</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">auto.tiendas@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_autoservicio'))]"/>
+        <field name="property_product_pricelist" ref="lista_mayorista"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_15days"/>
+    </record>
+
+    <record id="cli_auto_mini" model="res.partner">
+        <field name="name">Minimarket Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20410712718</field>
+        <field name="street">Av. Ejército 700</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">auto.mini@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_autoservicio'))]"/>
+        <field name="property_product_pricelist" ref="lista_mayorista"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_15days"/>
+    </record>
+
+    <record id="cli_auto_hiper" model="res.partner">
+        <field name="name">Hipermercado del Sur Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20410791901</field>
+        <field name="street">Av. Parra 410</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">auto.hiper@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_autoservicio'))]"/>
+        <field name="property_product_pricelist" ref="lista_mayorista"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_15days"/>
+    </record>
+
+    <record id="cli_auto_express" model="res.partner">
+        <field name="name">Cadena Express Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20410871093</field>
+        <field name="street">Av. Brasil 2100</field>
+        <field name="city">Lima</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">auto.express@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_autoservicio'))]"/>
+        <field name="property_product_pricelist" ref="lista_mayorista"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_15days"/>
+    </record>
+
+    <record id="cli_auto_canastas" model="res.partner">
+        <field name="name">Canastas Ejemplo EIRL</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20410950287</field>
+        <field name="street">Calle Los Pinos 120</field>
+        <field name="city">Lima</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">auto.canastas@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_autoservicio'))]"/>
+        <field name="property_product_pricelist" ref="lista_mayorista"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_15days"/>
+    </record>
+
+    <record id="cli_bod_misti" model="res.partner">
+        <field name="name">Bodega El Misti Ejemplo EIRL</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20411029477</field>
+        <field name="street">Calle Mercaderes 215</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">bod.misti@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_bodega'))]"/>
+        <field name="property_product_pricelist" ref="lista_bodega"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_bod_sanmartin" model="res.partner">
+        <field name="name">Bodega San Martín Ejemplo EIRL</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20411108661</field>
+        <field name="street">Av. San Martín 330</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">bod.sanmartin@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_bodega'))]"/>
+        <field name="property_product_pricelist" ref="lista_bodega"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_bod_andes" model="res.partner">
+        <field name="name">Bodega Los Andes Ejemplo EIRL</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20411187854</field>
+        <field name="street">Calle Alto de la Alianza 45</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">bod.andes@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_bodega'))]"/>
+        <field name="property_product_pricelist" ref="lista_bodega"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_bod_unidas" model="res.partner">
+        <field name="name">Bodegas Unidas Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20411267041</field>
+        <field name="street">Av. Dolores 900</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">bod.unidas@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_bodega'))]"/>
+        <field name="property_product_pricelist" ref="lista_bodega"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_bod_mercado" model="res.partner">
+        <field name="name">Mayorista Mercado Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20411346235</field>
+        <field name="street">Mercado San Camilo, puesto 12</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">bod.mercado@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_bodega'))]"/>
+        <field name="property_product_pricelist" ref="lista_bodega"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_bod_santarosa" model="res.partner">
+        <field name="name">Rosa Huamán Quispe (Bodega Santa Rosa)</field>
+        <field name="is_company" eval="False"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_DNI"/>
+        <field name="vat">40103571</field>
+        <field name="street">Calle Pizarro 118</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">bod.santarosa@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_bodega'))]"/>
+        <field name="property_product_pricelist" ref="lista_bodega"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_bod_villa" model="res.partner">
+        <field name="name">Marta Flores Ccari (Bodega Villa Hermosa)</field>
+        <field name="is_company" eval="False"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_DNI"/>
+        <field name="vat">40107142</field>
+        <field name="street">Av. Villa Hermosa 540</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">bod.villa@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_bodega'))]"/>
+        <field name="property_product_pricelist" ref="lista_bodega"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_bod_esperanza" model="res.partner">
+        <field name="name">Luis Mamani Yucra (Bodega La Esperanza)</field>
+        <field name="is_company" eval="False"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_DNI"/>
+        <field name="vat">40110713</field>
+        <field name="street">Calle Los Olivos 67</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">bod.esperanza@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_bodega'))]"/>
+        <field name="property_product_pricelist" ref="lista_bodega"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_bod_cayma" model="res.partner">
+        <field name="name">Carmen Zapata Rojas (Bodega Cayma)</field>
+        <field name="is_company" eval="False"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_DNI"/>
+        <field name="vat">40114284</field>
+        <field name="street">Av. Cayma 1020</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">bod.cayma@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_bodega'))]"/>
+        <field name="property_product_pricelist" ref="lista_bodega"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_bod_umacollo" model="res.partner">
+        <field name="name">Pedro Cutipa Huanca (Bodega Umacollo)</field>
+        <field name="is_company" eval="False"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_DNI"/>
+        <field name="vat">40117855</field>
+        <field name="street">Av. Umacollo 215</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">bod.umacollo@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_bodega'))]"/>
+        <field name="property_product_pricelist" ref="lista_bodega"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_hel_cercado" model="res.partner">
+        <field name="name">Luis Alarcón Pinto (heladero Cercado)</field>
+        <field name="is_company" eval="False"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_DNI"/>
+        <field name="vat">40121426</field>
+        <field name="street">Zona Cercado</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">hel.cercado@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_heladero'))]"/>
+        <field name="property_product_pricelist" ref="lista_heladero"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_hel_cayma" model="res.partner">
+        <field name="name">Diego Benavente Soto (heladero Cayma)</field>
+        <field name="is_company" eval="False"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_DNI"/>
+        <field name="vat">40124997</field>
+        <field name="street">Zona Cayma</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">hel.cayma@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_heladero'))]"/>
+        <field name="property_product_pricelist" ref="lista_heladero"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_hel_yanahuara" model="res.partner">
+        <field name="name">Carmen Delgado Ríos (heladera Yanahuara)</field>
+        <field name="is_company" eval="False"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_DNI"/>
+        <field name="vat">40128568</field>
+        <field name="street">Zona Yanahuara</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">hel.yanahuara@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_heladero'))]"/>
+        <field name="property_product_pricelist" ref="lista_heladero"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_hel_paucarpata" model="res.partner">
+        <field name="name">Raúl Mendoza Cruz (heladero Paucarpata)</field>
+        <field name="is_company" eval="False"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_DNI"/>
+        <field name="vat">40132139</field>
+        <field name="street">Zona Paucarpata</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">hel.paucarpata@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_heladero'))]"/>
+        <field name="property_product_pricelist" ref="lista_heladero"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_hel_cerro" model="res.partner">
+        <field name="name">Andrea Ticona Vera (heladera Cerro Colorado)</field>
+        <field name="is_company" eval="False"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_DNI"/>
+        <field name="vat">40135710</field>
+        <field name="street">Zona Cerro Colorado</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">hel.cerro@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_heladero'))]"/>
+        <field name="property_product_pricelist" ref="lista_heladero"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_hel_socabaya" model="res.partner">
+        <field name="name">Ernesto Linares Paz (heladero Socabaya)</field>
+        <field name="is_company" eval="False"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_DNI"/>
+        <field name="vat">40139281</field>
+        <field name="street">Zona Socabaya</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">hel.socabaya@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_heladero'))]"/>
+        <field name="property_product_pricelist" ref="lista_heladero"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_hel_miraflores" model="res.partner">
+        <field name="name">Silvia Condori Luque (heladera Miraflores)</field>
+        <field name="is_company" eval="False"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_DNI"/>
+        <field name="vat">40142852</field>
+        <field name="street">Zona Miraflores</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">hel.miraflores@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_heladero'))]"/>
+        <field name="property_product_pricelist" ref="lista_heladero"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+    <record id="cli_hel_sachaca" model="res.partner">
+        <field name="name">Walter Quispe Ayala (heladero Sachaca)</field>
+        <field name="is_company" eval="False"/>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_DNI"/>
+        <field name="vat">40146423</field>
+        <field name="street">Zona Sachaca</field>
+        <field name="city">Arequipa</field>
+        <field name="country_id" ref="base.pe"/>
+        <field name="email">hel.sachaca@clientes.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="customer_rank">1</field>
+        <field name="category_id" eval="[Command.link(ref('cat_heladero'))]"/>
+        <field name="property_product_pricelist" ref="lista_heladero"/>
+        <field name="property_payment_term_id" ref="account.account_payment_term_immediate"/>
+    </record>
+
+</odoo>

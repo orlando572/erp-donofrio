@@ -65,6 +65,15 @@ class TestFacturacionConIGV(TransactionCase):
         self.assertEqual(self.cliente_ruc.lang, 'es_PE')
         self.assertEqual(self.env['res.partner'].with_context(lang=None).create({'name': 'Cliente sin idioma'}).lang, 'es_PE')
 
+    def test_los_insumos_se_compran_con_igv_18(self):
+        insumos = self.env['product.template'].search([
+            ('categ_id', 'child_of', self.env.ref('donofrio_base.cat_insumos').id)])
+        self.assertTrue(insumos)
+        for insumo in insumos:
+            with self.subTest(insumo=insumo.default_code):
+                self.assertEqual(insumo.supplier_taxes_id.mapped('amount'), [18.0])
+                self.assertEqual(insumo.supplier_taxes_id.type_tax_use, 'purchase')
+
     def test_pedido_con_ruc_factura_en_el_diario_01(self):
         pedido, factura = self._facturar(self.cliente_ruc)
         self.assertEqual(pedido.journal_id, self.facturas)

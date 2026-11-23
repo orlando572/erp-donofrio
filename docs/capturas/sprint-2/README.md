@@ -33,3 +33,15 @@ Tomadas el 23/11/2026 en la BD `donofrio`, con una factura y una boleta de ejemp
 | `HU-15_boleta_03_con_igv` | HU-15 | Boleta en el diario «Boletas», tipo de documento (03), subtotal S/ 25.42, IGV S/ 4.58, total S/ 30.00 |
 | `HU-15_pdf_factura` | HU-15 | PDF de la factura, en español, con el RUC del cliente y el IGV |
 | `HU-15_pdf_boleta` | HU-15 | PDF de la boleta. Limitación: la plantilla estándar la titula «Factura» y rotula «RUC» al DNI |
+
+## Capturas de HU-16 (Evelyn)
+
+Tomadas el 23/11/2026 en la BD `donofrio` recién creada con `scripts/init_db.sh` y cargada con `scripts/cargar_transacciones.py` completo (16 semanas, del 3/8 al 22/11/2026). Con la semilla fija, cada corrida da lo mismo: 437 pedidos de venta por S/ 9 106 775, 939 pedidos de mostrador y 95 compras.
+
+| Archivo | HU | Qué muestra |
+|---|---|---|
+| `HU-16_ventas_por_mes_grafico` | HU-16 | Análisis de ventas por mes: sube de agosto a octubre (estacionalidad) |
+| `HU-16_ventas_por_canal_y_mes` | HU-16 | Unidades vendidas por mes y por equipo de ventas (Heladeros, Canal Tradicional y Canal Moderno) |
+| `HU-16_facturas_y_boletas_de_clientes` | HU-16 | 516 documentos de cliente: facturas `F` a crédito (registradas, por vencer) y boletas `B` pagadas |
+| `HU-16_facturas_de_proveedor` | HU-16 | 95 facturas de proveedor (01, con IGV) de las compras enlazadas a las recepciones de insumos |
+| `HU-16_pdv_sesiones_cerradas` | HU-16 | 96 sesiones de caja de la Heladería Av. Venezuela, de 9:00 a 17:00, todas cerradas y registradas |

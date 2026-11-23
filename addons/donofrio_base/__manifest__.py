@@ -24,6 +24,7 @@ Todos los datos (RUC, clientes, empleados, precios) son ficticios.
         'data/precios_data.xml',
         'data/produccion_data.xml',
         'data/reabastecimiento_data.xml',
+        'data/clientes_data.xml',
         'data/rrhh_data.xml',
     ],
     'post_init_hook': 'post_init_hook',
