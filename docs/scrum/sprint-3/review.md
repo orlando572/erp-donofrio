@@ -6,7 +6,7 @@
 
 "Núcleo v1.0.0 entregable: seguro, replicado, probado, desplegado y documentado."
 
-**Resultado: cumplido, salvo HU-30.** Ocho de las nueve HU del sprint están fusionadas en `develop` (27 de 29 puntos: Evelyn 12, Orlando 15 y 5 compartidos de HU-28 y HU-33 que se reparten entre los dos). La HU-30 (2 puntos, usabilidad con usuarios) sigue abierta: su plan, su cuestionario y su script están hechos, pero las pruebas con las 5 personas se harán después de la revisión del plan por Orlando y por Evelyn y de su iteración. Las épicas #140 y #142 están cerradas; la #141 sigue abierta por HU-30. El CI de `develop` está en verde.
+**Resultado: cumplido, salvo HU-30.** Ocho de las nueve HU del sprint están fusionadas en `develop` (27 de 29 puntos: Evelyn 5, Orlando 14 y 8 compartidos de HU-28 y HU-33). La HU-30 (2 puntos, usabilidad con usuarios) sigue abierta: su plan, su cuestionario y su script están hechos, pero las pruebas con las 5 personas se harán después de la revisión del plan por Orlando y por Evelyn y de su iteración. Las épicas #140 y #142 están cerradas; la #141 sigue abierta por HU-30. El CI de `develop` está en verde.
 
 ## Incremento mostrado
 
