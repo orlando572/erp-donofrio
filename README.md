@@ -9,7 +9,7 @@ ERP académico para **D'Onofrio como unidad de helados y confitería** (corte 20
 
 ## Estado
 
-Sprint 0 cerrado. Sprint 1 (Fundaciones) en curso: entorno Docker listo (HU-01); siguen CI y datos maestros.
+Sprint 0 cerrado. Sprint 1 (Fundaciones) en curso: entorno Docker (HU-01), CI (HU-02) y compañía peruana (HU-03) listos; siguen los datos maestros.
 
 ## Levantar el entorno (Odoo 19 + PostgreSQL 16)
 
@@ -19,10 +19,10 @@ Requisitos: Docker con el plugin Compose (ver «Preparar tu PC»). Unos 4 GB de 
 git clone https://github.com/orlando572/erp-donofrio.git ~/erp-donofrio && cd ~/erp-donofrio && git switch develop
 cp .env.example .env          # valores de desarrollo; cámbialos si lo despliegas
 docker compose up -d --build  # PostgreSQL 16 + Odoo 19.0 (la primera vez descarga las imágenes)
-scripts/init_db.sh            # solo la primera vez: crea la BD «donofrio» e instala base
+scripts/init_db.sh            # solo la primera vez: crea la BD «donofrio» e instala donofrio_base
 ```
 
-Abre <http://localhost:8069>. Al crear la BD, Odoo deja el usuario `admin` con contraseña `admin`: es solo para desarrollo, cámbiala si expones el puerto.
+Abre <http://localhost:8069>. `donofrio_base` deja la compañía con localización peruana (RUC ficticio, PEN, IGV 18 %, `es_PE`, `America/Lima`, plan contable PE). Al crear la BD, Odoo deja el usuario `admin` con contraseña `admin`: es solo para desarrollo, cámbiala si expones el puerto.
 
 | Comando | Para qué |
 |---|---|
@@ -36,7 +36,7 @@ Detalles:
 - Los puertos se publican solo en `127.0.0.1`. Si alguno está ocupado en tu PC, cambia `ODOO_PORT`, `ODOO_LONGPOLLING_PORT` o `DB_PORT` en `.env`.
 - PostgreSQL queda en `localhost:5432` para DBeaver, con el rol `odoo` (sin superusuario) y la contraseña de `.env`.
 - El gestor de bases de datos de Odoo está deshabilitado (`list_db = False`): la BD se crea siempre con `scripts/init_db.sh`.
-- Los módulos de `addons/` se montan en el contenedor en modo lectura. El aviso «invalid addons directory '/mnt/extra-addons'» desaparece cuando exista `donofrio_base`.
+- Los módulos de `addons/` se montan en el contenedor en modo lectura.
 - La imagen de Odoo tiene la etiqueta fechada fija en `docker/odoo/Dockerfile` (`odoo:19.0-20261112`) para que ambas PC y el CI usen exactamente la misma.
 
 ## Pruebas y CI

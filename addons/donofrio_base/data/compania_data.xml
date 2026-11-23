@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HU-03: compañía con localización peruana. Todos los datos son ficticios.
+     El plan contable PE se carga en hooks.py (post_init_hook), cuando la compañía ya es de Perú. -->
+<odoo noupdate="1">
+
+    <!-- Idioma es_PE: se activa y se cargan sus traducciones antes de asignarlo a la compañía y al usuario -->
+    <function model="res.lang" name="_activate_and_install_lang">
+        <value eval="[]"/>
+        <value>es_PE</value>
+    </function>
+
+    <!-- La moneda PEN viene archivada en base -->
+    <record id="base.PEN" model="res.currency">
+        <field name="active" eval="True"/>
+    </record>
+
+    <!-- Contacto de la compañía: RUC ficticio con dígito verificador válido -->
+    <record id="base.main_partner" model="res.partner">
+        <field name="name">D'Onofrio – Unidad de Helados y Confitería (proyecto académico)</field>
+        <field name="is_company" eval="True"/>
+        <field name="country_id" ref="base.pe"/>
+        <field name="state_id" ref="base.state_pe_15"/>
+        <field name="city">Lima</field>
+        <field name="street">Av. Ejemplo 123</field>
+        <field name="zip">15001</field>
+        <field name="phone">+51 1 555 0100</field>
+        <field name="email">info@donofrio.example.com</field>
+        <field name="l10n_latam_identification_type_id" ref="l10n_pe.it_RUC"/>
+        <field name="vat">20999999990</field>
+        <field name="lang">es_PE</field>
+        <field name="tz">America/Lima</field>
+    </record>
+
+    <!-- Compañía: PEN, identidad visual y plantilla de documentos -->
+    <record id="base.main_company" model="res.company">
+        <field name="currency_id" ref="base.PEN"/>
+        <field name="primary_color">#C77D00</field>
+        <field name="secondary_color">#5B3A29</field>
+        <field name="font">Lato</field>
+        <field name="external_report_layout_id" ref="web.external_layout_standard"/>
+        <field name="logo" type="base64" file="donofrio_base/static/img/logo.png"/>
+    </record>
+
+    <!-- Administrador: interfaz en español de Perú y hora de Lima -->
+    <record id="base.user_admin" model="res.users">
+        <field name="lang">es_PE</field>
+        <field name="tz">America/Lima</field>
+    </record>
+
+</odoo>
