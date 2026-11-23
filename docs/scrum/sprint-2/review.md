@@ -1,6 +1,6 @@
 # Sprint 2 (Procesos estándar): Review
 
-**Fecha:** 23/11/2026 · **Presenta:** Orlando (SM) · **PO:** Evelyn (pendiente de aceptar) · **Demo cruzada:** pendiente (ver más abajo)
+**Fecha:** 23/11/2026 · **Presenta:** Orlando (SM) · **PO:** Evelyn (aceptado el 23/11/2026) · **Demo cruzada:** guion y verificación listos; falta hacerla en vivo con Orlando ([demo_cruzada.md](demo_cruzada.md))
 
 ## Objetivo
 
@@ -52,4 +52,10 @@
 
 ## Decisión del PO
 
-Pendiente de Evelyn (aceptar o rechazar el incremento).
+**Aceptado por Evelyn (PO) el 23/11/2026.** Las 9 HU cumplen sus criterios de aceptación, tienen pruebas y capturas, y las cuatro épicas están cerradas y en «Hecho».
+
+Se acepta con estas salvedades, que no bloquean el incremento:
+
+- **Demo cruzada:** el guion y la verificación de HU-14 sobre la base de Evelyn están hechos ([demo_cruzada.md](demo_cruzada.md)); falta repetirla en vivo con Orlando antes del Gate 0.
+- **Limitaciones declaradas** de la Fase 1: FEFO no aplicado en el PdV (RNF005), boleta con la plantilla estándar de factura y sin envío a SUNAT.
+- **`enforce_admins`:** decisión abierta, pasa al Sprint 3.

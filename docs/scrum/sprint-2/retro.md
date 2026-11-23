@@ -1,7 +1,7 @@
 # Sprint 2 (Procesos estándar): Retrospectiva
 
 **Fecha:** 23/11/2026 · **Facilita:** Orlando (SM)
-**Estado:** borrador de Orlando a partir de lo ocurrido en el sprint; se completa y confirma con Evelyn.
+**Estado:** confirmada por Evelyn el 23/11/2026. La documentación de Evelyn del S2 ya se subió (PR #181); las acciones de mejora quedan para antes del Gate 0 y el S3.
 
 ## Seguimiento de las acciones de la Retro del S1
 
@@ -52,3 +52,11 @@
 ## Riesgos
 
 Ningún riesgo cambia de nivel. R4 (carga desigual y defensa de cada parte) sigue abierto: la demo cruzada pendiente es la forma de cubrirlo. El hallazgo del PdV sin FEFO queda aceptado como limitación de RNF005 en la Fase 1. El seguimiento se registra como comentario en el issue #131.
+
+## Aportes de Evelyn a la Retro
+
+- **Qué aprendí:**
+  - Las fechas de vigencia de las listas se guardan en UTC: una vigencia «a medianoche» se veía 5 horas corrida en Lima (PR #171). Desde entonces, las fechas de los datos se escriben en UTC con la hora de Lima y se prueba el borde.
+  - Un dato creado por el hook de instalación no existe en una base ya creada: el PdV, la facturación y los diarios necesitaron una llamada única en `odoo shell` o recrear la base.
+  - HU-16 dependía de HU-13 y HU-15 sin fusionar. Tuve que trabajar sobre una rama de integración local y rebasarla al fusionarse; fue la razón de que HU-16 esperara.
+- **Para el S3:** aprobar los PR del otro apenas el CI esté en verde, y pasar la épica a «Hecho» al fusionar su último PR.
