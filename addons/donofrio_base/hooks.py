@@ -111,6 +111,7 @@ def _programar_plan_contable(env):
             env['account.chart.template'].try_loading('pe', compania)
         _configurar_cuentas_de_valoracion(env)
         crear_punto_de_venta(env)
+        configurar_facturacion(env)
 
     env.registry._auto_install_template = cargar_plan_contable
 
@@ -158,3 +159,54 @@ def _habilitar_productos_en_pdv(env):
         ('available_in_pos', '=', False),
     ])
     terminados.write({'available_in_pos': True})
+
+
+def configurar_facturacion(env):
+    """HU-15: IGV 18 % en los productos terminados y diarios «Facturas» (01) y «Boletas» (03).
+
+    Va en el hook porque el impuesto y el diario de ventas vienen del plan contable, que se carga al terminar
+    de instalar el módulo. Es idempotente. Supuestos del proyecto:
+
+    * Los precios de venta incluyen el IGV (precio al público): el impuesto se marca como «incluido en el precio».
+    * Un solo diario de ventas por tipo de documento; el pedido elige el diario según el cliente (``models/sale_order.py``).
+    * Sin envío electrónico a SUNAT (``l10n_pe_edi`` es Enterprise): la numeración es la de Odoo (``F 00000001``, ``B 00000001``).
+    """
+    compania = env.ref('base.main_company')
+    # La lista «Default» la crea Odoo en USD, porque al instalar `sale` la compañía aún no tenía país ni moneda:
+    # sin esto, un pedido de un cliente sin lista propia se facturaría en dólares.
+    env['product.pricelist'].search([('currency_id', '!=', compania.currency_id.id)]).write({
+        'currency_id': compania.currency_id.id})
+    # Los PDF de factura salen en el idioma del cliente: todo contacto nuevo nace en español
+    env['ir.default'].set('res.partner', 'lang', 'es_PE')
+    igv = env['account.chart.template'].with_company(compania).ref('sale_tax_igv_18', raise_if_not_found=False)
+    if not igv:
+        _logger.warning('No existe el IGV 18 %% (sale_tax_igv_18): se omite la configuración de facturación.')
+        return
+    igv.price_include_override = 'tax_included'
+    terminados = env['product.template'].search([
+        ('categ_id', 'child_of', env.ref('donofrio_base.cat_terminados').id)])
+    terminados.write({'taxes_id': [(6, 0, igv.ids)]})
+
+    Diario = env['account.journal']
+    facturas = env.ref('donofrio_base.diario_facturas', raise_if_not_found=False)
+    if not facturas:
+        facturas = Diario.search([('type', '=', 'sale'), ('company_id', '=', compania.id)], order='sequence, id', limit=1)
+        facturas.write({'code': 'FAC'})
+    boletas = env.ref('donofrio_base.diario_boletas', raise_if_not_found=False)
+    if not boletas:
+        boletas = Diario.create({
+            'name': 'Boletas', 'code': 'BOL', 'type': 'sale', 'company_id': compania.id,
+            'l10n_latam_use_documents': facturas.l10n_latam_use_documents,
+        })
+    # El diario de ventas de Odoo trae su nombre traducido («Ventas»): se escribe el nuevo en todos los idiomas
+    for diario, nombre in ((facturas, 'Facturas'), (boletas, 'Boletas')):
+        for idioma in env['res.lang'].search([]).mapped('code'):
+            if diario.with_context(lang=idioma).name != nombre:
+                diario.with_context(lang=idioma).name = nombre
+    env['ir.model.data']._update_xmlids([
+        {'xml_id': 'donofrio_base.diario_facturas', 'record': facturas, 'noupdate': True},
+        {'xml_id': 'donofrio_base.diario_boletas', 'record': boletas, 'noupdate': True},
+    ])
+    config = env.ref('donofrio_base.pos_config_venezuela', raise_if_not_found=False)
+    if config:
+        config.invoice_journal_id = boletas
