@@ -18,9 +18,9 @@ r="$(curl -s -I -m 15 "http://localhost:$HTTP/web/login")"
 echo "$r" | head -1 | grep -q " 301 " && echo "$r" | grep -qi "^location: https://" && ok "80 → 443 (301)" || fallo "no redirige: $(echo "$r" | head -1)"
 
 echo "2) Versiones de TLS"
-for v in tls1_2 tls1_3; do
-  echo | openssl s_client -connect "localhost:$HTTPS" "-$v" 2>/dev/null | grep -q "Protocol *: TLSv1" && ok "acepta ${v/tls/TLS }" || fallo "no acepta $v"
-done
+# curl en lugar de openssl s_client: la salida de openssl cambia entre versiones (y con 1.3 no siempre imprime el protocolo)
+curl -sk --tlsv1.2 --tls-max 1.2 -o /dev/null -m 15 "$U/web/login" && ok "acepta TLS 1.2" || fallo "no acepta TLS 1.2"
+curl -sk --tlsv1.3 --tls-max 1.3 -o /dev/null -m 15 "$U/web/login" && ok "acepta TLS 1.3" || fallo "no acepta TLS 1.3"
 curl -sk --tls-max 1.1 -o /dev/null -m 15 "$U/web/login" 2>/dev/null && fallo "acepta TLS 1.1 o menor" || ok "rechaza TLS 1.1 y menores"
 
 echo "3) Cabeceras de seguridad en el login (cada una una sola vez)"
@@ -53,19 +53,26 @@ grep -qE "^admin_passwd = (cambiar-|.{0,15}$)" <<<"$conf" && fallo "admin_passwd
 docker compose run --rm --no-deps -T -e ODOO_PROXY_MODE=True -e ODOO_ADMIN_PASSWD=cambiar-admin-passwd odoo odoo --version >/dev/null 2>&1 \
   && fallo "Odoo arrancó en modo producción con la contraseña de ejemplo" || ok "Odoo se niega a arrancar en producción con la contraseña de ejemplo"
 
-echo "7) Bloqueo por intentos fallidos (base.login_cooldown_after = 5, espera de 60 s)"
-# El contador de Odoo es por IP y por worker (no se comparte entre procesos): con workers=2 hacen falta,
-# como máximo, 2 x 5 fallos antes de que TODOS los intentos siguientes se rechacen. Con 12 intentos hay bloqueo seguro.
+echo "7) Bloqueo por intentos fallidos (base.login_cooldown_*)"
+# El contador de Odoo es por IP y por worker (no se comparte entre procesos). Se lee el umbral real de la BD
+# (5 con donofrio_base; 10, el de Odoo, en una BD solo con 'base') y los workers de odoo.conf: con N workers y un
+# umbral U, el intento N*U + 1 se rechaza seguro.
+bd="${ODOO_DB:-$(grep -E '^ODOO_DB=' .env 2>/dev/null | cut -d= -f2)}"; bd="${bd:-donofrio}"
+umbral="$(docker compose exec -T db psql -U postgres -d "$bd" -tAc "SELECT value FROM ir_config_parameter WHERE key = 'base.login_cooldown_after'" 2>/dev/null | tr -d '[:space:]')"
+umbral="${umbral:-10}"
+workers="$(grep -E '^workers = ' <<<"$conf" | cut -d= -f2 | tr -d '[:space:]')"; workers="${workers:-2}"
+intentos=$((workers * umbral + 2))
+echo "  umbral $umbral fallos, $workers workers: se hacen $intentos intentos"
 jar="$(mktemp)"
 bloqueados=0
-for i in $(seq 1 12); do
+for i in $(seq 1 "$intentos"); do
   tok="$(curl -sk -c "$jar" -b "$jar" -m 15 "$U/web/login" | grep -oE 'name="csrf_token" value="[^"]+"' | head -1 | sed 's/.*value="//;s/"//')"
   resp="$(curl -sk -c "$jar" -b "$jar" -m 15 -d "csrf_token=$tok&login=admin&password=incorrecta-$i" "$U/web/login" | sed 's/<[^>]*>/ /g' | tr -s ' \n' ' ')"
   grep -qi "too many login failures" <<<"$resp" && bloqueados=$((bloqueados + 1))
 done
 rm -f "$jar"
-[ "$bloqueados" -ge 1 ] && ok "de 12 intentos fallidos seguidos, $bloqueados se rechazaron por bloqueo (\"Too many login failures\")" || fallo "ningún intento se bloqueó"
-registro="$(docker compose logs --no-color --tail=300 odoo 2>/dev/null)"
+[ "$bloqueados" -ge 1 ] && ok "de $intentos intentos fallidos seguidos, $bloqueados se rechazaron por bloqueo (\"Too many login failures\")" || fallo "ningún intento se bloqueó"
+registro="$(docker compose logs --no-color --tail=2000 odoo 2>/dev/null)"
 grep -q "Login attempt ignored" <<<"$registro" && ok "el bloqueo quedó en el registro de Odoo (Login attempt ignored)" || fallo "no hay 'Login attempt ignored' en el registro"
 
 echo
