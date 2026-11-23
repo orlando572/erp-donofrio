@@ -4,7 +4,7 @@
 
 ## 6.1 Estructura del repositorio
 
-El nombre propuesto es `erp-donofrio`. El repo es privado durante el desarrollo; se hace público o se agrega al docente antes de la entrega (decisión abierta).
+El repo es `erp-donofrio` en GitHub y es **público**: el docente ve el código, las Actions y el Project sin invitación. La rama por defecto es `develop`, para que `Closes #n` cierre los issues al fusionar los PR.
 
 ```
 erp-donofrio/
@@ -44,7 +44,7 @@ erp-donofrio/
 │   └── dev/odoo19_cambios.md       # Ficha de cambios de Odoo 19 para el agente
 ├── .github/
 │   ├── workflows/ci.yml, release.yml, cd.yml (opcional)
-│   ├── ISSUE_TEMPLATE/ (historia.yml, bug.yml)
+│   ├── ISSUE_TEMPLATE/ (epica.yml, bug.yml)
 │   ├── pull_request_template.md
 │   └── dependabot.yml              # Actions y Docker
 ├── .pre-commit-config.yaml         # ruff, pylint-odoo, check_legacy, prettier XML (opcional)
@@ -85,7 +85,7 @@ gitGraph
 | `hotfix/…` | Corrección urgente sobre `main` | Merge a `main` y a `develop` |
 
 **Merge strategy:**
-1. **Crear el PR:** `feature/*` → `develop` con la plantilla (HU, qué cambia, cómo probar, capturas, `Closes #n`).
+1. **Crear el PR:** `feature/*` → `develop` con la plantilla (HU, qué cambia, cómo probar, capturas, `Parte de #n` o, en el último PR de la épica, `Closes #n`).
 2. **Revisión de código:** la hace el otro integrante con la checklist (DoD, sin patrones legacy, ACL, tests, textos en español). Los comentarios se resuelven en la misma rama.
 3. **Fusión:**
    - `feature/*` → `develop` con **Squash and merge**, para dejar un commit por HU en un historial limpio.
@@ -103,8 +103,8 @@ gitGraph
 - Cada integrante hace commits **con su propia identidad de git y su cuenta de GitHub**. Las contribuciones por autor son evidencia de la sección 6.7 y de la nota individual.
 
 **Issues:**
-- Uno por HU (plantilla "Historia": como/quiero/para, criterios, puntos, RF/RNF) y uno por bug (plantilla "Bug": pasos, esperado, obtenido, captura, severidad).
-- Etiquetas: `area:ventas|logistica|produccion|gerencia|extras|infra|docs`, `tipo:historia|bug|tarea`, `prioridad:alta|media|baja`.
+- **Unos 25 en total** ([04 §4.11](04_scrum_pmbok.md)): una **épica** por área y dueño en cada sprint (plantilla "Épica": HU incluidas como checklist con como/quiero/para, criterios, puntos y RF/RNF), 7 de gestión (S0 ×2, Gate 0, Informe final, Entrega, Registro de riesgos, Dailies) y uno por bug real (plantilla "Bug": pasos, esperado, obtenido, captura, severidad).
+- Etiquetas: `area:ventas|logistica|produccion|gerencia|extras|infra|docs`, `tipo:epica|gestion|bug`, `fase-1|fase-2`, `prioridad:alta|media|baja`.
 - **Milestone** = sprint. Asignado = responsable.
 
 **PR:**
@@ -217,7 +217,7 @@ Se capturan al cierre de cada sprint en `docs/capturas/sprint-N/github/`, con fe
 | 6 | Un PR con revisión del otro integrante, comentarios resueltos, checks en verde y botón de *squash merge* | 6.6 |
 | 7 | PR de release `develop` → `main` con *merge commit* | 6.6 |
 | 8 | Historial de commits con la convención + **Insights → Contributors** (commits por autor) | 6.7 |
-| 9 | Issues abiertos y cerrados con etiquetas y milestones; un issue de bug cerrado por un PR (`Closes #n`) | 6.8 |
+| 9 | Épicas con su checklist de HU, cerradas por su último PR (`Closes #n`); etiquetas y milestones; un issue de bug cerrado por un PR (`Closes #n`); módulos de la F2 no aprobados cerrados como *not planned* | 6.8 |
 | 10 | Pestaña Actions con ejecuciones en verde y un ejemplo en rojo corregido después (muestra que el control funciona) | 6.9 / 6.10 |
 | 11 | Log del job `test` con el resumen de tests de Odoo | 6.10 |
 | 12 | Insights → Pulse o Code frequency de todo el periodo (prueba de que el trabajo se repartió en el tiempo) | 6.4 / 6.7 |

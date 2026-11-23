@@ -52,7 +52,7 @@ La plantilla no trae números visibles en los títulos. Esta numeración sigue s
 | 4.1.2 Procesos AS-IS | 5 diagramas BPMN: venta B2B, liquidación de heladero, producción y calidad, compras de insumos, recepción y despacho con cadena de frío. También los TO-BE (en Odoo) para contrastar | bpmn.io / Camunda Modeler (gratis), exportado a PNG | E (ventas, heladeros, compras), O (producción y calidad, almacén y cadena de frío) | S1 (AS-IS), S2 (TO-BE) |
 | 4.1.3 Arquitectura empresarial | Arquitectura actual y propuesta: software, datos y tecnología | draw.io (capas TOGAF simplificadas) | O | S1 |
 | 4.1.4 Identificación de oportunidades de innovación tecnológica | Tabla 1 (problema → oportunidad → tecnología), ya redactada en [01 §1.6](01_alcance_escenario.md) | Tabla | E | S1 |
-| 4.2.1 Gestión de requerimientos | Proceso: HU → RF/RNF → issue → prueba; matriz de trazabilidad | Tabla | E | S1 |
+| 4.2.1 Gestión de requerimientos | Proceso: HU → RF/RNF → épica (issue) → prueba; matriz de trazabilidad | Tabla | E | S1 |
 | 4.2.2 Requerimientos funcionales | Tabla 2: RF001 a RF018 por área, con columna de fase (ver [04 §4.2](04_scrum_pmbok.md)); el detalle en ficha va en el Anexo 10.1 | Tabla | E | S1 |
 | 4.2.3 Requerimientos no funcionales | Tabla 3: RNF001 a RNF013 por área; el detalle en ficha va en el Anexo 10.2 | Tabla | O | S1 |
 | 4.2.4 Diagramas de casos de uso | Diagrama general por área + CU001 a CU010, cada uno con su ficha (tabla 4) | PlantUML (en el repo, `docs/diagramas/*.puml`) | E (CU de ventas, heladeros, gerencia), O (CU de logística, producción, calidad) | S2 |
@@ -63,7 +63,7 @@ La plantilla no trae números visibles en los títulos. Esta numeración sigue s
 | 4.2.9 Gestión de calendarización | Tabla 6 (cronograma de hitos en orden, ver [04 §4.10](04_scrum_pmbok.md)) + ilustración 6 (Gantt armado con las fechas reales de ejecución que registra el Project, no con fechas planificadas) | GitHub Projects (vista Roadmap) o diagrama Mermaid gantt | E | S0, se actualiza en cada sprint |
 | 4.2.10 Desarrollo ágil Scrum: roles | Tabla 7 | Texto | E | S0 |
 | 4.2.11 Artefactos | Product Backlog (tabla 8) y Sprint Backlog (tabla 9), con capturas de las vistas "Product Backlog" y "Sprint actual" | GitHub Projects | E | S0-S4 |
-| 4.2.12 Eventos | Sprint, Planning, Daily, Review y Retro, con evidencias (ilustración 7) | GitHub Projects (issues "Daily S<N>") + actas `docs/scrum/` | E | S0-S4 |
+| 4.2.12 Eventos | Sprint, Planning, Daily, Review y Retro, con evidencias (ilustración 7) | GitHub Projects (issue "Dailies") + actas `docs/scrum/` | E | S0-S4 |
 | 4.3.1 Infraestructura tecnológica | Diagrama: PC de desarrollo, Docker, contenedores Odoo/PostgreSQL/réplica/Nginx, GitHub, runner de Actions y (opcional) VM en la nube | draw.io | O | S1 |
 | 4.3.2 Plataforma tecnológica | Odoo como MVC (ORM = DAO/Active Record, vistas XML/OWL, controladores), DTO (diccionarios JSON-RPC), SOLID aplicado a módulos y herencia | draw.io + texto | O | S2 |
 | 4.3.3 Configuración de herramientas: desarrollo, despliegue, mantenimiento y monitoreo | Lineamientos breves; el detalle va al **Manual de herramientas** | Texto | O | S2 |
@@ -72,10 +72,10 @@ La plantilla no trae números visibles en los títulos. Esta numeración sigue s
 | 4.3.6 Controles de versionamiento | Git + GitHub, ramas y responsables (resumen; el detalle va en 6.4 a 6.8) | Captura de GitHub | O | S1 |
 | 4.3.7 Máquinas virtuales y contenedores | Docker Compose: servicios, volúmenes, perfiles y redes | `docker compose ps` + captura | O | S1 |
 | 4.3.8 Plataformas cloud | GitHub (repo, Actions, GHCR) + VM en la nube opcional (decisión abierta) | Capturas | O | S3 → Cierre |
-| 4.3.9 Plataformas de gestión de proyectos | GitHub Projects: campos, vistas y uso (ilustración 16). Bajo el título va la nota "Herramienta utilizada: GitHub Projects (en reemplazo de Monday)" con su justificación ([04 §4.11](04_scrum_pmbok.md)) | GitHub Projects + CLI `gh` | E | S1 |
+| 4.3.9 Plataformas de gestión de proyectos | GitHub Projects: issues, campos, vistas y uso (ilustración 16), según [04 §4.11](04_scrum_pmbok.md) | GitHub Projects + CLI `gh` | E | S1 |
 | 4.4.1 Wireframes | Uno por caso de uso; detalle completo para las pantallas propias de la F2 (liquidación, inspección, temperatura, tablero), **que se diseñan en la F1 aunque no se implementen**, y versión simple para las estándar de Odoo | Excalidraw o Figma (gratis) | E | S2 |
 | 4.4.2 Mockups | Mockups en alta fidelidad con la paleta de marca (amarillo de los carritos) | Figma | E | S2 |
-| 4.5.1 Plan de gestión de riesgos | Tabla 10 + estrategias (evitar, mitigar, transferir, aceptar) + escalas 1-3 | Tabla + GitHub Projects (vista "Riesgos", issues con la etiqueta `riesgo`) | E | S0 |
+| 4.5.1 Plan de gestión de riesgos | Tabla 10 + estrategias (evitar, mitigar, transferir, aceptar) + escalas 1-3 | Tabla en `docs/pm/plan_riesgos.md` + issue "Registro de riesgos" | E | S0 |
 | 4.5.2 a 4.5.4 Riesgos por etapa: desarrollo, despliegue, mantenimiento | Tablas 11 a 13 con nivel = impacto × probabilidad, prioridad, seguimiento, frecuencia, herramienta y validación | Tabla (ver [07](07_riesgos_entrega.md)) | E (desarrollo), O (despliegue, mantenimiento) | S1, se actualiza en cada sprint |
 | 4.6.1 Buenas prácticas de conversión de prototipos a web UI/UX | Heurísticas de Nielsen, consistencia con el diseño de Odoo, accesibilidad (contraste), responsive, etiquetas en español | Texto | E | S3 |
 | 4.6.2 Propuesta de prototipos web | Pantallas reales implementadas, con capturas por caso de uso (F1: pantallas estándar configuradas; F2: + pantallas propias) | Odoo + navegador | E | S3 (+F2) |
@@ -105,12 +105,12 @@ La plantilla no trae números visibles en los títulos. Esta numeración sigue s
 | **6. Documentación de la solución** | | | | |
 | 6.1 Descripción del Scrum Team | Integrantes, roles y responsabilidades | Texto | E | S3 → Cierre |
 | 6.2 Resumen del cuadro de sprints | Tabla por sprint: objetivo, HU, puntos planificados y completados, fechas, incremento, burndown | GitHub Projects (Insights) + `scripts/burndown.py` (lee `gh project item-list --format json`, por puntos) | E | S3 → Cierre |
-| 6.3 Resumen del Monday (título del docente, se conserva) | Bajo el título va la nota "Herramienta utilizada: GitHub Projects (en reemplazo de Monday)" con su justificación ([04 §4.11](04_scrum_pmbok.md)). Capturas de cada vista (Product Backlog, Sprint actual, Riesgos, Entregables, Roadmap) y de Insights al cierre de cada sprint, e issues "Daily S<N>" | GitHub Projects | E | S3 → Cierre |
+| 6.3 Resumen del Monday | La sección se desarrolla con **GitHub Projects**, la herramienta de gestión del equipo, y lo dice en una línea bajo el título: es gratuita, está integrada con los issues, los PR y los commits, y el docente la ve sin invitación ([04 §4.11](04_scrum_pmbok.md)). Capturas de cada vista (Product Backlog, Sprint actual, Roadmap) y de Insights al cierre de cada sprint, y el issue "Dailies" | GitHub Projects | E | S3 → Cierre |
 | 6.4 Resumen del GitHub o GitLab | URLs del repo, releases, Actions y paquete GHCR; capturas (ver [06 §6.6](06_github_ci_infra.md)) | GitHub | O | S3 → Cierre |
 | 6.5 Ramificación o branching | Flujograma de ramas, esquema y listado de ramas | Mermaid gitGraph + capturas | O | S3 → Cierre |
 | 6.6 Merge strategy | PR → revisión cruzada → *squash merge* a `develop`; *merge commit* de `develop` a `main` con tag | Capturas de PR | O | S3 → Cierre |
 | 6.7 Resumen de commits | Convención, estadísticas por autor y capturas | GitHub Insights | E | S3 → Cierre |
-| 6.8 Resumen de issues | Issues por HU y por bug, etiquetas, milestones y prevención | GitHub Issues | E | S3 → Cierre |
+| 6.8 Resumen de issues | Unos 25 issues: épicas por área con su checklist de HU, issues de gestión y bugs; etiquetas, milestones, cierre con `Closes #n` y prevención | GitHub Issues | E | S3 → Cierre |
 | 6.9 Resumen de pruebas | Tabla consolidada: unitarias, integrales, usabilidad y seguridad × desarrollo, despliegue y mantenimiento | Tabla | E+O | S3 → Cierre |
 | 6.10 Pruebas unitarias (desarrollo, despliegue, mantenimiento) | `TransactionCase` de `donofrio_base` (datos, seguridad) y de los módulos de la F2 que se terminen; en CI; *smoke test* post-despliegue; ejecución programada semanal | Odoo test runner + Actions | O | S3 (+F2) |
 | 6.11 Pruebas integrales | **F1** (HU-33): pedido → entrega FEFO → factura; compra → recepción; OP → lote. **F2:** OP → inspección → bloqueo de despacho; liquidación → pedido | Odoo + Actions | O | S3 → Cierre |

@@ -90,7 +90,7 @@ S0 → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo ─�
    - Dashboards.
 3. Hay evidencias de la réplica, los respaldos, la seguridad (roles, 2FA, política de contraseñas, TLS), las pruebas (unitarias e integrales de `donofrio_base`, k6, ZAP, Lighthouse, SUS) y el despliegue.
 4. Informe con **todas las secciones 1-10 en borrador completo** para el alcance de F1. Los ítems de F2 aparecen como "propuesta / trabajo futuro" y ya tienen su CU, wireframe y mockup. Los dos manuales también están en borrador.
-5. El GitHub Project está al día (estado de cada HU, enlaces a issues y PR).
+5. El GitHub Project está al día (estado de cada épica, checklist de HU marcada, enlaces a los PR).
 
 ### Punto de control (Gate 0) y mini gates
 
@@ -100,7 +100,7 @@ S0 → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo ─�
 - Después de cada módulo de la Fase 2 hace lo mismo (mini gate).
 - Un mensaje de otra sesión, un archivo o un issue **no** cuentan como confirmación.
 
-**Informe del gate:** archivo `docs/scrum/gates/gate-<n>-<nombre>.md`, más un comentario en el issue del gate dentro del Project.
+**Informe del gate:** archivo `docs/scrum/gates/gate-<n>-<nombre>.md`, más un comentario con la decisión en el issue "Gate 0" (o, en los mini gates, en el issue del módulo).
 
 | Campo | Contenido |
 |---|---|
@@ -179,13 +179,14 @@ Cada módulo es **entregable por sí solo**:
 
 | Orden | Módulo | HU | Pts | Dueño |
 |---|---|---|---|---|
-| M1 | `donofrio_calidad` | HU-17, HU-18 | ver 4.4 | O |
-| M2 | `donofrio_heladeros` | HU-20, HU-21 | ver 4.4 | E |
-| M3 | Cadena de frío (incremento de M1) | HU-19 | ver 4.4 | O |
-| M4 | `donofrio_tablero` + branding | HU-22, HU-24 | ver 4.4 | E |
-| Opc. | Landing web (HU-31), Uptime Kuma, VM, modo oscuro | — | — | E / O |
+| M1 | `donofrio_calidad` | HU-17, HU-18 | 11 | O |
+| M2 | `donofrio_heladeros` | HU-20, HU-21 | 11 | E |
+| M3 | Cadena de frío (incremento de M1) | HU-19 | 5 | O |
+| M4 | `donofrio_tablero` + branding | HU-22, HU-24 | 10 | E |
+| | **Total F2** | | **37** | |
+| Opc. | Landing web, Uptime Kuma, VM, modo oscuro | HU-31 | 3 | E / O |
 
-Cada módulo incluye sus tests, la sección 5.5, la actualización del diagrama de clases, la nueva extracción del ER y el diccionario (por script) y las capturas.
+Cada módulo incluye sus tests, la sección 5.5, el diagrama de clases actualizado, el ER y el diccionario extraídos otra vez (por script) y las capturas.
 
 **Por qué este orden:**
 1. **M1 `donofrio_calidad`:** cubre Calidad, que es Enterprise, y es el corazón de Producción. Además da contenido real al diagrama de clases, al ER y diccionario y a la sección 5.5, y respalda ISO 9001/HACCP.
@@ -211,7 +212,7 @@ Hay **un solo plan**. Los sprints van en orden fijo y cada uno tiene un *timebox
 
 ### Sprint Backlog: formato (tabla 9 de la plantilla)
 
-Cada HU se divide en tareas de 2 a 6 h en el GitHub Project, con estas columnas:
+Cada HU se divide en tareas de 2 a 6 h dentro de la checklist de su épica (issue del Project), con estas columnas:
 - HU
 - Tarea
 - Responsable
@@ -241,11 +242,11 @@ Las actas viven en el repo, en `docs/scrum/sprint-N/` (Markdown breve), y se cap
 |---|---|---|---|
 | **Sprint** | ~1 día (*timebox*) | — | Iteración `S<N>` del Project con sus fechas reales; milestone de GitHub `Sprint N` |
 | **Sprint Planning** | Al inicio, 15-20 min | El PO presenta las HU priorizadas, se estima, se fija el objetivo y se divide en tareas | `planning.md`; captura de la vista "Sprint actual" del Project |
-| **Daily Scrum** | A mitad del sprint, 10 min (o asíncrona, como comentario) | Qué hice, qué haré y qué me bloquea | Comentarios en el issue "Daily S<N>" del sprint + `docs/scrum/sprint-N/dailies.md` |
+| **Daily Scrum** | A mitad del sprint, 10 min (o asíncrona, como comentario) | Qué hice, qué haré y qué me bloquea | Comentario en el issue "Dailies" + `docs/scrum/sprint-N/dailies.md` |
 | **Refinamiento** | Junto con la Daily, 10 min | Se ajustan las HU del siguiente sprint | Cambios en el Product Backlog del Project |
 | **Sprint Review** | Al final, 15-20 min | Demo del incremento contra los criterios; el PO acepta o rechaza; tag | `review.md` + capturas o video; *release* |
 | **Sprint Retrospective** | Al final, 10-15 min | Empezar, dejar de hacer, continuar + 2 acciones de mejora | `retro.md` + captura |
-| **Gate 0 / mini gates** | Al terminar la F1 y después de cada módulo de la F2 | Informe del gate (4.3) + decisión explícita del equipo | `docs/scrum/gates/*.md` + comentario con la decisión en el issue del gate |
+| **Gate 0 / mini gates** | Al terminar la F1 y después de cada módulo de la F2 | Informe del gate (4.3) + decisión explícita del equipo | `docs/scrum/gates/*.md` + comentario con la decisión en el issue "Gate 0" o en el del módulo |
 
 **Burndown:** `scripts/burndown.py` lee el Project con `gh project item-list --format json`, calcula por puntos y lo grafica, con una línea separada para la F1 y otra para la F2 (secciones 6.2 y 4.2.12). Se complementa con los gráficos de Insights del Project.
 
@@ -258,7 +259,7 @@ Las actas viven en el repo, en `docs/scrum/sprint-N/` (Markdown breve), y se cap
 4. Se actualiza el módulo sin errores (`-u`) sobre una BD con datos.
 5. Los textos visibles están en español y los criterios de aceptación se verificaron en la UI.
 6. Hay capturas de evidencia en `docs/capturas/sprint-N/` (`HU-xx_descripcion.png`).
-7. El ítem del Project está en "Hecho" con el enlace al PR; el issue se cerró con `Closes #n`.
+7. La HU está marcada en la checklist de su épica con el enlace al PR (`Parte de #n`); el último PR de la épica la cierra con `Closes #n` y el ítem del Project pasa a "Hecho".
 8. La sección del informe que corresponde tiene al menos un borrador.
 
 **Además, para cada módulo de la F2 (módulo entregable):**
@@ -307,40 +308,74 @@ Los hitos van en orden y sin fechas; el único plazo es el de H8.
 | H7 | 2 ensayos cronometrados (≤ 10 min) | Cierre | E+O |
 | H8 | **Entrega de todo: viernes 27 de noviembre, 14:30** (UTP+Class, un integrante, un solo intento) | Cierre | E (sube), O (verifica) |
 
-## 4.11 Gestión del proyecto con GitHub Projects (lo pide la plantilla)
+## 4.11 Gestión del proyecto con GitHub Projects
 
-La plantilla pide una plataforma de gestión de proyectos (4.3.9 y 6.3). Se usa **un solo GitHub Project (v2) llamado "Scrum ERP D'Onofrio"**, vinculado al repo `erp-donofrio`. Bajo los títulos de la plantilla que nombran la herramienta se conserva la numeración y el título del docente y se agrega esta nota:
+El proyecto se gestiona en **un solo GitHub Project (v2), "Scrum ERP D'Onofrio"**, vinculado al repo `erp-donofrio`. Es gratuito, está integrado con los issues, los PR y los commits, y el docente lo ve sin invitación porque el repo es público. Con él se desarrollan las secciones 4.2.11, 4.3.9 y 6.3 de la plantilla.
 
-> **Herramienta utilizada: GitHub Projects (en reemplazo de Monday).** Es gratis y sin límites para este uso (el plan gratis de Monday tiene 2 usuarios, 3 tableros, ítems limitados y no admite invitados); está integrado con los issues, los PR y los commits; y, si el repo es público, el docente lo ve sin invitación.
+### Issues (lista definitiva: 22 + bugs)
 
-**Campos:**
+Las HU van como **checklist dentro de un issue de épica** (una por área y dueño en cada sprint). Los riesgos viven en `docs/pm/plan_riesgos.md` y los entregables del informe en la checklist del issue "Informe final".
+
+| # | Título | Tipo | Sprint | Responsable | Prioridad | HU | Pts |
+|---|---|---|---|---|---|---|---|
+| 1 | Constitución del proyecto y GitHub Project | Gestión | S0 | Evelyn | Must | — | 0 |
+| 2 | Repo, ramas, plantillas y agente de IA | Gestión | S0 | Orlando | Must | — | 0 |
+| 3 | Registro de riesgos | Gestión | S0 | Evelyn | Must | — | 0 |
+| 4 | Dailies | Gestión | S0 | Orlando | Must | — | 0 |
+| 5 | Entorno Docker y CI | Épica | S1 | Orlando | Must | HU-01, HU-02 | 8 |
+| 6 | Datos maestros, compañía y seguridad | Épica | S1 | Orlando | Must | HU-03, HU-04, HU-06, HU-07 | 14 |
+| 7 | RR. HH. y análisis empresarial | Épica | S1 | Evelyn | Must | HU-05 | 2 |
+| 8 | Ventas, CRM y PdV | Épica | S2 | Evelyn | Must | HU-08, HU-09, HU-10 | 8 |
+| 9 | Compras y facturación | Épica | S2 | Evelyn | Must | HU-13, HU-15 | 6 |
+| 10 | Inventario y producción | Épica | S2 | Orlando | Must | HU-11, HU-12, HU-14 | 11 |
+| 11 | Transacciones de demostración | Épica | S2 | Orlando | Must | HU-16 | 5 |
+| 12 | Infraestructura, réplica y seguridad | Épica | S3 | Orlando | Must | HU-25, HU-26, HU-27, HU-29 | 14 |
+| 13 | Gerencia, KPIs y mesa de servicios ITIL | Épica | S3 | Evelyn | Must | HU-23, HU-30, HU-32 | 7 |
+| 14 | Pruebas y calidad del software | Épica | S3 | Orlando | Must | HU-28, HU-33 | 8 |
+| 15 | Gate 0 | Gestión | S3 | Evelyn | Must | — | 0 |
+| 16 | M1 `donofrio_calidad` | Épica | S4 | Orlando | Should | HU-17, HU-18 | 11 |
+| 17 | M2 `donofrio_heladeros` | Épica | S4 | Evelyn | Should | HU-20, HU-21 | 11 |
+| 18 | M3 Cadena de frío | Épica | S4 | Orlando | Should | HU-19 | 5 |
+| 19 | M4 `donofrio_tablero` + branding | Épica | S4 | Evelyn | Should | HU-22, HU-24 | 10 |
+| 20 | Opcionales: landing web, Uptime Kuma, VM y modo oscuro | Épica | S4 | Evelyn | Could | HU-31 | 3 |
+| 21 | Informe final | Gestión | Cierre | Evelyn | Must | — | 0 |
+| 22 | Entrega | Gestión | Cierre | Orlando | Must | — | 0 |
+| — | Un issue por bug real (plantilla "Bug") | Bug | El del hallazgo | Quien lo corrige | Según severidad | — | 0 |
+
+**Totales:** 15 épicas + 7 de gestión = 22 issues, más unos 3 bugs (**unos 25**). Puntos: F1 = 83 (issues 5-14), F2 = 37 (issues 16-19); **120 comprometidos**, más 3 opcionales (issue 20).
+
+**Reglas de los issues:**
+- **Título de la épica** con sus HU, por ejemplo `[HU-08, HU-09, HU-10] Ventas, CRM y PdV`. El cuerpo tiene la checklist de HU (con sus criterios de aceptación) y las tareas DOC e infraestructura de ese sprint.
+- **Responsable:** un solo valor en el campo. En las épicas compartidas (Transacciones, Pruebas, Gate 0) el cuerpo del issue nombra a los dos integrantes y qué hace cada uno.
+- **Ramas y commits:** una rama por HU (`feature/HU-xx-*`) y `[HU-xx]` en cada commit.
+- **PR:** dice `Parte de #n` y marca su HU en la checklist; **el último PR de la épica la cierra con `Closes #n`**.
+- **Gates:** el Gate 0 tiene su issue; cada mini gate es un comentario en el issue de su módulo. Los módulos de la F2 que el gate no apruebe o no lleguen se cierran como *not planned*, con un enlace al informe del gate.
+- **Registro de riesgos:** enlaza `docs/pm/plan_riesgos.md` y recibe un comentario en cada Retro. **Dailies:** un comentario por Daily.
+
+### Campos
 
 | Campo | Tipo | Valores |
 |---|---|---|
 | Status | Selección | Backlog / Por hacer / En curso / En revisión / Hecho |
 | Sprint | Iteración | S0, S1, S2, S3, S4, Cierre |
-| Puntos | Número | Fibonacci (4.4) |
-| Responsable | Selección | Evelyn / Orlando |
+| Puntos | Número | Suma de los puntos de las HU de la épica (4.4); 0 en gestión y bugs |
+| Responsable | Selección | Evelyn / Orlando (un solo valor) |
 | Fase | Selección | F1 / F2 |
-| Tipo | Selección | HU / Tarea / Doc / Riesgo / Entregable |
-| Prioridad | Selección | MoSCoW (M / S / C / W) |
+| Tipo | Selección | Épica / Gestión / Bug |
+| Prioridad | Selección | Must (F1 y gestión) / Should (M1-M4) / Could (opcionales) |
 
-**Vistas** (cada una reemplaza a un tablero del plan anterior):
+### Vistas
 
 | Vista | Diseño | Filtro o agrupación | Uso |
 |---|---|---|---|
-| **Product Backlog** | Tabla | Tipo = HU, agrupada por Fase, ordenada por Prioridad | Tabla 8 de la plantilla |
+| **Product Backlog** | Tabla | Tipo = Épica, agrupada por Fase, ordenada por Prioridad | Tabla 8 de la plantilla |
 | **Sprint actual** | Board por Status | Sprint = iteración actual | Sprint Backlog (tabla 9), Planning, Daily, Review |
-| **Riesgos** | Tabla | Tipo = Riesgo (issues con la etiqueta `riesgo`; I, P, nivel y estrategia en el cuerpo del issue) | Tablas 10-13 ([07](07_riesgos_entrega.md)) |
-| **Entregables del informe** | Tabla | Tipo = Entregable (issues con la etiqueta `entregable`: secciones 1-10, manuales, PPT, entrega) | Avance del informe; secciones que dependen de la F2 |
 | **Roadmap** | Roadmap | Por Sprint | Gantt de la 4.2.9 (fechas reales de cada iteración) |
 
-**Cómo se crea y gestiona:**
-- Con la CLI `gh` (`gh project create`, `gh project field-create`, `gh project item-add`, `gh project item-edit`), para que todo quede reproducible.
-- Requiere el permiso `project` del token: **lo ejecuta el usuario** con `gh auth refresh -s project`.
-- Los riesgos y los entregables son issues con las etiquetas `riesgo` y `entregable`; las dailies, comentarios en un issue "Daily S<N>" por sprint.
+### Creación y evidencias
 
-**Evidencias para 4.2.11, 4.3.9 y 6.3:**
-- Captura de cada vista y de Insights al cierre de cada sprint y en cada gate, en `docs/capturas/sprint-N/`.
-- Issues "Daily S<N>" con sus comentarios, más `docs/scrum/sprint-N/dailies.md`.
-- `scripts/burndown.py` (burndown por puntos desde `gh project item-list --format json`) y los gráficos de Insights.
+- Se crea y gestiona con la CLI `gh` (`gh project create`, `gh project field-create`, `gh project item-add`, `gh project item-edit`), para que todo sea reproducible. Requiere el permiso `project` del token, que **ejecuta el usuario** con `gh auth refresh -s project`.
+- **Evidencias para 4.2.11, 4.3.9 y 6.3:**
+  - Captura de cada vista y de Insights al cierre de cada sprint y en cada gate, en `docs/capturas/sprint-N/`.
+  - El issue "Dailies" con sus comentarios, más `docs/scrum/sprint-N/dailies.md`.
+  - `scripts/burndown.py` (burndown por puntos: suma los puntos de las épicas cerradas, desde `gh project item-list --format json`) y los gráficos de Insights.

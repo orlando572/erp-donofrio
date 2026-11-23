@@ -6,7 +6,7 @@
 
 El reparto es **por áreas de negocio completas, de punta a punta**: proceso BPMN → requerimientos → caso de uso → configuración o código → pruebas → sección del informe → parte de la exposición. Así cada persona puede defender su parte en la sustentación individual sin depender de la otra.
 
-**Regla nueva por las fases:** la parte defendible de cada integrante **no puede depender de la Fase 2**. Por eso los dos tienen código propio ya en la Fase 1:
+**Regla de las fases:** la parte defendible de cada integrante **no puede depender de la Fase 2**. Por eso los dos tienen código propio ya en la Fase 1:
 - Evelyn: los archivos de datos de su área en `donofrio_base`, los tests del flujo de venta, los `ir.filters` de gerencia y la mesa de servicios.
 - Orlando: la estructura y los hooks de `donofrio_base`, seguridad, infraestructura, CI y los tests de inventario y producción.
 
@@ -18,7 +18,7 @@ El reparto es **por áreas de negocio completas, de punta a punta**: proceso BPM
 | Gestión y negocio | Análisis empresarial (3, 4.1), Scrum y GitHub Projects (4.2.9-4.2.12, 6.1-6.3), **informes de gate (redacción con los datos del agente)**, riesgos de desarrollo, SLA/KPIs (4.7), cascada COBIT, prácticas ITIL | Arquitectura e infraestructura (4.1.3, 4.3), riesgos de despliegue y mantenimiento, **verificación de los criterios de salida del gate**, SoA ISO 27001 y trazabilidad |
 | Front / Back | Front-end: prototipos, wireframes y mockups (**incluidos los de las pantallas de la F2**), UI/UX, WPO (4.4, 4.6) | Back-end y BD: clases, ER, diccionario, replicación, administración, seguridad y despliegue (4.2.5-4.2.8, 5) |
 | Pruebas | Funcionales de su área, usabilidad (SUS), Lighthouse | Funcionales de su área, unitarias e integrales en CI, carga (k6), seguridad (ZAP) |
-| Repo y CI | Revisa los PR de Orlando; issues y commits (6.7, 6.8) | Workflows, ramas y merge (6.4-6.6); revisa los PR de Evelyn |
+| Repo y CI | Revisa los PR de Orlando; issues y commits (6.7, 6.8); responsable de sus épicas y de los issues "Constitución", "Registro de riesgos", "Gate 0" e "Informe final" ([04 §4.11](04_scrum_pmbok.md)) | Workflows, ramas y merge (6.4-6.6); revisa los PR de Evelyn; responsable de sus épicas (incluidas "Transacciones" y "Pruebas", compartidas) y de los issues "Repo", "Dailies" y "Entrega" |
 | Entregables | Informe (maquetación final en Word), PPT, **sube la entrega** | Manual de instalación, manual de herramientas, zip de la última release, **verifica la entrega** |
 
 **Equilibrio:**
