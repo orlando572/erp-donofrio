@@ -10,7 +10,7 @@ El detalle (participantes, entorno, consignas, criterios de éxito y limitacione
 
 | # | Tarea | Caso de uso | Usuario | Tiempo objetivo |
 |---|---|---|---|---|
-| T1 | Registrar una oportunidad de venta del canal Tradicional | CU001 | Vendedor | 90 s |
+| T1 | Registrar una oportunidad de venta del canal Tradicional | CU001 | Vendedor | 120 s |
 | T2 | Preparar y confirmar un pedido con la lista de precios del cliente | CU002 | Vendedor | 180 s |
 | T3 | Cobrar una venta en efectivo en el punto de venta | CU003 | Cajero | 150 s |
 | T4 | Ver los lotes que vencen en 30 días | CU010 (vista guardada de HU-23) | Jefe de almacén | 90 s |

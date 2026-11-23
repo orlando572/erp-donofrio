@@ -13,7 +13,7 @@ import statistics
 import sys
 
 META_SUS = 70
-OBJETIVO_SEG = {1: 90, 2: 180, 3: 150, 4: 90}      # ver docs/usabilidad/plan_de_pruebas.md
+OBJETIVO_SEG = {1: 120, 2: 180, 3: 150, 4: 90}      # ver docs/usabilidad/plan_de_pruebas.md
 SI = {'si', 'sí', 's', '1', 'true', 'x'}
 
 

@@ -26,12 +26,12 @@ Cada tarea se lee tal cual, sin decir dónde hacer clic. Los pasos esperados son
 
 | # | Proceso | Usuario | Consigna para la persona | Éxito si… | Pasos esperados | Tiempo objetivo |
 |---|---|---|---|---|---|---|
-| T1 | CRM (CU001) | Vendedor | «Un nuevo cliente, la *Bodega Don Pepe*, quiere comprar helados por unos S/ 3 000. Regístrelo como una posibilidad de venta del canal Tradicional.» | Existe la oportunidad con el cliente, el ingreso esperado y el equipo «Canal Tradicional» | 3 | 90 s |
+| T1 | CRM (CU001) | Vendedor | «Un nuevo cliente, la *Bodega Don Pepe*, quiere comprar helados por unos S/ 3 000. Regístrelo como una posibilidad de venta del canal Tradicional.» | Existe la oportunidad con el cliente, el ingreso esperado y el equipo «Canal Tradicional». **La etapa no importa:** si la persona crea la oportunidad desde el botón «+» de una columna, queda en esa etapa; si no, queda en «Prospecto» | 4 a 5 | 120 s |
 | T2 | Cotización (CU002) | Vendedor | «Prepare un pedido de 100 paletas de fresa para la *Distribuidora del Sur Ejemplo SAC* y confírmelo.» | El pedido está confirmado, con la lista de precios del cliente y la entrega creada | 3 | 180 s |
 | T3 | Punto de venta (CU003) | Cajero | «Un cliente compra 2 paletas de fresa y paga en efectivo. Cobre la venta.» | La venta queda pagada y se muestra la boleta | 3 | 150 s |
 | T4 | Consulta (CU010) | Jefe de almacén | «Vea qué lotes de productos vencen en los próximos 30 días.» | Llega a la vista de lotes por vencer (la vista guardada «Stock por vencer (30 días)») | 3 | 90 s |
 
-Para T3 hay que abrir antes una sesión de la Heladería Av. Venezuela (todas las de los datos de demostración están cerradas); la persona solo cobra. Para T2 el producto «Paleta de fresa» tiene existencias en Lima.
+**Sobre T1:** el usuario vendedor no tiene un equipo de ventas por defecto, así que la persona debe elegir «Canal Tradicional» en la oportunidad (es parte de lo que se mide). El equipo se ve en el formulario de la oportunidad, no en la tarjeta del embudo, que solo muestra la etiqueta. Para T3 hay que abrir antes una sesión de la Heladería Av. Venezuela (todas las de los datos de demostración están cerradas); la persona solo cobra. Para T2 el producto «Paleta de fresa» tiene existencias en Lima.
 
 ## Qué se anota por tarea y por persona
 
