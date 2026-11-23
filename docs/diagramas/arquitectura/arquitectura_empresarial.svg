@@ -26,8 +26,8 @@
 <text x="185" y="296" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Sin lote ni vencimiento en un sistema; el mismo dato se digita dos o más veces</text>
 <rect x="840" y="242" width="640" height="118" rx="8" fill="#f0f9f2" stroke="#1e7e34" stroke-width="1.5"/>
 <text x="850" y="262" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Una sola base PostgreSQL 16: el lote, el vencimiento y el movimiento quedan ligados</text>
-<text x="850" y="280" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Datos maestros cargados por código (donofrio_base); réplica de lectura y respaldos</text>
-<text x="850" y="296" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  diarios (Sprint 3)</text>
+<text x="850" y="280" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Datos maestros cargados por código (donofrio_base); réplica de lectura (HU-25) y</text>
+<text x="850" y="296" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  respaldos con restauración probada (HU-26)</text>
 <polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="785,301 840,301"/>
 <rect x="20" y="372" width="140" height="118" rx="8" fill="#eef3fb" stroke="#222" stroke-width="1.5"/>
 <text x="90" y="436" text-anchor="middle" font-size="15" font-weight="bold" fill="#222">Aplicación</text>
@@ -45,8 +45,9 @@
 <text x="185" y="522" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• PC de oficina y un servidor de archivos (supuesto)</text>
 <text x="185" y="540" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Sin entornos separados ni respaldos verificados</text>
 <rect x="840" y="502" width="640" height="118" rx="8" fill="#f0f9f2" stroke="#1e7e34" stroke-width="1.5"/>
-<text x="850" y="522" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Docker Compose (Odoo 19 + PostgreSQL 16), Nginx con TLS y réplica en el Sprint 3</text>
-<text x="850" y="540" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• GitHub (código, Projects), Actions (CI) y GHCR (imágenes); Ubuntu o WSL2 en las PC de</text>
-<text x="850" y="556" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  desarrollo</text>
+<text x="850" y="522" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Docker Compose (Odoo 19 + PostgreSQL 16), Nginx con TLS (perfil proxy) y réplica de</text>
+<text x="850" y="538" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  PostgreSQL (perfil replica)</text>
+<text x="850" y="556" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• GitHub (código, Projects), Actions (CI) y GHCR (imágenes); Ubuntu o WSL2 en las PC de</text>
+<text x="850" y="572" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  desarrollo</text>
 <polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="785,561 840,561"/>
 </svg>

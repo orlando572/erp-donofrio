@@ -1,0 +1,19 @@
+# Informe sección 5: evidencias de las pruebas de donofrio_base y del grafo de dependencias
+# Generado el 23/11/2026 sobre la rama feature/S3-informe-5 (develop ac85a71). El compose se ejecutó en un proyecto
+# aparte (COMPOSE_PROJECT_NAME=informe5tmp, puertos 15432/18069/18072) para no tocar los contenedores ni las bases de desarrollo.
+
+## COMPOSE_PROJECT_NAME=informe5tmp scripts/test.sh donofrio_base
+Probando: donofrio_base  (BD temporal test_1795472306_384836)
+test_1795472306_384836 odoo.tests.result: 0 failed, 0 error(s) of 136 tests when loading database 'test_1795472306_384836' 
+OK: donofrio_base instalado y 136 pruebas sin errores.
+fin rc=0
+Tiempo (reloj): 2:00.92
+
+## python3 scripts/grafo_dependencias.py --imagen erp-donofrio/odoo:19.0 --bd donofrio_perf
+Módulos propios: donofrio_base
+depends directos de los propios: 19
+Árbol de depends (con los propios): 62 módulos · por origen: base 1, oca 1, odoo 59, propio 1
+Profundidad máxima del árbol: 12 niveles
+Instalados solos por auto_install: 60 módulos · total esperado: 122
+Módulos instalados en la base «donofrio_perf»: 109 · coinciden: 109
+  Calculados y no instalados: portal_rating, project, project_account, project_hr_skills, project_mrp, project_mrp_account, project_purchase, project_purchase_stock, project_sms, project_stock, project_stock_account, project_todo, rating

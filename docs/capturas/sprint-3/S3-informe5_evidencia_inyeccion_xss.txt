@@ -1,0 +1,21 @@
+# Informe 5.12: prueba de inyección SQL y XSS reflejado contra Odoo (modo desarrollo, solo lectura)
+# Generado el 23/11/2026 con el usuario de prueba jefe.ventas@donofrio.example.com sobre la base 'donofrio'
+# (http://127.0.0.1:8069, workers = 0). Solo hace lecturas (search_count y GET); no escribe nada.
+# La contraseña de prueba sale de DONOFRIO_USER_PASSWORD del .env y no se imprime.
+#
+# Método: el cliente web busca con JSON-RPC (/web/dataset/call_kw/res.partner/search_count) y el dominio ilike que
+# escribiría un usuario en la barra de búsqueda. Si hubiera concatenación de SQL, la comilla rompería la consulta
+# (error) o devolvería todas las filas.
+
+## Inyección SQL en la búsqueda de contactos (res.partner)
+login correcto:                                   True
+total de contactos:                               60
+búsqueda normal 'Arequipa':                       1
+búsqueda  ' OR '1'='1:                            0      (no devuelve las 60 filas ni da error)
+búsqueda  x'); DROP TABLE res_partner;--:         0      (se trata como texto)
+total de contactos tras los intentos:             60     (la tabla sigue intacta)
+
+## XSS reflejado en el parámetro redirect de /web/login
+GET /web/login?redirect="><script>alert(1)</script>
+<script>alert(1) sin escapar en la respuesta:     False
+texto escapado (&lt;script&gt;…) en la respuesta: True

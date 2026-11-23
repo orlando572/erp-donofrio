@@ -38,3 +38,12 @@ Corridas del 23/11/2026 sobre el despliegue protegido (`scripts/levantar_prod.sh
 | `HU-28_evidencia_k6_zap.txt` | HU-28 | Salida real de `verificar_despliegue.sh`, de k6 (normal y de esfuerzo, con `docker stats`) y de ZAP antes y después, con el volumen de datos |
 | `HU-28_k6_resumen.json`, `HU-28_k6_esfuerzo_resumen.json` | HU-28 | Resumen de métricas de k6 (`--summary-export`) de la prueba normal y de la de esfuerzo |
 | `HU-28_zap_reporte.html`, `HU-28_zap_reporte.json` | HU-28 | Reporte de ZAP baseline final: 0 alertas altas; las medias y bajas están aceptadas con su motivo en `scripts/perf/zap-reglas.conf` |
+
+## Evidencias de la sección 5 del informe (Orlando)
+
+Generadas el 23/11/2026; las consultas a PostgreSQL fueron de solo lectura y las pruebas se corrieron en un proyecto de Compose aparte, sin tocar las bases de desarrollo.
+
+| Archivo | Sección | Qué contiene |
+|---|---|---|
+| `S3-informe5_evidencia_tests_y_dependencias.txt` | 5.4, 5.5 y 5.13 | `scripts/test.sh donofrio_base` (136 pruebas, 0 fallidas, 2 min 1 s) y la salida de `scripts/grafo_dependencias.py` (62 módulos en el árbol de `depends`, 122 con `auto_install`, comparación con una base real) |
+| `S3-informe5_evidencia_inyeccion_xss.txt` | 5.12 | Intento de inyección SQL en la búsqueda de contactos (0 filas y la tabla intacta) y de XSS en el parámetro `redirect` del login (sale escapado) |
