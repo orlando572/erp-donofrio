@@ -11,3 +11,13 @@ Tomadas el 23/11/2026 en la BD `donofrio` con los datos de `scripts/cargar_trans
 | `HU-23_vista_ventas_linea_canal_mes` | HU-23 | Vista guardada «Ventas por línea, canal y mes»: pivote por categoría, equipo de venta (canal) y mes, en soles y en unidades |
 | `HU-23_vista_produccion_producto_mes` | HU-23 | Vista guardada «Producción por producto y mes»: cantidad producida por producto y mes de inicio de la orden (agosto a noviembre) |
 | `HU-23_vista_stock_por_vencer` | HU-23 | Vista guardada «Stock por vencer (30 días)»: lotes con existencias que vencen en 30 días |
+
+## Evidencias de HU-28 (Orlando): k6 y ZAP
+
+Corridas del 23/11/2026 sobre el despliegue protegido (`scripts/levantar_prod.sh`) y una base con los datos completos de `scripts/cargar_transacciones.py`. Cómo repetirlas y qué significan: [docs/dev/pruebas_no_funcionales.md](../../dev/pruebas_no_funcionales.md).
+
+| Archivo | HU | Qué muestra |
+|---|---|---|
+| `HU-28_evidencia_k6_zap.txt` | HU-28 | Salida real de `verificar_despliegue.sh`, de k6 (normal y de esfuerzo, con `docker stats`) y de ZAP antes y después, con el volumen de datos |
+| `HU-28_k6_resumen.json`, `HU-28_k6_esfuerzo_resumen.json` | HU-28 | Resumen de métricas de k6 (`--summary-export`) de la prueba normal y de la de esfuerzo |
+| `HU-28_zap_reporte.html`, `HU-28_zap_reporte.json` | HU-28 | Reporte de ZAP baseline final: 0 alertas altas; las medias y bajas están aceptadas con su motivo en `scripts/perf/zap-reglas.conf` |

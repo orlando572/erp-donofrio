@@ -39,3 +39,4 @@ zap-report.*
 Thumbs.db
 node_modules/
 docker/nginx/certs/
+scripts/perf/resultados/

@@ -35,6 +35,9 @@ server {
 
     include /etc/nginx/snippets/seguridad.conf;
 
+    # HU-28 (ZAP): todas las cookies solo por HTTPS y sin envío en peticiones de otros sitios (session_id ya es HttpOnly)
+    proxy_cookie_flags ~ secure samesite=lax;
+
     client_max_body_size 64m;
     proxy_read_timeout 720s;
     proxy_connect_timeout 30s;
