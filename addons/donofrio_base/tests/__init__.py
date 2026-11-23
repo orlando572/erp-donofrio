@@ -8,3 +8,4 @@ from . import test_crm
 from . import test_precios
 from . import test_pdv
 from . import test_fefo
+from . import test_recepcion_despacho
