@@ -85,6 +85,22 @@ Un SLA fija lo que el equipo de TI se compromete a dar a los usuarios del ERP. S
 
 **Cómo se hace cumplir.** El SLA de resolución se vigila con el filtro «Fecha límite → De retraso» de Project (tickets con el plazo pasado) y con el pivote de cumplimiento; el de respuesta, el de continuidad y el de capacidad se comprueban con `scripts/perf/`, `scripts/restore.sh` y `scripts/verificar_replica.sh`.
 
+## 4.7.4 Prácticas de ITIL 4 que respaldan los ANS
+
+El proyecto toma de **ITIL 4** cinco prácticas y solo lo necesario para sostener los SLA de 4.7.3. No es una implementación certificada: es una **alineación** con buenas prácticas de referencia, con las herramientas gratuitas del repositorio y de Odoo Community. Los requisitos de ISO/IEC 20000-1 que las respaldan están en la columna correspondiente de la tabla 15.
+
+| Práctica ITIL 4 | Cómo se aplica en el proyecto | Herramienta | Evidencia |
+|---|---|---|---|
+| **Gestión de solicitudes de servicio** | Las peticiones de usuarios (un acceso, un reporte nuevo, una contraseña) se registran como ticket de tipo *Solicitud de servicio* o *Solicitud de acceso*, con prioridad y plazo | App Project de Odoo, proyecto «Mesa de Servicios TI» (HU-32) | Kanban de tickets; [anexo 10.3](anexo_10_03_solicitud_servicio.md) |
+| **Gestión de incidentes** | Una falla del servicio se registra como ticket de tipo *Incidente*, con impacto, urgencia y tiempo de resolución frente al SLA | La misma mesa de servicios | Pivote de cumplimiento del SLA; [anexo 10.5](anexo_10_05_incidente.md) |
+| **Gestión de niveles de servicio** | Los SLA de la tabla 15 fijan lo que se compromete; el campo «Cumplimiento del SLA» y el pivote miden si se cumplió | Campo calculado en `project.task` y vista guardada | 4.7.3; HU-32 |
+| **Gestión de capacidad y desempeño** | Se mide cuánto aguanta el sistema (20 usuarios virtuales), cuánto tarda en cargar y cuánto pesa cada página, y se contrasta con los umbrales | k6, Lighthouse y `scripts/perf/` | [4.6.4](04_06_wpo.md) y 4.7.1 |
+| **Habilitación del cambio** | Todo cambio al software entra por una solicitud de cambio: PR, revisión del otro integrante y CI en verde | GitHub (PR y Actions) | [Anexo 10.4](anexo_10_04_rfc.md) (Orlando) |
+
+**Flujo de un ticket.** *Nuevo → En análisis → En atención → Resuelto → Cerrado.* El plazo se calcula al crear el ticket según su prioridad; el ticket se considera resuelto dentro del SLA si llega a «Cerrado» antes de su fecha límite. Si falla, se registra como incumplido y se revisa su causa raíz, que puede abrir un **problema** (plantilla `bug.yml` de GitHub, para fallas del software).
+
+**Qué no se hace.** No hay catálogo de servicios, base de conocimiento ni gestión de problemas más allá del registro de la causa raíz: son prácticas de ITIL que quedan fuera del alcance de un proyecto de este tamaño.
+
 ## Limitaciones
 
 - **Una sola PC.** Las mediciones de k6 y Lighthouse vienen de una PC con 12 procesadores lógicos y 14 GB de RAM, con Docker y sin red real. Sirven para comparar, no como garantía de producción.
