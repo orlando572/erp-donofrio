@@ -8,6 +8,7 @@ def post_init_hook(env):
     """Pasos que no se pueden expresar como datos XML y corren al instalar el módulo."""
     _asignar_clave_a_usuarios(env)
     _asignar_responsable_de_inventario(env)
+    _configurar_valoracion(env)
     _programar_plan_contable(env)
 
 
@@ -44,6 +45,56 @@ def _asignar_responsable_de_inventario(env):
     productos.write({'responsible_id': jefe.id})
 
 
+def _configurar_valoracion(env):
+    """HU-14: valoración FIFO en terminados e insumos (03 §3.3 b).
+
+    Con FIFO, al terminar una OP el costo unitario del lote producido sale de lo que costaron los
+    insumos consumidos más el costo por hora de los centros de trabajo (``mrp_account``).
+    """
+    categorias = env['product.category'].search([
+        ('id', 'child_of', (env.ref('donofrio_base.cat_terminados') | env.ref('donofrio_base.cat_insumos')).ids),
+    ])
+    categorias.write({'property_cost_method': 'fifo', 'property_valuation': 'real_time'})
+
+
+# Cuenta de contrapartida de cada ubicación virtual (plan contable PE). En Odoo 19 la valoración solo genera
+# asientos si la ubicación de origen o destino tiene cuenta; ``l10n_pe`` no las trae. Simplificación del
+# proyecto: una sola cuenta por ubicación virtual (la variación de existencias 7111 sirve a producción y ajustes).
+CUENTAS_DE_UBICACIONES = {
+    'supplier': '6020000',    # compras de materias primas
+    'production': '7111000',  # variación de productos terminados
+    'inventory': '7111000',   # ajustes de inventario
+    'customer': '6922100',    # costo de ventas de productos terminados (venta local)
+}
+CUENTAS_DE_CATEGORIAS = {
+    'donofrio_base.cat_terminados': '2111100',     # productos terminados
+    'donofrio_base.cat_insumos': '2411100',        # materias primas
+}
+
+
+def _cuenta(env, codigo):
+    cuenta = env['account.account'].search([('code', '=', codigo)], limit=1)
+    if not cuenta:
+        _logger.warning('No existe la cuenta %s en el plan contable: se omite.', codigo)
+    return cuenta
+
+
+def _configurar_cuentas_de_valoracion(env):
+    """HU-14: cuentas de valoración por categoría y de contrapartida por ubicación virtual (asientos de stock)."""
+    compania = env.ref('base.main_company')
+    for uso, codigo in CUENTAS_DE_UBICACIONES.items():
+        cuenta = _cuenta(env, codigo)
+        if cuenta:
+            env['stock.location'].search([
+                ('usage', '=', uso), ('company_id', 'in', (False, compania.id)),
+            ]).valuation_account_id = cuenta
+    for xmlid, codigo in CUENTAS_DE_CATEGORIAS.items():
+        cuenta = _cuenta(env, codigo)
+        if cuenta:
+            raiz = env.ref(xmlid)
+            env['product.category'].search([('id', 'child_of', raiz.id)]).property_stock_valuation_account_id = cuenta
+
+
 def _programar_plan_contable(env):
     """Carga el plan contable peruano (plantilla ``pe`` de ``l10n_pe``) en la compañía principal.
 
@@ -58,6 +109,7 @@ def _programar_plan_contable(env):
         compania = env.ref('base.main_company')
         if compania.chart_template != 'pe':
             env['account.chart.template'].try_loading('pe', compania)
+        _configurar_cuentas_de_valoracion(env)
         crear_punto_de_venta(env)
 
     env.registry._auto_install_template = cargar_plan_contable
