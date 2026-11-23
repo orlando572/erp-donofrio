@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HU-08: embudo CRM por canal (03 §3.3 a). Equipos, etapas, etiquetas y 20 oportunidades ficticias.
+     Las oportunidades llevan empresa y contacto como texto: los clientes reales se cargan aparte. -->
+<odoo noupdate="1">
+
+    <!-- Etapas del embudo. Se reemplazan las 4 de Odoo (New, Qualified, Proposition, Won) por las de D'Onofrio -->
+    <delete model="crm.stage" search="[('id', 'in', [ref('crm.stage_lead1'), ref('crm.stage_lead2'), ref('crm.stage_lead3'), ref('crm.stage_lead4')])]"/>
+    <record id="etapa_prospecto" model="crm.stage">
+        <field name="name">Prospecto</field>
+        <field name="sequence">1</field>
+    </record>
+    <record id="etapa_calificado" model="crm.stage">
+        <field name="name">Calificado</field>
+        <field name="sequence">2</field>
+    </record>
+    <record id="etapa_propuesta" model="crm.stage">
+        <field name="name">Propuesta</field>
+        <field name="sequence">3</field>
+    </record>
+    <record id="etapa_negociacion" model="crm.stage">
+        <field name="name">Negociación</field>
+        <field name="sequence">4</field>
+    </record>
+    <record id="etapa_ganado" model="crm.stage">
+        <field name="name">Ganado</field>
+        <field name="sequence">5</field>
+        <field name="is_won" eval="True"/>
+    </record>
+
+    <!-- Equipos de venta por canal -->
+    <record id="equipo_moderno" model="crm.team">
+        <field name="name">Canal Moderno</field>
+        <field name="user_id" ref="user_jefe_ventas"/>
+        <field name="use_opportunities" eval="True"/>
+    </record>
+    <record id="equipo_tradicional" model="crm.team">
+        <field name="name">Canal Tradicional</field>
+        <field name="user_id" ref="user_vendedor"/>
+        <field name="use_opportunities" eval="True"/>
+    </record>
+    <record id="equipo_heladeros" model="crm.team">
+        <field name="name">Heladeros</field>
+        <field name="user_id" ref="user_jefe_ventas"/>
+        <field name="use_opportunities" eval="True"/>
+    </record>
+
+    <!-- Etiquetas por tipo de cliente -->
+    <record id="etiqueta_distribuidor" model="crm.tag"><field name="name">Distribuidor regional</field></record>
+    <record id="etiqueta_autoservicio" model="crm.tag"><field name="name">Autoservicio</field></record>
+    <record id="etiqueta_bodega" model="crm.tag"><field name="name">Bodega</field></record>
+    <record id="etiqueta_heladero" model="crm.tag"><field name="name">Heladero (campaña de verano)</field></record>
+
+    <!-- Oportunidades -->
+    <record id="op_01" model="crm.lead">
+        <field name="name">Distribución regional Cusco</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Distribuidora Andina Ejemplo SAC</field>
+        <field name="contact_name">Marco Quispe</field>
+        <field name="email_from">contacto01@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_prospecto"/>
+        <field name="team_id" ref="equipo_moderno"/>
+        <field name="user_id" ref="user_jefe_ventas"/>
+        <field name="expected_revenue">42000</field>
+        <field name="priority">1</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_distribuidor'))]"/>
+    </record>
+    <record id="op_02" model="crm.lead">
+        <field name="name">Surtido de helados para autoservicio</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Supermercado Ejemplo SAC</field>
+        <field name="contact_name">Lucía Paredes</field>
+        <field name="email_from">contacto02@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_calificado"/>
+        <field name="team_id" ref="equipo_moderno"/>
+        <field name="user_id" ref="user_jefe_ventas"/>
+        <field name="expected_revenue">65000</field>
+        <field name="priority">2</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_autoservicio'))]"/>
+    </record>
+    <record id="op_03" model="crm.lead">
+        <field name="name">Distribución regional Puno</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Comercial del Altiplano Ejemplo SAC</field>
+        <field name="contact_name">Rolando Mamani</field>
+        <field name="email_from">contacto03@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_propuesta"/>
+        <field name="team_id" ref="equipo_moderno"/>
+        <field name="user_id" ref="user_jefe_ventas"/>
+        <field name="expected_revenue">38000</field>
+        <field name="priority">1</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_distribuidor'))]"/>
+    </record>
+    <record id="op_04" model="crm.lead">
+        <field name="name">Campaña de panetón en cadena de tiendas</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Tiendas Ejemplo Perú SAC</field>
+        <field name="contact_name">Karina Salas</field>
+        <field name="email_from">contacto04@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_negociacion"/>
+        <field name="team_id" ref="equipo_moderno"/>
+        <field name="user_id" ref="user_jefe_ventas"/>
+        <field name="expected_revenue">90000</field>
+        <field name="priority">3</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_autoservicio'))]"/>
+    </record>
+    <record id="op_05" model="crm.lead">
+        <field name="name">Helados y chocolates para minimarkets</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Minimarket Ejemplo SAC</field>
+        <field name="contact_name">Jorge Valdivia</field>
+        <field name="email_from">contacto05@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_prospecto"/>
+        <field name="team_id" ref="equipo_moderno"/>
+        <field name="user_id" ref="user_jefe_ventas"/>
+        <field name="expected_revenue">18000</field>
+        <field name="priority">0</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_autoservicio'))]"/>
+    </record>
+    <record id="op_06" model="crm.lead">
+        <field name="name">Distribución regional Tacna</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Distribuidora del Sur Ejemplo SAC</field>
+        <field name="contact_name">Elena Condori</field>
+        <field name="email_from">contacto06@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_ganado"/>
+        <field name="team_id" ref="equipo_moderno"/>
+        <field name="user_id" ref="user_jefe_ventas"/>
+        <field name="expected_revenue">52000</field>
+        <field name="priority">2</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_distribuidor'))]"/>
+    </record>
+    <record id="op_07" model="crm.lead">
+        <field name="name">Panetón para canastas corporativas</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Canastas Ejemplo EIRL</field>
+        <field name="contact_name">Pedro Salinas</field>
+        <field name="email_from">contacto07@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_calificado"/>
+        <field name="team_id" ref="equipo_moderno"/>
+        <field name="user_id" ref="user_jefe_ventas"/>
+        <field name="expected_revenue">27000</field>
+        <field name="priority">1</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_autoservicio'))]"/>
+    </record>
+    <record id="op_08" model="crm.lead">
+        <field name="name">Bodega Santa Rosa</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Bodega Santa Rosa Ejemplo</field>
+        <field name="contact_name">Rosa Huamán</field>
+        <field name="email_from">contacto08@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_prospecto"/>
+        <field name="team_id" ref="equipo_tradicional"/>
+        <field name="user_id" ref="user_vendedor"/>
+        <field name="expected_revenue">3200</field>
+        <field name="priority">0</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_bodega'))]"/>
+    </record>
+    <record id="op_09" model="crm.lead">
+        <field name="name">Bodega Los Andes</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Bodega Los Andes Ejemplo</field>
+        <field name="contact_name">Julio Ccama</field>
+        <field name="email_from">contacto09@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_calificado"/>
+        <field name="team_id" ref="equipo_tradicional"/>
+        <field name="user_id" ref="user_vendedor"/>
+        <field name="expected_revenue">4100</field>
+        <field name="priority">1</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_bodega'))]"/>
+    </record>
+    <record id="op_10" model="crm.lead">
+        <field name="name">Bodega San Martín</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Bodega San Martín Ejemplo</field>
+        <field name="contact_name">Teresa Apaza</field>
+        <field name="email_from">contacto10@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_propuesta"/>
+        <field name="team_id" ref="equipo_tradicional"/>
+        <field name="user_id" ref="user_vendedor"/>
+        <field name="expected_revenue">3600</field>
+        <field name="priority">1</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_bodega'))]"/>
+    </record>
+    <record id="op_11" model="crm.lead">
+        <field name="name">Mayorista del mercado central</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Mayorista Mercado Ejemplo SAC</field>
+        <field name="contact_name">Víctor Choque</field>
+        <field name="email_from">contacto11@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_negociacion"/>
+        <field name="team_id" ref="equipo_tradicional"/>
+        <field name="user_id" ref="user_vendedor"/>
+        <field name="expected_revenue">15500</field>
+        <field name="priority">2</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_bodega'))]"/>
+    </record>
+    <record id="op_12" model="crm.lead">
+        <field name="name">Bodega Villa Hermosa</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Bodega Villa Hermosa Ejemplo</field>
+        <field name="contact_name">Marta Flores</field>
+        <field name="email_from">contacto12@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_prospecto"/>
+        <field name="team_id" ref="equipo_tradicional"/>
+        <field name="user_id" ref="user_vendedor"/>
+        <field name="expected_revenue">2800</field>
+        <field name="priority">0</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_bodega'))]"/>
+    </record>
+    <record id="op_13" model="crm.lead">
+        <field name="name">Bodega El Misti</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Bodega El Misti Ejemplo</field>
+        <field name="contact_name">Hugo Cáceres</field>
+        <field name="email_from">contacto13@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_propuesta"/>
+        <field name="team_id" ref="equipo_tradicional"/>
+        <field name="user_id" ref="user_vendedor"/>
+        <field name="expected_revenue">4400</field>
+        <field name="priority">1</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_bodega'))]"/>
+    </record>
+    <record id="op_14" model="crm.lead">
+        <field name="name">Panetón para bodegas de la zona norte</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Bodegas Unidas Ejemplo SAC</field>
+        <field name="contact_name">Sonia Ramos</field>
+        <field name="email_from">contacto14@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_calificado"/>
+        <field name="team_id" ref="equipo_tradicional"/>
+        <field name="user_id" ref="user_vendedor"/>
+        <field name="expected_revenue">9800</field>
+        <field name="priority">1</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_bodega'))]"/>
+    </record>
+    <record id="op_15" model="crm.lead">
+        <field name="name">Reclutamiento de heladero, Cercado</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Candidato heladero Cercado</field>
+        <field name="contact_name">Luis Alarcón</field>
+        <field name="email_from">contacto15@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_prospecto"/>
+        <field name="team_id" ref="equipo_heladeros"/>
+        <field name="user_id" ref="user_jefe_ventas"/>
+        <field name="expected_revenue">6000</field>
+        <field name="priority">0</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_heladero'))]"/>
+    </record>
+    <record id="op_16" model="crm.lead">
+        <field name="name">Reclutamiento de heladero, Cayma</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Candidato heladero Cayma</field>
+        <field name="contact_name">Diego Benavente</field>
+        <field name="email_from">contacto16@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_calificado"/>
+        <field name="team_id" ref="equipo_heladeros"/>
+        <field name="user_id" ref="user_jefe_ventas"/>
+        <field name="expected_revenue">6000</field>
+        <field name="priority">1</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_heladero'))]"/>
+    </record>
+    <record id="op_17" model="crm.lead">
+        <field name="name">Reclutamiento de heladero, Yanahuara</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Candidato heladero Yanahuara</field>
+        <field name="contact_name">Carmen Delgado</field>
+        <field name="email_from">contacto17@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_propuesta"/>
+        <field name="team_id" ref="equipo_heladeros"/>
+        <field name="user_id" ref="user_jefe_ventas"/>
+        <field name="expected_revenue">6000</field>
+        <field name="priority">1</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_heladero'))]"/>
+    </record>
+    <record id="op_18" model="crm.lead">
+        <field name="name">Reclutamiento de heladero, Paucarpata</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Candidato heladero Paucarpata</field>
+        <field name="contact_name">Raúl Mendoza</field>
+        <field name="email_from">contacto18@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_negociacion"/>
+        <field name="team_id" ref="equipo_heladeros"/>
+        <field name="user_id" ref="user_jefe_ventas"/>
+        <field name="expected_revenue">6000</field>
+        <field name="priority">2</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_heladero'))]"/>
+    </record>
+    <record id="op_19" model="crm.lead">
+        <field name="name">Heladero concesionario, Cerro Colorado</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Concesionario Cerro Colorado Ejemplo</field>
+        <field name="contact_name">Andrea Ticona</field>
+        <field name="email_from">contacto19@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_ganado"/>
+        <field name="team_id" ref="equipo_heladeros"/>
+        <field name="user_id" ref="user_jefe_ventas"/>
+        <field name="expected_revenue">8500</field>
+        <field name="priority">2</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_heladero'))]"/>
+    </record>
+    <record id="op_20" model="crm.lead">
+        <field name="name">Heladero concesionario, Socabaya</field>
+        <field name="type">opportunity</field>
+        <field name="partner_name">Concesionario Socabaya Ejemplo</field>
+        <field name="contact_name">Ernesto Linares</field>
+        <field name="email_from">contacto20@ejemplo.example.com</field>
+        <field name="stage_id" ref="etapa_ganado"/>
+        <field name="team_id" ref="equipo_heladeros"/>
+        <field name="user_id" ref="user_jefe_ventas"/>
+        <field name="expected_revenue">8500</field>
+        <field name="priority">2</field>
+        <field name="tag_ids" eval="[Command.link(ref('etiqueta_heladero'))]"/>
+    </record>
+
+</odoo>
