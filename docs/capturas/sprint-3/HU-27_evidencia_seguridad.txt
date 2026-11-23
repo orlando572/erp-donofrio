@@ -1,0 +1,116 @@
+# HU-27: evidencias del despliegue protegido y la seguridad
+# Generado el 23/11/2026 15:25 con scripts/levantar_prod.sh (Nginx + TLS, workers=2, proxy_mode) sobre la base 'donofrio'
+
+## Contenedores del perfil proxy
+SERVICE      IMAGE                    STATUS                    PORTS
+db           postgres:16              Up 14 minutes (healthy)   127.0.0.1:5432->5432/tcp
+db-replica   postgres:16              Up 25 minutes (healthy)   127.0.0.1:5433->5432/tcp
+nginx        nginx:stable             Up 25 seconds             0.0.0.0:8080->80/tcp, [::]:8080->80/tcp, 0.0.0.0:8443->443/tcp, [::]:8443->443/tcp
+odoo         erp-donofrio/odoo:19.0   Up 23 seconds (healthy)   127.0.0.1:8069->8069/tcp, 127.0.0.1:8072->8072/tcp, 8071/tcp
+
+## 2FA del administrador y la gerencia (inicio de sesión con la contraseña correcta)
+gerente (2FA obligatorio): HTTP/2 303 
+ location: /web/login/totp
+ 
+admin (2FA obligatorio):   HTTP/2 303 
+ location: /web/login/totp
+ 
+vendedor (sin 2FA):        HTTP/2 303 
+ location: /odoo
+ 
+
+## Certificado TLS y cabeceras (openssl / curl -I)
+subject=C=PE, O=Donofrio ERP (proyecto academico), CN=localhost
+issuer=C=PE, O=Donofrio ERP (proyecto academico), CN=localhost
+Verification error: self-signed certificate
+Protocol: TLSv1.3
+Server public key is 2048 bit
+
+HTTP/2 200 
+server: nginx
+content-type: text/html; charset=utf-8
+strict-transport-security: max-age=31536000
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: strict-origin-when-cross-origin
+
+## Parámetros de seguridad (SQL)
+              key               | value 
+--------------------------------+-------
+ auth_password_policy.minlength | 12
+ base.login_cooldown_after      | 5
+ base.login_cooldown_duration   | 60
+(3 rows)
+
+## Las contraseñas están con hash (nunca en claro)
+             login             |      password_hash      
+-------------------------------+-------------------------
+ gerente@donofrio.example.com  | $pbkdf2-sha512$600000$…
+ vendedor@donofrio.example.com | $pbkdf2-sha512$600000$…
+(2 rows)
+
+## Usuarios con 2FA obligatorio (grupo donofrio_base.group_2fa_obligatorio)
+            login             
+------------------------------
+ admin
+ gerente@donofrio.example.com
+(2 rows)
+
+## Inicios de sesión registrados (res_users_log, últimos 5)
+     create_date     |             login             
+---------------------+-------------------------------
+ 2026-11-23 20:25:45 | vendedor@donofrio.example.com
+ 2026-11-23 20:25:44 | admin
+ 2026-11-23 20:25:44 | gerente@donofrio.example.com
+ 2026-11-23 20:25:26 | admin
+ 2026-11-23 20:25:25 | vendedor@donofrio.example.com
+(5 rows)
+
+## Auditoría de cambios (auditlog): cambio de una regla de precio 15 → 20 → 15 por el jefe de ventas
+            regla            |   state   
+-----------------------------+-----------
+ Listas de precios           | confirmed
+ Líneas de listas de precios | confirmed
+ Pedidos de venta            | confirmed
+ Órdenes de compra           | confirmed
+(4 rows)
+
+       cuando        |              quien               |         model          | method |  field_name   | antes | despues 
+---------------------+----------------------------------+------------------------+--------+---------------+-------+---------
+ 2026-11-23 20:25:43 | jefe.ventas@donofrio.example.com | product.pricelist.item | write  | percent_price | 20.0  | 15.0
+ 2026-11-23 20:25:43 | jefe.ventas@donofrio.example.com | product.pricelist.item | write  | percent_price | 15.0  | 20.0
+(2 rows)
+
+
+## scripts/verificar_despliegue.sh
+1) HTTP redirige a HTTPS
+  OK    80 → 443 (301)
+2) Versiones de TLS
+  OK    acepta TLS 1_2
+  OK    acepta TLS 1_3
+  OK    rechaza TLS 1.1 y menores
+3) Cabeceras de seguridad en el login (cada una una sola vez)
+  OK    Strict-Transport-Security: max-age=31536000
+  OK    X-Content-Type-Options: nosniff
+  OK    X-Frame-Options: SAMEORIGIN
+  OK    Referrer-Policy: strict-origin-when-cross-origin
+  OK    Server sin versión (server: nginx)
+4) El gestor de bases de datos no se publica
+  OK    /web/database/manager → 404
+  OK    /web/database/create → 404
+5) Compresión, caché de assets y websocket
+  OK    gzip en el login
+  OK    assets con Cache-Control de un año (/web/assets/6f9f281/web.assets_frontend.min.css)
+  OK    assets comprimidos
+  OK    /websocket se actualiza a 101 (puerto 8072)
+6) Odoo en modo producción
+  OK    odoo.conf: workers = 2
+  OK    odoo.conf: proxy_mode = True
+  OK    odoo.conf: list_db = False
+  OK    admin_passwd de 16 o más caracteres, no la de ejemplo
+  OK    Odoo se niega a arrancar en producción con la contraseña de ejemplo
+7) Bloqueo por intentos fallidos (base.login_cooldown_after = 5, espera de 60 s)
+  OK    de 12 intentos fallidos seguidos, 10 se rechazaron por bloqueo ("Too many login failures")
+  OK    el bloqueo quedó en el registro de Odoo (Login attempt ignored)
+
+Despliegue protegido verificado: todas las comprobaciones pasaron.

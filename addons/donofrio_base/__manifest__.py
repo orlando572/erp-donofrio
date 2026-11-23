@@ -13,7 +13,9 @@ Todos los datos (RUC, clientes, empleados, precios) son ficticios.
     'license': 'LGPL-3',
     'depends': ['base', 'l10n_pe', 'stock', 'sale', 'purchase', 'purchase_stock', 'mrp', 'point_of_sale', 'product_expiry',
                 'crm', 'hr', 'hr_org_chart',
-                'spreadsheet_dashboard_sale', 'spreadsheet_dashboard_stock_account', 'spreadsheet_dashboard_account'],
+                'spreadsheet_dashboard_sale', 'spreadsheet_dashboard_stock_account', 'spreadsheet_dashboard_account',
+                # HU-27: 2FA, política de contraseñas y auditoría de cambios (OCA, fijado en el Dockerfile)
+                'auth_totp_mail', 'auth_password_policy', 'auditlog'],
     'data': [
         'data/compania_data.xml',
         'data/almacenes_data.xml',
@@ -28,6 +30,7 @@ Todos los datos (RUC, clientes, empleados, precios) son ficticios.
         'data/clientes_data.xml',
         'data/rrhh_data.xml',
         'data/vistas_gerencia_data.xml',
+        'data/seguridad_data.xml',
     ],
     'post_init_hook': 'post_init_hook',
     'installable': True,

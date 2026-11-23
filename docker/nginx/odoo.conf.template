@@ -1,0 +1,84 @@
+# Nginx delante de Odoo (HU-27, 06 §6.5, ISO 27001 A.8.24 y A.8.20). Perfil proxy del docker-compose.yml.
+# La imagen nginx procesa esta plantilla con envsubst al arrancar (solo reemplaza las variables de entorno
+# definidas, como NGINX_HTTPS_PORT; $host, $scheme, etc. los resuelve Nginx).
+
+upstream odoo      { server odoo:8069; }
+upstream odoo-chat { server odoo:8072; }
+
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+
+# 80 → 443 (todo el tráfico va cifrado)
+server {
+    listen 80;
+    server_name _;
+    server_tokens off;
+    return 301 https://$host:${NGINX_HTTPS_PORT}$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    http2 on;
+    server_name _;
+    server_tokens off;
+
+    # TLS 1.2 y 1.3; el certificado lo genera scripts/generar_certificado.sh (autofirmado, para la demo)
+    ssl_certificate     /etc/nginx/certs/donofrio.crt;
+    ssl_certificate_key /etc/nginx/certs/donofrio.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers off;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 1d;
+    ssl_session_tickets off;
+
+    include /etc/nginx/snippets/seguridad.conf;
+
+    client_max_body_size 64m;
+    proxy_read_timeout 720s;
+    proxy_connect_timeout 30s;
+    proxy_send_timeout 720s;
+
+    # Compresión de lo que Odoo no comprime ya
+    gzip on;
+    gzip_comp_level 5;
+    gzip_min_length 1024;
+    gzip_proxied any;
+    gzip_vary on;
+    gzip_types text/css text/plain text/xml application/xml application/json application/javascript
+               application/x-javascript image/svg+xml;
+
+    proxy_set_header Host              $host;
+    proxy_set_header X-Real-IP         $remote_addr;
+    proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Host  $host;
+
+    # El gestor de bases de datos nunca se publica (RNF009; además list_db = False en odoo.conf)
+    location ^~ /web/database/ {
+        return 404;
+    }
+
+    # Eventos en tiempo real (chat, notificaciones) por websocket
+    location /websocket {
+        proxy_pass http://odoo-chat;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade    $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+        proxy_read_timeout 3600s;
+        include /etc/nginx/snippets/seguridad.conf;
+    }
+
+    # Assets con hash en la URL: Odoo ya manda Cache-Control de un año; Nginx lo respeta y comprime
+    location /web/assets/ {
+        proxy_pass http://odoo;
+        proxy_redirect off;
+        include /etc/nginx/snippets/seguridad.conf;
+    }
+
+    location / {
+        proxy_pass http://odoo;
+        proxy_redirect off;
+    }
+}

@@ -130,6 +130,31 @@ scripts/verificar_replica.sh
 
 La primera vez, `db` se recrea (sus datos se conservan) porque ahora carga el `pg_hba.conf` del repo; `db-replica` copia la base con `pg_basebackup`. El script comprueba `pg_stat_replication` (estado `streaming`), `pg_is_in_recovery()` en la réplica, que un dato escrito en el primario llegue a la réplica y que un `INSERT` en la réplica falle con `read-only transaction`. Para leer desde DBeaver: `localhost:5433` con el usuario `odoo`. Para apagarla: `docker compose --profile replica stop db-replica`; para recrearla desde cero: `docker compose --profile replica rm -sf db-replica && docker volume rm erp-donofrio_pgdata-replica`.
 
+### 6.2 Despliegue protegido: Nginx con TLS y Odoo en modo producción
+
+Para la demo «en producción» (y para las pruebas de carga y de seguridad) se levanta Odoo detrás de Nginx. En tu `.env` pon una `ODOO_ADMIN_PASSWD` de **16 caracteres o más** (no la de ejemplo: en este modo Odoo se niega a arrancar con ella) y ejecuta:
+
+```bash
+scripts/levantar_prod.sh          # certificado autofirmado + Odoo con workers=2 y proxy_mode + Nginx
+scripts/verificar_despliegue.sh   # comprueba TLS, cabeceras, gestor de BD, assets, websocket, configuración y bloqueo
+```
+
+Entra por `https://localhost:8443` (acepta la advertencia: el certificado es autofirmado; en una VM real se cambia por Let's Encrypt). `http://localhost:8080` redirige a HTTPS. Para volver a desarrollo: `docker compose --profile proxy down && docker compose up -d`.
+
+Qué protege (todo por código, ver `docker/nginx/` y `donofrio_base`):
+
+| Control | Cómo |
+|---|---|
+| Cifrado en tránsito (A.8.24) | TLS 1.2 y 1.3, HSTS y redirección 80 → 443 en `docker/nginx/odoo.conf.template` |
+| Gestor de bases de datos | `list_db = False` en Odoo y `/web/database/*` responde 404 en Nginx |
+| Contraseña maestra | Viene de `.env` (en GitHub, de Secrets) o de un archivo (`ODOO_ADMIN_PASSWD_FILE`); en modo producción debe tener 16+ caracteres |
+| Contraseñas de usuario (A.5.17) | Mínimo 12 caracteres (`auth_password_policy`), guardadas con hash PBKDF2 |
+| Bloqueo por intentos (A.8.5) | 5 fallos, espera de 60 s (`base.login_cooldown_*`). El contador de Odoo es **por IP y por worker**: con 2 workers puede tardar hasta 10 fallos en bloquear |
+| 2FA (A.8.5 y A.8.2) | El administrador y el gerente (grupo «2FA obligatorio») piden código en el despliegue protegido. Quien activó su app de autenticación (Preferencias → Seguridad → Activar autenticación de dos factores) la usa; quien no, recibe un código por correo, **lo que requiere configurar un servidor de correo saliente**. Parámetro `donofrio.2fa_privilegiados`: `auto` (por defecto, solo con proxy), `si` o `no` |
+| Auditoría (A.8.15, RNF010) | `auditlog` (OCA, fijado por commit en el Dockerfile) registra quién, cuándo y el valor anterior y nuevo de listas de precios, pedidos de venta y órdenes de compra (Ajustes → Técnico → Auditoría) |
+
+Los usuarios de prueba (`DONOFRIO_USER_PASSWORD`) tienen 18 caracteres y cumplen la política. Si tu `.env` tiene una más corta, la instalación de `donofrio_base` fallará: usa 12 o más.
+
 ## 7. Actualizar, reiniciar y desinstalar
 
 | Quiero… | Comando |
@@ -168,4 +193,4 @@ Para que sea diario, agrega al `crontab -e` del equipo (02:00): `0 2 * * * cd /r
 ## 9. Pendiente para el Cierre
 
 - Capturas de cada paso en una PC limpia y la prueba con Evelyn siguiendo solo este manual.
-- Pasos de despliegue en la nube (Nginx con TLS y copias de seguridad) cuando se completen en el Sprint 3.
+- Despliegue en una VM en la nube (Let's Encrypt en lugar del certificado autofirmado y servidor de correo para el 2FA por correo), solo si se decide hacerlo.

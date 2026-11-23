@@ -1,6 +1,6 @@
 # ERP D'Onofrio: Odoo 19.0 Community + PostgreSQL 16 (06 §6.5).
 # Uso: cp .env.example .env && docker compose up -d && scripts/init_db.sh
-# Perfiles: replica (HU-25: docker compose --profile replica up -d); proxy y tools llegan en HU-27.
+# Perfiles: replica (HU-25: docker compose --profile replica up -d); proxy (HU-27: scripts/levantar_prod.sh); tools llega después.
 name: erp-donofrio
 
 services:
@@ -51,6 +51,9 @@ services:
       ODOO_ADMIN_PASSWD: ${ODOO_ADMIN_PASSWD:?Falta ODOO_ADMIN_PASSWD en .env}
       # Contraseña de prueba de los usuarios por rol de donofrio_base (la aplica el post_init_hook)
       DONOFRIO_USER_PASSWORD: ${DONOFRIO_USER_PASSWORD:-}
+      # HU-27: dev = 0 workers y sin proxy; el despliegue protegido (scripts/levantar_prod.sh) usa 2 y True
+      ODOO_WORKERS: ${ODOO_WORKERS:-0}
+      ODOO_PROXY_MODE: ${ODOO_PROXY_MODE:-False}
     volumes:
       - ./addons:/mnt/extra-addons:ro
       - odoo-data:/var/lib/odoo
@@ -63,6 +66,24 @@ services:
       timeout: 5s
       retries: 10
       start_period: 30s
+
+  # HU-27: Nginx con TLS delante de Odoo. Perfil proxy: scripts/levantar_prod.sh
+  nginx:
+    profiles: ["proxy"]
+    image: nginx:stable
+    restart: unless-stopped
+    depends_on:
+      odoo:
+        condition: service_healthy
+    environment:
+      NGINX_HTTPS_PORT: ${NGINX_HTTPS_PORT:-8443}
+    volumes:
+      - ./docker/nginx/odoo.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ./docker/nginx/seguridad.conf:/etc/nginx/snippets/seguridad.conf:ro
+      - ./docker/nginx/certs:/etc/nginx/certs:ro
+    ports:
+      - "${NGINX_HTTP_PORT:-8080}:80"
+      - "${NGINX_HTTPS_PORT:-8443}:443"
 
   # HU-25: standby en streaming (física, asíncrona), solo lectura. Perfil replica.
   db-replica:

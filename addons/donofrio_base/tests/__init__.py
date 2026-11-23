@@ -14,3 +14,4 @@ from . import test_reabastecimiento
 from . import test_facturacion
 from . import test_clientes
 from . import test_gerencia
+from . import test_hardening
