@@ -10,4 +10,5 @@ from . import test_pdv
 from . import test_fefo
 from . import test_recepcion_despacho
 from . import test_produccion
+from . import test_reabastecimiento
 from . import test_facturacion

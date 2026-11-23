@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HU-13: reabastecimiento mínimo/máximo de los insumos en la Planta Lima (03 §3.3 e).
+     Cuando las existencias previstas bajan del mínimo, el planificador genera la solicitud de cotización (RFQ)
+     al proveedor del insumo por lo que falta para llegar al máximo; al confirmar la orden de compra se crea la
+     recepción. Los números salen de las recetas y del plan semanal de producción (scripts/cargar_transacciones.py):
+       mínimo = consumo de (plazo del proveedor + 7 días de seguridad)
+       máximo = mínimo + 2 semanas de consumo (el ciclo de pedido)
+     Son supuestos ficticios. -->
+<odoo noupdate="1">
+
+    <!-- El planificador arma cada compra con el comprador del proveedor (``res.partner.buyer_id``): se asigna al
+         usuario Comprador. Es una función y no un campo de los registros del proveedor porque esos son ``noupdate``. -->
+    <function model="res.partner" name="write"
+              eval="([ref('prov_lacteos'), ref('prov_cacao'), ref('prov_molino'), ref('prov_frutas'), ref('prov_envases'), ref('prov_cartones')], {'buyer_id': ref('user_compras')})"/>
+
+    <record id="rp_leche" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_leche')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">21000</field>
+        <field name="product_max_qty">53000</field>
+    </record>
+
+    <record id="rp_crema" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_crema')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">3900</field>
+        <field name="product_max_qty">9300</field>
+    </record>
+
+    <record id="rp_leche_polvo" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_leche_polvo')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">1900</field>
+        <field name="product_max_qty">3800</field>
+    </record>
+
+    <record id="rp_mantequilla" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_mantequilla')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">3600</field>
+        <field name="product_max_qty">7800</field>
+    </record>
+
+    <record id="rp_cacao" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_cacao')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">6300</field>
+        <field name="product_max_qty">11000</field>
+    </record>
+
+    <record id="rp_manteca_cacao" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_manteca_cacao')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">3000</field>
+        <field name="product_max_qty">5000</field>
+    </record>
+
+    <record id="rp_azucar" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">12000</field>
+        <field name="product_max_qty">28000</field>
+    </record>
+
+    <record id="rp_harina" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_harina')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">11000</field>
+        <field name="product_max_qty">26000</field>
+    </record>
+
+    <record id="rp_glucosa" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_glucosa')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">1200</field>
+        <field name="product_max_qty">2400</field>
+    </record>
+
+    <record id="rp_huevos" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_huevos')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">65000</field>
+        <field name="product_max_qty">170000</field>
+    </record>
+
+    <record id="rp_pulpa_fresa" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_pulpa_fresa')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">1600</field>
+        <field name="product_max_qty">3200</field>
+    </record>
+
+    <record id="rp_pulpa_lucuma" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_pulpa_lucuma')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">4400</field>
+        <field name="product_max_qty">8800</field>
+    </record>
+
+    <record id="rp_frutas_confitadas" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_frutas_confitadas')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">5600</field>
+        <field name="product_max_qty">11000</field>
+    </record>
+
+    <record id="rp_pasas" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_pasas')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">2700</field>
+        <field name="product_max_qty">4900</field>
+    </record>
+
+    <record id="rp_mani" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_mani')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">600</field>
+        <field name="product_max_qty">1200</field>
+    </record>
+
+    <record id="rp_vainilla" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_vainilla')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">170</field>
+        <field name="product_max_qty">310</field>
+    </record>
+
+    <record id="rp_cono" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_cono')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">40000</field>
+        <field name="product_max_qty">80000</field>
+    </record>
+
+    <record id="rp_envoltura" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_envoltura')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">390000</field>
+        <field name="product_max_qty">710000</field>
+    </record>
+
+    <record id="rp_palito" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_palito')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">98000</field>
+        <field name="product_max_qty">180000</field>
+    </record>
+
+    <record id="rp_vaso" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_vaso')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">49000</field>
+        <field name="product_max_qty">89000</field>
+    </record>
+
+    <record id="rp_envase_1l" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_envase_1l')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">37000</field>
+        <field name="product_max_qty">67000</field>
+    </record>
+
+    <record id="rp_caja_paneton" model="stock.warehouse.orderpoint">
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('stock.warehouse0')).lot_stock_id.id"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_caja_paneton')).product_variant_id.id"/>
+        <field name="route_id" ref="purchase_stock.route_warehouse0_buy"/>
+        <field name="trigger">auto</field>
+        <field name="product_min_qty">41000</field>
+        <field name="product_max_qty">71000</field>
+    </record>
+
+</odoo>
