@@ -61,3 +61,4 @@ Cada PR se abre **directo contra `develop`**, uno a la vez: cada rama se rebasa 
 - **Volumen de las existencias.** Con recetas por tanda industrial el stock de terminados con receta es de decenas de miles de unidades; los terminados sin receta solo tienen inventario inicial. Evelyn dimensiona sus ventas con el resumen que imprime el script.
 - **HU-16 depende de las dos partes.** El script es uno solo; la épica #139 se cierra cuando Evelyn agrega ventas, PdV y compras.
 - **Aprobación cruzada.** Cada PR de Orlando necesita la aprobación de Evelyn; conviene pedirla apenas el CI esté en verde.
+- **FEFO y vencimiento en el PdV.** Al revisar HU-10 se comprobó que el punto de venta no aplica FEFO ni bloquea un lote vencido (el cajero escribe el lote). Decisión del 23/11: se declara como limitación de la Fase 1 (RNF005 y CU005) y no se construye una restricción propia.
