@@ -208,11 +208,27 @@ Se inspira en el propósito público de Nestlé de aprovechar el poder de los al
 
 La demanda de helados sube en verano y la de panetón en Navidad. La estrategia es **producir helado en invierno con anticipación** (cámara de congelación) y **liberar capacidad de la línea de helados para el panetón** al acercarse la campaña de Navidad, usando las mismas instalaciones y la misma fuerza de distribución todo el año. El ERP lo apoya con listas de precios por campaña y reportes por mes.
 
+### 3.6.4 Cascada de metas de COBIT 2019
+
+COBIT 2019 se usa como **marco de referencia** para pasar de lo que necesita la gerencia a lo que el proyecto construye: *necesidad del interesado → meta empresarial (EG) → meta de alineamiento de TI (AG) → objetivo de gestión → componente del ERP*. No se hace evaluación de capacidad ni de madurez: queda fuera del alcance. Las necesidades salen de [1.6 del plan](../plan/01_alcance_escenario.md) y del análisis de interesados (`docs/pm/interesados.md`); la columna final dice **dónde está la evidencia** en este repositorio.
+
+| Necesidad de la gerencia de D'Onofrio | Meta empresarial (EG) | Meta de alineamiento (AG) | Objetivos de gestión | Cómo lo atiende el proyecto (evidencia) |
+|---|---|---|---|---|
+| Integrar ventas, almacén y producción, y liquidar a los heladeros sin errores | **EG08** Optimización de la funcionalidad de los procesos internos | **AG08** Habilitar y soportar los procesos integrando aplicaciones y tecnología | **BAI03** Gestionar la identificación y construcción de soluciones | Odoo estándar configurado por código en `donofrio_base`, construido con Scrum; ciclo vender-comprar-producir-facturar probado de punta a punta (HU-33). La liquidación del heladero es la Fase 2 |
+| Que el sistema esté disponible en temporada alta | **EG06** Continuidad y disponibilidad del servicio | **AG05** Entrega de servicios de I&T alineada con el negocio | **APO09** Acuerdos de servicio · **DSS01** Operaciones · **DSS04** Continuidad | Tablas de SLA (4.7.3); despliegue con Nginx y TLS; réplica en caliente (HU-25); respaldos y restauración con RTO medido de 31 s (HU-26) |
+| Proteger la información de clientes y de la operación | **EG02** Riesgo de negocio gestionado · **EG03** Cumplimiento de leyes externas | **AG02** Riesgo de I&T gestionado · **AG07** Seguridad de la información y privacidad · **AG01** Cumplimiento | **APO12** Riesgo · **APO13** Seguridad · **DSS05** Servicios de seguridad | Registro de riesgos (`docs/pm/plan_riesgos.md`); seguridad del despliegue: 2FA, política de contraseñas, TLS y auditoría (HU-27); ZAP sin alertas altas (HU-28); datos ficticios por la Ley 29733 |
+| Cambiar el sistema sin romper la operación | **EG08** | **AG06** Agilidad para convertir requerimientos en soluciones operativas | **BAI06** Cambios de TI · **DSS02** Solicitudes e incidentes · **DSS03** Problemas | Todo cambio entra por PR con CI y revisión del otro integrante (anexo 10.4); *release* automática (HU-29); mesa de servicios en Project (HU-32, anexos 10.3 y 10.5); plantilla `bug.yml` para registrar problemas |
+| Decidir con datos | **EG07** Calidad de la información de gestión | **AG10** Calidad de la información de gestión de I&T | **MEA01** Supervisar el desempeño y la conformidad | Dashboards estándar y vistas guardadas (HU-23); KPI y SLA en 4.7; pruebas de carga y de rendimiento (HU-28) |
+
+**Los 11 objetivos de gestión** que usa el proyecto son APO09, APO12, APO13, BAI03, BAI06, DSS01, DSS02, DSS03, DSS04, DSS05 y MEA01. El mapa inverso (qué componente del ERP o de la infraestructura soporta cada objetivo) está en 4.1.3.
+
+**Lo que la cascada no cubre.** La Fase 2 (calidad, heladeros, cadena de frío y tablero propio) atendería la necesidad de integrar procesos con más detalle; mientras no se construya, la fila 1 se apoya solo en Odoo estándar. COBIT es aquí una guía de alineamiento y no una auditoría.
+
 ---
 
 ## 3.7 Planificación empresarial
 
-Los objetivos estratégicos se organizan en un **Cuadro de Mando Integral sencillo** y se ligan a indicadores que el ERP puede calcular. Las metas son **supuestos académicos** para la demo.
+Los objetivos estratégicos se organizan en un **Cuadro de Mando Integral sencillo** y se ligan a indicadores que el ERP puede calcular. Cada indicador se enlaza con la cascada de COBIT de [3.6.4](#364-cascada-de-metas-de-cobit-2019): los de ventas y producción alimentan MEA01; los de continuidad, APO09 y DSS04. Las metas son **supuestos académicos** para la demo.
 
 | Perspectiva | Objetivo estratégico | Indicador (KPI) | Meta [S] | De dónde sale en el ERP | RF |
 |---|---|---|---|---|---|
