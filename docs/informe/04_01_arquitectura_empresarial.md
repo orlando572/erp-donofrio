@@ -6,7 +6,7 @@
 
 ## Marco y alcance
 
-Se ordena la arquitectura con las **cuatro capas de TOGAF** (negocio, datos, aplicación y tecnología), usadas de forma simplificada: no se aplica el método completo de TOGAF, solo su clasificación de capas, para comparar la situación actual con la propuesta. Los objetivos de gestión de **COBIT 2019** que el ERP ayuda a cumplir se enlazan al final de la sección.
+Se ordena la arquitectura con las **cuatro capas de TOGAF** **[cita]** (negocio, datos, aplicación y tecnología), usadas de forma simplificada: no se aplica el método completo de TOGAF, solo su clasificación de capas, para comparar la situación actual con la propuesta. Los objetivos de gestión de **COBIT 2019 [cita]** que el ERP ayuda a cumplir se enlazan al final de la sección.
 
 ![Arquitectura empresarial AS-IS y TO-BE](../diagramas/arquitectura/arquitectura_empresarial.png)
 
@@ -49,3 +49,11 @@ COBIT 2019 se usa como marco de referencia (alineación, no certificación). Est
 | **MEA01** Monitoreo del desempeño y la conformidad | Burndown por puntos, CI y pruebas de carga, seguridad y WPO (Sprint 3) |
 
 > Los objetivos DSS02, DSS04, APO09 y MEA01 dependen de trabajo del Sprint 3: hoy están **planificados**, no implementados.
+
+---
+
+## Pendiente de citar antes del informe final
+
+1. **TOGAF** (The Open Group): citar la edición usada y confirmar que las cuatro capas (negocio, datos, aplicación y tecnología) son las del estándar.
+2. **COBIT 2019** (ISACA): confirmar el nombre de cada objetivo de la tabla (APO09, APO12, APO13, BAI03, BAI06, DSS01 a DSS05 y MEA01) con la guía *Governance and Management Objectives* y agregar la referencia APA 7 en la sección 9. Los nombres se escribieron de memoria.
+3. El enlace entre cada objetivo y el elemento de la arquitectura que lo respalda es un **juicio del equipo** (supuesto académico). La situación actual (AS-IS) es el supuesto S7 del plan.

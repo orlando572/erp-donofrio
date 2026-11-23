@@ -6,7 +6,7 @@
 
 ## Cómo se clasifican y se verifican
 
-- **Clasificación:** cada RNF se asigna a una característica del modelo de calidad **ISO/IEC 25010:2023**, que tiene nueve: adecuación funcional, eficiencia de desempeño, compatibilidad, capacidad de interacción, fiabilidad, seguridad, mantenibilidad, flexibilidad (antes portabilidad) y protección (*safety*). Ninguno de los RNF de este proyecto cae en *compatibilidad* ni en *protección*.
+- **Clasificación:** cada RNF se asigna a una característica del modelo de calidad **ISO/IEC 25010:2023 [cita]**, que tiene nueve: adecuación funcional, eficiencia de desempeño, compatibilidad, capacidad de interacción, fiabilidad, seguridad, mantenibilidad, flexibilidad (antes portabilidad) y protección (*safety*). Ninguno de los RNF de este proyecto cae en *compatibilidad* ni en *protección*.
 - **Verificación:** cada RNF tiene una métrica y una prueba concreta. Las pruebas automáticas viven en `addons/donofrio_base/tests/` y corren en el CI en cada PR; las no funcionales (k6, ZAP, Lighthouse, SUS, restauración cronometrada) se ejecutan en el Sprint 3 y sus resultados van a la sección 5.14.
 - **Trazabilidad:** RNF → HU → épica (issue) → prueba, como en [4.2.1](04_02_requerimientos_funcionales.md).
 
@@ -14,7 +14,7 @@
 
 **Estado** al cierre del Sprint 1: *Implementado* (hecho y probado), *Parcial* (una parte ya está en `develop`) o *Planificado* (con su sprint).
 
-| Área | ID | Requerimiento no funcional | Característica 25010:2023 | Métrica o prueba | HU · sprint | Estado |
+| Área | ID | Requerimiento no funcional | Característica 25010:2023 **[cita]** | Métrica o prueba | HU · sprint | Estado |
 |---|---|---|---|---|---|---|
 | **Marketing y Ventas** | RNF001 | Portabilidad: navegadores Chrome, Firefox y Edge; responsive en móvil (pedidos y PdV; liquidación si hay F2) | Flexibilidad (adaptabilidad) | Prueba manual en 3 navegadores y en vista móvil | HU-09, HU-10 · S2-S3 | Planificado |
 | | RNF002 | Rendimiento: p95 < 2 s en listas y formularios con 20 usuarios concurrentes | Eficiencia de desempeño (comportamiento temporal) | k6 con 20 usuarios virtuales | HU-28 · S3 | Planificado |
@@ -52,3 +52,10 @@
 | Planificado | RNF001, RNF002, RNF004, RNF006, RNF008, RNF010 | 6 |
 
 > **Límites declarados.** Los valores de rendimiento (p95 < 2 s, 20 usuarios) y de disponibilidad (99 %) son metas académicas sobre una instancia local; la medición real llega en el Sprint 3. RNF012 se da por *Implementado* con la evidencia de dos PC distintas (Orlando y Evelyn). La parte de la imagen publicada en GHCR llega con la HU-29.
+
+---
+
+## Pendiente de citar antes del informe final
+
+1. **ISO/IEC 25010:2023** (modelo de calidad del producto): confirmar con el texto de la norma los nombres de las nueve características y de las subcaracterísticas asignadas (por ejemplo, instalabilidad dentro de flexibilidad y recuperabilidad dentro de fiabilidad), y agregar la referencia APA 7 en la sección 9. Los nombres de esta tabla se escribieron de memoria.
+2. La asignación de cada RNF a una característica, y las metas numéricas (p95 < 2 s, 20 usuarios, 99 %, RPO y RTO), son **juicios del equipo** (supuestos académicos), no valores tomados de la norma.
