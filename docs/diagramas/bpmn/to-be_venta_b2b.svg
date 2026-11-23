@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1785" height="828" viewBox="0 0 1785 828" font-family="DejaVu Sans, Arial, sans-serif">
+<defs><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222"/></marker></defs>
+<rect width="1785" height="828" fill="#fff"/>
+<rect x="20" y="20" width="1745" height="750" fill="none" stroke="#222" stroke-width="1.5"/>
+<line x1="50" y1="20" x2="50" y2="770" stroke="#222"/>
+<g transform="rotate(-90 35 395.0)"><text x="35" y="399" text-anchor="middle" font-size="12" font-weight="bold">TO-BE · Venta a cliente B2B con Odoo estándar (Fase 1)</text></g>
+<line x1="72" y1="20" x2="72" y2="170" stroke="#222"/>
+<g transform="rotate(-90 61 95.0)"><text x="61" y="99" text-anchor="middle" font-size="11" font-weight="bold">Cliente</text></g>
+<line x1="50" y1="170" x2="1765" y2="170" stroke="#222"/>
+<line x1="72" y1="170" x2="72" y2="320" stroke="#222"/>
+<g transform="rotate(-90 61 245.0)"><text x="61" y="249" text-anchor="middle" font-size="11" font-weight="bold">Vendedor</text></g>
+<line x1="50" y1="320" x2="1765" y2="320" stroke="#222"/>
+<line x1="72" y1="320" x2="72" y2="470" stroke="#222"/>
+<g transform="rotate(-90 61 395.0)"><text x="61" y="399" text-anchor="middle" font-size="11" font-weight="bold">Jefe de Ventas</text></g>
+<line x1="50" y1="470" x2="1765" y2="470" stroke="#222"/>
+<line x1="72" y1="470" x2="72" y2="620" stroke="#222"/>
+<g transform="rotate(-90 61 545.0)"><text x="61" y="549" text-anchor="middle" font-size="11" font-weight="bold">Almacén</text></g>
+<line x1="50" y1="620" x2="1765" y2="620" stroke="#222"/>
+<line x1="72" y1="620" x2="72" y2="770" stroke="#222"/>
+<g transform="rotate(-90 61 695.0)"><text x="61" y="699" text-anchor="middle" font-size="11" font-weight="bold">Facturación</text></g>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="182,95 239,95 239,245 255,245"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="373,245 405,245"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="523,245 589,245"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="614,270 614,395 705,395"/>
+<text x="620" y="285" font-size="11" font-weight="bold">Sí</text>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="639,245 855,245"/>
+<text x="645" y="236" font-size="11" font-weight="bold">No</text>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="823,395 839,395 839,245 855,245"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="973,245 989,245 989,545 1005,545"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1123,545 1139,545 1139,95 1155,95"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1273,95 1289,95 1289,695 1305,695"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1423,695 1455,695"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1573,695 1646,695"/>
+<circle cx="164" cy="95" r="18.0" fill="#e8f5e9" stroke="#222" stroke-width="1.5"/><text x="164" y="128" text-anchor="middle" font-size="11" font-weight="normal">Un cliente muestra</text><text x="164" y="141" text-anchor="middle" font-size="11" font-weight="normal">interés</text>
+<rect x="255" y="208" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="314" y="229" text-anchor="middle" font-size="11" font-weight="normal">Registra la</text><text x="314" y="242" text-anchor="middle" font-size="11" font-weight="normal">oportunidad en el</text><text x="314" y="255" text-anchor="middle" font-size="11" font-weight="normal">embudo CRM de su</text><text x="314" y="268" text-anchor="middle" font-size="11" font-weight="normal">canal</text>
+<rect x="405" y="208" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="464" y="229" text-anchor="middle" font-size="11" font-weight="normal">Cotiza: Odoo</text><text x="464" y="242" text-anchor="middle" font-size="11" font-weight="normal">aplica la lista</text><text x="464" y="255" text-anchor="middle" font-size="11" font-weight="normal">de precios según</text><text x="464" y="268" text-anchor="middle" font-size="11" font-weight="normal">cliente y fecha</text>
+<polygon points="614,220 639,245 614,270 589,245" fill="#fff8e1" stroke="#222" stroke-width="1.5"/><path d="M605,236 L623,254 M623,236 L605,254" stroke="#222" stroke-width="2.5"/><text x="614" y="197" text-anchor="middle" font-size="11" font-weight="bold">¿Pide descuento o</text><text x="614" y="210" text-anchor="middle" font-size="11" font-weight="bold">crédito?</text>
+<rect x="705" y="358" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="764" y="379" text-anchor="middle" font-size="11" font-weight="normal">Aprueba o rechaza</text><text x="764" y="392" text-anchor="middle" font-size="11" font-weight="normal">la cotización en</text><text x="764" y="405" text-anchor="middle" font-size="11" font-weight="normal">Odoo, con</text><text x="764" y="418" text-anchor="middle" font-size="11" font-weight="normal">registro</text>
+<rect x="855" y="208" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="914" y="229" text-anchor="middle" font-size="11" font-weight="normal">El cliente acepta</text><text x="914" y="242" text-anchor="middle" font-size="11" font-weight="normal">y se confirma el</text><text x="914" y="255" text-anchor="middle" font-size="11" font-weight="normal">pedido: Odoo crea</text><text x="914" y="268" text-anchor="middle" font-size="11" font-weight="normal">la entrega</text>
+<rect x="1005" y="508" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="1064" y="529" text-anchor="middle" font-size="11" font-weight="normal">Pick y ship:</text><text x="1064" y="542" text-anchor="middle" font-size="11" font-weight="normal">reserva por FEFO</text><text x="1064" y="555" text-anchor="middle" font-size="11" font-weight="normal">y despacha con la</text><text x="1064" y="568" text-anchor="middle" font-size="11" font-weight="normal">guía de remisión</text>
+<rect x="1155" y="58" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="1214" y="86" text-anchor="middle" font-size="11" font-weight="normal">Recibe la</text><text x="1214" y="99" text-anchor="middle" font-size="11" font-weight="normal">mercadería y</text><text x="1214" y="112" text-anchor="middle" font-size="11" font-weight="normal">firma la guía</text>
+<rect x="1305" y="658" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="1364" y="686" text-anchor="middle" font-size="11" font-weight="normal">Emite factura</text><text x="1364" y="699" text-anchor="middle" font-size="11" font-weight="normal">(01) o boleta</text><text x="1364" y="712" text-anchor="middle" font-size="11" font-weight="normal">(03) con IGV 18 %</text>
+<rect x="1455" y="658" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="1514" y="679" text-anchor="middle" font-size="11" font-weight="normal">Registra el pago;</text><text x="1514" y="692" text-anchor="middle" font-size="11" font-weight="normal">Odoo concilia y</text><text x="1514" y="705" text-anchor="middle" font-size="11" font-weight="normal">marca la factura</text><text x="1514" y="718" text-anchor="middle" font-size="11" font-weight="normal">como pagada</text>
+<circle cx="1664" cy="695" r="18.0" fill="#e8f5e9" stroke="#222" stroke-width="4"/><text x="1664" y="735" text-anchor="middle" font-size="11" font-weight="normal">Pedido cerrado</text>
+<rect x="20" y="786" width="16" height="14" rx="3" fill="#f4f7fb" stroke="#222"/><text x="44" y="798" font-size="11">Tarea con Odoo estándar (Fase 1)</text>
+</svg>

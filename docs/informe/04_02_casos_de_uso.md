@@ -2,15 +2,15 @@
 
 > **Estado:** borrador del Sprint 1 · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [04 §4.2 y §4.4](../plan/04_scrum_pmbok.md), [03 §3.3](../plan/03_modulos_odoo.md)
 >
-> Los diagramas están en PlantUML (`docs/diagramas/cu/*.puml`, con su PNG). Aquí van los de **ventas, heladeros y gerencia** (Evelyn, Sprint 1) y los de **logística y producción** (CU005 a CU008, Orlando, Sprint 2), con la misma plantilla. Los wireframes y mockups de cada CU se hacen en el Sprint 2 (4.4.1).
+> Los diagramas están en PlantUML (`docs/diagramas/cu/*.puml`, con su PNG). Aquí van los de **ventas, heladeros y gerencia** (Evelyn, Sprint 1) y los de **logística y producción** (CU005 a CU008, Orlando, Sprint 2), con la misma plantilla. Los wireframes y mockups de cada CU están en [4.4](04_04_prototipos.md) (Sprint 2). En el Sprint 2 se agregaron CU011 (compras) y CU012 (facturación).
 
 ## Lista de casos de uso
 
 | ID | Caso de uso | Área | RF | HU | Fase | Estado | Responsable |
 |---|---|---|---|---|---|---|---|
-| CU001 | Registrar oportunidad en el embudo CRM | Ventas | RF001 | HU-08 | F1 | Planificado | Evelyn |
-| CU002 | Cotizar y confirmar pedido con lista de precios | Ventas | RF002 | HU-09 | F1 | Planificado | Evelyn |
-| CU003 | Vender en el punto de venta con boleta | Ventas | RF003 | HU-10 | F1 | Planificado | Evelyn |
+| CU001 | Registrar oportunidad en el embudo CRM | Ventas | RF001 | HU-08 | F1 | Implementado | Evelyn |
+| CU002 | Cotizar y confirmar pedido con lista de precios | Ventas | RF002 | HU-09 | F1 | Implementado | Evelyn |
+| CU003 | Vender en el punto de venta con boleta | Ventas | RF003 | HU-10 | F1 | Implementado | Evelyn |
 | CU004 | Liquidar al heladero del día | Heladeros | RF004 | HU-20, HU-21 | **F2** (M2) | **Propuesto** | Evelyn |
 | CU005 | Recibir, almacenar y despachar con lotes y FEFO | Logística | RF005, RF006, RF007 | HU-06, HU-11, HU-12 | F1 | Planificado | Orlando |
 | CU006 | Registrar temperaturas y alertar (cadena de frío) | Logística | RF008 | HU-19 | **F2** (M3) | **Propuesto** | Orlando |
@@ -18,8 +18,10 @@
 | CU008 | Inspeccionar la calidad y liberar el lote | Producción | RF011, RF012 | HU-17, HU-18 | **F2** (M1) | **Propuesto** | Orlando |
 | CU009 | Consultar el tablero gerencial de KPIs | Gerencia | RF013 | HU-23 (F1), HU-22 (F2) | F1 (estándar) | Planificado | Evelyn |
 | CU010 | Analizar ventas por línea, canal y temporada | Gerencia | RF014 | HU-23 | F1 | Planificado | Evelyn |
+| CU011 | Comprar insumos con reabastecimiento mín./máx. | Compras | RF015 | HU-13 | F1 | Implementado | Evelyn |
+| CU012 | Facturar con IGV (factura 01 o boleta 03) | Facturación | RF016 | HU-15 | F1 | Implementado | Evelyn |
 
-**Estados:** *Planificado* = su HU está en un sprint de la F1; *Propuesto* = depende de un módulo de la Fase 2 y queda como «Diseñado – trabajo futuro» si no se construye ([02 §2.3](../plan/02_mapeo_plantilla.md)).
+**Estados:** *Implementado* = su HU está fusionada en `develop`, con tests y capturas; *Planificado* = su HU está en un sprint de la F1; *Propuesto* = depende de un módulo de la Fase 2 y queda como «Diseñado – trabajo futuro» si no se construye ([02 §2.3](../plan/02_mapeo_plantilla.md)).
 
 ---
 
@@ -40,6 +42,12 @@ El verde es la variante estándar de la Fase 1 (pedido de venta al heladero con 
 ![Casos de uso de Logística y Producción](../diagramas/cu/cu_logistica_produccion.png)
 
 El verde es lo que se hace con Odoo estándar en la Fase 1 (CU005 y CU007). El amarillo son los módulos propios de la Fase 2: cadena de frío (CU006, M3) y calidad (CU008, M1).
+
+### Compras y Facturación
+
+![Casos de uso de Compras y Facturación](../diagramas/cu/cu_compras_facturacion.png)
+
+Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 porque RF015 (compras) y RF016 (facturación) no tenían caso de uso propio.
 
 ### Gerencia
 
@@ -63,7 +71,7 @@ El verde es lo que se hace con Odoo estándar en la Fase 1 (CU005 y CU007). El a
 | **Postcondiciones** | La oportunidad queda en su etapa con historial; una oportunidad ganada puede tener cotización asociada |
 | **Reglas de negocio** | 5 etapas fijas: Prospecto → Calificado → Propuesta → Negociación → Ganado. Cada oportunidad pertenece a un equipo de venta |
 | **Datos de apoyo** | Unas 20 oportunidades ficticias cargadas por código |
-| **Evidencia / prueba** | Captura del embudo en Kanban (Sprint 2); prueba de datos de CRM en `donofrio_base` |
+| **Evidencia / prueba** | `tests/test_crm.py`; capturas `HU-08_*` |
 
 ### CU002: Cotizar y confirmar pedido con lista de precios
 
@@ -78,7 +86,7 @@ El verde es lo que se hace con Odoo estándar en la Fase 1 (CU005 y CU007). El a
 | **Flujos alternos** | A1. Si pide un descuento o condición especial, la cotización va al Jefe de Ventas, que la aprueba o la rechaza.<br>A2. Si el cliente no acepta, la cotización se cancela con su motivo.<br>A3. Para un heladero se usa la lista «Heladero» y, al volver, se registra la devolución estándar (ver CU004) |
 | **Postcondiciones** | Pedido confirmado con precios de la lista vigente; entrega creada en inventario |
 | **Reglas de negocio** | El precio cambia según la lista de precios y la fecha (verano, Navidad, heladero); moneda PEN; IGV 18 % |
-| **Evidencia / prueba** | Test de integración pedido → entrega → factura (HU-33); capturas de la cotización y del pedido (Sprint 2) |
+| **Evidencia / prueba** | `tests/test_precios.py` (pedido confirmado → entrega con el precio de la lista); capturas `HU-09_*`; el test de integración completo es HU-33 (Sprint 3) |
 
 ### CU003: Vender en el punto de venta con boleta
 
@@ -93,7 +101,7 @@ El verde es lo que se hace con Odoo estándar en la Fase 1 (CU005 y CU007). El a
 | **Flujos alternos** | A1. Si el cliente pide factura, se registra con su RUC.<br>A2. Si la caja no cuadra, se anota la diferencia al cerrar.<br>A3. Si el producto no tiene stock, se avisa antes de cobrar |
 | **Postcondiciones** | Venta registrada, stock descontado, boleta emitida y caja cerrada con su diferencia |
 | **Reglas de negocio** | Boleta (tipo 03) para consumidor final; IGV 18 %; sin envío a SUNAT: el EDI `l10n_pe_edi` es Enterprise y se declara como limitación |
-| **Evidencia / prueba** | Captura de la sesión, la venta y la boleta (Sprint 2) |
+| **Evidencia / prueba** | `tests/test_pdv.py`; capturas `HU-10_*` y `HU-16_pdv_sesiones_cerradas` |
 
 ### CU004: Liquidar al heladero del día (propuesto, Fase 2)
 
@@ -109,7 +117,7 @@ El verde es lo que se hace con Odoo estándar en la Fase 1 (CU005 y CU007). El a
 | **Postcondiciones** | Liquidación confirmada, pedido creado y devolución al almacén registrada |
 | **Reglas de negocio** | El heladero es concesionario (supuesto S4): compra a precio de heladero y liquida cada día; no es empleado |
 | **Estado** | **Propuesto.** No se construye sin la confirmación explícita de Evelyn u Orlando tras el Gate 0. Si no se hace, queda como «Diseñado – trabajo futuro» con este caso de uso, su wireframe y su mockup |
-| **Evidencia / prueba** | Wireframe y mockup de la pantalla de liquidación (Sprint 2); si se construye, tests de `donofrio_heladeros` |
+| **Evidencia / prueba** | [Wireframe y mockup](04_04_prototipos.md) de la pantalla de liquidación y de su vista móvil (Sprint 2); si se construye, tests de `donofrio_heladeros` |
 
 ### CU005: Recibir, almacenar y despachar con lotes y FEFO
 
@@ -206,9 +214,39 @@ El verde es lo que se hace con Odoo estándar en la Fase 1 (CU005 y CU007). El a
 | **Reglas de negocio** | Los filtros son compartidos; los datos son ficticios (supuesto S2) |
 | **Evidencia / prueba** | Capturas del pivote y del gráfico (Sprint 3) |
 
+### CU011: Comprar insumos con reabastecimiento mín./máx.
+
+| Campo | Contenido |
+|---|---|
+| **ID / Nombre** | CU011 · Comprar insumos con reabastecimiento mín./máx. |
+| **Requerimiento / HU** | RF015 · HU-13 (con HU-15 para la factura del proveedor) |
+| **Actores** | Comprador (principal), Jefe de Almacén, Proveedor (externo), Contador |
+| **Descripción** | Cuando el stock de un insumo baja de su mínimo, Odoo genera la solicitud de cotización al proveedor hasta el máximo; el comprador la confirma, el almacén recibe con lote y vencimiento y finanzas registra la factura |
+| **Precondiciones** | 22 reglas de reabastecimiento (una por insumo) en Planta Lima con ruta «Comprar»; proveedor y comprador asignados |
+| **Flujo principal** | 1. El planificador calcula lo que falta hasta el máximo.<br>2. Odoo crea **una RFQ por proveedor**, a cargo del Comprador.<br>3. El comprador revisa y **confirma**: la RFQ pasa a orden de compra.<br>4. Odoo crea la recepción en Lima.<br>5. El almacén recibe con lote y vencimiento (CU005).<br>6. Finanzas registra la factura del proveedor (01) con IGV 18 % y programa el pago |
+| **Flujos alternos** | A1. Si el stock está sobre el mínimo, no se genera ninguna RFQ.<br>A2. Si ya hay una RFQ abierta, la regla no pide dos veces.<br>A3. El comprador puede cancelar la RFQ antes de confirmarla |
+| **Postcondiciones** | Orden de compra confirmada, recepción creada y regla satisfecha; factura del proveedor con IGV |
+| **Reglas de negocio** | Mínimo = consumo semanal × (plazo del proveedor + 7 días) / 7; máximo = mínimo + 2 semanas de consumo (supuestos ficticios); un proveedor principal por insumo |
+| **Evidencia / prueba** | `tests/test_reabastecimiento.py` (5 pruebas); capturas `HU-13_*` y `HU-16_facturas_de_proveedor` |
+
+### CU012: Facturar con IGV (factura 01 o boleta 03)
+
+| Campo | Contenido |
+|---|---|
+| **ID / Nombre** | CU012 · Facturar con IGV |
+| **Requerimiento / HU** | RF016 · HU-15 |
+| **Actores** | Contador (principal), Vendedor, Cliente (externo) |
+| **Descripción** | Desde un pedido de venta confirmado se emite la factura (cliente con RUC) o la boleta (cliente con DNI o consumidor final) en su diario, con el IGV 18 % calculado, y se imprime el PDF |
+| **Precondiciones** | Pedido confirmado; diarios «Facturas» y «Boletas»; IGV 18 % en los productos terminados |
+| **Flujo principal** | 1. Abre el pedido y crea la factura.<br>2. Odoo elige el diario y el tipo de documento según el cliente: **01** con RUC, **03** con DNI.<br>3. Odoo calcula la base y el IGV (el precio al público ya lo incluye).<br>4. Confirma la factura: recibe su número (`F 00000001` o `B 00000001`).<br>5. Imprime el PDF y registra el pago |
+| **Flujos alternos** | A1. Un cliente sin documento recibe boleta como «consumidor final».<br>A2. Si el cliente pide factura en el PdV, se registra con su RUC (CU003) |
+| **Postcondiciones** | Factura o boleta publicada, en soles y en su diario; cuenta por cobrar creada |
+| **Reglas de negocio** | IGV 18 % incluido en el precio de venta; moneda PEN; sin envío electrónico a SUNAT (`l10n_pe_edi` es Enterprise). Limitación: la plantilla estándar titula «Factura» al PDF de la boleta y rotula «RUC» al DNI |
+| **Evidencia / prueba** | `tests/test_facturacion.py`; capturas `HU-15_*` |
+
 ---
 
 ## Pendiente
 
-- Wireframes y mockups de cada CU, **incluidos los de la Fase 2** (Sprint 2, 4.4.1).
+- ~~Wireframes y mockups de cada CU, incluidos los de la Fase 2~~: hechos en el Sprint 2, ver [4.4](04_04_prototipos.md).
 - Pasar cada CU a «Implementado» cuando se verifique en la UI, y los de la F2 a «Diseñado – trabajo futuro» o «Implementado» según el Gate 0 ([02 §2.3](../plan/02_mapeo_plantilla.md)).

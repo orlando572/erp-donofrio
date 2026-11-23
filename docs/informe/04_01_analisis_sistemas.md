@@ -124,3 +124,63 @@ Limitación declarada: la temperatura de las cámaras se sigue controlando fuera
 | Temperaturas en papel | Se mantiene en papel en la Fase 1 | — | Pendiente: M3 (Fase 2) |
 | Inspección en papel y lotes no conformes sin registro | Inspección ligada a la orden y bloqueo del despacho | — | Pendiente: M1 (Fase 2) |
 
+
+---
+
+## 4.1.2 (continuación) Procesos TO-BE en Odoo: ventas, compras y heladeros (Sprint 2)
+
+Son los tres procesos de negocio que Evelyn describió como AS-IS en el Sprint 1 (venta B2B, compra de insumos y liquidación del heladero), ahora **ejecutados con Odoo 19 Community**. Se dibujan con el mismo generador ([`generar_bpmn.py`](../diagramas/generar_bpmn.py)) y la misma leyenda: azul claro = Fase 1 (Odoo estándar configurado por `donofrio_base`); **amarillo** = depende del módulo propio de la Fase 2.
+
+| # | Proceso TO-BE | Responsable | Archivo | Estado |
+|---|---|---|---|---|
+| 9 | Venta a cliente B2B con Odoo estándar (Fase 1) | Evelyn | [to-be_venta_b2b.png](../diagramas/bpmn/to-be_venta_b2b.png) · [.bpmn](../diagramas/bpmn/to-be_venta_b2b.bpmn) | Borrador S2; HU-08, 09, 15 en `develop` |
+| 10 | Compra de insumos con Odoo estándar (Fase 1) | Evelyn | [to-be_compra_insumos.png](../diagramas/bpmn/to-be_compra_insumos.png) · [.bpmn](../diagramas/bpmn/to-be_compra_insumos.bpmn) | Borrador S2; HU-13, 15 en `develop` |
+| 11 | Heladero con Odoo estándar (Fase 1, sin M2) | Evelyn | [to-be_heladero.png](../diagramas/bpmn/to-be_heladero.png) · [.bpmn](../diagramas/bpmn/to-be_heladero.bpmn) | Borrador S2 (variante mínima) |
+| 12 | Heladero con liquidación diaria (M2, Fase 2) | Evelyn | [to-be_heladero_m2.png](../diagramas/bpmn/to-be_heladero_m2.png) · [.bpmn](../diagramas/bpmn/to-be_heladero_m2.bpmn) | Borrador S2 (diseño) |
+
+### 9. Venta a cliente B2B con Odoo estándar (Fase 1)
+
+![BPMN TO-BE venta B2B](../diagramas/bpmn/to-be_venta_b2b.png)
+
+El vendedor registra la oportunidad en el embudo CRM de su canal y crea la cotización: Odoo propone **la lista de precios del cliente** (mayorista, bodega, heladero, verano o Navidad) según la fecha. Si el cliente pide descuento o crédito, el jefe de ventas aprueba o rechaza **dentro de Odoo, con el historial de la cotización como registro** (paso manual: no hay una regla de aprobación automática). Al confirmar el pedido, Odoo crea la entrega; el almacén hace *pick* y *ship* **reservando por FEFO** y despacha con la guía. Desde el mismo pedido se emite la **factura (01)** si el cliente tiene RUC o la **boleta (03)** si tiene DNI, con IGV 18 %, y el pago concilia la factura sin digitar nada dos veces.
+
+Limitación declarada: no hay envío electrónico a SUNAT (`l10n_pe_edi` es Enterprise); la numeración es la de Odoo (`F 00000001`, `B 00000001`).
+
+### 10. Compra de insumos con Odoo estándar (Fase 1)
+
+![BPMN TO-BE compra de insumos](../diagramas/bpmn/to-be_compra_insumos.png)
+
+Cada insumo tiene una **regla de reabastecimiento mín./máx.**: cuando el stock baja del mínimo, el planificador de Odoo calcula lo que falta hasta el máximo y genera **una solicitud de cotización (RFQ) por proveedor**, a cargo del Comprador. El comprador revisa y confirma; la RFQ pasa a **orden de compra** y se envía al proveedor desde Odoo. Al confirmar, Odoo crea la recepción en Lima, donde el almacén registra lote y vencimiento (proceso 8). Finanzas registra la **factura del proveedor (01) con IGV 18 %** desde la orden y programa el pago a su vencimiento. Ya no hay cotizaciones por teléfono, comparación en Excel, firma en papel ni orden de compra en Word.
+
+Limitación declarada: la comparación entre varios proveedores de un mismo insumo no se modela (cada insumo tiene un proveedor principal).
+
+### 11. Heladero con Odoo estándar (Fase 1, sin M2)
+
+![BPMN TO-BE heladero estándar](../diagramas/bpmn/to-be_heladero.png)
+
+Es la variante **mínima** que no necesita ningún módulo propio. El heladero es un **contacto concesionario** (supuesto S4), no un empleado: compra con la lista «Heladero» y liquida cada día. El vendedor crea y confirma el pedido del día con esa lista; el almacén entrega la carga y Odoo descuenta el stock por FEFO. Al volver, el heladero entrega el sobrante y el efectivo; el almacén registra la **devolución estándar** (el stock regresa) y facturación emite la **nota de crédito** por lo devuelto y cobra lo vendido.
+
+Limitación declarada: no hay merma ni comisión como campos, ni cálculo automático de lo vendido, ni PDF de liquidación para firmar; eso lo resuelve la variante del proceso 12.
+
+### 12. Heladero con liquidación diaria (M2, Fase 2)
+
+![BPMN TO-BE heladero con liquidación](../diagramas/bpmn/to-be_heladero_m2.png)
+
+Con el módulo `donofrio_heladeros` (diseño, sin construir hasta confirmar el Gate 0), el liquidador abre una **liquidación por heladero y fecha**. El almacén registra lo despachado por producto. Al volver el heladero, el liquidador registra lo **devuelto y la merma**; Odoo calcula **vendido = despachado − devuelto − merma**, el importe a precio de heladero y la comisión. Si el efectivo no cuadra, la diferencia queda registrada en la liquidación. Al confirmar, Odoo **crea y confirma el pedido de venta**, y se imprime el PDF que firman las dos partes. Cubre el problema 1 del plan (liquidación manual con cuaderno).
+
+### Cómo resuelve el TO-BE los puntos débiles del AS-IS (ventas, compras y heladeros)
+
+| Punto débil del AS-IS | Cómo lo resuelve el TO-BE | HU | Estado |
+|---|---|---|---|
+| Pedido anotado en Excel con el precio calculado a mano | Cotización con lista de precios por canal y fecha | HU-09 | Probado con tests |
+| Aprobación de descuentos por correo, sin registro | El jefe de ventas aprueba en la cotización y queda en el historial (chatter) | HU-09 | Paso manual: no hay regla automática de aprobación |
+| Pedido digitado dos veces para facturar | Factura 01 o boleta 03 desde el pedido, con IGV 18 % | HU-15 | Probado con tests |
+| Despacho sin ver vencimientos | *Pick* y *ship* con reserva por FEFO | HU-11, HU-12 | Probado con tests |
+| Cobranza conciliada a fin de mes en Excel | Pago registrado en la factura, con conciliación | HU-15 | Verificado en la UI con datos de demostración |
+| Venta de mostrador sin control de caja | Sesión de PdV con boleta y cierre de caja | HU-10 | Probado con tests |
+| Faltante de insumos detectado a simple vista | Regla mín./máx. que genera la RFQ | HU-13 | Probado con tests |
+| Cotizaciones por teléfono y orden de compra en Word | RFQ y orden de compra generadas por Odoo | HU-13 | Probado con tests |
+| Recepción sin lote ni vencimiento | La recepción de la OC exige lote y fecha | HU-11 | Probado con tests |
+| Factura de proveedor digitada a mano | Factura de proveedor (01) con IGV desde la orden | HU-16 | Verificado con datos de demostración |
+| Liquidación del heladero en cuaderno y cálculo a mano | Variante estándar (pedido + devolución) | — | Documentada; sin prueba propia |
+| Descuadre de efectivo descontado al día siguiente | Diferencia registrada en la liquidación | HU-20, HU-21 | Pendiente: M2 (Fase 2) |
