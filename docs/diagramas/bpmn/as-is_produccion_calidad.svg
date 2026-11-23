@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1635" height="678" viewBox="0 0 1635 678" font-family="DejaVu Sans, Arial, sans-serif">
+<defs><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222"/></marker></defs>
+<rect width="1635" height="678" fill="#fff"/>
+<rect x="20" y="20" width="1595" height="600" fill="none" stroke="#222" stroke-width="1.5"/>
+<line x1="50" y1="20" x2="50" y2="620" stroke="#222"/>
+<g transform="rotate(-90 35 320.0)"><text x="35" y="324" text-anchor="middle" font-size="12" font-weight="bold">AS-IS · Producción y calidad</text></g>
+<line x1="72" y1="20" x2="72" y2="170" stroke="#222"/>
+<g transform="rotate(-90 61 95.0)"><text x="61" y="99" text-anchor="middle" font-size="11" font-weight="bold">Jefe de Producción</text></g>
+<line x1="50" y1="170" x2="1615" y2="170" stroke="#222"/>
+<line x1="72" y1="170" x2="72" y2="320" stroke="#222"/>
+<g transform="rotate(-90 61 245.0)"><text x="61" y="249" text-anchor="middle" font-size="11" font-weight="bold">Calidad</text></g>
+<line x1="50" y1="320" x2="1615" y2="320" stroke="#222"/>
+<line x1="72" y1="320" x2="72" y2="470" stroke="#222"/>
+<g transform="rotate(-90 61 395.0)"><text x="61" y="399" text-anchor="middle" font-size="11" font-weight="bold">Operario de línea</text></g>
+<line x1="50" y1="470" x2="1615" y2="470" stroke="#222"/>
+<line x1="72" y1="470" x2="72" y2="620" stroke="#222"/>
+<g transform="rotate(-90 61 545.0)"><text x="61" y="549" text-anchor="middle" font-size="11" font-weight="bold">Almacén</text></g>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="182,95 255,95"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="373,95 389,95 389,545 405,545"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="523,545 539,545 539,395 555,395"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="673,395 705,395"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="823,395 839,395 839,245 855,245"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="973,245 1039,245"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1089,245 1155,245"/>
+<text x="1095" y="236" font-size="11" font-weight="bold">No</text>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1064,270 1064,395 1155,395"/>
+<text x="1070" y="285" font-size="11" font-weight="bold">Sí</text>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1273,245 1346,245"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1273,395 1289,395 1289,545 1305,545"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1423,545 1496,545"/>
+<circle cx="164" cy="95" r="18.0" fill="#e8f5e9" stroke="#222" stroke-width="1.5"/><text x="164" y="128" text-anchor="middle" font-size="11" font-weight="normal">Llega la demanda del</text><text x="164" y="141" text-anchor="middle" font-size="11" font-weight="normal">mes o de la campaña</text>
+<rect x="255" y="58" width="118" height="74" rx="8" fill="#fde0dc" stroke="#c0392b" stroke-width="1.5"/><text x="314" y="79" text-anchor="middle" font-size="11" font-weight="normal">Programa la</text><text x="314" y="92" text-anchor="middle" font-size="11" font-weight="normal">producción en</text><text x="314" y="105" text-anchor="middle" font-size="11" font-weight="normal">Excel y imprime</text><text x="314" y="118" text-anchor="middle" font-size="11" font-weight="normal">la orden</text>
+<rect x="405" y="508" width="118" height="74" rx="8" fill="#fde0dc" stroke="#c0392b" stroke-width="1.5"/><text x="464" y="523" text-anchor="middle" font-size="11" font-weight="normal">Entrega los</text><text x="464" y="536" text-anchor="middle" font-size="11" font-weight="normal">insumos con un</text><text x="464" y="549" text-anchor="middle" font-size="11" font-weight="normal">vale de papel,</text><text x="464" y="562" text-anchor="middle" font-size="11" font-weight="normal">sin lote ni</text><text x="464" y="575" text-anchor="middle" font-size="11" font-weight="normal">vencimiento</text>
+<rect x="555" y="358" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="614" y="386" text-anchor="middle" font-size="11" font-weight="normal">Produce siguiendo</text><text x="614" y="399" text-anchor="middle" font-size="11" font-weight="normal">la fórmula</text><text x="614" y="412" text-anchor="middle" font-size="11" font-weight="normal">impresa</text>
+<rect x="705" y="358" width="118" height="74" rx="8" fill="#fde0dc" stroke="#c0392b" stroke-width="1.5"/><text x="764" y="379" text-anchor="middle" font-size="11" font-weight="normal">Anota a mano las</text><text x="764" y="392" text-anchor="middle" font-size="11" font-weight="normal">temperaturas de</text><text x="764" y="405" text-anchor="middle" font-size="11" font-weight="normal">cada etapa (80-85</text><text x="764" y="418" text-anchor="middle" font-size="11" font-weight="normal">°C)</text>
+<rect x="855" y="208" width="118" height="74" rx="8" fill="#fde0dc" stroke="#c0392b" stroke-width="1.5"/><text x="914" y="229" text-anchor="middle" font-size="11" font-weight="normal">Inspecciona una</text><text x="914" y="242" text-anchor="middle" font-size="11" font-weight="normal">muestra y llena</text><text x="914" y="255" text-anchor="middle" font-size="11" font-weight="normal">el formato en</text><text x="914" y="268" text-anchor="middle" font-size="11" font-weight="normal">papel</text>
+<polygon points="1064,220 1089,245 1064,270 1039,245" fill="#fff8e1" stroke="#222" stroke-width="1.5"/><path d="M1055,236 L1073,254 M1073,236 L1055,254" stroke="#222" stroke-width="2.5"/><text x="1064" y="204" text-anchor="middle" font-size="11" font-weight="bold">¿El lote cumple?</text>
+<rect x="1155" y="208" width="118" height="74" rx="8" fill="#fde0dc" stroke="#c0392b" stroke-width="1.5"/><text x="1214" y="229" text-anchor="middle" font-size="11" font-weight="normal">Decide a criterio</text><text x="1214" y="242" text-anchor="middle" font-size="11" font-weight="normal">si se reprocesa o</text><text x="1214" y="255" text-anchor="middle" font-size="11" font-weight="normal">se descarta, sin</text><text x="1214" y="268" text-anchor="middle" font-size="11" font-weight="normal">registro</text>
+<circle cx="1364" cy="245" r="18.0" fill="#e8f5e9" stroke="#222" stroke-width="4"/><text x="1364" y="278" text-anchor="middle" font-size="11" font-weight="normal">Lote reprocesado o</text><text x="1364" y="291" text-anchor="middle" font-size="11" font-weight="normal">descartado</text>
+<rect x="1155" y="358" width="118" height="74" rx="8" fill="#fde0dc" stroke="#c0392b" stroke-width="1.5"/><text x="1214" y="379" text-anchor="middle" font-size="11" font-weight="normal">Etiqueta el lote</text><text x="1214" y="392" text-anchor="middle" font-size="11" font-weight="normal">con un código</text><text x="1214" y="405" text-anchor="middle" font-size="11" font-weight="normal">manual y lo envía</text><text x="1214" y="418" text-anchor="middle" font-size="11" font-weight="normal">al almacén</text>
+<rect x="1305" y="508" width="118" height="74" rx="8" fill="#fde0dc" stroke="#c0392b" stroke-width="1.5"/><text x="1364" y="536" text-anchor="middle" font-size="11" font-weight="normal">Registra la</text><text x="1364" y="549" text-anchor="middle" font-size="11" font-weight="normal">entrada en el</text><text x="1364" y="562" text-anchor="middle" font-size="11" font-weight="normal">kárdex de Excel</text>
+<circle cx="1514" cy="545" r="18.0" fill="#e8f5e9" stroke="#222" stroke-width="4"/><text x="1514" y="578" text-anchor="middle" font-size="11" font-weight="normal">Producto terminado en</text><text x="1514" y="591" text-anchor="middle" font-size="11" font-weight="normal">almacén</text>
+<rect x="20" y="636" width="16" height="14" rx="3" fill="#fde0dc" stroke="#c0392b"/><text x="44" y="648" font-size="11">Punto débil de la situación actual (supuesto S7 del plan: los datos de procesos son ficticios y verosímiles)</text>
+</svg>
