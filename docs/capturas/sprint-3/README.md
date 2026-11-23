@@ -11,3 +11,12 @@ Tomadas el 23/11/2026 en la BD `donofrio` con los datos de `scripts/cargar_trans
 | `HU-23_vista_ventas_linea_canal_mes` | HU-23 | Vista guardada «Ventas por línea, canal y mes»: pivote por categoría, equipo de venta (canal) y mes, en soles y en unidades |
 | `HU-23_vista_produccion_producto_mes` | HU-23 | Vista guardada «Producción por producto y mes»: cantidad producida por producto y mes de inicio de la orden (agosto a noviembre) |
 | `HU-23_vista_stock_por_vencer` | HU-23 | Vista guardada «Stock por vencer (30 días)»: lotes con existencias que vencen en 30 días |
+
+## Capturas de HU-32 (Evelyn)
+
+Tomadas el 23/11/2026 en la BD `donofrio`, con los cinco tickets de ejemplo de la «Mesa de Servicios TI» (proyecto de la app Project de Community, cargado por `donofrio_base`).
+
+| Archivo | HU | Qué muestra |
+|---|---|---|
+| `HU-32_mesa_servicios_kanban` | HU-32 | Tablero Kanban de la mesa con las etapas Nuevo, En análisis, En atención, Resuelto y Cerrado (plegada); tickets abiertos con su tipo ITIL, prioridad en estrellas y fecha límite del SLA |
+| `HU-32_pivote_cumplimiento_sla` | HU-32 | Vista guardada «Cumplimiento del SLA por tipo de ticket»: 5 tickets por tipo (Incidente, Solicitud de servicio y Solicitud de acceso) y por estado del SLA (abierto, cumplido, incumplido) |
