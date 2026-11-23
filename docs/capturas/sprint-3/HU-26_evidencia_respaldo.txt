@@ -1,0 +1,51 @@
+# HU-26: evidencias de respaldo y restauración
+# Generado el 23/11/2026 15:04 sobre la base 'donofrio' (scripts/backup.sh, restore.sh y verificar_backup.sh)
+
+## scripts/backup.sh
+[2026-11-23 15:04:56] Respaldo de 'donofrio' en backups/ (donofrio_20261123_150455)
+[2026-11-23 15:04:57] pg_dump listo: 7,4M
+[2026-11-23 15:04:58] filestore listo: 5,4M
+[2026-11-23 15:04:58] Retención de 7 días: 0 archivo(s) borrado(s)
+[2026-11-23 15:04:58] Respaldo terminado en 2 s
+
+Respaldos de 'donofrio' en backups/:
+  2026-11-23 15:04  7,4M  donofrio_20261123_150455.dump
+  2026-11-23 15:04  5,4M  donofrio_20261123_150455_filestore.tar.gz
+
+## ls -l backups/
+-rw-rw-r-- 1 orlando orlando 7702337 2026-11-23 15:04 donofrio_20261123_150455.dump
+-rw-rw-r-- 1 orlando orlando     204 2026-11-23 15:04 donofrio_20261123_150455.sha256
+-rw-rw-r-- 1 orlando orlando 5644508 2026-11-23 15:04 donofrio_20261123_150455_filestore.tar.gz
+
+## scripts/restore.sh backups/<respaldo> (base nueva: donofrio_restaurada)
+[2026-11-23 15:04:59] Sumas de verificación correctas
+[2026-11-23 15:04:59] Creando la base 'donofrio_restaurada' y restaurando donofrio_20261123_150455.dump
+[2026-11-23 15:05:27] Restaurando el filestore de 'donofrio_restaurada'
+[2026-11-23 15:05:29] Base 'donofrio_restaurada' restaurada. Comprobación:
+  módulos instalados = 105
+  usuarios = 14
+  adjuntos = 751
+[2026-11-23 15:05:29] RTO medido: 31 s (objetivo: 7200 s)
+
+## Odoo carga la base restaurada
+2026-11-23 20:05:30,814 1 INFO donofrio_restaurada odoo.modules.loading: 1 modules loaded in 0.00s, 0 queries (+0 extra) 
+2026-11-23 20:05:31,419 1 INFO donofrio_restaurada odoo.modules.loading: 105 modules loaded in 0.58s, 0 queries (+0 extra) 
+2026-11-23 20:05:31,668 1 INFO donofrio_restaurada odoo.registry: Registry loaded in 0.873s 
+
+## scripts/verificar_backup.sh
+1) Respaldo de 'donofrio'
+  OK    dump, filestore y sumas generados (7,4M)
+2) Restauración en una BD nueva ('donofrio_verif_150532')
+[2026-11-23 15:05:46] RTO medido: 11 s (objetivo: 7200 s)
+  OK    restore.sh terminó bien
+3) La BD restaurada coincide con la original (módulos/usuarios/adjuntos/contactos y archivos del filestore)
+  OK    tablas: 105/14/751/33 = 105/14/751/33
+  OK    filestore: 505 archivos en las dos
+4) restore.sh no sobrescribe una BD existente
+  OK    se negó a sobrescribir 'donofrio_verif_150532'
+5) Sumas de verificación: un respaldo alterado se rechaza
+  OK    rechazó el respaldo alterado
+6) Retención de 7 días
+  OK    borró el de 8 días y conservó el de 6
+
+Respaldo y restauración verificados.

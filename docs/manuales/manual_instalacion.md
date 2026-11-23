@@ -167,6 +167,18 @@ Los usuarios de prueba (`DONOFRIO_USER_PASSWORD`) tienen 18 caracteres y cumplen
 
 > **Importante:** los datos de configuración se cargan con `noupdate`. Si un cambio modifica esos datos (por ejemplo las recetas), `-u` **no** los actualiza: hay que recrear la base (última fila). Si cambias `DONOFRIO_USER_PASSWORD`, también.
 
+### 7.1 Copias de seguridad y restauración
+
+```bash
+scripts/backup.sh                                   # respaldo ahora
+scripts/restore.sh backups/donofrio_AAAAMMDD_HHMMSS  # restaura en una BD nueva (donofrio_restaurada)
+scripts/verificar_backup.sh                          # prueba el ciclo completo con una BD temporal
+```
+
+`backup.sh` guarda en `backups/` (carpeta ignorada por git) tres archivos por corrida: el `.dump` de la base (`pg_dump -Fc`), el `_filestore.tar.gz` con los adjuntos y un `.sha256`; y borra los respaldos de más de 7 días. `restore.sh` **nunca sobrescribe**: crea una base nueva, comprueba las sumas, restaura la base y el filestore y muestra el tiempo (RTO medido; el objetivo es 2 horas). Para abrir la base restaurada en Odoo: `ODOO_DB=donofrio_restaurada docker compose up -d odoo` (y luego vuelve a dejar `ODOO_DB` como estaba).
+
+Para que sea diario, agrega al `crontab -e` del equipo (02:00): `0 2 * * * cd /ruta/a/ERP-Donofrio && scripts/backup.sh >> backups/backup.log 2>&1`. Para tener la copia fuera del equipo, define `BACKUP_DIR` en `.env` con una carpeta sincronizada (o copia `backups/` a un disco externo).
+
 ## 8. Problemas frecuentes
 
 | Síntoma | Causa probable | Solución |
