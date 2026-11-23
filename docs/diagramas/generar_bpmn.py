@@ -298,6 +298,98 @@ def to_be_recepcion_despacho():
     return p
 
 
+def to_be_venta_b2b():
+    """Fase 1: del embudo CRM a la factura cobrada, con precios por lista, entrega FEFO en 2 pasos e IGV."""
+    p = Proceso('to_be_venta_b2b', 'TO-BE · Venta a cliente B2B con Odoo estándar (Fase 1)',
+                ['Cliente', 'Vendedor', 'Jefe de Ventas', 'Almacén', 'Facturación'])
+    p.nodo('inicio', 'inicio', 'Un cliente muestra interés', 'Cliente', 0)
+    p.nodo('oportunidad', 'tarea', 'Registra la oportunidad en el embudo CRM de su canal', 'Vendedor', 1)
+    p.nodo('cotiza', 'tarea', 'Cotiza: Odoo aplica la lista de precios según cliente y fecha', 'Vendedor', 2)
+    p.nodo('especial', 'compuerta', '¿Pide descuento o crédito?', 'Vendedor', 3)
+    p.nodo('aprueba', 'tarea', 'Aprueba o rechaza la cotización en Odoo, con registro', 'Jefe de Ventas', 4)
+    p.nodo('confirma', 'tarea', 'El cliente acepta y se confirma el pedido: Odoo crea la entrega', 'Vendedor', 5)
+    p.nodo('pick', 'tarea', 'Pick y ship: reserva por FEFO y despacha con la guía de remisión', 'Almacén', 6)
+    p.nodo('recibe', 'tarea', 'Recibe la mercadería y firma la guía', 'Cliente', 7)
+    p.nodo('factura', 'tarea', 'Emite factura (01) o boleta (03) con IGV 18 %', 'Facturación', 8)
+    p.nodo('cobra', 'tarea', 'Registra el pago; Odoo concilia y marca la factura como pagada', 'Facturación', 9)
+    p.nodo('fin', 'fin', 'Pedido cerrado', 'Facturación', 10)
+    p.flujo('inicio', 'oportunidad')
+    p.flujo('oportunidad', 'cotiza')
+    p.flujo('cotiza', 'especial')
+    p.flujo('especial', 'aprueba', 'Sí', salida='abajo')
+    p.flujo('especial', 'confirma', 'No')
+    p.flujo('aprueba', 'confirma')
+    for a_, b_ in [('confirma', 'pick'), ('pick', 'recibe'), ('recibe', 'factura'), ('factura', 'cobra'), ('cobra', 'fin')]:
+        p.flujo(a_, b_)
+    return p
+
+
+def to_be_compra_insumos():
+    """Fase 1: regla mín./máx. que genera la RFQ, OC confirmada, recepción con lote y factura con IGV."""
+    p = Proceso('to_be_compra_insumos', 'TO-BE · Compra de insumos con Odoo estándar (Fase 1)',
+                ['Almacén', 'Compras', 'Proveedor', 'Finanzas'])
+    p.nodo('inicio', 'inicio', 'El stock de un insumo baja del mínimo', 'Almacén', 0)
+    p.nodo('regla', 'tarea', 'La regla mín./máx. calcula el faltante hasta el máximo', 'Almacén', 1)
+    p.nodo('rfq', 'tarea', 'Odoo genera una RFQ por proveedor, a cargo del Comprador', 'Compras', 2)
+    p.nodo('revisa', 'tarea', 'Revisa y confirma: la RFQ pasa a orden de compra', 'Compras', 3)
+    p.nodo('envia', 'tarea', 'Recibe la orden de compra por correo desde Odoo', 'Proveedor', 4)
+    p.nodo('entrega', 'tarea', 'Entrega los insumos con guía y factura', 'Proveedor', 5)
+    p.nodo('recibe', 'tarea', 'Recibe contra la OC y registra lote y vencimiento', 'Almacén', 6)
+    p.nodo('factura', 'tarea', 'Registra la factura del proveedor (01) con IGV 18 %', 'Finanzas', 7)
+    p.nodo('paga', 'tarea', 'Programa y registra el pago a la fecha de vencimiento', 'Finanzas', 8)
+    p.nodo('fin', 'fin', 'Compra cerrada', 'Finanzas', 9)
+    for a_, b_ in [('inicio', 'regla'), ('regla', 'rfq'), ('rfq', 'revisa'), ('revisa', 'envia'), ('envia', 'entrega'),
+                   ('entrega', 'recibe'), ('recibe', 'factura'), ('factura', 'paga'), ('paga', 'fin')]:
+        p.flujo(a_, b_)
+    return p
+
+
+def to_be_heladero():
+    """Fase 1 (alternativa estándar, sin M2): pedido al heladero con la lista «Heladero» y devolución estándar."""
+    p = Proceso('to_be_heladero', 'TO-BE · Heladero con Odoo estándar (Fase 1, sin M2)',
+                ['Heladero', 'Vendedor', 'Almacén', 'Facturación'])
+    p.nodo('inicio', 'inicio', 'Inicio de la jornada', 'Heladero', 0)
+    p.nodo('pide', 'tarea', 'Pide su carga de helados del día', 'Heladero', 1)
+    p.nodo('pedido', 'tarea', 'Crea y confirma el pedido con la lista «Heladero»', 'Vendedor', 2)
+    p.nodo('despacha', 'tarea', 'Entrega la carga con guía; Odoo descuenta por FEFO', 'Almacén', 3)
+    p.nodo('ruta', 'tarea', 'Sale a la ruta y vende', 'Heladero', 4)
+    p.nodo('vuelve', 'tarea', 'Regresa y entrega el sobrante y el efectivo', 'Heladero', 5)
+    p.nodo('devuelve', 'tarea', 'Registra la devolución: el sobrante vuelve al stock', 'Almacén', 6)
+    p.nodo('nota', 'tarea', 'Emite la nota de crédito por lo devuelto', 'Facturación', 7)
+    p.nodo('cobra', 'tarea', 'Cobra lo vendido y registra el pago de la factura', 'Facturación', 8)
+    p.nodo('fin', 'fin', 'Jornada cerrada', 'Facturación', 9)
+    for a_, b_ in [('inicio', 'pide'), ('pide', 'pedido'), ('pedido', 'despacha'), ('despacha', 'ruta'),
+                   ('ruta', 'vuelve'), ('vuelve', 'devuelve'), ('devuelve', 'nota'), ('nota', 'cobra'), ('cobra', 'fin')]:
+        p.flujo(a_, b_)
+    return p
+
+
+def to_be_heladero_m2():
+    """Con el módulo M2 (Fase 2): liquidación diaria que calcula lo vendido y crea el pedido."""
+    p = Proceso('to_be_heladero_m2', 'TO-BE · Heladero con liquidación diaria (M2, Fase 2)',
+                ['Heladero', 'Liquidador', 'Almacén', 'Caja'])
+    p.nodo('inicio', 'inicio', 'Inicio de la jornada', 'Heladero', 0)
+    p.nodo('abre', 'tarea', 'Abre la liquidación del heladero para la fecha (borrador)', 'Liquidador', 1, f2=True)
+    p.nodo('despacha', 'tarea', 'Registra lo despachado; Odoo descuenta el stock por FEFO', 'Almacén', 2, f2=True)
+    p.nodo('ruta', 'tarea', 'Sale a la ruta y vende', 'Heladero', 3)
+    p.nodo('vuelve', 'tarea', 'Regresa y entrega el sobrante y el efectivo', 'Heladero', 4)
+    p.nodo('registra', 'tarea', 'Registra devuelto y merma; Odoo calcula lo vendido y el importe', 'Liquidador', 5, f2=True)
+    p.nodo('cuadra', 'compuerta', '¿El efectivo cuadra?', 'Liquidador', 6)
+    p.nodo('diferencia', 'tarea', 'Recibe el efectivo y registra la diferencia', 'Caja', 7, f2=True)
+    p.nodo('confirma', 'tarea', 'Confirma la liquidación: Odoo crea y confirma el pedido de venta', 'Liquidador', 8, f2=True)
+    p.nodo('imprime', 'tarea', 'Imprime el PDF de la liquidación y lo firman las dos partes', 'Caja', 9, f2=True)
+    p.nodo('fin', 'fin', 'Liquidación cerrada', 'Caja', 10)
+    for a_, b_ in [('inicio', 'abre'), ('abre', 'despacha'), ('despacha', 'ruta'), ('ruta', 'vuelve'),
+                   ('vuelve', 'registra'), ('registra', 'cuadra')]:
+        p.flujo(a_, b_)
+    p.flujo('cuadra', 'diferencia', 'No', salida='abajo')
+    p.flujo('cuadra', 'confirma', 'Sí')
+    p.flujo('diferencia', 'confirma')
+    p.flujo('confirma', 'imprime')
+    p.flujo('imprime', 'fin')
+    return p
+
+
 PROCESOS = {
     'as-is_venta_b2b': venta_b2b,
     'as-is_liquidacion_heladero': liquidacion_heladero,
@@ -307,6 +399,10 @@ PROCESOS = {
     'to-be_produccion': to_be_produccion,
     'to-be_produccion_m1': to_be_produccion_m1,
     'to-be_recepcion_despacho': to_be_recepcion_despacho,
+    'to-be_venta_b2b': to_be_venta_b2b,
+    'to-be_compra_insumos': to_be_compra_insumos,
+    'to-be_heladero': to_be_heladero,
+    'to-be_heladero_m2': to_be_heladero_m2,
 }
 
 # ----------------------------------------------------------------------------- BPMN 2.0 XML

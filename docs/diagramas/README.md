@@ -2,7 +2,7 @@
 
 | Carpeta | Contenido | Herramienta | Responsable |
 |---|---|---|---|
-| `bpmn/` | BPMN AS-IS: venta B2B, liquidación del heladero y compra de insumos (Evelyn); producción y calidad, y recepción y despacho con cadena de frío (Orlando). BPMN TO-BE (Sprint 2, Orlando): producción con Odoo estándar, producción con inspección de calidad (M1) y recepción y despacho (`.bpmn`, `.svg`, `.png`) | `generar_bpmn.py` + bpmn.io | Evelyn y Orlando |
+| `bpmn/` | BPMN AS-IS: venta B2B, liquidación del heladero y compra de insumos (Evelyn); producción y calidad, y recepción y despacho con cadena de frío (Orlando). BPMN TO-BE (Sprint 2): producción con Odoo estándar, producción con inspección de calidad (M1) y recepción y despacho (Orlando); venta B2B, compra de insumos, heladero con Odoo estándar y heladero con liquidación diaria (M2) (Evelyn) (`.bpmn`, `.svg`, `.png`) | `generar_bpmn.py` + bpmn.io | Evelyn y Orlando |
 | `arquitectura/` | Arquitectura empresarial AS-IS y TO-BE (4.1.3) e infraestructura tecnológica (4.3.1) (`.svg`, `.png`) | `generar_arquitectura.py` | Orlando |
 | `cu/` | Casos de uso de ventas, heladeros y gerencia (Evelyn) y de logística y producción (Orlando) (`.puml` y `.png`) | PlantUML | Evelyn y Orlando |
 
