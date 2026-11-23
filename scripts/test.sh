@@ -37,7 +37,7 @@ docker compose run --rm -T odoo odoo -d "$db" -i "$lista" \
   --test-enable --test-tags "$tags" --stop-after-init --log-level=test >"$log" 2>&1 || rc=$?
 
 resumen="$(grep -E 'of [0-9]+ tests' "$log" | tail -n 1 || true)"
-errores="$(grep -E ' (ERROR|CRITICAL) |^FAIL:|Traceback' "$log" || true)"
+errores="$(grep -E -A12 ' (ERROR|CRITICAL) |^FAIL:|Traceback' "$log" | head -n 80 || true)"
 pruebas="$(grep -Eo 'of [0-9]+ tests' "$log" | tail -n 1 | grep -Eo '[0-9]+' || echo 0)"
 
 if [ -n "$errores" ]; then

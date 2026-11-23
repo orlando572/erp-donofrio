@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Crea la base de datos de Odoo e instala los módulos indicados (por defecto: base).
+# Crea la base de datos de Odoo e instala los módulos indicados (por defecto: donofrio_base).
 # Es idempotente: si la BD ya existe, no hace nada.
 # Uso: scripts/init_db.sh [modulo1,modulo2,...]
 set -euo pipefail
@@ -9,7 +9,7 @@ cd "$(dirname "$0")/.."
 set -a; . ./.env; set +a
 
 DB="${ODOO_DB:-donofrio}"
-MODULOS="${1:-base}"
+MODULOS="${1:-donofrio_base}"
 
 docker compose up -d --wait db
 
