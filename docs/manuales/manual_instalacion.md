@@ -86,8 +86,12 @@ Crea la base `donofrio` e instala `donofrio_base` (compañía peruana, almacenes
 
 Genera 16 semanas de inventario, recepciones, órdenes de producción con lote y reposiciones a Arequipa (del 3/8 al 22/11/2026, con semilla fija):
 
+Detén antes el servicio web: sus tareas programadas corren sobre la misma base y pueden chocar con el script (error «could not serialize access due to concurrent update»).
+
 ```bash
+docker compose stop odoo
 docker compose run --rm -T odoo odoo shell -d donofrio --no-http < scripts/cargar_transacciones.py
+docker compose up -d odoo
 ```
 
 Tarda entre 5 y 8 minutos. Si ya hay datos de demostración, el script no carga nada; para repetir la carga hay que recrear la base (sección 7).
@@ -136,6 +140,7 @@ Qué deberías ver en la interfaz:
 | Los usuarios por rol no pueden entrar | `DONOFRIO_USER_PASSWORD` no estaba en `.env` al crear la base | Define la variable y recrea la base (sección 7) |
 | Muy lento en Windows | El repositorio está en `C:\` o `/mnt/c` | Clónalo dentro de Ubuntu (`~/erp-donofrio`) |
 | `scripts/init_db.sh` dice que la base ya existe | La base se creó antes | Es normal; para recrearla, usa «Empezar de cero» |
+| El script de datos de demostración falla con «could not serialize access due to concurrent update» | El servicio web corría a la vez y sus tareas programadas tocaron las mismas existencias | Recrea la base (sección 7), detén el servicio web (`docker compose stop odoo`) y repite la carga |
 
 ## 9. Pendiente para el Cierre
 
