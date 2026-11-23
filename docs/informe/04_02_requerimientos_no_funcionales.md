@@ -27,7 +27,7 @@
 | | RNF009 | Seguridad: RBAC, HTTPS, gestor de BD deshabilitado, 2FA para el administrador | Seguridad (confidencialidad, autenticidad) | ZAP baseline + tests de acceso | HU-04, HU-27, HU-28 · S1-S3 | Parcial: RBAC con 10 roles y regla del CD Arequipa (HU-04), gestor de BD deshabilitado (`list_db = False`, HU-01); faltan HTTPS y 2FA (HU-27) |
 | **Otros** | RNF010 | Auditoría de cambios en datos sensibles (precios, pedidos; liquidaciones e inspecciones en F2) | Seguridad (responsabilidad) | Chatter + `auditlog` | HU-27 · S3 | Planificado |
 | | RNF011 | Disponibilidad ≥ 99 % en horario laboral; reinicio automático y *healthcheck* | Fiabilidad (disponibilidad) | Registros de `/web/health` y Uptime Kuma | HU-01, HU-32 · S1, S3 | Parcial: `restart: unless-stopped` y *healthcheck* en ambos servicios (HU-01); falta la medición |
-| | RNF012 | Reproducibilidad: el entorno completo se levanta con un comando | Flexibilidad (instalabilidad) | `docker compose up` en una PC limpia | HU-01, HU-29 · S1, S3 | **Implementado** en la PC de Orlando desde cero (BD nueva con `scripts/init_db.sh`); falta repetirlo en la PC de Evelyn |
+| | RNF012 | Reproducibilidad: el entorno completo se levanta con un comando | Flexibilidad (instalabilidad) | `docker compose up` en una PC limpia | HU-01, HU-29 · S1, S3 | **Implementado**: reproducido desde cero en la PC de Orlando y en la de Evelyn (`docker compose up -d --build` y `scripts/init_db.sh`; ambos servicios `healthy` y login de Odoo con respuesta 200) |
 | | RNF013 | Cumplimiento de la Ley 29733: datos personales ficticios y mínimos | Seguridad (confidencialidad) | Revisión de los datos maestros | Todas las HU de datos | Parcial: los datos de compañía, usuarios, productos, proveedores y empleados cargados son ficticios (RUC `20999999990` inventado, correos `.example.com`); se revisan los de cada HU posterior |
 
 ## Resumen por característica ISO/IEC 25010:2023
@@ -51,4 +51,4 @@
 | Parcial | RNF003, RNF005, RNF009, RNF011, RNF013 | 5 |
 | Planificado | RNF001, RNF002, RNF004, RNF006, RNF008, RNF010 | 6 |
 
-> **Límites declarados.** Los valores de rendimiento (p95 < 2 s, 20 usuarios) y de disponibilidad (99 %) son metas académicas sobre una instancia local; la medición real llega en el Sprint 3. RNF012 se da por *Implementado* solo con la evidencia de una PC; el criterio de la HU-01 pide además reproducirlo en la PC de la otra persona.
+> **Límites declarados.** Los valores de rendimiento (p95 < 2 s, 20 usuarios) y de disponibilidad (99 %) son metas académicas sobre una instancia local; la medición real llega en el Sprint 3. RNF012 se da por *Implementado* con la evidencia de dos PC distintas (Orlando y Evelyn). La parte de la imagen publicada en GHCR llega con la HU-29.

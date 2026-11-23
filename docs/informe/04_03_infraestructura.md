@@ -24,6 +24,18 @@ El ERP corre sobre contenedores en la PC de cada integrante (Ubuntu o Ubuntu den
 | **GHCR** | Registro de imágenes (`ghcr.io/orlando572/erp-donofrio`); una imagen y un zip del código por cada tag `v*` | Planificado (HU-29) |
 | **VM en la nube** | Oracle Free u otra, con Compose, Nginx y Let's Encrypt; despliegue por SSH desde Actions | Opcional (decisión abierta) |
 
+**Protección de la rama `develop`** (verificada en la configuración del repositorio el 23/11/2026):
+
+| Regla | Valor |
+|---|---|
+| Aprobaciones requeridas en el PR | 1, y se descartan si el código cambia o el PR cambia de rama base |
+| Checks obligatorios | `lint` y `test` (CI de GitHub Actions) |
+| Conversaciones resueltas | Obligatorio |
+| *Force push* y borrado de la rama | Prohibidos |
+| Aplica a administradores | **No** (`enforce_admins` desactivado): quien tiene rol de administrador puede saltarse las reglas |
+
+**Excepciones en el Sprint 1.** El CI llegó con la HU-02, así que los PR #152 y #153, abiertos antes, no podían reportar `lint` ni `test` y se fusionaron como administrador con la aprobación de Evelyn. Los PR #154, #155 y #156 se apilaron sobre el #153 y, al cambiar su base a `develop`, GitHub descartó sus aprobaciones; se fusionaron como administrador con el código ya revisado y los checks en verde. Los PR #157 y #158 esperaron una nueva aprobación. A partir del Sprint 2, los PR se abren directos contra `develop` para no repetir esas excepciones.
+
 **Seguridad de la infraestructura ya aplicada:** los puertos solo escuchan en `127.0.0.1`; el gestor de bases de datos de Odoo está deshabilitado (`list_db = False`); la contraseña maestra y las claves de PostgreSQL salen de `.env`, que no se sube al repositorio; el rol de la aplicación no es superusuario de PostgreSQL.
 
 ## 4.3.7 Máquinas virtuales y contenedores

@@ -28,7 +28,7 @@ Se ordena la arquitectura con las **cuatro capas de TOGAF** (negocio, datos, apl
 | Negocio | Compañía con localización peruana (RUC ficticio, PEN, IGV 18 %), 10 usuarios por rol con permisos mínimos, organigrama y empleados en RR. HH. (HU-05) | Los procesos de punta a punta (Sprint 2) y los dashboards (Sprint 3) |
 | Datos | Base PostgreSQL 16 con datos maestros cargados por código: 2 almacenes y 8 ubicaciones, 25 productos terminados, 22 insumos y 12 recetas con lote y vida útil | Transacciones de demostración (HU-16), réplica (HU-25) y respaldos (HU-26) |
 | Aplicación | Odoo 19 con Inventario, Manufactura, Ventas, Compras, Punto de venta, Facturación y RR. HH. instalados; módulo `donofrio_base` | CRM, Project y los dashboards; los módulos propios de la Fase 2 no se empiezan sin confirmación del equipo |
-| Tecnología | Docker Compose con Odoo y PostgreSQL, CI en cada PR, protección de `develop` con revisión y CI obligatorios | Nginx con TLS (HU-27), imágenes en GHCR y release `v1.0.0` (HU-29), VM en la nube (opcional) |
+| Tecnología | Docker Compose con Odoo y PostgreSQL, CI en cada PR, protección de `develop` (1 aprobación y los checks `lint` y `test` para quien colabora; ver [4.3.1](04_03_infraestructura.md)) | Nginx con TLS (HU-27), imágenes en GHCR y release `v1.0.0` (HU-29), VM en la nube (opcional) |
 
 ## Objetivos de COBIT 2019 que soporta la arquitectura
 
