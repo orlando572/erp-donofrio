@@ -16,3 +16,4 @@ from . import test_clientes
 from . import test_gerencia
 from . import test_hardening
 from . import test_flujo_venta
+from . import test_flujo_compra_produccion
