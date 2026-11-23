@@ -1,6 +1,6 @@
 # ERP D'Onofrio: Odoo 19.0 Community + PostgreSQL 16 (06 §6.5).
 # Uso: cp .env.example .env && docker compose up -d && scripts/init_db.sh
-# Los perfiles replica, proxy y tools llegan en HU-25 y HU-27.
+# Perfiles: replica (HU-25: docker compose --profile replica up -d); proxy y tools llegan en HU-27.
 name: erp-donofrio
 
 services:
@@ -17,6 +17,14 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./docker/postgres/primary/init-usuario-odoo.sh:/docker-entrypoint-initdb.d/10-usuario-odoo.sh:ro
+      - ./docker/postgres/primary/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+    # HU-25: pg_hba propio (permite al rol 'replicador') y límite del WAL que retiene el slot de la réplica
+    command:
+      - postgres
+      - -c
+      - hba_file=/etc/postgresql/pg_hba.conf
+      - -c
+      - max_slot_wal_keep_size=1GB
     ports:
       # Solo en localhost, para DBeaver
       - "127.0.0.1:${DB_PORT:-5432}:5432"
@@ -56,6 +64,33 @@ services:
       retries: 10
       start_period: 30s
 
+  # HU-25: standby en streaming (física, asíncrona), solo lectura. Perfil replica.
+  db-replica:
+    profiles: ["replica"]
+    image: postgres:16
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: ["/bin/bash", "/entrypoint-replica.sh"]
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Falta POSTGRES_PASSWORD en .env}
+      # Sin ':?' a propósito: solo se exige al levantar el perfil replica (lo valida el script)
+      REPLICADOR_PASSWORD: ${REPLICADOR_PASSWORD:-}
+    volumes:
+      - pgdata-replica:/var/lib/postgresql/data
+      - ./docker/postgres/replica/entrypoint-replica.sh:/entrypoint-replica.sh:ro
+    ports:
+      # Solo lectura, en localhost, para DBeaver
+      - "127.0.0.1:${REPLICA_PORT:-5433}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
 volumes:
   pgdata:
+  pgdata-replica:
   odoo-data:
