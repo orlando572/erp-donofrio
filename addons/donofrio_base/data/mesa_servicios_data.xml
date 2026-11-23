@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HU-32 (plan 09 §9.3): mesa de servicios TI para los usuarios del ERP, con la app Project de Community.
+     La app Helpdesk es Enterprise. Las prioridades de Odoo (Baja, Media, Alta, Urgente) son las P4 a P1 de la matriz ITIL;
+     la fecha límite se calcula sola según la prioridad (models/project_task.py). Los tickets de ejemplo son ficticios. -->
+<odoo noupdate="1">
+
+    <record id="proyecto_mesa_servicios" model="project.project">
+        <field name="name">Mesa de Servicios TI</field>
+        <field name="privacy_visibility">employees</field>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="description">Incidentes, solicitudes de servicio y solicitudes de acceso de los usuarios del ERP. El SLA de resolución depende de la prioridad: Urgente 4 h, Alta 8 h, Media 3 días, Baja 5 días.</field>
+    </record>
+
+    <!-- Etapas: Nuevo → En análisis → En atención → Resuelto → Cerrado (plegada) -->
+    <record id="etapa_ti_nuevo" model="project.task.type">
+        <field name="name">Nuevo</field>
+        <field name="sequence">1</field>
+        <field name="project_ids" eval="[Command.set([ref('proyecto_mesa_servicios')])]"/>
+    </record>
+    <record id="etapa_ti_analisis" model="project.task.type">
+        <field name="name">En análisis</field>
+        <field name="sequence">2</field>
+        <field name="project_ids" eval="[Command.set([ref('proyecto_mesa_servicios')])]"/>
+    </record>
+    <record id="etapa_ti_atencion" model="project.task.type">
+        <field name="name">En atención</field>
+        <field name="sequence">3</field>
+        <field name="project_ids" eval="[Command.set([ref('proyecto_mesa_servicios')])]"/>
+    </record>
+    <record id="etapa_ti_resuelto" model="project.task.type">
+        <field name="name">Resuelto</field>
+        <field name="sequence">4</field>
+        <field name="project_ids" eval="[Command.set([ref('proyecto_mesa_servicios')])]"/>
+    </record>
+    <record id="etapa_ti_cerrado" model="project.task.type">
+        <field name="name">Cerrado</field>
+        <field name="sequence">5</field>
+        <field name="fold" eval="True"/>
+        <field name="project_ids" eval="[Command.set([ref('proyecto_mesa_servicios')])]"/>
+    </record>
+
+    <!-- Tipos de ticket ITIL -->
+    <record id="etiqueta_ti_incidente" model="project.tags">
+        <field name="name">Incidente</field>
+        <field name="color">1</field>
+    </record>
+    <record id="etiqueta_ti_solicitud_servicio" model="project.tags">
+        <field name="name">Solicitud de servicio</field>
+        <field name="color">4</field>
+    </record>
+    <record id="etiqueta_ti_solicitud_acceso" model="project.tags">
+        <field name="name">Solicitud de acceso</field>
+        <field name="color">10</field>
+    </record>
+
+    <!-- Cinco tickets de ejemplo. Los cerrados traen su fecha límite y de cierre para mostrar el SLA cumplido e incumplido;
+         en los abiertos, la fecha límite la calcula el modelo según la prioridad. -->
+    <record id="ticket_ti_tablero" model="project.task">
+        <field name="name">Tablero gerencial no carga</field>
+        <field name="project_id" ref="proyecto_mesa_servicios"/>
+        <field name="stage_id" ref="etapa_ti_cerrado"/>
+        <field name="state">1_done</field>
+        <field name="priority">2</field>
+        <field name="tag_ids" eval="[Command.set([ref('etiqueta_ti_incidente')])]"/>
+        <field name="user_ids" eval="[Command.set([ref('base.user_admin')])]"/>
+        <field name="date_deadline">2026-11-20 20:00:00</field>
+        <field name="description">El gerente reporta que el panel de ventas queda en blanco al abrirlo. Causa: caché del navegador; se limpió y se confirmó.</field>
+    </record>
+    <record id="ticket_ti_acceso_liquidador" model="project.task">
+        <field name="name">Alta de un liquidador para la temporada de verano en el CD Arequipa</field>
+        <field name="project_id" ref="proyecto_mesa_servicios"/>
+        <field name="stage_id" ref="etapa_ti_cerrado"/>
+        <field name="state">1_done</field>
+        <field name="priority">1</field>
+        <field name="tag_ids" eval="[Command.set([ref('etiqueta_ti_solicitud_acceso')])]"/>
+        <field name="user_ids" eval="[Command.set([ref('base.user_admin')])]"/>
+        <field name="date_deadline">2026-11-19 15:00:00</field>
+        <field name="description">Se pide un usuario con el rol de liquidador de heladeros. Se atendió después del plazo porque faltó la aprobación del jefe.</field>
+    </record>
+    <record id="ticket_ti_boleta_pdv" model="project.task">
+        <field name="name">No imprime la boleta en el punto de venta</field>
+        <field name="project_id" ref="proyecto_mesa_servicios"/>
+        <field name="stage_id" ref="etapa_ti_atencion"/>
+        <field name="priority">3</field>
+        <field name="tag_ids" eval="[Command.set([ref('etiqueta_ti_incidente')])]"/>
+        <field name="user_ids" eval="[Command.set([ref('base.user_admin')])]"/>
+        <field name="description">La caja de la Heladería Av. Venezuela no puede imprimir el comprobante.</field>
+    </record>
+    <record id="ticket_ti_clave" model="project.task">
+        <field name="name">Restablecer la contraseña del jefe de almacén</field>
+        <field name="project_id" ref="proyecto_mesa_servicios"/>
+        <field name="stage_id" ref="etapa_ti_analisis"/>
+        <field name="priority">1</field>
+        <field name="tag_ids" eval="[Command.set([ref('etiqueta_ti_solicitud_acceso')])]"/>
+        <field name="user_ids" eval="[Command.set([ref('base.user_admin')])]"/>
+        <field name="description">El jefe de almacén olvidó su contraseña y su segundo factor.</field>
+    </record>
+    <record id="ticket_ti_reporte" model="project.task">
+        <field name="name">Nuevo reporte de ventas por zona</field>
+        <field name="project_id" ref="proyecto_mesa_servicios"/>
+        <field name="stage_id" ref="etapa_ti_nuevo"/>
+        <field name="priority">0</field>
+        <field name="tag_ids" eval="[Command.set([ref('etiqueta_ti_solicitud_servicio')])]"/>
+        <field name="description">La jefatura de ventas pide ver las ventas por distrito de Lima.</field>
+    </record>
+
+    <!-- Odoo pone la fecha de cierre al crear un ticket en la etapa plegada y pisa la que se escriba en el registro:
+         por eso la de los dos cerrados se escribe aparte, para mostrar un SLA cumplido y otro incumplido -->
+    <function model="project.task" name="write"
+              eval="([ref('ticket_ti_tablero')], {'date_end': '2026-11-20 17:30:00'})"/>
+    <function model="project.task" name="write"
+              eval="([ref('ticket_ti_acceso_liquidador')], {'date_end': '2026-11-21 14:00:00'})"/>
+
+    <!-- Pivote de cumplimiento del SLA: tipo de ticket por filas, estado del SLA por columnas -->
+    <record id="filtro_mesa_cumplimiento_sla" model="ir.filters">
+        <field name="name">Cumplimiento del SLA por tipo de ticket</field>
+        <field name="model_id">project.task</field>
+        <field name="action_id" ref="project.action_view_all_task"/>
+        <field name="domain" eval="[('project_id', '=', ref('proyecto_mesa_servicios'))]"/>
+        <field name="context">{'pivot_measures': ['__count'], 'pivot_row_groupby': ['tag_ids'], 'pivot_column_groupby': ['sla_estado']}</field>
+        <field name="sort">[]</field>
+    </record>
+
+</odoo>
