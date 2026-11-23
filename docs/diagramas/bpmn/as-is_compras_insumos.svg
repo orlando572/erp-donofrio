@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1935" height="828" viewBox="0 0 1935 828" font-family="DejaVu Sans, Arial, sans-serif">
+<defs><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222"/></marker></defs>
+<rect width="1935" height="828" fill="#fff"/>
+<rect x="20" y="20" width="1895" height="750" fill="none" stroke="#222" stroke-width="1.5"/>
+<line x1="50" y1="20" x2="50" y2="770" stroke="#222"/>
+<g transform="rotate(-90 35 395.0)"><text x="35" y="399" text-anchor="middle" font-size="12" font-weight="bold">AS-IS · Compra de insumos</text></g>
+<line x1="72" y1="20" x2="72" y2="170" stroke="#222"/>
+<g transform="rotate(-90 61 95.0)"><text x="61" y="99" text-anchor="middle" font-size="11" font-weight="bold">Almacén</text></g>
+<line x1="50" y1="170" x2="1915" y2="170" stroke="#222"/>
+<line x1="72" y1="170" x2="72" y2="320" stroke="#222"/>
+<g transform="rotate(-90 61 245.0)"><text x="61" y="249" text-anchor="middle" font-size="11" font-weight="bold">Compras</text></g>
+<line x1="50" y1="320" x2="1915" y2="320" stroke="#222"/>
+<line x1="72" y1="320" x2="72" y2="470" stroke="#222"/>
+<g transform="rotate(-90 61 395.0)"><text x="61" y="399" text-anchor="middle" font-size="11" font-weight="bold">Gerencia</text></g>
+<line x1="50" y1="470" x2="1915" y2="470" stroke="#222"/>
+<line x1="72" y1="470" x2="72" y2="620" stroke="#222"/>
+<g transform="rotate(-90 61 545.0)"><text x="61" y="549" text-anchor="middle" font-size="11" font-weight="bold">Proveedor</text></g>
+<line x1="50" y1="620" x2="1915" y2="620" stroke="#222"/>
+<line x1="72" y1="620" x2="72" y2="770" stroke="#222"/>
+<g transform="rotate(-90 61 695.0)"><text x="61" y="699" text-anchor="middle" font-size="11" font-weight="bold">Finanzas</text></g>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="182,95 255,95"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="373,95 405,95"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="523,95 539,95 539,245 555,245"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="673,245 689,245 689,545 705,545"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="823,545 839,545 839,245 855,245"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="973,245 989,245 989,395 1005,395"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1123,395 1139,395 1139,245 1155,245"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1273,245 1289,245 1289,545 1305,545"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1423,545 1439,545 1439,95 1455,95"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1573,95 1589,95 1589,695 1605,695"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1723,695 1796,695"/>
+<circle cx="164" cy="95" r="18.0" fill="#e8f5e9" stroke="#222" stroke-width="1.5"/><text x="164" y="128" text-anchor="middle" font-size="11" font-weight="normal">Baja el stock de un</text><text x="164" y="141" text-anchor="middle" font-size="11" font-weight="normal">insumo</text>
+<rect x="255" y="58" width="118" height="74" rx="8" fill="#fde0dc" stroke="#c0392b" stroke-width="1.5"/><text x="314" y="79" text-anchor="middle" font-size="11" font-weight="normal">Revisa el stock a</text><text x="314" y="92" text-anchor="middle" font-size="11" font-weight="normal">simple vista y</text><text x="314" y="105" text-anchor="middle" font-size="11" font-weight="normal">detecta el</text><text x="314" y="118" text-anchor="middle" font-size="11" font-weight="normal">faltante</text>
+<rect x="405" y="58" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="464" y="86" text-anchor="middle" font-size="11" font-weight="normal">Pide la compra</text><text x="464" y="99" text-anchor="middle" font-size="11" font-weight="normal">por correo a</text><text x="464" y="112" text-anchor="middle" font-size="11" font-weight="normal">Compras</text>
+<rect x="555" y="208" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="614" y="236" text-anchor="middle" font-size="11" font-weight="normal">Pide cotizaciones</text><text x="614" y="249" text-anchor="middle" font-size="11" font-weight="normal">por teléfono y</text><text x="614" y="262" text-anchor="middle" font-size="11" font-weight="normal">correo</text>
+<rect x="705" y="508" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="764" y="542" text-anchor="middle" font-size="11" font-weight="normal">Envía su</text><text x="764" y="555" text-anchor="middle" font-size="11" font-weight="normal">cotización</text>
+<rect x="855" y="208" width="118" height="74" rx="8" fill="#fde0dc" stroke="#c0392b" stroke-width="1.5"/><text x="914" y="242" text-anchor="middle" font-size="11" font-weight="normal">Compara en Excel</text><text x="914" y="255" text-anchor="middle" font-size="11" font-weight="normal">y elige proveedor</text>
+<rect x="1005" y="358" width="118" height="74" rx="8" fill="#fde0dc" stroke="#c0392b" stroke-width="1.5"/><text x="1064" y="386" text-anchor="middle" font-size="11" font-weight="normal">Firma la</text><text x="1064" y="399" text-anchor="middle" font-size="11" font-weight="normal">aprobación en</text><text x="1064" y="412" text-anchor="middle" font-size="11" font-weight="normal">papel</text>
+<rect x="1155" y="208" width="118" height="74" rx="8" fill="#fde0dc" stroke="#c0392b" stroke-width="1.5"/><text x="1214" y="236" text-anchor="middle" font-size="11" font-weight="normal">Emite la orden de</text><text x="1214" y="249" text-anchor="middle" font-size="11" font-weight="normal">compra en Word y</text><text x="1214" y="262" text-anchor="middle" font-size="11" font-weight="normal">la envía</text>
+<rect x="1305" y="508" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="1364" y="536" text-anchor="middle" font-size="11" font-weight="normal">Entrega los</text><text x="1364" y="549" text-anchor="middle" font-size="11" font-weight="normal">insumos con guía</text><text x="1364" y="562" text-anchor="middle" font-size="11" font-weight="normal">y factura</text>
+<rect x="1455" y="58" width="118" height="74" rx="8" fill="#fde0dc" stroke="#c0392b" stroke-width="1.5"/><text x="1514" y="79" text-anchor="middle" font-size="11" font-weight="normal">Recibe y firma la</text><text x="1514" y="92" text-anchor="middle" font-size="11" font-weight="normal">guía, sin</text><text x="1514" y="105" text-anchor="middle" font-size="11" font-weight="normal">registrar lote ni</text><text x="1514" y="118" text-anchor="middle" font-size="11" font-weight="normal">vencimiento</text>
+<rect x="1605" y="658" width="118" height="74" rx="8" fill="#fde0dc" stroke="#c0392b" stroke-width="1.5"/><text x="1664" y="686" text-anchor="middle" font-size="11" font-weight="normal">Digita la factura</text><text x="1664" y="699" text-anchor="middle" font-size="11" font-weight="normal">del proveedor y</text><text x="1664" y="712" text-anchor="middle" font-size="11" font-weight="normal">programa el pago</text>
+<circle cx="1814" cy="695" r="18.0" fill="#e8f5e9" stroke="#222" stroke-width="4"/><text x="1814" y="735" text-anchor="middle" font-size="11" font-weight="normal">Compra cerrada</text>
+<rect x="20" y="786" width="16" height="14" rx="3" fill="#fde0dc" stroke="#c0392b"/><text x="44" y="798" font-size="11">Punto débil de la situación actual (supuesto S7 del plan: los datos de procesos son ficticios y verosímiles)</text>
+</svg>
