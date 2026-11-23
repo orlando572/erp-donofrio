@@ -69,6 +69,7 @@ def crear_punto_de_venta(env):
     Va en el hook y no en un XML porque necesita los diarios y cuentas del plan contable, que se
     cargan al terminar de instalar el módulo (ver ``_programar_plan_contable``). Es idempotente.
     """
+    _habilitar_productos_en_pdv(env)
     if env.ref('donofrio_base.pos_config_venezuela', raise_if_not_found=False):
         return
     compania = env.ref('base.main_company')
@@ -92,3 +93,16 @@ def crear_punto_de_venta(env):
             ('pos_config_venezuela', config),
         )
     ])
+
+
+def _habilitar_productos_en_pdv(env):
+    """Marca los productos terminados como disponibles en el PdV; sin esto el catálogo del cajero sale vacío.
+
+    Los insumos no se venden en mostrador. Se hace aquí y no en ``productos_data.xml`` porque esos
+    registros son ``noupdate`` y un XML no los cambiaría en una base que ya existe.
+    """
+    terminados = env['product.template'].search([
+        ('categ_id', 'child_of', env.ref('donofrio_base.cat_terminados').id),
+        ('available_in_pos', '=', False),
+    ])
+    terminados.write({'available_in_pos': True})

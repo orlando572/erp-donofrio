@@ -10,6 +10,7 @@ class TestPuntoDeVenta(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.config = cls.env.ref('donofrio_base.pos_config_venezuela')
+        cls.cajero = cls.env.ref('donofrio_base.user_cajero_pdv')
         cls.efectivo = cls.env.ref('donofrio_base.pdv_metodo_efectivo')
         cls.yape = cls.env.ref('donofrio_base.pdv_metodo_yape')
         cls.helado = cls.env.ref('donofrio_base.pt_h01').product_variant_id
@@ -20,13 +21,14 @@ class TestPuntoDeVenta(TransactionCase):
             'vat': '12345678',
         })
 
-    def _abrir_sesion(self, efectivo_inicial=0.0):
-        self.config.open_ui()
-        sesion = self.config.current_session_id
+    def _abrir_sesion(self, efectivo_inicial=0.0, usuario=None):
+        config = self.config.with_user(usuario) if usuario else self.config
+        config.open_ui()
+        sesion = config.current_session_id
         sesion.set_opening_control(efectivo_inicial, None)
         return sesion
 
-    def _vender(self, sesion, cantidad, metodo, cliente=False, boleta=False):
+    def _vender(self, sesion, cantidad, metodo, cliente=False, boleta=False, usuario=None, lote=None):
         """Registra una venta como lo hace la interfaz del PdV y devuelve el pedido."""
         precio = self.config.pricelist_id._get_product_price(self.helado, cantidad)
         impuestos = self.helado.taxes_id.filtered_domain(self.env['account.tax']._check_company_domain(self.env.company))
@@ -41,7 +43,7 @@ class TestPuntoDeVenta(TransactionCase):
             'partner_id': cliente.id if cliente else False, 'to_invoice': boleta,
             'fiscal_position_id': False,
             'lines': [(0, 0, {
-                'id': 1, 'pack_lot_ids': [], 'price_unit': precio, 'product_id': self.helado.id, 'qty': cantidad,
+                'id': 1, 'pack_lot_ids': [[0, 0, {'lot_name': lote}]] if lote else [], 'price_unit': precio, 'product_id': self.helado.id, 'qty': cantidad,
                 'price_subtotal': calculo['total_excluded'], 'price_subtotal_incl': total,
                 'tax_ids': [(6, 0, impuestos.ids)],
             })],
@@ -49,7 +51,8 @@ class TestPuntoDeVenta(TransactionCase):
                 'amount': total, 'name': fields.Datetime.now(), 'payment_method_id': metodo.id,
             })],
         }
-        resultado = self.env['pos.order'].sync_from_ui([datos])
+        pedidos = self.env['pos.order'].with_user(usuario) if usuario else self.env['pos.order']
+        resultado = pedidos.sync_from_ui([datos])
         return self.env['pos.order'].browse(resultado['pos.order'][0]['id']), total
 
     def test_pdv_con_efectivo_y_yape(self):
@@ -58,6 +61,15 @@ class TestPuntoDeVenta(TransactionCase):
         self.assertTrue(self.efectivo.is_cash_count)
         self.assertFalse(self.yape.is_cash_count)
         self.assertEqual(self.config.picking_type_id.warehouse_id, self.env.ref('stock.warehouse0'))
+
+    def test_catalogo_del_pdv_son_los_productos_terminados(self):
+        terminados = self.env['product.template'].search([
+            ('categ_id', 'child_of', self.env.ref('donofrio_base.cat_terminados').id)])
+        insumos = self.env['product.template'].search([
+            ('categ_id', 'child_of', self.env.ref('donofrio_base.cat_insumos').id)])
+        self.assertTrue(terminados)
+        self.assertTrue(all(terminados.mapped('available_in_pos')), 'El cajero debe poder vender todo producto terminado')
+        self.assertFalse(any(insumos.mapped('available_in_pos')), 'Los insumos no se venden en el PdV')
 
     def test_boleta_a_consumidor_final(self):
         sesion = self._abrir_sesion()
@@ -85,4 +97,17 @@ class TestPuntoDeVenta(TransactionCase):
         resultado = sesion.close_session_from_ui()
         self.assertTrue(resultado['successful'], resultado)
         self.assertEqual(sesion.state, 'closed')
+        self.assertAlmostEqual(sesion.cash_register_difference, 0.0)
+
+    def test_cajero_vende_con_lote_y_boleta_sin_permisos_de_inventario(self):
+        """Los productos terminados llevan lote: el cajero, que no es usuario de Inventario, debe poder venderlos."""
+        sesion = self._abrir_sesion(usuario=self.cajero)
+        pedido, total = self._vender(
+            sesion, 1, self.efectivo, self.consumidor_final, boleta=True, usuario=self.cajero, lote='LOTE-CAJERO-1')
+        self.assertEqual(pedido.account_move.l10n_latam_document_type_id.code, '03')
+        self.assertEqual(pedido.lines.pack_lot_ids.lot_name, 'LOTE-CAJERO-1')
+        sesion = sesion.with_user(self.cajero)
+        sesion.post_closing_cash_details(total)
+        resultado = sesion.close_session_from_ui()
+        self.assertTrue(resultado['successful'], resultado)
         self.assertAlmostEqual(sesion.cash_register_difference, 0.0)
