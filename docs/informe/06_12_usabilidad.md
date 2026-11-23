@@ -1,6 +1,6 @@
 # 6.12 Pruebas de usabilidad
 
-> **Estado:** método e instrumentos listos; **faltan las mediciones con las 5 personas** · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [04 §4.4](../plan/04_scrum_pmbok.md) (HU-30) · **Requisito:** RNF003
+> **Estado:** método e instrumentos en borrador; **se harán la revisión por Orlando y Evelyn, el piloto y la iteración del plan, y después las mediciones con las 5 personas** · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [04 §4.4](../plan/04_scrum_pmbok.md) (HU-30) · **Requisito:** RNF003
 
 ## Método
 
@@ -18,6 +18,10 @@ El detalle (participantes, entorno, consignas, criterios de éxito y limitacione
 ## Cómo se procesan los datos
 
 `scripts/usabilidad_sus.py` lee el CSV de resultados y calcula el SUS de cada persona (de 0 a 100), el promedio y la mediana, la tasa de éxito y el tiempo mediano de cada tarea frente a su objetivo. La fórmula está verificada con casos conocidos (`--autotest`: todo 3 da 50; la mejor respuesta, 100; la peor, 0).
+
+## Revisión e iteración antes de las pruebas
+
+Antes de llamar a las 5 personas, el plan pasa por una revisión cruzada (Orlando y Evelyn), una prueba piloto de las cuatro tareas con la interfaz real y una iteración que corrige lo encontrado. El detalle está en [`plan_de_pruebas.md`](../usabilidad/plan_de_pruebas.md). Los datos del piloto no se cuentan en los resultados.
 
 ## Resultados
 

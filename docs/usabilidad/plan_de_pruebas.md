@@ -1,6 +1,6 @@
 # HU-30: Plan de pruebas de usabilidad (6.12, RNF003)
 
-> **Estado:** preparado el 23/11/2026 · **Responsable:** Evelyn (PO) · **Participantes:** 5 personas reales, **todavía sin reclutar ni medir**
+> **Estado:** borrador del 23/11/2026, **en revisión y en iteración** · **Responsable:** Evelyn (PO) · **Revisa:** Orlando · **Participantes:** 5 personas reales, que harán la prueba **después de la revisión y de la iteración** descritas más abajo
 >
 > RNF003: interfaz en español, tareas clave en ≤ 3 pasos y **SUS ≥ 70**, con 5 usuarios y 4 tareas cronometradas.
 
@@ -67,9 +67,16 @@ El script [`scripts/usabilidad_sus.py`](../../scripts/usabilidad_sus.py) lee el 
 python3 scripts/usabilidad_sus.py docs/usabilidad/resultados.csv
 ```
 
-## Prueba piloto (antes de las cinco personas)
+## Revisión e iteración antes de las cinco personas
 
-Una persona del equipo que no haya armado esa parte hace las cuatro tareas, para confirmar que: las consignas se entienden, los pasos y tiempos esperados son razonables, y los usuarios y datos de cada tarea existen. Lo que salga se corrige antes de empezar; los datos del piloto **no** cuentan.
+Las pruebas con las 5 personas se harán **después** de estos pasos, para no gastar a los participantes con un plan que todavía tiene errores:
+
+1. **Revisión del plan por Orlando y por Evelyn** (revisión cruzada de este PR): las consignas, los criterios de éxito, los tiempos objetivo, el cuestionario y el script de cálculo.
+2. **Prueba piloto de las cuatro tareas** con la interfaz real, hecha por alguien del equipo que no haya armado esa parte, para confirmar que las consignas se entienden, que los pasos y tiempos esperados son razonables y que los usuarios y datos de cada tarea existen. Los datos del piloto **no** cuentan en los resultados.
+3. **Iteración:** se corrige lo que salga de la revisión y del piloto (consignas, criterios, tiempos, datos de partida o pantallas de inicio) y se actualiza este documento. Si el cambio es grande, se repite el piloto de esa tarea.
+4. **Pruebas con las 5 personas**, con el plan ya corregido, y cálculo del SUS.
+
+Lo que ya se corrigió con una primera revisión de la tarea 1 en la interfaz: el equipo de ventas no se elige en el formulario de la oportunidad, así que la consigna usa la etiqueta «Bodega»; el formulario rápido del «+» no tiene la etiqueta; y entre persona y persona hay que archivar la oportunidad y el contacto de prueba. Las otras tres tareas **siguen pendientes de este piloto**.
 
 ## Limitaciones previstas
 
