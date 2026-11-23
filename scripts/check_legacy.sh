@@ -5,4 +5,5 @@
 # Uso: scripts/check_legacy.sh [ruta ...]   (por defecto: addons)
 set -euo pipefail
 cd "$(dirname "$0")/.."
-exec python3 .claude/hooks/bloquear_legacy.py --scan "$@"
+PY="$(command -v python3 || command -v python)" || { echo "Falta Python (python3 o python)" >&2; exit 1; }
+exec "$PY" .claude/hooks/bloquear_legacy.py --scan "$@"
