@@ -42,6 +42,15 @@ Cada tarea se lee tal cual, sin decir dónde hacer clic. Los pasos esperados son
 
 Todo se registra en [`resultados_plantilla.csv`](resultados_plantilla.csv) (una fila por persona).
 
+## Reinicio entre personas
+
+Cada persona debe partir de lo mismo. Al terminar con una, el moderador:
+
+1. **Archiva la oportunidad «Bodega Don Pepe»** (T1).
+2. **Archiva el contacto «Bodega Don Pepe»**: el «+» del embudo lo crea junto con la oportunidad, y si queda, la persona siguiente lo encontraría ya hecho.
+3. **Cancela el pedido** de las 100 paletas de fresa (T2).
+4. Deja abierta la sesión del PdV y las tres ventanas en su pantalla de partida (la venta de T3 queda registrada; no hace falta borrarla).
+
 ## Cuestionario SUS
 
 Al terminar las cuatro tareas, cada persona responde las 10 preguntas del [formulario SUS](formulario_sus.md), en una escala de 1 (muy en desacuerdo) a 5 (muy de acuerdo). Se puede pasar por Google Forms (el plan lo indica) copiando los enunciados del archivo; el resultado se pasa al mismo CSV.
