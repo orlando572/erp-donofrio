@@ -23,9 +23,9 @@ Necesidad del negocio → RF / RNF → Historia de usuario (HU) → Épica (issu
 
 | Área | ID | Requerimiento funcional | Fase | HU | Estado | Prioridad |
 |---|---|---|---|---|---|---|
-| **Marketing y Ventas** | RF001 | Registrar oportunidades por canal en un embudo CRM | F1 | HU-08 (HU-31 opcional) | Planificado (S2) | Must |
-| | RF002 | Cotizar y confirmar pedidos con listas de precios por canal y temporada | F1 | HU-09 | Planificado (S2) | Must |
-| | RF003 | Vender en el punto de venta de la tienda de planta con boleta | F1 | HU-10 | Planificado (S2) | Must |
+| **Marketing y Ventas** | RF001 | Registrar oportunidades por canal en un embudo CRM | F1 | HU-08 (HU-31 opcional) | Implementado (S2) | Must |
+| | RF002 | Cotizar y confirmar pedidos con listas de precios por canal y temporada | F1 | HU-09 | Implementado (S2) | Must |
+| | RF003 | Vender en el punto de venta de la tienda de planta con boleta | F1 | HU-10 | Implementado (S2) | Must |
 | | RF004 | Liquidar diariamente a los heladeros ambulantes | **F2** (`donofrio_heladeros`). Sin la F2 se cubre en parte: pedido de venta al heladero con la lista «Heladero» + devolución estándar | HU-20, HU-21 | Diseñado – trabajo futuro | Must (en F2) |
 | **Logística y Almacén** | RF005 | Gestionar almacenes y ubicaciones con cámaras de frío | F1 | HU-06 | Implementado (HU-06) | Must |
 | | RF006 | Controlar lotes con fecha de vencimiento y salida FEFO | F1 | HU-11 | Planificado (S2) | Must |
@@ -37,8 +37,8 @@ Necesidad del negocio → RF / RNF → Historia de usuario (HU) → Épica (issu
 | | RF012 | Emitir el certificado de calidad del lote | **F2** (`donofrio_calidad`) | HU-18 | Diseñado – trabajo futuro | Must (en F2) |
 | **Dirección / Gerencia** | RF013 | Tablero gerencial de KPIs | F1 con los dashboards estándar de Community; **F2** con el tablero OWL propio | HU-23 (F1), HU-22 (F2) | Planificado (S3) en F1; el tablero OWL queda como trabajo futuro | Must |
 | | RF014 | Análisis por línea, canal y temporada | F1 | HU-23 | Planificado (S3) | Must |
-| **Otros: Compras, Finanzas, RR. HH., TI** | RF015 | Comprar insumos con reabastecimiento mín./máx. | F1 | HU-13 | Planificado (S2) | Must |
-| | RF016 | Emitir facturas y boletas con IGV (`l10n_pe`) | F1 | HU-03, HU-15 | En curso (HU-03 implementada; HU-15 en S2) | Must |
+| **Otros: Compras, Finanzas, RR. HH., TI** | RF015 | Comprar insumos con reabastecimiento mín./máx. | F1 | HU-13 | Implementado (S2) | Must |
+| | RF016 | Emitir facturas y boletas con IGV (`l10n_pe`) | F1 | HU-03, HU-15 | Implementado (HU-03 y HU-15) | Must |
 | | RF017 | Gestionar el organigrama, empleados y puestos | F1 | HU-05 | Implementado (HU-05, PR #160) | Must |
 | | RF018 | Gestionar usuarios y roles por área | F1 | HU-04 | Implementado (HU-04) | Must |
 
