@@ -19,6 +19,7 @@ Todos los datos (RUC, clientes, empleados, precios) son ficticios.
         'security/donofrio_security.xml',
         'data/usuarios_data.xml',
         'data/productos_data.xml',
+        'data/precios_data.xml',
         'data/produccion_data.xml',
         'data/rrhh_data.xml',
     ],
