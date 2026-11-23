@@ -35,8 +35,8 @@ Necesidad del negocio → RF / RNF → Historia de usuario (HU) → Épica (issu
 | | RF010 | Planificar y ejecutar órdenes de producción con lote | F1 | HU-14 | Planificado (S2) | Must |
 | | RF011 | Inspeccionar la calidad por puntos de control ligados a la OP y al lote | **F2** (`donofrio_calidad`) | HU-17 | Diseñado – trabajo futuro | Must (en F2) |
 | | RF012 | Emitir el certificado de calidad del lote | **F2** (`donofrio_calidad`) | HU-18 | Diseñado – trabajo futuro | Must (en F2) |
-| **Dirección / Gerencia** | RF013 | Tablero gerencial de KPIs | F1 con los dashboards estándar de Community; **F2** con el tablero OWL propio | HU-23 (F1), HU-22 (F2) | Planificado (S3) en F1; el tablero OWL queda como trabajo futuro | Must |
-| | RF014 | Análisis por línea, canal y temporada | F1 | HU-23 | Planificado (S3) | Must |
+| **Dirección / Gerencia** | RF013 | Tablero gerencial de KPIs | F1 con los dashboards estándar de Community; **F2** con el tablero OWL propio | HU-23 (F1), HU-22 (F2) | Implementado (S3, HU-23) en F1; el tablero OWL queda como trabajo futuro | Must |
+| | RF014 | Análisis por línea, canal y temporada | F1 | HU-23 | Implementado (S3, HU-23) | Must |
 | **Otros: Compras, Finanzas, RR. HH., TI** | RF015 | Comprar insumos con reabastecimiento mín./máx. | F1 | HU-13 | Implementado (S2) | Must |
 | | RF016 | Emitir facturas y boletas con IGV (`l10n_pe`) | F1 | HU-03, HU-15 | Implementado (HU-03 y HU-15) | Must |
 | | RF017 | Gestionar el organigrama, empleados y puestos | F1 | HU-05 | Implementado (HU-05, PR #160) | Must |

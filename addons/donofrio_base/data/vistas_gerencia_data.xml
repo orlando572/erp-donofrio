@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HU-23: vistas guardadas (pivotes y gráficos) para la gerencia, compartidas con todos los usuarios.
+     Se cargan junto a los dashboards estándar de Community (spreadsheet_dashboard_*), que se instalan solos.
+     Sin `user_ids` el filtro es de todos; con `action_id` aparece en «Favoritos» de esa pantalla. -->
+<odoo noupdate="1">
+
+    <!-- Ventas por línea (categoría), canal (equipo de venta) y mes -->
+    <record id="filtro_ventas_linea_canal_mes" model="ir.filters">
+        <field name="name">Ventas por línea, canal y mes</field>
+        <field name="model_id">sale.report</field>
+        <field name="action_id" ref="sale.action_order_report_all"/>
+        <field name="domain">[('state', 'in', ('sale', 'done'))]</field>
+        <field name="context">{'pivot_measures': ['price_subtotal', 'product_uom_qty'], 'pivot_row_groupby': ['categ_id', 'team_id'], 'pivot_column_groupby': ['date:month']}</field>
+        <field name="sort">[]</field>
+    </record>
+
+    <record id="filtro_ventas_canal_mes_grafico" model="ir.filters">
+        <field name="name">Ventas por canal y mes (gráfico)</field>
+        <field name="model_id">sale.report</field>
+        <field name="action_id" ref="sale.action_order_report_all"/>
+        <field name="domain">[('state', 'in', ('sale', 'done'))]</field>
+        <field name="context">{'graph_mode': 'bar', 'graph_measure': 'price_subtotal', 'graph_groupbys': ['date:month', 'team_id']}</field>
+        <field name="sort">[]</field>
+    </record>
+
+    <!-- Producción por línea: una orden no guarda su categoría, así que la línea es el producto.
+         El mes es el de inicio de la orden (`date_start`): la fecha de fin la pone el reloj real del servidor. -->
+    <record id="filtro_produccion_por_linea" model="ir.filters">
+        <field name="name">Producción por producto y mes</field>
+        <field name="model_id">mrp.production</field>
+        <field name="action_id" ref="mrp.mrp_production_action"/>
+        <field name="domain">[('state', '=', 'done')]</field>
+        <field name="context">{'pivot_measures': ['product_qty'], 'pivot_row_groupby': ['product_id'], 'pivot_column_groupby': ['date_start:month']}</field>
+        <field name="sort">[]</field>
+    </record>
+
+    <!-- Stock por vencer: lotes con existencias que vencen en los próximos 30 días -->
+    <record id="filtro_stock_por_vencer" model="ir.filters">
+        <field name="name">Stock por vencer (30 días)</field>
+        <field name="model_id">stock.lot</field>
+        <field name="action_id" ref="stock.action_production_lot_form"/>
+        <field name="domain">[('product_qty', '>', 0), ('expiration_date', '&lt;=', (context_today() + relativedelta(days=30)).strftime('%Y-%m-%d'))]</field>
+        <field name="context">{}</field>
+        <field name="sort">["expiration_date asc"]</field>
+    </record>
+
+</odoo>
