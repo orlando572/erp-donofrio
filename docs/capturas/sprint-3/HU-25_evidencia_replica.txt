@@ -1,0 +1,49 @@
+# HU-25: evidencias de la réplica en streaming
+# Generado el 23/11/2026 15:01 con scripts/verificar_replica.sh y consultas a la base 'donofrio'
+
+## docker compose --profile replica ps
+SERVICE      IMAGE                    STATUS                        PORTS
+db           postgres:16              Up About a minute (healthy)   127.0.0.1:5432->5432/tcp
+db-replica   postgres:16              Up About a minute (healthy)   127.0.0.1:5433->5432/tcp
+odoo         erp-donofrio/odoo:19.0   Up 4 hours (healthy)          127.0.0.1:8069->8069/tcp, 127.0.0.1:8072->8072/tcp, 8071/tcp
+
+## scripts/verificar_replica.sh
+1) Primario: pg_stat_replication
+172.19.0.4|streaming|async|
+  OK    la réplica está en streaming (asíncrona)
+2) Réplica: pg_is_in_recovery()
+  OK    la réplica está en recuperación (standby)
+3) Un dato escrito en el primario se lee en la réplica
+  OK    'hu25_1795464072' llegó a la réplica
+4) La réplica rechaza escrituras (solo lectura)
+  ERROR:  cannot execute INSERT in a read-only transaction
+  OK    INSERT en la réplica rechazado
+5) El rol de Odoo no es superusuario ni de replicación
+  OK    el rol 'odoo' no puede replicar ni es superusuario
+
+Réplica verificada: todas las comprobaciones pasaron.
+
+## Primario: SELECT client_addr, state, sync_state, replay_lag, slot FROM pg_stat_replication
+ client_addr |   state   | sync_state |   replay_lag    |    slot_name     | active 
+-------------+-----------+------------+-----------------+------------------+--------
+ 172.19.0.4  | streaming | async      | 00:00:00.002255 | donofrio_replica | t
+(1 row)
+
+## Réplica: SELECT pg_is_in_recovery()
+ pg_is_in_recovery 
+-------------------
+ t
+(1 row)
+
+## Datos de Odoo (base donofrio) en primario y réplica
+-- db
+product_template=48
+sale_order=0
+stock_lot=488
+-- db-replica
+product_template=48
+sale_order=0
+stock_lot=488
+
+## Escritura en la réplica (base donofrio, rol odoo)
+ERROR:  cannot execute UPDATE in a read-only transaction
