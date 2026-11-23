@@ -14,7 +14,8 @@ permissions:
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  # Solo se cancelan las corridas viejas de un PR; en develop y main cada commit tiene su corrida completa
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   lint:
