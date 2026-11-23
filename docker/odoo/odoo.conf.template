@@ -1,7 +1,8 @@
-; Plantilla de configuración de Odoo. entrypoint.sh reemplaza ${ODOO_DB} y ${ODOO_ADMIN_PASSWD}.
+; Plantilla de configuración de Odoo. entrypoint.sh reemplaza ${ODOO_DB}, ${ODOO_ADMIN_PASSWD}, ${ODOO_WORKERS} y ${ODOO_PROXY_MODE}.
 ; La conexión a PostgreSQL (db_host, db_user, db_password) la pone el entrypoint oficial desde HOST/USER/PASSWORD.
 [options]
-addons_path = /mnt/extra-addons
+; /opt/oca: módulos de la comunidad fijados por commit en el Dockerfile (auditlog)
+addons_path = /mnt/extra-addons,/opt/oca
 data_dir = /var/lib/odoo
 admin_passwd = ${ODOO_ADMIN_PASSWD}
 ; Gestor de bases de datos deshabilitado (RNF009): la BD se crea con scripts/init_db.sh
@@ -9,5 +10,9 @@ list_db = False
 dbfilter = ^${ODOO_DB}$
 ; Dentro del contenedor debe escuchar en todas las interfaces; el compose solo lo publica en 127.0.0.1
 http_interface = 0.0.0.0
-; Desarrollo: un solo proceso. El perfil de producción (HU-27) sube workers y activa proxy_mode.
-workers = 0
+; Desarrollo: workers=0 (un solo proceso) y proxy_mode=False. El despliegue protegido (scripts/levantar_prod.sh,
+; perfil proxy) usa workers=2 y proxy_mode=True para leer X-Forwarded-* de Nginx. Sin debug ni gestor de BD en ningún caso.
+workers = ${ODOO_WORKERS}
+proxy_mode = ${ODOO_PROXY_MODE}
+; Detrás de Nginx se pide el puerto de eventos (websocket) en 8072
+gevent_port = 8072

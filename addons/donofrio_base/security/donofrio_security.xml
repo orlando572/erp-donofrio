@@ -17,6 +17,16 @@
         <field name="comment">Limita las operaciones de inventario (transferencias, movimientos y existencias) a las del almacén WH-AQP CD Arequipa.</field>
     </record>
 
+    <!-- HU-27 (ISO 27001 8.5 y 8.2): quien está en este grupo debe usar segundo factor de autenticación en el
+         despliegue protegido (ver models/res_users.py). Lo tienen el administrador y el gerente general. -->
+    <record id="group_2fa_obligatorio" model="res.groups">
+        <field name="name">2FA obligatorio</field>
+        <field name="sequence">95</field>
+        <field name="privilege_id" ref="res_groups_privilege_donofrio"/>
+        <field name="user_ids" eval="[Command.link(ref('base.user_admin'))]"/>
+        <field name="comment">Exige código de verificación (app de autenticación o correo) al iniciar sesión en el despliegue protegido.</field>
+    </record>
+
     <!-- Transferencias cuyo origen o destino está en el almacén de Arequipa -->
     <record id="rule_picking_cd_arequipa" model="ir.rule">
         <field name="name">Transferencias: solo las del CD Arequipa</field>
