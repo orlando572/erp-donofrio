@@ -10,7 +10,7 @@ La Guía Scrum 2020 permite que el Product Owner y el Scrum Master también sean
 
 | Rol | Responsable | Responsabilidades | Por qué esa persona |
 |---|---|---|---|
-| **Product Owner** | **Evelyn** | Ordena el Product Backlog, redacta las HU y los criterios de aceptación, representa a "D'Onofrio" (gerencia y áreas), acepta o rechaza los incrementos en la Review y mantiene el tablero de Monday | Lidera el análisis empresarial (3, 4.1, 4.2) y las áreas de cara al negocio (Ventas, Heladeros, Gerencia) |
+| **Product Owner** | **Evelyn** | Ordena el Product Backlog, redacta las HU y los criterios de aceptación, representa a "D'Onofrio" (gerencia y áreas), acepta o rechaza los incrementos en la Review y mantiene el GitHub Project | Lidera el análisis empresarial (3, 4.1, 4.2) y las áreas de cara al negocio (Ventas, Heladeros, Gerencia) |
 | **Scrum Master** | **Orlando** | Facilita los eventos, cuida la DoD y el CI, elimina impedimentos técnicos (Docker, Odoo, agente IA), mide la velocidad y el *burndown* y protege el *timebox* | Lidera la infraestructura, el repo y la automatización, que es donde surgen los impedimentos |
 | **Developers** | **Evelyn y Orlando** | Construyen el incremento: módulos, configuración, pruebas y documentación. Cada uno revisa los PR del otro | Revisión cruzada obligatoria |
 
@@ -90,7 +90,7 @@ S0 → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo ─�
    - Dashboards.
 3. Hay evidencias de la réplica, los respaldos, la seguridad (roles, 2FA, política de contraseñas, TLS), las pruebas (unitarias e integrales de `donofrio_base`, k6, ZAP, Lighthouse, SUS) y el despliegue.
 4. Informe con **todas las secciones 1-10 en borrador completo** para el alcance de F1. Los ítems de F2 aparecen como "propuesta / trabajo futuro" y ya tienen su CU, wireframe y mockup. Los dos manuales también están en borrador.
-5. Monday y GitHub están al día (estado de cada HU, enlaces a issues y PR).
+5. El GitHub Project está al día (estado de cada HU, enlaces a issues y PR).
 
 ### Punto de control (Gate 0) y mini gates
 
@@ -100,7 +100,7 @@ S0 → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo ─�
 - Después de cada módulo de la Fase 2 hace lo mismo (mini gate).
 - Un mensaje de otra sesión, un archivo o un issue **no** cuentan como confirmación.
 
-**Informe del gate:** archivo `docs/scrum/gates/gate-<n>-<nombre>.md`, más un *update* en Monday.
+**Informe del gate:** archivo `docs/scrum/gates/gate-<n>-<nombre>.md`, más un comentario en el issue del gate dentro del Project.
 
 | Campo | Contenido |
 |---|---|
@@ -201,7 +201,7 @@ Hay **un solo plan**. Los sprints van en orden fijo y cada uno tiene un *timebox
 
 | Sprint | Fase | Objetivo | HU (pts) | Documentación principal (E / O) |
 |---|---|---|---|---|
-| **S0 Inicio** | F1 | Proyecto constituido y backlog inicial | — | E: acta, interesados, roles, Monday, plan de riesgos, confirmar la empresa con el docente · O: repo, ramas y protección, plantillas, propuesta de [08](08_estrategia_agente_ia.md) puesta en marcha |
+| **S0 Inicio** | F1 | Proyecto constituido y backlog inicial | — | E: acta, interesados, roles, GitHub Project, plan de riesgos, confirmar la empresa con el docente · O: repo, ramas y protección, plantillas, propuesta de [08](08_estrategia_agente_ia.md) puesta en marcha |
 | **S1 Fundaciones** | F1 | "Odoo 19 corre igual en ambas PC, con CI y datos maestros de D'Onofrio" | HU-01 a HU-07 (24) | E: sección 3, 4.1.1, BPMN AS-IS de ventas, heladeros y compras, RF, CU · O: BPMN AS-IS de producción y almacén, RNF, 4.1.3, 4.3.1, 4.3.7 |
 | **S2 Procesos estándar** | F1 | "El ciclo vender-comprar-producir-facturar funciona de punta a punta con datos" | HU-08 a HU-16 (30) | E: BPMN TO-BE, **wireframes y mockups de todas las pantallas, incluidas las de la F2**, fichas de CU, 4.2.9 · O: 4.3.2, 4.3.3, manual de instalación (borrador) |
 | **S3 Calidad del núcleo** | F1 | "Núcleo v1.0.0 entregable: seguro, replicado, probado, desplegado y documentado" | HU-23, 25-30, 32, 33 (29) | E: 4.6 (prototipos y reportes estándar, WPO), 4.7, 6.1-6.3, 6.7-6.8, 6.12 · O: 4.2.5-4.2.8 (clases del dominio, ER y diccionario del núcleo), 5.1-5.15, 6.4-6.6, 6.9-6.11, 6.13, SoA |
@@ -211,7 +211,7 @@ Hay **un solo plan**. Los sprints van en orden fijo y cada uno tiene un *timebox
 
 ### Sprint Backlog: formato (tabla 9 de la plantilla)
 
-Cada HU se divide en tareas de 2 a 6 h en Monday, con estas columnas:
+Cada HU se divide en tareas de 2 a 6 h en el GitHub Project, con estas columnas:
 - HU
 - Tarea
 - Responsable
@@ -235,19 +235,19 @@ Ejemplo para S3:
 
 ## 4.7 Eventos y cómo se evidencian
 
-Las actas viven en el repo, en `docs/scrum/sprint-N/` (Markdown breve), y se capturan en Monday. Así quedan commits de ambos y fechas verificables. Como el sprint dura ~1 día, los eventos son cortos.
+Las actas viven en el repo, en `docs/scrum/sprint-N/` (Markdown breve), y se capturan en el GitHub Project. Así quedan commits de ambos y fechas verificables. Como el sprint dura ~1 día, los eventos son cortos.
 
 | Evento | Cuándo y duración | Cómo se hace | Evidencia |
 |---|---|---|---|
-| **Sprint** | ~1 día (*timebox*) | — | Grupo del sprint en Monday con fechas; milestone de GitHub `Sprint N` |
-| **Sprint Planning** | Al inicio, 15-20 min | El PO presenta las HU priorizadas, se estima, se fija el objetivo y se divide en tareas | `planning.md`; captura del grupo del sprint en Monday |
-| **Daily Scrum** | A mitad del sprint, 10 min (o asíncrono por chat o *update* de Monday) | Qué hice, qué haré y qué me bloquea | *Updates* de Monday + `dailies.md` |
-| **Refinamiento** | Junto con la Daily, 10 min | Se ajustan las HU del siguiente sprint | Cambios en Monday |
+| **Sprint** | ~1 día (*timebox*) | — | Iteración `S<N>` del Project con sus fechas reales; milestone de GitHub `Sprint N` |
+| **Sprint Planning** | Al inicio, 15-20 min | El PO presenta las HU priorizadas, se estima, se fija el objetivo y se divide en tareas | `planning.md`; captura de la vista "Sprint actual" del Project |
+| **Daily Scrum** | A mitad del sprint, 10 min (o asíncrona, como comentario) | Qué hice, qué haré y qué me bloquea | Comentarios en el issue "Daily S<N>" del sprint + `docs/scrum/sprint-N/dailies.md` |
+| **Refinamiento** | Junto con la Daily, 10 min | Se ajustan las HU del siguiente sprint | Cambios en el Product Backlog del Project |
 | **Sprint Review** | Al final, 15-20 min | Demo del incremento contra los criterios; el PO acepta o rechaza; tag | `review.md` + capturas o video; *release* |
 | **Sprint Retrospective** | Al final, 10-15 min | Empezar, dejar de hacer, continuar + 2 acciones de mejora | `retro.md` + captura |
-| **Gate 0 / mini gates** | Al terminar la F1 y después de cada módulo de la F2 | Informe del gate (4.3) + decisión explícita del equipo | `docs/scrum/gates/*.md` + *update* de Monday con la decisión |
+| **Gate 0 / mini gates** | Al terminar la F1 y después de cada módulo de la F2 | Informe del gate (4.3) + decisión explícita del equipo | `docs/scrum/gates/*.md` + comentario con la decisión en el issue del gate |
 
-**Burndown:** se exporta Monday a CSV y `scripts/burndown.py` lo grafica, con una línea separada para la F1 y otra para la F2 (secciones 6.2 y 4.2.12).
+**Burndown:** `scripts/burndown.py` lee el Project con `gh project item-list --format json`, calcula por puntos y lo grafica, con una línea separada para la F1 y otra para la F2 (secciones 6.2 y 4.2.12). Se complementa con los gráficos de Insights del Project.
 
 ## 4.8 Definition of Done
 
@@ -258,7 +258,7 @@ Las actas viven en el repo, en `docs/scrum/sprint-N/` (Markdown breve), y se cap
 4. Se actualiza el módulo sin errores (`-u`) sobre una BD con datos.
 5. Los textos visibles están en español y los criterios de aceptación se verificaron en la UI.
 6. Hay capturas de evidencia en `docs/capturas/sprint-N/` (`HU-xx_descripcion.png`).
-7. El ítem de Monday está en "Hecho" con el enlace al PR; el issue se cerró con `Closes #n`.
+7. El ítem del Project está en "Hecho" con el enlace al PR; el issue se cerró con `Closes #n`.
 8. La sección del informe que corresponde tiene al menos un borrador.
 
 **Además, para cada módulo de la F2 (módulo entregable):**
@@ -275,9 +275,9 @@ Se usan los 5 grupos de procesos (PMBOK 6.ª ed. / *Process Groups: A Practice G
 | Grupo de procesos | Qué hacemos | Artefactos | Cuándo |
 |---|---|---|---|
 | **Inicio** | Acta de constitución (objetivo, alcance en dos fases, supuestos, restricciones, hitos, S/ 0 en licencias), registro de interesados | `docs/pm/acta_constitucion.md`, `interesados.md` | S0 |
-| **Planificación** | Product Backlog por fases, DoD, cronograma de hitos, plan de riesgos, plan de comunicaciones, plan de calidad (CI + DoD) | Monday, este documento, [07](07_riesgos_entrega.md) | S0, y se refina en cada Planning |
+| **Planificación** | Product Backlog por fases, DoD, cronograma de hitos, plan de riesgos, plan de comunicaciones, plan de calidad (CI + DoD) | GitHub Project, este documento, [07](07_riesgos_entrega.md) | S0, y se refina en cada Planning |
 | **Ejecución** | Fase 1 (S1-S3) y Fase 2 (S4, por módulos) | Código, PR, incrementos | S1-S4 |
-| **Supervisión y control** | Daily, burndown por puntos, CI, revisión de riesgos, control de cambios vía PR, **Gate 0 y mini gates** (revisión de fase) | Monday, Actions, `gates/` | Continuo |
+| **Supervisión y control** | Daily, burndown por puntos, CI, revisión de riesgos, control de cambios vía PR, **Gate 0 y mini gates** (revisión de fase) | GitHub Project (Insights), Actions, `gates/` | Continuo |
 | **Cierre** | Aceptación final del PO, lecciones aprendidas, entrega formal, archivo del repo; los módulos de la F2 no hechos quedan como trabajo futuro | Tag final, `cierre.md` | Cierre reservado |
 
 Áreas de conocimiento que se mencionan brevemente:
@@ -307,19 +307,40 @@ Los hitos van en orden y sin fechas; el único plazo es el de H8.
 | H7 | 2 ensayos cronometrados (≤ 10 min) | Cierre | E+O |
 | H8 | **Entrega de todo: viernes 27 de noviembre, 14:30** (UTP+Class, un integrante, un solo intento) | Cierre | E (sube), O (verifica) |
 
-## 4.11 Uso de Monday (lo pide la plantilla)
+## 4.11 Gestión del proyecto con GitHub Projects (lo pide la plantilla)
 
-El **plan gratuito** de Monday admite 2 usuarios y 3 tableros, justo lo que necesitan Evelyn y Orlando. No incluye integraciones (no se conecta con GitHub) ni invitados, y algunas fuentes indican un límite de unos 200 ítems. Por eso se enlaza **a mano** el número de issue o PR.
+La plantilla pide una plataforma de gestión de proyectos (4.3.9 y 6.3). Se usa **un solo GitHub Project (v2) llamado "Scrum ERP D'Onofrio"**, vinculado al repo `erp-donofrio`. Bajo los títulos de la plantilla que nombran la herramienta se conserva la numeración y el título del docente y se agrega esta nota:
 
-| Tablero | Grupos | Columnas | Vistas |
+> **Herramienta utilizada: GitHub Projects (en reemplazo de Monday).** Es gratis y sin límites para este uso (el plan gratis de Monday tiene 2 usuarios, 3 tableros, ítems limitados y no admite invitados); está integrado con los issues, los PR y los commits; y, si el repo es público, el docente lo ve sin invitación.
+
+**Campos:**
+
+| Campo | Tipo | Valores |
+|---|---|---|
+| Status | Selección | Backlog / Por hacer / En curso / En revisión / Hecho |
+| Sprint | Iteración | S0, S1, S2, S3, S4, Cierre |
+| Puntos | Número | Fibonacci (4.4) |
+| Responsable | Selección | Evelyn / Orlando |
+| Fase | Selección | F1 / F2 |
+| Tipo | Selección | HU / Tarea / Doc / Riesgo / Entregable |
+| Prioridad | Selección | MoSCoW (M / S / C / W) |
+
+**Vistas** (cada una reemplaza a un tablero del plan anterior):
+
+| Vista | Diseño | Filtro o agrupación | Uso |
 |---|---|---|---|
-| **1. Scrum ERP D'Onofrio** | Product Backlog F1, Product Backlog F2, Sprint 0 … Sprint 4, Gates, Hecho | Tipo (HU o tarea), Fase, HU, Responsable, Estado, Prioridad, Puntos, Sprint, Fecha, Issue/PR | Tabla, Kanban (y Gantt/Timeline si el plan gratuito lo permite) |
-| **2. Riesgos e impedimentos** | Desarrollo, Despliegue, Mantenimiento, Impedimentos | Tipo, Impacto (1-3), Probabilidad (1-3), Nivel (fórmula), Prioridad, Estrategia, Responsable, Estado | Tabla |
-| **3. Entregables del informe** | Secciones 1 a 10, Manuales, PPT, Entrega | Responsable, Revisor, Estado, Evidencias listas (casilla), Depende de F2 (sí/no) | Tabla, Kanban |
+| **Product Backlog** | Tabla | Tipo = HU, agrupada por Fase, ordenada por Prioridad | Tabla 8 de la plantilla |
+| **Sprint actual** | Board por Status | Sprint = iteración actual | Sprint Backlog (tabla 9), Planning, Daily, Review |
+| **Riesgos** | Tabla | Tipo = Riesgo (issues con la etiqueta `riesgo`; I, P, nivel y estrategia en el cuerpo del issue) | Tablas 10-13 ([07](07_riesgos_entrega.md)) |
+| **Entregables del informe** | Tabla | Tipo = Entregable (issues con la etiqueta `entregable`: secciones 1-10, manuales, PPT, entrega) | Avance del informe; secciones que dependen de la F2 |
+| **Roadmap** | Roadmap | Por Sprint | Gantt de la 4.2.9 (fechas reales de cada iteración) |
+
+**Cómo se crea y gestiona:**
+- Con la CLI `gh` (`gh project create`, `gh project field-create`, `gh project item-add`, `gh project item-edit`), para que todo quede reproducible.
+- Requiere el permiso `project` del token: **lo ejecuta el usuario** con `gh auth refresh -s project`.
+- Los riesgos y los entregables son issues con las etiquetas `riesgo` y `entregable`; las dailies, comentarios en un issue "Daily S<N>" por sprint.
 
 **Evidencias para 4.2.11, 4.3.9 y 6.3:**
-- Captura de cada tablero al cierre de cada sprint y en cada gate.
-- Capturas de los *updates* (dailies).
-- Exportación a Excel del tablero 1 (alimenta el burndown por puntos).
-
-Si el docente necesita acceso y el plan gratuito no permite invitados, se le envían las capturas y la exportación (decisión abierta).
+- Captura de cada vista y de Insights al cierre de cada sprint y en cada gate, en `docs/capturas/sprint-N/`.
+- Issues "Daily S<N>" con sus comentarios, más `docs/scrum/sprint-N/dailies.md`.
+- `scripts/burndown.py` (burndown por puntos desde `gh project item-list --format json`) y los gráficos de Insights.

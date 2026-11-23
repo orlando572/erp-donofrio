@@ -30,7 +30,7 @@ erp-donofrio/
 │   ├── backup.sh / restore.sh
 │   ├── diccionario_datos.py        # information_schema + ir_model_fields → XLSX/MD
 │   ├── schemaspy.sh                # ER en HTML/PNG
-│   ├── burndown.py                 # CSV de Monday → gráfico
+│   ├── burndown.py                 # gh project item-list --format json → burndown por puntos
 │   └── perf/ (k6 *.js, lighthouse.sh, zap.sh)
 ├── docs/
 │   ├── plan/                       # Este plan
@@ -39,6 +39,7 @@ erp-donofrio/
 │   ├── capturas/sprint-N/          # Evidencias (HU-xx_*.png)
 │   ├── scrum/sprint-N/             # planning, dailies, review, retro
 │   ├── pm/                         # acta, interesados, comunicaciones, cierre
+│   │   └── github-projects/        # definición de campos y vistas del Project (comandos gh)
 │   ├── manuales/                   # Manual de instalación y de herramientas (MD → PDF)
 │   └── dev/odoo19_cambios.md       # Ficha de cambios de Odoo 19 para el agente
 ├── .github/

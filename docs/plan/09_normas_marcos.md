@@ -186,7 +186,7 @@ Esta tabla va en el informe, en 5.11 o como anexo. Cada evidencia se guarda en `
 | ITIL incidentes y solicitudes · COBIT DSS02 · ISO 20000-1 | Registrar y resolver dentro del SLA | Mesa de servicios en Project | Captura: Kanban de tickets por etapa; pivote de cumplimiento del SLA; Anexos 10.3 y 10.5 |
 | ITIL niveles de servicio · COBIT APO09 | SLA definidos y medidos | Tabla de SLA + Uptime Kuma | Tabla 15; captura: *uptime* |
 | ITIL capacidad y desempeño | Capacidad para la temporada alta | k6 + proyección de usuarios | Archivo: reporte de k6; tabla de proyección |
-| ISO 31000 · COBIT APO12 | Riesgos evaluados y tratados | Matriz I × P + tablero de riesgos en Monday | Tablas 10-13; captura de Monday |
+| ISO 31000 · COBIT APO12 | Riesgos evaluados y tratados | Matriz I × P + vista "Riesgos" del GitHub Project | Tablas 10-13; captura de la vista |
 | ISO 25010 | Calidad del producto | RNF clasificados y probados | Tablas 22-24 con la columna 25010 |
 | ISO 9001 / HACCP / ISO 22000 | Trazabilidad (F1); liberación, no conformes, PCC, registros (F2) | F1: lotes, FEFO, fecha de retiro. F2: `donofrio_calidad` (inspecciones, temperaturas, bloqueo de despacho) | Test: lote rechazado no despacha; captura: certificado QWeb, alerta de temperatura |
 | Ley 29733 · ISO 27001 A.5.34 | Protección de datos personales | Datos ficticios, campos privados restringidos | Captura: vendedor sin acceso a datos privados; párrafo en 3.2 |
