@@ -1,0 +1,98 @@
+# Informe sección 6 (6.4 a 6.6): evidencia de GitHub, solo lectura
+# Extraída el 23/11/2026 (~23:00 UTC) con `gh` y `git` sobre origin/develop 1e303ed. Ningún comando modificó el repositorio.
+# La tabla completa de PR (con método de fusión, aprobación y merges de develop) está en S3-informe6_prs_fusionados.tsv.
+# No contiene secretos: solo metadatos públicos del repositorio.
+
+## 1. Repositorio  (gh repo view / gh api repos/orlando572/erp-donofrio)
+url                          https://github.com/orlando572/erp-donofrio
+visibilidad                  PUBLIC
+rama por defecto             develop
+licencia                     LGPL-3.0
+creado                       2026-11-23T00:07:46Z
+allow_squash_merge           true     (squash_merge_commit_title = COMMIT_OR_PR_TITLE)
+allow_merge_commit           true     (merge_commit_title = MERGE_MESSAGE)
+allow_rebase_merge           false
+delete_branch_on_merge       true
+secret_scanning              enabled
+secret_scanning_push_protection  enabled
+dependabot_security_updates  disabled
+rulesets                     0
+Actions                      enabled, allowed_actions = all
+GitHub Project               https://github.com/users/orlando572/projects/4  (público, «Scrum ERP D'Onofrio», 22 ítems)
+Issues                       22 en total (11 abiertos, 11 cerrados)
+
+## 2. Protección de ramas  (gh api repos/orlando572/erp-donofrio/branches/{develop,main}/protection)
+                                  develop          main
+required_approving_review_count   1                1
+dismiss_stale_reviews             true             true
+require_code_owner_reviews        false            false
+require_last_push_approval        false            false
+required_status_checks            lint, test       (ninguno)
+  strict (rama al día)            false            —
+required_conversation_resolution  true             true
+enforce_admins                    false            false
+allow_force_pushes                false            false
+allow_deletions                   false            false
+required_linear_history           false            false
+required_signatures               false            false
+
+## 3. Ramas remotas  (git branch -r; gh api repos/orlando572/erp-donofrio/branches)
+protegidas: develop, main
+main     0 commits propios; 76 commits detrás de develop; último commit 2026-11-22 (284e9bf, «inicializa repo, estructura, CLAUDE.md y defensa anti-legacy [S0]»)
+Ramas de trabajo que siguen en el remoto (todas con su PR ya fusionado; GitHub las deja «por delante» de develop porque se fusionaron con squash):
+  docs/s2-aceptacion-po (#184), docs/s3-planning (#185), feature/HU-23-tablero-estandar (#188), feature/HU-25-replica (#186),
+  feature/HU-26-backups (#187), feature/HU-27-seguridad-despliegue (#189), feature/HU-28-k6-zap (#196), feature/HU-28-lighthouse (#194),
+  feature/HU-29-release (#190), feature/HU-30-usabilidad (#195), feature/HU-33-tests-compra-op (#192), feature/S3-informe-4-2 (#197),
+  feature/S3-informe-5 (#198)
+Las otras 36 ramas de los 49 PR fusionados se borraron al fusionar (delete_branch_on_merge = true).
+PR abiertos al extraer: 0 (gh pr list --state open)
+
+## 4. Pull requests  (gh pr list --state all --limit 500)
+total 49 · fusionados 49 · cerrados sin fusionar 0 · abiertos 0 · todos con base `develop` (ninguno a `main` todavía)
+autor:        orlando572 30 · Eve3000a 19
+fusionó:      orlando572 35 · Eve3000a 14   (26 PR los fusionó su propio autor después de la aprobación del otro integrante)
+método:       squash 32 · merge commit 17
+  merge commit: #151, #153 a #158, #160, #166, #169, #173 a #177, #180, #183  (todos hasta el #183)
+  squash:       #1, #152, #159, #161 a #165, #167, #168, #170 a #172, #178, #179, #181, #182 y todos desde el #184
+reviewDecision: APPROVED 46 · REVIEW_REQUIRED 3 (#154, #155, #156: su aprobación se descartó al cambiar la base a develop; ver 4.3.1)
+revisiones de otro integrante: los 49 PR tienen al menos una revisión del otro; 13 revisiones quedaron DISMISSED (en 11 PR) por nuevos push (dismiss_stale_reviews = true)
+conversaciones: 0 comentarios en línea de código; 3 comentarios de conversación (PR #187, #189 y #192, con la explicación de cada conflicto resuelto)
+commits dentro de los PR: 88
+PR con merge de develop dentro de la rama (9 merge commits en 8 PR): #168, #170, #179, #187, #189 (2), #192, #194, #196
+Commits en develop (git log origin/develop): 77 (Orlando 52; Evelyn 25, 22 con «Evelyn» y 3 con «evelyn»)
+Primer padre de develop (git log --first-parent): 50 commits (1 raíz, 32 squash y 17 merge commits de PR)
+Commits sin merges con Conventional Commits: 60 de 60 (git log origin/develop --no-merges)
+
+## 5. GitHub Actions  (gh workflow list --all; gh run list --limit 300; gh api .../actions/runs/{id}/jobs)
+workflows: CI (ci.yml) · Release (release.yml) · Pruebas no funcionales (perf.yml, solo workflow_dispatch)
+ejecuciones registradas: 109 (23/11/2026 02:44 a 22:44 UTC)
+  CI: 108 → success 96 · cancelled 10 · failure 2    por evento: pull_request 62 · push 45 · schedule 1
+  Release: 1 → success (ensayo en el PR #190, no publicó nada)
+  Pruebas no funcionales: 0 ejecuciones (manual)
+Jobs de CI (todas las ejecuciones; duración de las exitosas: mediana / máxima):
+  lint     101 success                              13 s / 18 s
+  test      98 success · 3 cancelled               133 s / 199 s
+  replica   38 success                              32 s / 245 s
+  backup    36 success                              75 s / 97 s
+  proxy     29 success · 2 failure · 1 cancelled    87 s / 119 s
+Las 10 ejecuciones canceladas fueron reemplazadas por una corrida más reciente del mismo grupo de concurrencia (en un PR, por un push nuevo;
+en develop, por el push siguiente cuando había una en cola). Ninguna es un fallo de las pruebas.
+Las 2 ejecuciones en rojo son del PR #189 (HU-27), job `proxy`, paso «Verificar TLS, cabeceras, gestor de BD, assets, websocket,
+configuración y bloqueo de login». De la segunda se conserva el registro: «FALLO no acepta tls1_3», «FALLO ningún intento se bloqueó» y
+«FALLO no hay 'Login attempt ignored' en el registro» (el chequeo usaba openssl y contaba mal el bloqueo por worker); de la primera no se
+conserva el motivo. Se corrigieron en el mismo PR (commit «fix(ci): el chequeo de TLS usa curl y el de bloqueo de login lee el u…») y
+el PR se fusionó con el CI en verde.
+Corrida programada (schedule, lunes 11:00 UTC): 1 ejecución registrada, success (id 45279340817, sobre ac85a71).
+
+## 6. Releases, tags y paquete GHCR
+gh release list                      (vacío)
+tags (git tag; gh api .../tags)      0
+https://github.com/orlando572/erp-donofrio/releases/tag/v1.0.0      → HTTP 404 (no existe)
+https://github.com/users/orlando572/packages/container/package/erp-donofrio  → HTTP 404 (no existe)
+`gh api users/orlando572/packages` no se pudo consultar: el token de gh no tiene el permiso read:packages. La ausencia del paquete se
+infiere de que release.yml solo publica con un tag `v*` y no hay ninguno, y se confirma con el 404 público.
+Se publican en el Gate 0 con docs/dev/release.md (tag v1.0.0 sobre main).
+
+## 7. Archivos de la configuración de GitHub en el repo
+.github/workflows/ci.yml, release.yml, perf.yml · .github/ISSUE_TEMPLATE/epica.yml, bug.yml · .github/pull_request_template.md
+No existen: .github/dependabot.yml, .github/CODEOWNERS, .github/ISSUE_TEMPLATE/solicitud_cambio.yml, .pre-commit-config.yaml, cd.yml
