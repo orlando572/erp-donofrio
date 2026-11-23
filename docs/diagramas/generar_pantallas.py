@@ -20,7 +20,8 @@ SALIDA = Path(__file__).resolve().parent / 'pantallas'
 
 # Paleta del mockup (el amarillo es el de los carritos de D'Onofrio)
 AMARILLO, AMARILLO_CLARO, TINTA = '#F7C60A', '#FFF3C4', '#2B2B2B'
-FONDO, BORDE, GRIS = '#F4F5F7', '#D5D9DF', '#6B7280'
+AMARILLO_OSCURO = '#9A6B00'      # amarillo de los títulos de reporte (contraste sobre blanco)
+FONDO, BORDE, GRIS = '#F4F5F7', '#D5D9DF', '#5C6370'
 VERDE, ROJO, AZUL = '#2E7D32', '#C0392B', '#1565C0'
 
 
@@ -198,9 +199,9 @@ COMPONENTES = {
 # ----------------------------------------------------------------------------- pantallas
 
 class Pantalla:
-    def __init__(self, id_, cu, titulo, modulo, ruta, partes, ancho=960, f2=False, hu=''):
+    def __init__(self, id_, cu, titulo, modulo, ruta, partes, ancho=960, f2=False, hu='', reporte=False):
         self.id, self.cu, self.titulo, self.modulo, self.ruta = id_, cu, titulo, modulo, ruta
-        self.partes, self.ancho, self.f2, self.hu = partes, ancho, f2, hu
+        self.partes, self.ancho, self.f2, self.hu, self.reporte = partes, ancho, f2, hu, reporte
 
 
 def p(componente, *args, **kw):
@@ -354,6 +355,36 @@ PANTALLAS = [
 ]
 
 
+# Reportes en PDF (QWeb) de la Fase 2: se diseñan en la F1 aunque no se construyan (4.6.3). Hoja A4 sin barra de la aplicación.
+REPORTES = [
+    Pantalla('rp_certificado_calidad', 'CU008', 'Certificado de calidad del lote', 'Calidad (M1)',
+             'Calidad › Inspecciones › INS/00018 › Imprimir', hu='HU-18', f2=True, reporte=True, ancho=794, partes=[
+        p('campos', [('Producto', '[PT-H01] Paleta de fresa 60 g'), ('Lote', 'PT-2611-0042'),
+                     ('Orden de producción', 'LIM/MO/00012'), ('Fecha de producción', '15/01/2027'),
+                     ('Vence', '15/07/2027'), ('Inspector', 'Carmen Rojas')]),
+        p('tabla', ['Punto de control', 'Norma', 'Medición', 'Resultado'], [
+            ['Pasteurización', '80 a 85 °C', '82 °C', 'Cumple'],
+            ['Peso por unidad', '58 a 62 g', '60 g', 'Cumple'],
+            ['Microbiología (coliformes)', '< 10 UFC/g', '4 UFC/g', 'Cumple'],
+        ], [2.5, 1.5, 1.3, 1.3]),
+        p('alerta', 'RESULTADO: lote APROBADO para su despacho.', 'ok'),
+        p('texto', 'Firma del inspector de calidad: ____________________        Firma del jefe de producción: ____________________'),
+    ]),
+    Pantalla('rp_liquidacion_heladero', 'CU004', 'Liquidación del heladero', 'Heladeros (M2)',
+             'Heladeros › Liquidaciones › LIQ/2027/00031 › Imprimir', hu='HU-21', f2=True, reporte=True, ancho=794, partes=[
+        p('campos', [('Heladero', 'Juan Mamani (concesionario)'), ('Fecha', '15/01/2027'),
+                     ('Lista de precios', 'Heladero'), ('Liquidador', 'Liquidador de Heladeros')]),
+        p('tabla', ['Producto', 'Despachado', 'Devuelto', 'Merma', 'Vendido', 'Importe'], [
+            ['Paleta de fresa', '120', '18', '2', '100', 'S/ 75.00'],
+            ['Paleta de lúcuma', '80', '10', '0', '70', 'S/ 52.50'],
+            ['Cono vainilla', '60', '8', '1', '51', 'S/ 76.50'],
+        ], [3, 1.3, 1.2, 1, 1.2, 1.5], total='Vendido S/ 204.00 · Comisión S/ 20.40'),
+        p('alerta', 'Efectivo entregado S/ 214.50 · Diferencia a favor del heladero: S/ 10.50', 'info'),
+        p('texto', 'Firma del heladero: ____________________        Firma del liquidador: ____________________'),
+    ]),
+]
+
+
 # ----------------------------------------------------------------------------- render
 
 def dibujar(pantalla, mockup):
@@ -367,18 +398,35 @@ def dibujar(pantalla, mockup):
         cuerpo.append(svg)
         y += alto
     alto_total = y + 24
+    cabecera = [t(margen, 100, pantalla.titulo, e, 17 if w > 600 else 14, 'bold')]
+    if pantalla.reporte:
+        # Hoja con la cabecera de la compañía (logo, nombre y RUC ficticio), como el layout de los reportes de Odoo
+        cabecera = [
+            f'<circle cx="{margen + 20}" cy="40" r="18" fill="{e.marca}" stroke="{e.tinta}"/>',
+            t(margen + 48, 36, "D'Onofrio", e, 16, 'bold', color=e.tinta),
+            t(margen + 48, 52, 'Helados y Confitería', e, 9, color=e.gris),
+            t(w - margen, 34, "D'Onofrio – Unidad de Helados y Confitería (proyecto académico)", e, 9, ancla='end'),
+            t(w - margen, 48, 'Av. Ejemplo 123, Lima · RUC 20999999990', e, 9, color=e.gris, ancla='end'),
+            f'<line x1="{margen}" y1="66" x2="{w - margen}" y2="66" stroke="{e.borde}"/>',
+            t(margen, 100, pantalla.titulo, e, 17, 'bold', color=AMARILLO_OSCURO if mockup else None),
+            t(w - margen, 100, f'{pantalla.cu} · {pantalla.hu}', e, 11, color=e.gris, ancla='end'),
+        ]
+    else:
+        cabecera = [
+            # barra superior de la aplicación
+            f'<rect width="{w}" height="46" fill="{e.marca if mockup else "#CCCCCC"}"/>',
+            t(margen, 29, "D'Onofrio ERP", e, 14, 'bold'),
+            t(margen + 130, 29, pantalla.modulo, e, 12),
+            t(w - margen, 29, 'Evelyn · Ventas' if not pantalla.f2 else 'Usuario del módulo', e, 11, ancla='end'),
+            # ruta y título
+            t(margen, 72, pantalla.ruta, e, 11, color=e.gris),
+            t(margen, 100, pantalla.titulo, e, 17 if w > 600 else 14, 'bold'),
+            t(w - margen, 72 if w <= 600 else 100, f'{pantalla.cu} · {pantalla.hu}', e, 11, color=e.gris, ancla='end'),
+        ]
+    fondo = '#FFFFFF' if pantalla.reporte else e.fondo
     s = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{alto_total:.0f}" '
          f'viewBox="0 0 {w} {alto_total:.0f}" font-family="{e.fuente}">',
-         f'<rect width="{w}" height="{alto_total:.0f}" fill="{e.fondo}"/>',
-         # barra superior de la aplicación
-         f'<rect width="{w}" height="46" fill="{e.marca if mockup else "#CCCCCC"}"/>',
-         t(margen, 29, "D'Onofrio ERP", e, 14, 'bold'),
-         t(margen + 130, 29, pantalla.modulo, e, 12),
-         t(w - margen, 29, 'Evelyn · Ventas' if not pantalla.f2 else 'Usuario del módulo', e, 11, ancla='end'),
-         # ruta y título
-         t(margen, 72, pantalla.ruta, e, 11, color=e.gris),
-         t(margen, 100, pantalla.titulo, e, 17 if w > 600 else 14, 'bold'),
-         t(w - margen, 72 if w <= 600 else 100, f'{pantalla.cu} · {pantalla.hu}', e, 11, color=e.gris, ancla='end')]
+         f'<rect width="{w}" height="{alto_total:.0f}" fill="{fondo}"/>'] + cabecera
     if pantalla.f2:
         s.append(f'<rect x="{margen}" y="110" width="250" height="20" rx="10" '
                  f'fill="{AMARILLO_CLARO if mockup else "#EEEEEE"}" stroke="{e.tinta}" stroke-dasharray="3 2"/>'
@@ -391,7 +439,7 @@ def dibujar(pantalla, mockup):
 
 def main():
     SALIDA.mkdir(parents=True, exist_ok=True)
-    for pantalla in PANTALLAS:
+    for pantalla in PANTALLAS + REPORTES:
         for prefijo, mockup in (('wf', False), ('mk', True)):
             (SALIDA / f'{prefijo}_{pantalla.id}.svg').write_text(dibujar(pantalla, mockup), encoding='utf-8')
         print(f'{pantalla.id}: wf + mk')
