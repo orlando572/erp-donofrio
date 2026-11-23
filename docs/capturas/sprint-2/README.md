@@ -22,3 +22,14 @@ Tomadas el 23/11/2026 en la BD `donofrio`, sin existencias de insumos. Las RFQ l
 | `HU-13_rfq_proveedor_lacteos` | HU-13 | RFQ P00001 con leche fresca, crema, leche en polvo y mantequilla, cada una hasta su máximo; se entrega en Planta Lima |
 | `HU-13_orden_de_compra_confirmada` | HU-13 | La misma RFQ confirmada («Orden de compra») |
 | `HU-13_recepcion_creada_por_la_oc` | HU-13 | Recepción `LIM/IN/00001` creada al confirmar la OC, en estado «Listo», con origen P00001 |
+## Capturas de HU-15 (Evelyn)
+
+Tomadas el 23/11/2026 en la BD `donofrio`, con una factura y una boleta de ejemplo generadas desde un pedido de venta de 100 y 20 paletas de fresa (S/ 1.50 con IGV incluido). El PDF se generó con el servidor levantado (`/report/pdf/account.report_invoice/<id>`).
+
+| Archivo | HU | Qué muestra |
+|---|---|---|
+| `HU-15_facturas_y_boletas_en_soles` | HU-15 | Lista de facturas: `F 00000001` (cliente con RUC) y `B 00000001` (cliente con DNI), en soles |
+| `HU-15_factura_01_con_igv` | HU-15 | Factura en el diario «Facturas», tipo de documento (01), IGV 18 %: subtotal S/ 127.12, IGV S/ 22.88, total S/ 150.00 |
+| `HU-15_boleta_03_con_igv` | HU-15 | Boleta en el diario «Boletas», tipo de documento (03), subtotal S/ 25.42, IGV S/ 4.58, total S/ 30.00 |
+| `HU-15_pdf_factura` | HU-15 | PDF de la factura, en español, con el RUC del cliente y el IGV |
+| `HU-15_pdf_boleta` | HU-15 | PDF de la boleta. Limitación: la plantilla estándar la titula «Factura» y rotula «RUC» al DNI |
