@@ -33,7 +33,9 @@ echo "Probando: ${lista}  (BD temporal ${db})"
 docker compose up -d --wait db
 
 rc=0
-docker compose run --rm -T odoo odoo -d "$db" -i "$lista" \
+# --db-filter propio: el healthcheck del compose consulta /web/health mientras corren los tests y,
+# con el dbfilter de odoo.conf (la BD de desarrollo), Odoo intentaría cargar esa otra BD.
+docker compose run --rm -T odoo odoo -d "$db" --db-filter "^${db}\$" -i "$lista" \
   --test-enable --test-tags "$tags" --stop-after-init --log-level=test >"$log" 2>&1 || rc=$?
 
 resumen="$(grep -E 'of [0-9]+ tests' "$log" | tail -n 1 || true)"

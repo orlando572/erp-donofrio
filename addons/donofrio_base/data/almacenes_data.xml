@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HU-06: almacenes de Lima y Arequipa con ubicaciones de frío (03 §3.3).
+     En la Fase 1 el rango de temperatura va en el nombre de la ubicación (stock.location no tiene campo de nota);
+     el control con rangos y alertas sería la cadena de frío de la Fase 2 (M3). -->
+<odoo noupdate="1">
+
+    <!-- Ubicaciones de almacén y rutas multi-paso (lo mismo que activa Inventario → Ajustes) -->
+    <record id="base.group_user" model="res.groups">
+        <field name="implied_ids" eval="[
+            Command.link(ref('stock.group_stock_multi_locations')),
+            Command.link(ref('stock.group_adv_location')),
+        ]"/>
+    </record>
+
+    <!-- WH-LIM Planta Lima: se reutiliza el almacén que crea Inventario; despacho en 2 pasos (pick + ship) -->
+    <record id="stock.warehouse0" model="stock.warehouse">
+        <field name="name">WH-LIM Planta Lima</field>
+        <field name="code">LIM</field>
+        <field name="delivery_steps">pick_ship</field>
+    </record>
+
+    <!-- WH-AQP CD Arequipa: despacho en 1 paso y se abastece desde Lima (crea la ruta Lima → Arequipa) -->
+    <record id="wh_aqp" model="stock.warehouse">
+        <field name="name">WH-AQP CD Arequipa</field>
+        <field name="code">AQP</field>
+        <field name="delivery_steps">ship_only</field>
+        <field name="resupply_wh_ids" eval="[Command.link(ref('stock.warehouse0'))]"/>
+    </record>
+
+    <!-- Ubicaciones de Lima (bajo LIM/Stock) -->
+    <record id="loc_lim_congelacion" model="stock.location">
+        <field name="name">Cámara de congelación (-25 °C)</field>
+        <field name="usage">internal</field>
+        <field name="location_id" ref="stock.stock_location_stock"/>
+    </record>
+    <record id="loc_lim_refrigerados" model="stock.location">
+        <field name="name">Cámara de insumos refrigerados (2-6 °C)</field>
+        <field name="usage">internal</field>
+        <field name="location_id" ref="stock.stock_location_stock"/>
+    </record>
+    <record id="loc_lim_seco" model="stock.location">
+        <field name="name">Almacén seco</field>
+        <field name="usage">internal</field>
+        <field name="location_id" ref="stock.stock_location_stock"/>
+    </record>
+    <record id="loc_lim_despacho_triciclos" model="stock.location">
+        <field name="name">Zona de despacho de triciclos</field>
+        <field name="usage">internal</field>
+        <field name="location_id" ref="stock.stock_location_stock"/>
+    </record>
+
+    <!-- Ubicaciones de Arequipa (bajo AQP/Stock) -->
+    <record id="loc_aqp_congelacion" model="stock.location">
+        <field name="name">Cámara de congelación (-25 °C)</field>
+        <field name="usage">internal</field>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('wh_aqp')).lot_stock_id.id"/>
+    </record>
+    <record id="loc_aqp_refrigerada" model="stock.location">
+        <field name="name">Cámara refrigerada (2-6 °C)</field>
+        <field name="usage">internal</field>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('wh_aqp')).lot_stock_id.id"/>
+    </record>
+    <record id="loc_aqp_seco" model="stock.location">
+        <field name="name">Almacén seco</field>
+        <field name="usage">internal</field>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('wh_aqp')).lot_stock_id.id"/>
+    </record>
+    <record id="loc_aqp_despacho_triciclos" model="stock.location">
+        <field name="name">Zona de despacho de triciclos</field>
+        <field name="usage">internal</field>
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('wh_aqp')).lot_stock_id.id"/>
+    </record>
+
+</odoo>
