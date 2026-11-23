@@ -119,6 +119,17 @@ Qué deberías ver en la interfaz:
 - **Fabricación → Productos → Listas de materiales:** 12 recetas con sus operaciones.
 - **Inventario → Productos → Números de serie/lote:** lotes con fecha de caducidad (si cargaste los datos de demostración).
 
+### 6.1 Réplica de la base de datos (opcional)
+
+Un segundo PostgreSQL (`db-replica`) copia al primero en *streaming* y solo permite leer. Agrega `REPLICADOR_PASSWORD` (y, si quieres, `REPLICA_PORT`) a tu `.env` como en `.env.example` y ejecuta:
+
+```bash
+docker compose --profile replica up -d --wait
+scripts/verificar_replica.sh
+```
+
+La primera vez, `db` se recrea (sus datos se conservan) porque ahora carga el `pg_hba.conf` del repo; `db-replica` copia la base con `pg_basebackup`. El script comprueba `pg_stat_replication` (estado `streaming`), `pg_is_in_recovery()` en la réplica, que un dato escrito en el primario llegue a la réplica y que un `INSERT` en la réplica falle con `read-only transaction`. Para leer desde DBeaver: `localhost:5433` con el usuario `odoo`. Para apagarla: `docker compose --profile replica stop db-replica`; para recrearla desde cero: `docker compose --profile replica rm -sf db-replica && docker volume rm erp-donofrio_pgdata-replica`.
+
 ## 7. Actualizar, reiniciar y desinstalar
 
 | Quiero… | Comando |
@@ -157,4 +168,4 @@ Para que sea diario, agrega al `crontab -e` del equipo (02:00): `0 2 * * * cd /r
 ## 9. Pendiente para el Cierre
 
 - Capturas de cada paso en una PC limpia y la prueba con Evelyn siguiendo solo este manual.
-- Pasos de despliegue en la nube (Nginx con TLS, copias de seguridad y réplica) cuando se completen en el Sprint 3.
+- Pasos de despliegue en la nube (Nginx con TLS y copias de seguridad) cuando se completen en el Sprint 3.
