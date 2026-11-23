@@ -26,6 +26,7 @@ ORM / PYTHON
 ✓ Controladores JSON: type='jsonrpc' (no 'json')                     (18.1)
   create: @api.model_create_multi
 ✓ ir.cron: sin numbercall (interval_number + interval_type)
+✓ Reservas y FEFO usan la fecha real de la corrida: un lote con retiro vencido tiene stock.quant.available_quantity = 0   (product_expiry)
 
 MODELOS QUE CAMBIARON (datos de donofrio_base)
 ✓ res.users.group_ids (NO groups_id); res.groups.privilege_id → res.groups.privilege

@@ -6,3 +6,4 @@ from . import test_productos
 from . import test_rrhh
 from . import test_crm
 from . import test_precios
+from . import test_fefo
