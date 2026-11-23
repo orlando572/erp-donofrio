@@ -44,6 +44,8 @@ pruebas="$(grep -Eo 'of [0-9]+ tests' "$log" | tail -n 1 | grep -Eo '[0-9]+' || 
 
 if [ -n "$errores" ]; then
   echo "$errores"
+  # La línea final de cada traza (tipo y mensaje de la excepción) suele quedar fuera del contexto anterior
+  grep -E '^[A-Za-z_.]*(Error|Exception|ParseError)\b' "$log" | sort -u | head -n 10 || true
 fi
 [ -n "$resumen" ] && echo "$resumen"
 

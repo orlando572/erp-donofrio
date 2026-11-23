@@ -1,0 +1,868 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HU-07: centros de trabajo y recetas (listas de materiales con operaciones) (03 §3.3 c).
+     En Community las operaciones no tienen campo de instrucciones: los controles críticos van en el
+     nombre de cada operación y en la nota del centro de trabajo.
+     Generado a partir de tablas de redacción; los datos son ficticios y verosímiles (supuesto S2 del plan). -->
+<odoo noupdate="1">
+
+    <!-- Centros de trabajo: capacidad y costo por hora supuestos -->
+    <record id="wc_helados" model="mrp.workcenter">
+        <field name="name">Línea Helados</field>
+        <field name="code">LH</field>
+        <field name="costs_hour">85.0</field>
+        <field name="note" type="html"><p>Controles críticos (PCC supuestos): pasteurizar a 80-85 °C; madurar a 2-6 °C; endurecer a -18 °C o menos.</p></field>
+    </record>
+    <record id="wc_chocolates" model="mrp.workcenter">
+        <field name="name">Línea Chocolates</field>
+        <field name="code">LC</field>
+        <field name="costs_hour">70.0</field>
+        <field name="note" type="html"><p>Controles críticos (supuestos): conchado a 50-60 °C; templado a 31-32 °C; moldeo y enfriado a 12-15 °C.</p></field>
+    </record>
+    <record id="wc_paneton" model="mrp.workcenter">
+        <field name="name">Línea Panetón</field>
+        <field name="code">LP</field>
+        <field name="costs_hour">60.0</field>
+        <field name="note" type="html"><p>Controles críticos (supuestos): fermentación a 28-30 °C por 8 h; horneado a 170-180 °C; enfriar hasta 25 °C antes de empacar.</p></field>
+    </record>
+
+    <!-- Recetas -->
+    <record id="bom_pt_h01" model="mrp.bom">
+        <field name="product_tmpl_id" ref="pt_h01"/>
+        <field name="product_qty">100</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="type">normal</field>
+    </record>
+    <record id="bom_pt_h01_l1" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_pulpa_fresa')).product_variant_id.id"/>
+        <field name="product_qty">4</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h01_l2" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
+        <field name="product_qty">3</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h01_l3" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_glucosa')).product_variant_id.id"/>
+        <field name="product_qty">1</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h01_l4" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_leche')).product_variant_id.id"/>
+        <field name="product_qty">10</field>
+        <field name="product_uom_id" ref="uom.product_uom_litre"/>
+    </record>
+    <record id="bom_pt_h01_l5" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_palito')).product_variant_id.id"/>
+        <field name="product_qty">100</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_h01_l6" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_envoltura')).product_variant_id.id"/>
+        <field name="product_qty">100</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_h01_op1" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h01"/>
+        <field name="name">Pasteurización (80-85 °C, 30 min)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">10</field>
+        <field name="time_cycle_manual">45</field>
+    </record>
+    <record id="bom_pt_h01_op2" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h01"/>
+        <field name="name">Maduración (2-6 °C, 4 h)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">20</field>
+        <field name="time_cycle_manual">240</field>
+    </record>
+    <record id="bom_pt_h01_op3" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h01"/>
+        <field name="name">Congelamiento</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">30</field>
+        <field name="time_cycle_manual">60</field>
+    </record>
+    <record id="bom_pt_h01_op4" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h01"/>
+        <field name="name">Endurecimiento (-18 °C o menos)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">40</field>
+        <field name="time_cycle_manual">480</field>
+    </record>
+
+    <record id="bom_pt_h03" model="mrp.bom">
+        <field name="product_tmpl_id" ref="pt_h03"/>
+        <field name="product_qty">100</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="type">normal</field>
+    </record>
+    <record id="bom_pt_h03_l1" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h03"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_leche')).product_variant_id.id"/>
+        <field name="product_qty">12</field>
+        <field name="product_uom_id" ref="uom.product_uom_litre"/>
+    </record>
+    <record id="bom_pt_h03_l2" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h03"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_crema')).product_variant_id.id"/>
+        <field name="product_qty">2</field>
+        <field name="product_uom_id" ref="uom.product_uom_litre"/>
+    </record>
+    <record id="bom_pt_h03_l3" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h03"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
+        <field name="product_qty">4</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h03_l4" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h03"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_cacao')).product_variant_id.id"/>
+        <field name="product_qty">2</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h03_l5" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h03"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_manteca_cacao')).product_variant_id.id"/>
+        <field name="product_qty">1</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h03_l6" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h03"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_palito')).product_variant_id.id"/>
+        <field name="product_qty">100</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_h03_l7" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h03"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_envoltura')).product_variant_id.id"/>
+        <field name="product_qty">100</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_h03_op1" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h03"/>
+        <field name="name">Pasteurización (80-85 °C, 30 min)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">10</field>
+        <field name="time_cycle_manual">45</field>
+    </record>
+    <record id="bom_pt_h03_op2" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h03"/>
+        <field name="name">Maduración (2-6 °C, 4 h)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">20</field>
+        <field name="time_cycle_manual">240</field>
+    </record>
+    <record id="bom_pt_h03_op3" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h03"/>
+        <field name="name">Congelamiento</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">30</field>
+        <field name="time_cycle_manual">60</field>
+    </record>
+    <record id="bom_pt_h03_op4" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h03"/>
+        <field name="name">Endurecimiento (-18 °C o menos)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">40</field>
+        <field name="time_cycle_manual">480</field>
+    </record>
+
+    <record id="bom_pt_h05" model="mrp.bom">
+        <field name="product_tmpl_id" ref="pt_h05"/>
+        <field name="product_qty">100</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="type">normal</field>
+    </record>
+    <record id="bom_pt_h05_l1" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h05"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_leche')).product_variant_id.id"/>
+        <field name="product_qty">10</field>
+        <field name="product_uom_id" ref="uom.product_uom_litre"/>
+    </record>
+    <record id="bom_pt_h05_l2" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h05"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_crema')).product_variant_id.id"/>
+        <field name="product_qty">3</field>
+        <field name="product_uom_id" ref="uom.product_uom_litre"/>
+    </record>
+    <record id="bom_pt_h05_l3" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h05"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
+        <field name="product_qty">4</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h05_l4" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h05"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_leche_polvo')).product_variant_id.id"/>
+        <field name="product_qty">1</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h05_l5" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h05"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_vainilla')).product_variant_id.id"/>
+        <field name="product_qty">0.2</field>
+        <field name="product_uom_id" ref="uom.product_uom_litre"/>
+    </record>
+    <record id="bom_pt_h05_l6" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h05"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_cono')).product_variant_id.id"/>
+        <field name="product_qty">100</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_h05_l7" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h05"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_envoltura')).product_variant_id.id"/>
+        <field name="product_qty">100</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_h05_op1" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h05"/>
+        <field name="name">Pasteurización (80-85 °C, 30 min)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">10</field>
+        <field name="time_cycle_manual">45</field>
+    </record>
+    <record id="bom_pt_h05_op2" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h05"/>
+        <field name="name">Maduración (2-6 °C, 4 h)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">20</field>
+        <field name="time_cycle_manual">240</field>
+    </record>
+    <record id="bom_pt_h05_op3" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h05"/>
+        <field name="name">Congelamiento</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">30</field>
+        <field name="time_cycle_manual">60</field>
+    </record>
+    <record id="bom_pt_h05_op4" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h05"/>
+        <field name="name">Endurecimiento (-18 °C o menos)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">40</field>
+        <field name="time_cycle_manual">480</field>
+    </record>
+
+    <record id="bom_pt_h07" model="mrp.bom">
+        <field name="product_tmpl_id" ref="pt_h07"/>
+        <field name="product_qty">100</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="type">normal</field>
+    </record>
+    <record id="bom_pt_h07_l1" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h07"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_leche')).product_variant_id.id"/>
+        <field name="product_qty">10</field>
+        <field name="product_uom_id" ref="uom.product_uom_litre"/>
+    </record>
+    <record id="bom_pt_h07_l2" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h07"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_pulpa_lucuma')).product_variant_id.id"/>
+        <field name="product_qty">5</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h07_l3" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h07"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
+        <field name="product_qty">4</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h07_l4" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h07"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_vaso')).product_variant_id.id"/>
+        <field name="product_qty">100</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_h07_op1" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h07"/>
+        <field name="name">Pasteurización (80-85 °C, 30 min)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">10</field>
+        <field name="time_cycle_manual">45</field>
+    </record>
+    <record id="bom_pt_h07_op2" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h07"/>
+        <field name="name">Maduración (2-6 °C, 4 h)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">20</field>
+        <field name="time_cycle_manual">240</field>
+    </record>
+    <record id="bom_pt_h07_op3" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h07"/>
+        <field name="name">Congelamiento</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">30</field>
+        <field name="time_cycle_manual">60</field>
+    </record>
+    <record id="bom_pt_h07_op4" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h07"/>
+        <field name="name">Endurecimiento (-18 °C o menos)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">40</field>
+        <field name="time_cycle_manual">480</field>
+    </record>
+
+    <record id="bom_pt_h10" model="mrp.bom">
+        <field name="product_tmpl_id" ref="pt_h10"/>
+        <field name="product_qty">50</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="type">normal</field>
+    </record>
+    <record id="bom_pt_h10_l1" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h10"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_leche')).product_variant_id.id"/>
+        <field name="product_qty">25</field>
+        <field name="product_uom_id" ref="uom.product_uom_litre"/>
+    </record>
+    <record id="bom_pt_h10_l2" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h10"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_crema')).product_variant_id.id"/>
+        <field name="product_qty">6</field>
+        <field name="product_uom_id" ref="uom.product_uom_litre"/>
+    </record>
+    <record id="bom_pt_h10_l3" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h10"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
+        <field name="product_qty">8</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h10_l4" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h10"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_leche_polvo')).product_variant_id.id"/>
+        <field name="product_qty">3</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h10_l5" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h10"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_glucosa')).product_variant_id.id"/>
+        <field name="product_qty">2</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h10_l6" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h10"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_vainilla')).product_variant_id.id"/>
+        <field name="product_qty">0.3</field>
+        <field name="product_uom_id" ref="uom.product_uom_litre"/>
+    </record>
+    <record id="bom_pt_h10_l7" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h10"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_envase_1l')).product_variant_id.id"/>
+        <field name="product_qty">50</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_h10_op1" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h10"/>
+        <field name="name">Pasteurización (80-85 °C, 30 min)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">10</field>
+        <field name="time_cycle_manual">45</field>
+    </record>
+    <record id="bom_pt_h10_op2" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h10"/>
+        <field name="name">Maduración (2-6 °C, 4 h)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">20</field>
+        <field name="time_cycle_manual">240</field>
+    </record>
+    <record id="bom_pt_h10_op3" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h10"/>
+        <field name="name">Congelamiento</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">30</field>
+        <field name="time_cycle_manual">60</field>
+    </record>
+    <record id="bom_pt_h10_op4" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h10"/>
+        <field name="name">Endurecimiento (-18 °C o menos)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">40</field>
+        <field name="time_cycle_manual">480</field>
+    </record>
+
+    <record id="bom_pt_h11" model="mrp.bom">
+        <field name="product_tmpl_id" ref="pt_h11"/>
+        <field name="product_qty">50</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="type">normal</field>
+    </record>
+    <record id="bom_pt_h11_l1" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h11"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_leche')).product_variant_id.id"/>
+        <field name="product_qty">25</field>
+        <field name="product_uom_id" ref="uom.product_uom_litre"/>
+    </record>
+    <record id="bom_pt_h11_l2" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h11"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_crema')).product_variant_id.id"/>
+        <field name="product_qty">6</field>
+        <field name="product_uom_id" ref="uom.product_uom_litre"/>
+    </record>
+    <record id="bom_pt_h11_l3" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h11"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
+        <field name="product_qty">8</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h11_l4" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h11"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_cacao')).product_variant_id.id"/>
+        <field name="product_qty">4</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h11_l5" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h11"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_glucosa')).product_variant_id.id"/>
+        <field name="product_qty">2</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h11_l6" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h11"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_envase_1l')).product_variant_id.id"/>
+        <field name="product_qty">50</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_h11_op1" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h11"/>
+        <field name="name">Pasteurización (80-85 °C, 30 min)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">10</field>
+        <field name="time_cycle_manual">45</field>
+    </record>
+    <record id="bom_pt_h11_op2" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h11"/>
+        <field name="name">Maduración (2-6 °C, 4 h)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">20</field>
+        <field name="time_cycle_manual">240</field>
+    </record>
+    <record id="bom_pt_h11_op3" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h11"/>
+        <field name="name">Congelamiento</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">30</field>
+        <field name="time_cycle_manual">60</field>
+    </record>
+    <record id="bom_pt_h11_op4" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h11"/>
+        <field name="name">Endurecimiento (-18 °C o menos)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">40</field>
+        <field name="time_cycle_manual">480</field>
+    </record>
+
+    <record id="bom_pt_h12" model="mrp.bom">
+        <field name="product_tmpl_id" ref="pt_h12"/>
+        <field name="product_qty">50</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="type">normal</field>
+    </record>
+    <record id="bom_pt_h12_l1" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h12"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_leche')).product_variant_id.id"/>
+        <field name="product_qty">22</field>
+        <field name="product_uom_id" ref="uom.product_uom_litre"/>
+    </record>
+    <record id="bom_pt_h12_l2" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h12"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_crema')).product_variant_id.id"/>
+        <field name="product_qty">5</field>
+        <field name="product_uom_id" ref="uom.product_uom_litre"/>
+    </record>
+    <record id="bom_pt_h12_l3" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h12"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_pulpa_lucuma')).product_variant_id.id"/>
+        <field name="product_qty">12</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h12_l4" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h12"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
+        <field name="product_qty">6</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_h12_l5" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_h12"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_envase_1l')).product_variant_id.id"/>
+        <field name="product_qty">50</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_h12_op1" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h12"/>
+        <field name="name">Pasteurización (80-85 °C, 30 min)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">10</field>
+        <field name="time_cycle_manual">45</field>
+    </record>
+    <record id="bom_pt_h12_op2" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h12"/>
+        <field name="name">Maduración (2-6 °C, 4 h)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">20</field>
+        <field name="time_cycle_manual">240</field>
+    </record>
+    <record id="bom_pt_h12_op3" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h12"/>
+        <field name="name">Congelamiento</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">30</field>
+        <field name="time_cycle_manual">60</field>
+    </record>
+    <record id="bom_pt_h12_op4" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_h12"/>
+        <field name="name">Endurecimiento (-18 °C o menos)</field>
+        <field name="workcenter_id" ref="wc_helados"/>
+        <field name="sequence">40</field>
+        <field name="time_cycle_manual">480</field>
+    </record>
+
+    <record id="bom_pt_c01" model="mrp.bom">
+        <field name="product_tmpl_id" ref="pt_c01"/>
+        <field name="product_qty">200</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="type">normal</field>
+    </record>
+    <record id="bom_pt_c01_l1" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_c01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_cacao')).product_variant_id.id"/>
+        <field name="product_qty">2.5</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_c01_l2" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_c01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_manteca_cacao')).product_variant_id.id"/>
+        <field name="product_qty">1.5</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_c01_l3" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_c01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
+        <field name="product_qty">2.0</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_c01_l4" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_c01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_leche_polvo')).product_variant_id.id"/>
+        <field name="product_qty">1.2</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_c01_l5" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_c01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_mani')).product_variant_id.id"/>
+        <field name="product_qty">1.5</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_c01_l6" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_c01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_envoltura')).product_variant_id.id"/>
+        <field name="product_qty">200</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_c01_op1" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_c01"/>
+        <field name="name">Conchado (50-60 °C)</field>
+        <field name="workcenter_id" ref="wc_chocolates"/>
+        <field name="sequence">10</field>
+        <field name="time_cycle_manual">240</field>
+    </record>
+    <record id="bom_pt_c01_op2" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_c01"/>
+        <field name="name">Templado (31-32 °C)</field>
+        <field name="workcenter_id" ref="wc_chocolates"/>
+        <field name="sequence">20</field>
+        <field name="time_cycle_manual">60</field>
+    </record>
+    <record id="bom_pt_c01_op3" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_c01"/>
+        <field name="name">Moldeo y enfriado (12-15 °C)</field>
+        <field name="workcenter_id" ref="wc_chocolates"/>
+        <field name="sequence">30</field>
+        <field name="time_cycle_manual">90</field>
+    </record>
+
+    <record id="bom_pt_c02" model="mrp.bom">
+        <field name="product_tmpl_id" ref="pt_c02"/>
+        <field name="product_qty">200</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="type">normal</field>
+    </record>
+    <record id="bom_pt_c02_l1" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_c02"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_cacao')).product_variant_id.id"/>
+        <field name="product_qty">2.0</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_c02_l2" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_c02"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_manteca_cacao')).product_variant_id.id"/>
+        <field name="product_qty">1.4</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_c02_l3" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_c02"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
+        <field name="product_qty">1.8</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_c02_l4" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_c02"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_leche_polvo')).product_variant_id.id"/>
+        <field name="product_qty">1.0</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_c02_l5" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_c02"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_envoltura')).product_variant_id.id"/>
+        <field name="product_qty">200</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_c02_op1" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_c02"/>
+        <field name="name">Conchado (50-60 °C)</field>
+        <field name="workcenter_id" ref="wc_chocolates"/>
+        <field name="sequence">10</field>
+        <field name="time_cycle_manual">240</field>
+    </record>
+    <record id="bom_pt_c02_op2" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_c02"/>
+        <field name="name">Templado (31-32 °C)</field>
+        <field name="workcenter_id" ref="wc_chocolates"/>
+        <field name="sequence">20</field>
+        <field name="time_cycle_manual">60</field>
+    </record>
+    <record id="bom_pt_c02_op3" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_c02"/>
+        <field name="name">Moldeo y enfriado (12-15 °C)</field>
+        <field name="workcenter_id" ref="wc_chocolates"/>
+        <field name="sequence">30</field>
+        <field name="time_cycle_manual">90</field>
+    </record>
+
+    <record id="bom_pt_c03" model="mrp.bom">
+        <field name="product_tmpl_id" ref="pt_c03"/>
+        <field name="product_qty">100</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="type">normal</field>
+    </record>
+    <record id="bom_pt_c03_l1" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_c03"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_cacao')).product_variant_id.id"/>
+        <field name="product_qty">2.0</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_c03_l2" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_c03"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_manteca_cacao')).product_variant_id.id"/>
+        <field name="product_qty">1.0</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_c03_l3" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_c03"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
+        <field name="product_qty">1.2</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_c03_l4" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_c03"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_envoltura')).product_variant_id.id"/>
+        <field name="product_qty">100</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_c03_op1" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_c03"/>
+        <field name="name">Conchado (50-60 °C)</field>
+        <field name="workcenter_id" ref="wc_chocolates"/>
+        <field name="sequence">10</field>
+        <field name="time_cycle_manual">240</field>
+    </record>
+    <record id="bom_pt_c03_op2" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_c03"/>
+        <field name="name">Templado (31-32 °C)</field>
+        <field name="workcenter_id" ref="wc_chocolates"/>
+        <field name="sequence">20</field>
+        <field name="time_cycle_manual">60</field>
+    </record>
+    <record id="bom_pt_c03_op3" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_c03"/>
+        <field name="name">Moldeo y enfriado (12-15 °C)</field>
+        <field name="workcenter_id" ref="wc_chocolates"/>
+        <field name="sequence">30</field>
+        <field name="time_cycle_manual">90</field>
+    </record>
+
+    <record id="bom_pt_p01" model="mrp.bom">
+        <field name="product_tmpl_id" ref="pt_p01"/>
+        <field name="product_qty">50</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="type">normal</field>
+    </record>
+    <record id="bom_pt_p01_l1" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_p01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_harina')).product_variant_id.id"/>
+        <field name="product_qty">25</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_p01_l2" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_p01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
+        <field name="product_qty">6</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_p01_l3" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_p01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_huevos')).product_variant_id.id"/>
+        <field name="product_qty">150</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_p01_l4" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_p01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_mantequilla')).product_variant_id.id"/>
+        <field name="product_qty">6</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_p01_l5" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_p01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_frutas_confitadas')).product_variant_id.id"/>
+        <field name="product_qty">7</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_p01_l6" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_p01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_pasas')).product_variant_id.id"/>
+        <field name="product_qty">3</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_p01_l7" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_p01"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_caja_paneton')).product_variant_id.id"/>
+        <field name="product_qty">50</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_p01_op1" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_p01"/>
+        <field name="name">Amasado</field>
+        <field name="workcenter_id" ref="wc_paneton"/>
+        <field name="sequence">10</field>
+        <field name="time_cycle_manual">40</field>
+    </record>
+    <record id="bom_pt_p01_op2" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_p01"/>
+        <field name="name">Fermentación (28-30 °C, 8 h)</field>
+        <field name="workcenter_id" ref="wc_paneton"/>
+        <field name="sequence">20</field>
+        <field name="time_cycle_manual">480</field>
+    </record>
+    <record id="bom_pt_p01_op3" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_p01"/>
+        <field name="name">Horneado (170-180 °C)</field>
+        <field name="workcenter_id" ref="wc_paneton"/>
+        <field name="sequence">30</field>
+        <field name="time_cycle_manual">60</field>
+    </record>
+    <record id="bom_pt_p01_op4" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_p01"/>
+        <field name="name">Enfriado (hasta 25 °C)</field>
+        <field name="workcenter_id" ref="wc_paneton"/>
+        <field name="sequence">40</field>
+        <field name="time_cycle_manual">120</field>
+    </record>
+    <record id="bom_pt_p01_op5" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_p01"/>
+        <field name="name">Empaque</field>
+        <field name="workcenter_id" ref="wc_paneton"/>
+        <field name="sequence">50</field>
+        <field name="time_cycle_manual">45</field>
+    </record>
+
+    <record id="bom_pt_p02" model="mrp.bom">
+        <field name="product_tmpl_id" ref="pt_p02"/>
+        <field name="product_qty">50</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="type">normal</field>
+    </record>
+    <record id="bom_pt_p02_l1" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_p02"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_harina')).product_variant_id.id"/>
+        <field name="product_qty">25</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_p02_l2" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_p02"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
+        <field name="product_qty">6</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_p02_l3" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_p02"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_huevos')).product_variant_id.id"/>
+        <field name="product_qty">200</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_p02_l4" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_p02"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_mantequilla')).product_variant_id.id"/>
+        <field name="product_qty">9</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_p02_l5" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_p02"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_frutas_confitadas')).product_variant_id.id"/>
+        <field name="product_qty">9</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_p02_l6" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_p02"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_pasas')).product_variant_id.id"/>
+        <field name="product_qty">5</field>
+        <field name="product_uom_id" ref="uom.product_uom_kgm"/>
+    </record>
+    <record id="bom_pt_p02_l7" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_pt_p02"/>
+        <field name="product_id" model="product.template" eval="obj(ref('in_caja_paneton')).product_variant_id.id"/>
+        <field name="product_qty">50</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="bom_pt_p02_op1" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_p02"/>
+        <field name="name">Amasado</field>
+        <field name="workcenter_id" ref="wc_paneton"/>
+        <field name="sequence">10</field>
+        <field name="time_cycle_manual">40</field>
+    </record>
+    <record id="bom_pt_p02_op2" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_p02"/>
+        <field name="name">Fermentación (28-30 °C, 8 h)</field>
+        <field name="workcenter_id" ref="wc_paneton"/>
+        <field name="sequence">20</field>
+        <field name="time_cycle_manual">480</field>
+    </record>
+    <record id="bom_pt_p02_op3" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_p02"/>
+        <field name="name">Horneado (170-180 °C)</field>
+        <field name="workcenter_id" ref="wc_paneton"/>
+        <field name="sequence">30</field>
+        <field name="time_cycle_manual">60</field>
+    </record>
+    <record id="bom_pt_p02_op4" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_p02"/>
+        <field name="name">Enfriado (hasta 25 °C)</field>
+        <field name="workcenter_id" ref="wc_paneton"/>
+        <field name="sequence">40</field>
+        <field name="time_cycle_manual">120</field>
+    </record>
+    <record id="bom_pt_p02_op5" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_pt_p02"/>
+        <field name="name">Empaque</field>
+        <field name="workcenter_id" ref="wc_paneton"/>
+        <field name="sequence">50</field>
+        <field name="time_cycle_manual">45</field>
+    </record>
+
+</odoo>
