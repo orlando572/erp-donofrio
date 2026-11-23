@@ -9,13 +9,13 @@ Escalas de la plantilla:
 - **Nivel = I × P**.
 - Prioridad: **Alta** si el nivel es 6-9 (acción inmediata), **Media** si es 3-5 (seguimiento constante), **Baja** si es 1-2 (monitoreo).
 
-Estos riesgos se registran en el tablero 2 de Monday y se revisan en cada Planning y Retro.
+Estos riesgos se registran en `docs/pm/plan_riesgos.md`, enlazado desde el issue "Registro de riesgos", y se revisan en cada Planning y Retro.
 
 | Id | Tipo | Riesgo | I | P | Nivel | Prio | Estrategia | Resp. |
 |---|---|---|---|---|---|---|---|---|
 | R1 | Externo | **Plazo muy corto: todo se entrega el viernes 27 de noviembre, 14:30** (el "18 de julio, 07:00" del PDF es un dato de la plantilla) | 3 | 3 | 9 | Alta | **Mitigar:** sprints con *timebox* de ~1 día en orden fijo ([04 §4.6](04_scrum_pmbok.md)); la Fase 1 garantiza un entregable aunque la Fase 2 no alcance; Gate 0 por criterios; Cierre reservado; lo más probable es que de la F2 solo entre M1 | E |
 | R2 | Técnico | El agente de IA o tutoriales viejos generan **API obsoleta de Odoo** (`attrs`, `<tree>`, `_sql_constraints`…) que rompe la instalación | 3 | 3 | 9 | Alta | **Mitigar:** código fuente 19.0 local, ficha de cambios, hook que bloquea, `check_legacy` en CI, instalación con tests en cada PR ([08](08_estrategia_agente_ia.md)) | O |
-| R3 | Organizacional | **Otro grupo elige la misma empresa** (prohibido por la regla 10) | 3 | 2 | 6 | Alta | **Evitar:** confirmar D'Onofrio con el docente en S0; alternativa de respaldo: otra empresa de consumo masivo | E |
+| R3 | Organizacional | **Otro grupo elige la misma empresa** (prohibido por la regla 10) | 3 | 1 | 3 | Media | **Evitar:** el docente asignó D'Onofrio al grupo en S0 y es el único grupo con esta empresa | E |
 | R4 | Humano | **Carga desigual** o un integrante no puede defender su parte (la nota también es individual) | 3 | 2 | 6 | Alta | **Mitigar:** reparto por áreas de punta a punta, revisión cruzada de todos los PR, demos cruzadas en la Review, 2 ensayos | E+O |
 | R5 | Organizacional | **Uso de IA no declarado** se interpreta como plagio (regla 11) | 3 | 2 | 6 | Alta | **Evitar:** declarar en la metodología el uso del asistente de IA y la verificación humana; todo el contenido revisado y entendido por quien lo firma; citar las fuentes | E+O |
 | R6 | Técnico | Un módulo OCA o una funcionalidad necesaria no está en Community 19 (pasó con `quality_control_mrp_oca` y el EDI) | 2 | 3 | 6 | Alta | **Aceptar o mitigar:** módulo propio pequeño; limitación declarada para EDI y nómina | O |
@@ -24,10 +24,10 @@ Estos riesgos se registran en el tablero 2 de Monday y se revisan en cada Planni
 | R9 | Externo | **Falla la subida única** a UTP+Class (tamaño, formato, hora o conexión) | 3 | 2 | 6 | Alta | **Mitigar:** generar los PDF y el zip al inicio del Cierre; revisar el límite de tamaño; subir con margen antes del viernes 27, 14:30; checklist de 7.2 | E |
 | R10 | Externo | **Cambia el escenario Froneri** antes de la entrega (noticias nuevas) | 1 | 2 | 2 | Baja | **Aceptar:** la fecha de corte de 2026 está declarada; se actualiza solo el párrafo del entorno | E |
 | R11 | Legal/ético | Uso de marca, logo o identidad real (**impersonación**) si se publica una web o un RUC real | 2 | 2 | 4 | Media | **Evitar:** RUC ficticio, aviso de "proyecto académico, no afiliado", sitio con `noindex`, repo sin PDF del docente | E |
-| R12 | Técnico | Límites del plan gratuito de Monday (2 usuarios, 3 tableros, sin integraciones, posible tope de ítems) | 1 | 2 | 2 | Baja | **Aceptar:** 3 tableros justos; las tareas finas viven en GitHub Issues | E |
+| R12 | Organizacional | El título 6.3 de la plantilla ("Resumen del Monday") nombra otra herramienta y el evaluador espera verla | 1 | 2 | 2 | Baja | **Mitigar:** una línea bajo el título que justifica GitHub Projects ([04 §4.11](04_scrum_pmbok.md)) y aviso al docente | E |
 | R13 | Humano | La **exposición pasa de 10 minutos** y se corta | 2 | 2 | 4 | Media | **Mitigar:** guion cronometrado, punto de corte a los 8:30, video de respaldo | E+O |
 | R14 | Técnico | La demo en vivo falla (Docker, red, datos) | 3 | 2 | 6 | Alta | **Mitigar:** BD de demo pre-cargada y respaldada, video grabado, PC probada el día anterior | O |
-| R15 | Organizacional | La documentación se deja para el final y no da el tiempo | 3 | 2 | 6 | Alta | **Evitar:** la DoD exige un borrador de la sección por HU; tablero 3 de Monday con un estado por sección; el Gate 0 exige el informe completo en borrador para el alcance de la F1 | E |
+| R15 | Organizacional | La documentación se deja para el final y no da el tiempo | 3 | 2 | 6 | Alta | **Evitar:** la DoD exige un borrador de la sección por HU; checklist de secciones en el issue "Informe final"; el Gate 0 exige el informe completo en borrador para el alcance de la F1 | E |
 | R16 | Técnico | La evidencia de Scrum se concentra en pocos días (commits todos juntos) | 2 | 2 | 4 | Media | **Mitigar:** commits pequeños y diarios de ambos, sprints con fechas reales, actas fechadas | O |
 | R17 | Organizacional | **La Fase 2 se come el tiempo del cierre** o la entrega queda con un módulo a medias | 3 | 2 | 6 | Alta | **Evitar:** Gate 0 y mini gates por criterios (F1 completa; el módulo se termina y documenta antes del Cierre); cierre reservado que la F2 no puede usar; orden fijo M1 → M4; lo inconcluso no se fusiona y se documenta como trabajo futuro | O (criterios), E (decisión) |
 | R18 | Técnico | El agente de IA **sigue con la Fase 2 sin autorización** después del gate | 2 | 2 | 4 | Media | **Evitar:** la regla del gate en el CLAUDE.md; solo vale la confirmación explícita en el chat de Evelyn u Orlando; los PR de la F2 requieren revisión humana | O |
@@ -42,7 +42,7 @@ Las tablas 11-13 de la plantilla (riesgos por etapa del software: desarrollo, de
 - Mantenimiento: backups no probados, disco lleno, lotes vencidos por *cron* caído.
 
 Cada tabla agrega:
-- Seguimiento: en cada sprint, en Monday.
+- Seguimiento: en cada sprint, con un comentario en el issue "Registro de riesgos".
 - Validación: el PO valida y ambos revisan.
 
 ## 7.2 Checklist final de entrega
@@ -51,7 +51,7 @@ Cada tabla agrega:
 
 - [ ] **a. Informe final (PDF)** sobre la plantilla del docente, sin texto de ejemplo; secciones 1-10; índices actualizados; leyendas numeradas; APA 7; historial de revisiones lleno
 - [ ] **b. Manual de instalación y configuración del proyecto (PDF)**: requisitos, clonar, `.env`, `docker compose up`, `init_db.sh`, carga de transacciones, usuarios de prueba, perfiles (réplica, proxy), backup y restauración, actualización de módulos, solución de problemas
-- [ ] **c. Manual de instalación y configuración de las herramientas (PDF)**: Docker, Git, VS Code, DBeaver, SchemaSpy, bpmn.io/Camunda Modeler, draw.io, PlantUML, Lighthouse, k6, OWASP ZAP, Monday, GitHub (Actions, GHCR), asistente de IA
+- [ ] **c. Manual de instalación y configuración de las herramientas (PDF)**: Docker, Git, VS Code, DBeaver, SchemaSpy, bpmn.io/Camunda Modeler, draw.io, PlantUML, Lighthouse, k6, OWASP ZAP, GitHub (Actions, GHCR, Projects y la CLI `gh` con el permiso `project`), asistente de IA
 - [ ] **d. Material audiovisual (PPTX o PDF)** para 10 minutos + video de respaldo de la demo
 - [ ] **e. Enlace al repositorio** (público o con acceso del docente) que muestre el 100 % de la construcción: releases, Actions, issues, PR
 - [ ] **f. Código fuente comprimido** (`erp-donofrio-v1.0.0.zip` de la Release) con un README de indicaciones y especificaciones

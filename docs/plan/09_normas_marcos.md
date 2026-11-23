@@ -33,7 +33,7 @@ Para evitar ambigüedades, cada fila lleva también el **nombre** de la sección
 | **OWASP Top 10** (edición 2021; usar la 2025 si ya es versión final a la fecha de entrega) | Las 10 categorías como lista de ataques a defender | **5.12** Identificación de ataques y defensa · **6.13** Pruebas de seguridad (ZAP) | O |
 | **ISO 22301:2019** | BIA mínimo (procesos críticos, RPO y RTO), estrategia de continuidad (réplica + respaldos) y ejercicio (restauración y promoción de la réplica) | **5.9** Gestión de replicación · **5.9b** Administración de BD (respaldos) · **4.7.3** SLA (RPO/RTO) | O |
 | **ISO 9001:2015 + HACCP (Codex) / ISO 22000:2018** | ISO 9001: identificación y trazabilidad, liberación de productos, control de salidas no conformes. HACCP: puntos críticos de control (PCC), límites críticos, monitoreo, acciones correctivas, registros | **3.2** Descripción del problema (contexto de inocuidad) · **4.1.2** BPMN de producción y calidad · **5.5** Documentación del módulo `donofrio_calidad` · justificación de RF008, RF011, RF012 y RNF005 | O |
-| **Ley 29733** (Protección de Datos Personales, Perú) y su reglamento vigente (verificar si es el **D.S. 016-2024-JUS**, que reemplazó al D.S. 003-2013-JUS) | Principios de finalidad, proporcionalidad y seguridad; datos de clientes (DNI/RUC) y empleados | **3.2** Supuestos (datos ficticios) · **4.2.3** RNF013 · **5.11** control 5.34 de la SoA | E |
+| **Ley 29733** (Protección de Datos Personales, Perú) y su reglamento vigente (verificar si es el **D.S. 016-2024-JUS**, sucesor del D.S. 003-2013-JUS) | Principios de finalidad, proporcionalidad y seguridad; datos de clientes (DNI/RUC) y empleados | **3.2** Supuestos (datos ficticios) · **4.2.3** RNF013 · **5.11** control 5.34 de la SoA | E |
 
 ## 9.2 Cómo se demuestra cada control en Odoo 19 Community
 
@@ -63,7 +63,7 @@ Todo lo que aparece aquí se **verificó en la rama 19.0** de `github.com/odoo/o
 | **Gestión de cambios y problemas** del software | **GitHub Issues** con plantillas: `solicitud_cambio.yml` (RFC: motivo, impacto, riesgo, plan de *rollback*, aprobador), `bug.yml` (incidente técnico o problema) | Etiquetas `tipo:cambio-normal`, `tipo:cambio-estandar`, `tipo:cambio-emergencia`; el PR enlazado es la implementación; el CI y la revisión hacen de **autoridad de cambio** | Habilitación del cambio: RFC → evaluación (revisión del PR) → autorización (aprobación) → implementación (merge) → verificación (CI y *smoke test*) → cierre (release) |
 | **Capacidad y desempeño** | k6 + `pg_stat_statements` + `docker stats` + Uptime Kuma | `scripts/perf/` | Gestión de capacidad y desempeño: tabla de proyección de usuarios (heladeros en verano frente a invierno) y umbrales |
 
-**Anexos nuevos** (los formatos que pide el pedido). Cada uno trae el formulario y un ejemplo lleno con un caso de D'Onofrio:
+**Anexos con los formatos ITIL.** Cada uno trae el formulario y un ejemplo lleno con un caso de D'Onofrio:
 
 | Anexo | Formato | Ejemplo lleno |
 |---|---|---|
@@ -92,18 +92,18 @@ Matriz de prioridad (impacto × urgencia) y SLA por prioridad. Es la misma tabla
 
 Se demuestra con dos tablas: la cascada (arriba) en 3.6-3.7 y un mapa "objetivo COBIT → componente del ERP o de la infraestructura" en 4.1.3. **No se hace** evaluación de capacidad ni de madurez: queda fuera de alcance.
 
-## 9.5 ISO/IEC 25010:2023 aplicada a los RNF (columna nueva en 4.2.3 y 5.14)
+## 9.5 ISO/IEC 25010:2023 aplicada a los RNF (columna ISO 25010 en 4.2.3 y 5.14)
 
 | Característica 25010:2023 | RNF | Prueba |
 |---|---|---|
 | Adecuación funcional | (los RF) | Pruebas funcionales (5.13) |
 | Eficiencia de desempeño | RNF002, RNF008 | k6, Lighthouse |
 | Compatibilidad | RNF001 | 3 navegadores |
-| Capacidad de interacción (antes "usabilidad") | RNF003 | SUS + tareas |
+| Capacidad de interacción ("usabilidad" en la edición 2011) | RNF003 | SUS + tareas |
 | Fiabilidad | RNF006, RNF011 | Restauración, réplica, *uptime* |
 | Seguridad | RNF009, RNF010, RNF013 | ZAP, tests de acceso |
 | Mantenibilidad | RNF007 | CI, lint, cobertura de tests |
-| Flexibilidad (antes "portabilidad") | RNF012 | Instalación limpia con un comando |
+| Flexibilidad ("portabilidad" en la edición 2011) | RNF012 | Instalación limpia con un comando |
 | Protección (*safety*, nueva en 2023) | RNF004, RNF005 | Un lote rechazado o vencido no se despacha (inocuidad del consumidor) |
 
 ## 9.6 OWASP Top 10 → tabla 18 "Ataque y defensa" (5.12)
@@ -186,21 +186,21 @@ Esta tabla va en el informe, en 5.11 o como anexo. Cada evidencia se guarda en `
 | ITIL incidentes y solicitudes · COBIT DSS02 · ISO 20000-1 | Registrar y resolver dentro del SLA | Mesa de servicios en Project | Captura: Kanban de tickets por etapa; pivote de cumplimiento del SLA; Anexos 10.3 y 10.5 |
 | ITIL niveles de servicio · COBIT APO09 | SLA definidos y medidos | Tabla de SLA + Uptime Kuma | Tabla 15; captura: *uptime* |
 | ITIL capacidad y desempeño | Capacidad para la temporada alta | k6 + proyección de usuarios | Archivo: reporte de k6; tabla de proyección |
-| ISO 31000 · COBIT APO12 | Riesgos evaluados y tratados | Matriz I × P + tablero de riesgos en Monday | Tablas 10-13; captura de Monday |
+| ISO 31000 · COBIT APO12 | Riesgos evaluados y tratados | Matriz I × P en `docs/pm/plan_riesgos.md` + issue "Registro de riesgos" | Tablas 10-13; archivo y comentarios del issue |
 | ISO 25010 | Calidad del producto | RNF clasificados y probados | Tablas 22-24 con la columna 25010 |
 | ISO 9001 / HACCP / ISO 22000 | Trazabilidad (F1); liberación, no conformes, PCC, registros (F2) | F1: lotes, FEFO, fecha de retiro. F2: `donofrio_calidad` (inspecciones, temperaturas, bloqueo de despacho) | Test: lote rechazado no despacha; captura: certificado QWeb, alerta de temperatura |
 | Ley 29733 · ISO 27001 A.5.34 | Protección de datos personales | Datos ficticios, campos privados restringidos | Captura: vendedor sin acceso a datos privados; párrafo en 3.2 |
 | COBIT MEA01 | Supervisión del desempeño | Tablero de KPIs + burndown | Captura del tablero; gráfico de burndown |
 
-## 9.10 Impacto en el backlog y el reparto
+## 9.10 Normas en el backlog y el reparto
 
-Se mantiene la simplicidad: solo se agrega **una** HU de configuración y se precisan dos existentes.
+Las normas se cubren con **una** HU de configuración (HU-32) y con el alcance de seguridad de dos HU de la F1.
 
-| Cambio | Detalle | Pts | Sprint | Resp. |
+| Ítem | Detalle | Pts | Sprint | Resp. |
 |---|---|---|---|---|
-| **HU-32 (nueva, Fase 1)** | Como **responsable de TI**, quiero una mesa de servicios en Project (etapas, tipos de ticket ITIL, prioridad con fecha límite de SLA) para registrar incidentes y solicitudes. Criterios: proyecto y etapas cargados por código; 5 tickets de ejemplo; pivote de cumplimiento del SLA | 2 | S3 | E |
-| HU-27 (precisión) | Se agregan `auth_password_policy` (minlength 12), parámetros de *cooldown*, `auth_totp_mail` con política para el administrador y la gerencia, y `test_seguridad.py` | (sin cambio: 5) | S3 (Fase 1) | O |
-| HU-04 (precisión) | Grupos de 19.0 con `privilege_id` + `ir.rule` del CD Arequipa (F1); las `ir.rule` del liquidador y del inspector llegan con M1 y M2 (F2) | (sin cambio: 3) | S1 | O |
-| DOC (nuevas tareas) | Cascada COBIT (3.6-3.7) y prácticas ITIL + anexos 10.3-10.5 → **E**; SoA, trazabilidad, OWASP, columna 25010, ISO 22301 y HACCP → **O** | — | S3 (Fase 1) | E / O |
+| **HU-32 (Fase 1)** | Como **responsable de TI**, quiero una mesa de servicios en Project (etapas, tipos de ticket ITIL, prioridad con fecha límite de SLA) para registrar incidentes y solicitudes. Criterios: proyecto y etapas cargados por código; 5 tickets de ejemplo; pivote de cumplimiento del SLA | 2 | S3 | E |
+| HU-27 (seguridad) | Incluye `auth_password_policy` (minlength 12), parámetros de *cooldown*, `auth_totp_mail` con política para el administrador y la gerencia, y `test_seguridad.py` | 5 | S3 (Fase 1) | O |
+| HU-04 (roles) | Grupos de 19.0 con `privilege_id` + `ir.rule` del CD Arequipa (F1); las `ir.rule` del liquidador y del inspector llegan con M1 y M2 (F2) | 3 | S1 | O |
+| DOC (normas) | Cascada COBIT (3.6-3.7) y prácticas ITIL + anexos 10.3-10.5 → **E**; SoA, trazabilidad, OWASP, columna 25010, ISO 22301 y HACCP → **O** | — | S3 (Fase 1) | E / O |
 
 Todos los controles de seguridad de §9.2 son de la **Fase 1**: no dependen de módulos propios. Los grupos "Calidad / …" y "Heladeros / …" de la fila #1 se agregan solo si llegan M1 y M2. Total del backlog: ver [04 §4.4](04_scrum_pmbok.md) (F1 = 83 puntos, F2 = 37).

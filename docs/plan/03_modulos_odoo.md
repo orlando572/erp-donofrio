@@ -20,11 +20,11 @@ Se verificó revisando si cada módulo existe en la rama `19.0` de `github.com/o
 | Studio, IA, firma, MPS, PLM, mantenimiento de equipos, *shop floor* | Enterprise | — | No se usan |
 
 **Cambios de Odoo 19 que afectan la carga de datos** (verificados en el código fuente 19.0):
-- **UoM sin categorías:** ahora se usa `uom.uom.relative_uom_id` + `relative_factor`.
+- **UoM sin categorías:** se usa `uom.uom.relative_uom_id` + `relative_factor`.
 - **Productos:** `product.template.type` (`consu`/`service`/`combo`) + `is_storable` (lo agrega `stock`).
-- **RR. HH.:** el módulo `hr_contract` ya no existe; los contratos se manejan con `hr.version`.
-- **Usuarios:** `res.users.group_ids` (antes `groups_id`) y `res.groups.privilege_id` (nuevo modelo `res.groups.privilege`).
-- **Datos demo:** desde 18.3 ya no se cargan por defecto (`--with-demo`).
+- **RR. HH.:** el módulo `hr_contract` no existe en 19.0; los contratos se manejan con `hr.version`.
+- **Usuarios:** `res.users.group_ids` (no `groups_id`) y `res.groups.privilege_id` (modelo `res.groups.privilege`).
+- **Datos demo:** desde 18.3 no se cargan por defecto (`--with-demo`).
 
 ## 3.2 Módulos OCA portados a 19.0 (verificado en las ramas `19.0` de GitHub)
 
