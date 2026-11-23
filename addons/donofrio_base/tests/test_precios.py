@@ -40,6 +40,15 @@ class TestListasDePrecios(TransactionCase):
         # el panetón no entra en la lista de verano
         self.assertAlmostEqual(self._precio(self.verano, self.paneton, '2027-01-15'), self.paneton.lst_price)
 
+    def test_vigencia_empieza_y_termina_a_medianoche_de_lima(self):
+        base = self.helado.lst_price
+        # Lima es UTC-5: el 30/11 a las 23:00 en Lima todavía no rige el verano; el 1/12 a las 00:00, sí
+        self.assertAlmostEqual(self._precio(self.verano, self.helado, '2026-12-01 04:00:00'), base)
+        self.assertAlmostEqual(self._precio(self.verano, self.helado, '2026-12-01 05:00:00'), base * 0.90)
+        # el 31/03 a las 23:00 en Lima aún rige; el 1/04 a las 00:00 ya no
+        self.assertAlmostEqual(self._precio(self.verano, self.helado, '2027-04-01 03:00:00'), base * 0.90)
+        self.assertAlmostEqual(self._precio(self.verano, self.helado, '2027-04-01 05:00:00'), base)
+
     def test_navidad_depende_de_la_fecha_y_la_categoria(self):
         base = self.paneton.lst_price
         self.assertAlmostEqual(self._precio(self.navidad, self.paneton, '2026-11-20'), base * 0.88)

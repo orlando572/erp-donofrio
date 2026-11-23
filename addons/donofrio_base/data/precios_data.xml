@@ -44,7 +44,8 @@
         <field name="percent_price">25</field>
     </record>
 
-    <!-- Temporada: Verano (helados, diciembre a marzo). Una regla por temporada, con su vigencia -->
+    <!-- Temporada: Verano (helados, diciembre a marzo). Una regla por temporada, con su vigencia.
+         Las fechas van en UTC: medianoche de Lima (UTC-5) es 05:00 UTC, y el fin es 23:59:59 hora de Lima -->
     <record id="lista_verano" model="product.pricelist">
         <field name="name">Verano</field>
         <field name="currency_id" ref="base.PEN"/>
@@ -55,8 +56,8 @@
         <field name="categ_id" ref="cat_helados"/>
         <field name="compute_price">percentage</field>
         <field name="percent_price">10</field>
-        <field name="date_start">2026-01-01 00:00:00</field>
-        <field name="date_end">2026-03-31 23:59:59</field>
+        <field name="date_start">2026-01-01 05:00:00</field>
+        <field name="date_end">2026-04-01 04:59:59</field>
     </record>
     <record id="lista_verano_regla_2027" model="product.pricelist.item">
         <field name="pricelist_id" ref="lista_verano"/>
@@ -64,8 +65,8 @@
         <field name="categ_id" ref="cat_helados"/>
         <field name="compute_price">percentage</field>
         <field name="percent_price">10</field>
-        <field name="date_start">2026-12-01 00:00:00</field>
-        <field name="date_end">2027-03-31 23:59:59</field>
+        <field name="date_start">2026-12-01 05:00:00</field>
+        <field name="date_end">2027-04-01 04:59:59</field>
     </record>
 
     <!-- Temporada: Campaña Navidad (panetón, octubre a diciembre) -->
@@ -79,8 +80,8 @@
         <field name="categ_id" ref="cat_paneton"/>
         <field name="compute_price">percentage</field>
         <field name="percent_price">12</field>
-        <field name="date_start">2025-10-01 00:00:00</field>
-        <field name="date_end">2025-12-31 23:59:59</field>
+        <field name="date_start">2025-10-01 05:00:00</field>
+        <field name="date_end">2026-01-01 04:59:59</field>
     </record>
     <record id="lista_navidad_regla_2026" model="product.pricelist.item">
         <field name="pricelist_id" ref="lista_navidad"/>
@@ -88,8 +89,8 @@
         <field name="categ_id" ref="cat_paneton"/>
         <field name="compute_price">percentage</field>
         <field name="percent_price">12</field>
-        <field name="date_start">2026-10-01 00:00:00</field>
-        <field name="date_end">2026-12-31 23:59:59</field>
+        <field name="date_start">2026-10-01 05:00:00</field>
+        <field name="date_end">2027-01-01 04:59:59</field>
     </record>
 
 </odoo>
