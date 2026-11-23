@@ -12,3 +12,4 @@ from . import test_recepcion_despacho
 from . import test_produccion
 from . import test_reabastecimiento
 from . import test_facturacion
+from . import test_clientes
