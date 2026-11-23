@@ -1,0 +1,368 @@
+@startuml er_nucleo
+' Generado por scripts/diagrama_er.py desde la BD real; no se edita a mano (ver docs/diagramas/README.md).
+title Modelo ER del núcleo (36 tablas centrales de la Fase 1)
+hide circle
+hide empty methods
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 12
+skinparam roundCorner 6
+skinparam ArrowColor #555555
+skinparam entity {
+  BorderColor #444444
+  BackgroundColor #FFFFFF
+}
+skinparam package {
+  BorderColor #888888
+  FontStyle bold
+}
+skinparam nodesep 30
+skinparam ranksep 90
+
+entity "sale_order" as sale_order #DCEBFA {
+  * id : integer <<PK>>
+  --
+  * partner_id : integer <<FK>>
+  * partner_invoice_id : integer <<FK>>
+  pricelist_id : integer <<FK>>
+  opportunity_id : integer <<FK>>
+  warehouse_id : integer <<FK>>
+  <i>+ FK a account_journal, res_partner, res_users</i>
+}
+entity "sale_order_line" as sale_order_line #DCEBFA {
+  * id : integer <<PK>>
+  --
+  * order_id : integer <<FK>>
+  order_partner_id : integer <<FK>>
+  product_id : integer <<FK>>
+  warehouse_id : integer <<FK>>
+  <i>+ FK a res_users, sale_order_line</i>
+}
+entity "crm_lead" as crm_lead #DCEBFA {
+  * id : integer <<PK>>
+  --
+  partner_id : integer <<FK>>
+  <i>+ FK a res_users</i>
+}
+entity "pos_order" as pos_order #DCEBFA {
+  * id : integer <<PK>>
+  --
+  pricelist_id : integer <<FK>>
+  partner_id : integer <<FK>>
+  account_move : integer <<FK>>
+  employee_id : integer <<FK>>
+  <i>+ FK a res_users, account_journal</i>
+}
+entity "res_partner" as res_partner #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  <i>+ FK a res_partner ×2, res_users ×2</i>
+}
+entity "product_template" as product_template #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  categ_id : integer <<FK>>
+}
+entity "product_product" as product_product #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  * product_tmpl_id : integer <<FK>>
+}
+entity "product_category" as product_category #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  <i>+ FK a product_category</i>
+}
+entity "product_pricelist" as product_pricelist #EAF5E4 {
+  * id : integer <<PK>>
+}
+entity "product_pricelist_item" as product_pricelist_item #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  pricelist_id : integer <<FK>>
+  categ_id : integer <<FK>>
+  product_tmpl_id : integer <<FK>>
+  product_id : integer <<FK>>
+  base_pricelist_id : integer <<FK>>
+}
+entity "product_supplierinfo" as product_supplierinfo #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  * partner_id : integer <<FK>>
+  product_id : integer <<FK>>
+  * product_tmpl_id : integer <<FK>>
+}
+entity "hr_employee" as hr_employee #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  work_contact_id : integer <<FK>>
+  <i>+ FK a res_users, hr_employee ×2</i>
+}
+entity "stock_warehouse" as stock_warehouse #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  partner_id : integer <<FK>>
+  <i>+ FK a stock_location ×8, stock_picking_type ×12</i>
+}
+entity "stock_location" as stock_location #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  warehouse_id : integer <<FK>>
+  <i>+ FK a stock_location</i>
+}
+entity "stock_picking_type" as stock_picking_type #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  warehouse_id : integer <<FK>>
+  <i>+ FK a stock_location ×2, stock_picking_type</i>
+}
+entity "stock_picking" as stock_picking #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  partner_id : integer <<FK>>
+  owner_id : integer <<FK>>
+  pos_order_id : integer <<FK>>
+  sale_id : integer <<FK>>
+  <i>+ FK a stock_picking ×2, stock_location ×2, stock_picking_type, res_users</i>
+}
+entity "stock_move" as stock_move #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  * product_id : integer <<FK>>
+  partner_id : integer <<FK>>
+  picking_id : integer <<FK>>
+  restrict_partner_id : integer <<FK>>
+  warehouse_id : integer <<FK>>
+  orderpoint_id : integer <<FK>>
+  created_production_id : integer <<FK>>
+  production_id : integer <<FK>>
+  operation_id : integer <<FK>>
+  workorder_id : integer <<FK>>
+  bom_line_id : integer <<FK>>
+  account_move_id : integer <<FK>>
+  purchase_line_id : integer <<FK>>
+  sale_line_id : integer <<FK>>
+  <i>+ FK a stock_location ×3, stock_picking_type, stock_move, mrp_production</i>
+}
+entity "stock_move_line" as stock_move_line #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  picking_id : integer <<FK>>
+  move_id : integer <<FK>>
+  product_id : integer <<FK>>
+  lot_id : integer <<FK>>
+  owner_id : integer <<FK>>
+  workorder_id : integer <<FK>>
+  production_id : integer <<FK>>
+  <i>+ FK a stock_location ×2</i>
+}
+entity "stock_lot" as stock_lot #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  * product_id : integer <<FK>>
+  <i>+ FK a stock_location</i>
+}
+entity "stock_quant" as stock_quant #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  * product_id : integer <<FK>>
+  lot_id : integer <<FK>>
+  owner_id : integer <<FK>>
+  <i>+ FK a stock_location, res_users</i>
+}
+entity "stock_warehouse_orderpoint" as stock_warehouse_orderpoint #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  * warehouse_id : integer <<FK>>
+  * product_id : integer <<FK>>
+  bom_id : integer <<FK>>
+  supplier_id : integer <<FK>>
+  <i>+ FK a stock_location</i>
+}
+entity "mrp_bom" as mrp_bom #F6E3F4 {
+  * id : integer <<PK>>
+  --
+  * product_tmpl_id : integer <<FK>>
+  product_id : integer <<FK>>
+  <i>+ FK a stock_picking_type</i>
+}
+entity "mrp_bom_line" as mrp_bom_line #F6E3F4 {
+  * id : integer <<PK>>
+  --
+  * product_id : integer <<FK>>
+  product_tmpl_id : integer <<FK>>
+  * bom_id : integer <<FK>>
+  operation_id : integer <<FK>>
+}
+entity "mrp_production" as mrp_production #F6E3F4 {
+  * id : integer <<PK>>
+  --
+  * product_id : integer <<FK>>
+  bom_id : integer <<FK>>
+  orderpoint_id : integer <<FK>>
+  sale_line_id : integer <<FK>>
+  <i>+ FK a stock_picking_type, stock_location ×4, res_users</i>
+}
+entity "mrp_workorder" as mrp_workorder #F6E3F4 {
+  * id : integer <<PK>>
+  --
+  * workcenter_id : integer <<FK>>
+  * production_id : integer <<FK>>
+  operation_id : integer <<FK>>
+}
+entity "mrp_workcenter" as mrp_workcenter #F6E3F4 {
+  * id : integer <<PK>>
+}
+entity "mrp_routing_workcenter" as mrp_routing_workcenter #F6E3F4 {
+  * id : integer <<PK>>
+  --
+  * workcenter_id : integer <<FK>>
+  * bom_id : integer <<FK>>
+}
+entity "purchase_order" as purchase_order #FBE5DC {
+  * id : integer <<PK>>
+  --
+  * partner_id : integer <<FK>>
+  dest_address_id : integer <<FK>>
+  <i>+ FK a res_users, stock_picking_type</i>
+}
+entity "purchase_order_line" as purchase_order_line #FBE5DC {
+  * id : integer <<PK>>
+  --
+  product_id : integer <<FK>>
+  * order_id : integer <<FK>>
+  partner_id : integer <<FK>>
+  orderpoint_id : integer <<FK>>
+  sale_line_id : integer <<FK>>
+  <i>+ FK a stock_location</i>
+}
+entity "account_move" as account_move #E3F0F0 {
+  * id : integer <<PK>>
+  --
+  partner_id : integer <<FK>>
+  commercial_partner_id : integer <<FK>>
+  reversed_pos_order_id : integer <<FK>>
+  <i>+ FK a account_journal, account_move ×4, res_partner, res_users</i>
+}
+entity "account_move_line" as account_move_line #E3F0F0 {
+  * id : integer <<PK>>
+  --
+  * move_id : integer <<FK>>
+  partner_id : integer <<FK>>
+  product_id : integer <<FK>>
+  purchase_line_id : integer <<FK>>
+  <i>+ FK a account_journal, account_move_line</i>
+}
+entity "account_journal" as account_journal #E3F0F0 {
+  * id : integer <<PK>>
+}
+entity "res_users" as res_users #ECECEC {
+  * id : integer <<PK>>
+  --
+  * partner_id : integer <<FK>>
+}
+entity "res_groups" as res_groups #ECECEC {
+  * id : integer <<PK>>
+}
+entity "auditlog_rule" as auditlog_rule #ECECEC {
+  * id : integer <<PK>>
+}
+entity "project_task" as project_task #ECECEC {
+  * id : integer <<PK>>
+  --
+  partner_id : integer <<FK>>
+  <i>+ FK a project_task</i>
+}
+sale_order }o--|| res_partner : partner_id, partner_invoice_id (+1)
+sale_order }o--o| product_pricelist : pricelist_id
+sale_order }o--o| crm_lead : opportunity_id
+sale_order }o--o| stock_warehouse : warehouse_id
+sale_order_line }o--|| sale_order : order_id
+sale_order_line }o--o| res_partner : order_partner_id
+sale_order_line }o--o| product_product : product_id
+sale_order_line }o--o| stock_warehouse : warehouse_id
+crm_lead }o--o| res_partner : partner_id
+pos_order }o--o| product_pricelist : pricelist_id
+pos_order }o--o| res_partner : partner_id
+pos_order }o--o| account_move : account_move
+pos_order }o--o| hr_employee : employee_id
+product_template }o--o| product_category : categ_id
+product_product }o--|| product_template : product_tmpl_id
+product_pricelist_item }o--o| product_pricelist : pricelist_id, base_pricelist_id
+product_pricelist_item }o--o| product_category : categ_id
+product_pricelist_item }o--o| product_template : product_tmpl_id
+product_pricelist_item }o--o| product_product : product_id
+product_supplierinfo }o--|| res_partner : partner_id
+product_supplierinfo }o--o| product_product : product_id
+product_supplierinfo }o--|| product_template : product_tmpl_id
+hr_employee }o--o| res_partner : work_contact_id
+stock_warehouse }o--o| res_partner : partner_id
+stock_location }o--o| stock_warehouse : warehouse_id
+stock_picking_type }o--o| stock_warehouse : warehouse_id
+stock_picking }o--o| res_partner : partner_id, owner_id
+stock_picking }o--o| pos_order : pos_order_id
+stock_picking }o--o| sale_order : sale_id
+stock_move }o--|| product_product : product_id
+stock_move }o--o| res_partner : partner_id, restrict_partner_id
+stock_move }o--o| stock_picking : picking_id
+stock_move }o--o| stock_warehouse : warehouse_id
+stock_move }o--o| stock_warehouse_orderpoint : orderpoint_id
+stock_move }o--o| mrp_production : created_production_id, production_id (+1)
+stock_move }o--o| mrp_routing_workcenter : operation_id
+stock_move }o--o| mrp_workorder : workorder_id
+stock_move }o--o| mrp_bom_line : bom_line_id
+stock_move }o--o| account_move : account_move_id
+stock_move }o--o| purchase_order_line : purchase_line_id
+stock_move }o--o| sale_order_line : sale_line_id
+stock_move_line }o--o| stock_picking : picking_id
+stock_move_line }o--o| stock_move : move_id
+stock_move_line }o--o| product_product : product_id
+stock_move_line }o--o| stock_lot : lot_id
+stock_move_line }o--o| res_partner : owner_id
+stock_move_line }o--o| mrp_workorder : workorder_id
+stock_move_line }o--o| mrp_production : production_id
+stock_lot }o--|| product_product : product_id
+stock_quant }o--|| product_product : product_id
+stock_quant }o--o| stock_lot : lot_id
+stock_quant }o--o| res_partner : owner_id
+stock_warehouse_orderpoint }o--|| stock_warehouse : warehouse_id
+stock_warehouse_orderpoint }o--|| product_product : product_id
+stock_warehouse_orderpoint }o--o| mrp_bom : bom_id
+stock_warehouse_orderpoint }o--o| product_supplierinfo : supplier_id
+mrp_bom }o--|| product_template : product_tmpl_id
+mrp_bom }o--o| product_product : product_id
+mrp_bom_line }o--|| product_product : product_id
+mrp_bom_line }o--o| product_template : product_tmpl_id
+mrp_bom_line }o--|| mrp_bom : bom_id
+mrp_bom_line }o--o| mrp_routing_workcenter : operation_id
+mrp_production }o--|| product_product : product_id
+mrp_production }o--o| mrp_bom : bom_id
+mrp_production }o--o| stock_warehouse_orderpoint : orderpoint_id
+mrp_production }o--o| sale_order_line : sale_line_id
+mrp_workorder }o--|| mrp_workcenter : workcenter_id
+mrp_workorder }o--|| mrp_production : production_id
+mrp_workorder }o--o| mrp_routing_workcenter : operation_id
+mrp_routing_workcenter }o--|| mrp_workcenter : workcenter_id
+mrp_routing_workcenter }o--|| mrp_bom : bom_id
+purchase_order }o--|| res_partner : partner_id, dest_address_id
+purchase_order_line }o--o| product_product : product_id
+purchase_order_line }o--|| purchase_order : order_id
+purchase_order_line }o--o| res_partner : partner_id
+purchase_order_line }o--o| stock_warehouse_orderpoint : orderpoint_id
+purchase_order_line }o--o| sale_order_line : sale_line_id
+account_move }o--o| res_partner : partner_id, commercial_partner_id (+1)
+account_move }o--o| pos_order : reversed_pos_order_id
+account_move_line }o--|| account_move : move_id
+account_move_line }o--o| res_partner : partner_id
+account_move_line }o--o| product_product : product_id
+account_move_line }o--o| purchase_order_line : purchase_line_id
+res_users }o--|| res_partner : partner_id
+project_task }o--o| res_partner : partner_id
+legend bottom
+  * = no admite nulo · <<PK>> clave primaria · <<FK>> clave foránea · color = área del negocio
+  Pata de gallo: ||  uno exacto · o|  cero o uno · }o  cero o muchos
+  Las FK a res_users, stock_location, stock_picking_type y account_journal y las autorreferencias se anotan
+  en la caja («+ FK a …») sin línea. Áreas: Ventas y CRM, Maestros, Inventario, Producción, Compras, Facturación, Seguridad y mesa de servicios
+endlegend
+@enduml

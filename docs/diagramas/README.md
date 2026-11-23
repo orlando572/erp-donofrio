@@ -5,6 +5,8 @@
 | `bpmn/` | BPMN AS-IS: venta B2B, liquidación del heladero y compra de insumos (Evelyn); producción y calidad, y recepción y despacho con cadena de frío (Orlando). BPMN TO-BE (Sprint 2): producción con Odoo estándar, producción con inspección de calidad (M1) y recepción y despacho (Orlando); venta B2B, compra de insumos, heladero con Odoo estándar y heladero con liquidación diaria (M2) (Evelyn) (`.bpmn`, `.svg`, `.png`) | `generar_bpmn.py` + bpmn.io | Evelyn y Orlando |
 | `arquitectura/` | Arquitectura empresarial AS-IS y TO-BE (4.1.3) e infraestructura tecnológica (4.3.1) (`.svg`, `.png`) | `generar_arquitectura.py` | Orlando |
 | `pantallas/` | Wireframes (`wf_*`) y mockups (`mk_*`) de las 12 pantallas de los casos de uso, incluidas las de la Fase 2 (`.svg`, `.png`) | `generar_pantallas.py` | Evelyn |
+| `clases/` | Diagrama de clases del núcleo (modelos de Odoo y extensiones de `donofrio_base`) y clases **propuestas** de la Fase 2 (4.2.5) (`.puml`, `.png`, `.svg`) | PlantUML | Orlando |
+| `er/` | Modelo ER del núcleo (36 tablas) y diseño lógico (ventas, inventario, producción y compras) (4.2.6 y 4.2.7), extraídos de la BD real (`.puml`, `.png`, `.svg`) | `scripts/diagrama_er.py` + PlantUML | Orlando |
 | `cu/` | Casos de uso de ventas, heladeros y gerencia (Evelyn) y de logística y producción (Orlando) (`.puml` y `.png`) | PlantUML | Evelyn y Orlando |
 
 `cu/` también incluye Compras y Facturación (CU011 y CU012). Los datos de procesos son ficticios y verosímiles (supuesto S7 del plan).
@@ -49,3 +51,24 @@ python3 docs/diagramas/generar_pantallas.py
 docker run --rm -v "$PWD/docs/diagramas/pantallas":/b --entrypoint sh python:3.12-slim -c \
   "apt-get update -qq && apt-get install -y -qq librsvg2-bin fonts-dejavu-core && cd /b && for f in *.svg; do rsvg-convert \$f -o \${f%.svg}.png; done && chown $(id -u):$(id -g) *.png"
 ```
+
+## Clases (4.2.5)
+
+Las dos figuras están escritas a mano en PlantUML (los modelos y campos se verificaron contra `ir_model_fields`; las clases de la Fase 2 son **propuestas**, con estereotipo `<<propuesto>>`).
+
+```bash
+for f in png svg; do docker run --rm -u $(id -u):$(id -g) -v "$PWD/docs/diagramas/clases":/data plantuml/plantuml:latest -charset UTF-8 -t$f /data/*.puml; done
+```
+
+## Modelo ER, diseño lógico y diccionario de datos (4.2.6 a 4.2.8)
+
+No se dibujan a mano: salen de una BD real. Para reflejar `develop` conviene una BD limpia con `donofrio_base` recién instalado (la de desarrollo puede estar desactualizada). Solo hacen lecturas (sesión de psql en modo solo lectura). Con el contenedor `db` arriba y `.env`:
+
+```bash
+scripts/esquema_limpio.sh crear                                   # BD temporal esquema_tmp_informe (1-2 min); no toca las demás
+python3 scripts/diagrama_er.py --bd esquema_tmp_informe           # docs/diagramas/er/*.puml, .png y .svg (PlantUML en Docker)
+python3 scripts/diccionario_datos.py --bd esquema_tmp_informe --bd-tamanos donofrio_perf   # docs/informe/04_02_diccionario_datos.md y anexo_diccionario_datos.md
+scripts/esquema_limpio.sh borrar                                  # borra la BD temporal
+```
+
+`diagrama_er.py` también acepta `--sin-render` (solo escribe los `.puml`). `diccionario_datos.py` acepta `--csv ruta.csv` para volcar todo el diccionario a un CSV (Excel lo abre) y `--bd-tamanos` (opcional) para contar filas en una BD con datos. Solo usan Python 3 y Docker, sin librerías. El ER usa PlantUML con Graphviz en vez de SchemaSpy porque deja filtrar las tablas del núcleo y no descarga otra imagen.

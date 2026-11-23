@@ -1,0 +1,196 @@
+@startuml logico_produccion_compras
+' Generado por scripts/diagrama_er.py desde la BD real; no se edita a mano (ver docs/diagramas/README.md).
+title Diseño lógico: Producción y compras
+hide circle
+hide empty methods
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 12
+skinparam roundCorner 6
+skinparam ArrowColor #555555
+skinparam entity {
+  BorderColor #444444
+  BackgroundColor #FFFFFF
+}
+skinparam package {
+  BorderColor #888888
+  FontStyle bold
+}
+skinparam nodesep 30
+skinparam ranksep 90
+
+entity "product_product" as product_product #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  default_code : varchar
+  barcode : varchar
+  active : boolean
+}
+entity "product_supplierinfo" as product_supplierinfo #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  * partner_id : integer <<FK>>
+  product_id : integer <<FK>>
+  * delay : integer
+  * min_qty : numeric
+  price : numeric
+}
+entity "stock_warehouse_orderpoint" as stock_warehouse_orderpoint #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  * product_id : integer <<FK>>
+  bom_id : integer <<FK>>
+  supplier_id : integer <<FK>>
+  * trigger : varchar
+  * product_min_qty : numeric
+  * product_max_qty : numeric
+}
+entity "mrp_bom" as mrp_bom #F6E3F4 {
+  * id : integer <<PK>>
+  --
+  product_id : integer <<FK>>
+  code : varchar
+  * type : varchar
+  * product_qty : numeric
+}
+entity "mrp_bom_line" as mrp_bom_line #F6E3F4 {
+  * id : integer <<PK>>
+  --
+  * product_id : integer <<FK>>
+  * bom_id : integer <<FK>>
+  operation_id : integer <<FK>>
+  * product_qty : numeric
+}
+entity "mrp_routing_workcenter" as mrp_routing_workcenter #F6E3F4 {
+  * id : integer <<PK>>
+  --
+  * workcenter_id : integer <<FK>>
+  * bom_id : integer <<FK>>
+  * name : varchar
+  time_cycle_manual : double precision
+}
+entity "mrp_workcenter" as mrp_workcenter #F6E3F4 {
+  * id : integer <<PK>>
+  --
+  name : varchar
+  costs_hour : double precision
+}
+entity "mrp_production" as mrp_production #F6E3F4 {
+  * id : integer <<PK>>
+  --
+  * product_id : integer <<FK>>
+  bom_id : integer <<FK>>
+  orderpoint_id : integer <<FK>>
+  name : varchar
+  origin : varchar
+  state : varchar
+  * product_qty : numeric
+  * date_start : timestamp
+  date_finished : timestamp
+}
+entity "mrp_workorder" as mrp_workorder #F6E3F4 {
+  * id : integer <<PK>>
+  --
+  * workcenter_id : integer <<FK>>
+  * production_id : integer <<FK>>
+  operation_id : integer <<FK>>
+  * name : varchar
+  state : varchar
+  duration_expected : numeric
+}
+entity "stock_lot" as stock_lot #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  * product_id : integer <<FK>>
+  * name : varchar
+  expiration_date : timestamp
+  use_date : timestamp
+  removal_date : timestamp
+  alert_date : timestamp
+}
+entity "stock_move" as stock_move #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  * product_id : integer <<FK>>
+  partner_id : integer <<FK>>
+  restrict_partner_id : integer <<FK>>
+  orderpoint_id : integer <<FK>>
+  created_production_id : integer <<FK>>
+  production_id : integer <<FK>>
+  operation_id : integer <<FK>>
+  workorder_id : integer <<FK>>
+  bom_line_id : integer <<FK>>
+  purchase_line_id : integer <<FK>>
+  <i>+ FK a stock_move, mrp_production</i>
+  state : varchar
+  origin : varchar
+  * product_uom_qty : numeric
+  quantity : numeric
+  * date : timestamp
+}
+entity "purchase_order" as purchase_order #FBE5DC {
+  * id : integer <<PK>>
+  --
+  * partner_id : integer <<FK>>
+  dest_address_id : integer <<FK>>
+  * name : varchar
+  state : varchar
+  amount_total : numeric
+  * date_order : timestamp
+}
+entity "purchase_order_line" as purchase_order_line #FBE5DC {
+  * id : integer <<PK>>
+  --
+  product_id : integer <<FK>>
+  * order_id : integer <<FK>>
+  partner_id : integer <<FK>>
+  orderpoint_id : integer <<FK>>
+  * product_qty : numeric
+  * price_unit : numeric
+  qty_received : numeric
+}
+entity "res_partner" as res_partner #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  <i>+ FK a res_partner ×2</i>
+  name : varchar
+  vat : varchar
+  active : boolean
+}
+product_supplierinfo }o--|| res_partner : partner_id
+product_supplierinfo }o--o| product_product : product_id
+stock_warehouse_orderpoint }o--|| product_product : product_id
+stock_warehouse_orderpoint }o--o| mrp_bom : bom_id
+stock_warehouse_orderpoint }o--o| product_supplierinfo : supplier_id
+mrp_bom }o--o| product_product : product_id
+mrp_bom_line }o--|| product_product : product_id
+mrp_bom_line }o--|| mrp_bom : bom_id
+mrp_bom_line }o--o| mrp_routing_workcenter : operation_id
+mrp_routing_workcenter }o--|| mrp_workcenter : workcenter_id
+mrp_routing_workcenter }o--|| mrp_bom : bom_id
+mrp_production }o--|| product_product : product_id
+mrp_production }o--o| mrp_bom : bom_id
+mrp_production }o--o| stock_warehouse_orderpoint : orderpoint_id
+mrp_workorder }o--|| mrp_workcenter : workcenter_id
+mrp_workorder }o--|| mrp_production : production_id
+mrp_workorder }o--o| mrp_routing_workcenter : operation_id
+stock_lot }o--|| product_product : product_id
+stock_move }o--|| product_product : product_id
+stock_move }o--o| res_partner : partner_id, restrict_partner_id
+stock_move }o--o| stock_warehouse_orderpoint : orderpoint_id
+stock_move }o--o| mrp_production : created_production_id, production_id (+1)
+stock_move }o--o| mrp_routing_workcenter : operation_id
+stock_move }o--o| mrp_workorder : workorder_id
+stock_move }o--o| mrp_bom_line : bom_line_id
+stock_move }o--o| purchase_order_line : purchase_line_id
+purchase_order }o--|| res_partner : partner_id, dest_address_id
+purchase_order_line }o--o| product_product : product_id
+purchase_order_line }o--|| purchase_order : order_id
+purchase_order_line }o--o| res_partner : partner_id
+purchase_order_line }o--o| stock_warehouse_orderpoint : orderpoint_id
+legend bottom
+  * = no admite nulo · <<PK>> clave primaria · <<FK>> clave foránea · solo columnas clave
+  Pata de gallo: ||  uno exacto · o|  cero o uno · }o  cero o muchos
+endlegend
+@enduml

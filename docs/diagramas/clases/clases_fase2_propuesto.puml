@@ -1,0 +1,103 @@
+@startuml clases_fase2_propuesto
+' 4.2.5. Clases PROPUESTAS de la Fase 2. No están implementadas: se diseñan a partir de docs/plan/03_modulos_odoo.md.
+title Clases propuestas de la Fase 2 (NO implementadas): calidad, cadena de frío, heladeros y tablero
+hide empty members
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 12
+skinparam classAttributeIconSize 0
+skinparam ArrowColor #888888
+skinparam class {
+  BorderColor #555555
+  BackgroundColor #FFFFFF
+  BackgroundColor<<propuesto>> #FFFBE0
+  BorderColor<<propuesto>> #B59A00
+}
+skinparam stereotypeCBackgroundColor #FFFFFF
+skinparam nodesep 30
+skinparam ranksep 80
+
+package "Modelos de Odoo que ya existen (Fase 1)" #F4F4F4 {
+  class "mrp.production" as mrp_production
+  class "stock.lot" as stock_lot
+  class "stock.location" as stock_location
+  class "sale.order" as sale_order
+  class "product.pricelist" as product_pricelist
+  class "hr.employee" as hr_employee
+}
+
+package "M1 donofrio_calidad (propuesto)" #FFFDF0 {
+  class "donofrio.calidad.punto" as punto <<propuesto>> #FFFBE0;line:B59A00;line.dashed {
+    nombre
+    producto
+    criterio
+  }
+  class "donofrio.calidad.inspeccion" as inspeccion <<propuesto>> #FFFBE0;line:B59A00;line.dashed {
+    estado : borrador | en curso | aprobada | rechazada
+    fecha
+    responsable
+  }
+  class "línea de medición" as medicion <<propuesto>> #FFFBE0;line:B59A00;line.dashed {
+    valor medido
+    resultado
+  }
+}
+
+package "M3 cadena de frío (propuesto, requiere M1)" #FFFDF0 {
+  class "donofrio.temperatura" as temperatura <<propuesto>> #FFFBE0;line:B59A00;line.dashed {
+    fecha y hora
+    valor
+    fuera de rango
+  }
+  class "campos agregados a stock.location" as temp_rango <<propuesto>> #FFFBE0;line:B59A00;line.dashed {
+    temp_min
+    temp_max
+  }
+}
+
+package "M2 donofrio_heladeros (propuesto)" #FFFDF0 {
+  class "donofrio.liquidacion" as liquidacion <<propuesto>> #FFFBE0;line:B59A00;line.dashed {
+    estado : borrador | despachado | liquidado
+    fecha
+    --
+    liquidar() : crea y confirma un sale.order
+  }
+  class "línea de liquidación" as linea_liq <<propuesto>> #FFFBE0;line:B59A00;line.dashed {
+    despachado
+    devuelto
+    merma
+    vendido (calculado)
+    precio de heladero
+    importe
+    comisión
+  }
+}
+
+package "M4 donofrio_tablero (propuesto)" #FFFDF0 {
+  class "servicio de KPIs" as kpis <<propuesto>> #FFFBE0;line:B59A00;line.dashed {
+    get_kpis() : usa _read_group
+  }
+}
+
+punto "1" <-- "*" inspeccion : punto de control
+inspeccion "1" *-- "*" medicion
+inspeccion "*" ..> "1" mrp_production : ligada a
+inspeccion "*" ..> "0..1" stock_lot : libera o rechaza
+temperatura "*" ..> "1" stock_location : se registra en
+temp_rango ..> stock_location : extiende
+liquidacion "1" *-- "*" linea_liq
+liquidacion "*" ..> "1" hr_employee : heladero
+liquidacion "*" ..> "0..1" sale_order : crea al liquidar
+linea_liq "*" ..> "1" product_pricelist : precio de heladero
+kpis ..> sale_order : lee
+kpis ..> inspeccion : lee (si M1 está instalado)
+kpis ..> liquidacion : lee (si M2 está instalado)
+kpis ..> temperatura : lee (si M3 está instalado)
+
+legend bottom
+  Amarillo con borde punteado = <<propuesto>>: no existe código ni tabla; son el diseño de la Fase 2 (orden fijo M1, M2, M3, M4).
+  Los nombres de los modelos salen del plan (03 §3.3); los atributos son los previstos allí y pueden cambiar al implementarse.
+  Si un módulo no se construye, queda como «Diseñado – trabajo futuro».
+endlegend
+@enduml

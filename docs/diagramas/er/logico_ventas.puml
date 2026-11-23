@@ -1,0 +1,163 @@
+@startuml logico_ventas
+' Generado por scripts/diagrama_er.py desde la BD real; no se edita a mano (ver docs/diagramas/README.md).
+title Diseño lógico: Ventas, precios y facturación
+hide circle
+hide empty methods
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 12
+skinparam roundCorner 6
+skinparam ArrowColor #555555
+skinparam entity {
+  BorderColor #444444
+  BackgroundColor #FFFFFF
+}
+skinparam package {
+  BorderColor #888888
+  FontStyle bold
+}
+skinparam nodesep 30
+skinparam ranksep 90
+
+entity "res_partner" as res_partner #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  <i>+ FK a res_partner ×2</i>
+  name : varchar
+  vat : varchar
+  active : boolean
+}
+entity "product_pricelist" as product_pricelist #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  * name : jsonb
+  active : boolean
+}
+entity "product_pricelist_item" as product_pricelist_item #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  pricelist_id : integer <<FK>>
+  product_tmpl_id : integer <<FK>>
+  product_id : integer <<FK>>
+  base_pricelist_id : integer <<FK>>
+  * applied_on : varchar
+  * compute_price : varchar
+  min_quantity : numeric
+  fixed_price : numeric
+  percent_price : double precision
+}
+entity "product_template" as product_template #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  * name : jsonb
+  list_price : numeric
+  * tracking : varchar
+  is_storable : boolean
+  expiration_time : integer
+  use_expiration_date : boolean
+}
+entity "product_product" as product_product #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  * product_tmpl_id : integer <<FK>>
+  default_code : varchar
+  barcode : varchar
+  active : boolean
+}
+entity "sale_order" as sale_order #DCEBFA {
+  * id : integer <<PK>>
+  --
+  * partner_id : integer <<FK>>
+  journal_id : integer <<FK>>
+  * partner_invoice_id : integer <<FK>>
+  pricelist_id : integer <<FK>>
+  opportunity_id : integer <<FK>>
+  <i>+ FK a res_partner</i>
+  * name : varchar
+  state : varchar
+  invoice_status : varchar
+  amount_untaxed : numeric
+  amount_tax : numeric
+  amount_total : numeric
+  * date_order : timestamp
+}
+entity "sale_order_line" as sale_order_line #DCEBFA {
+  * id : integer <<PK>>
+  --
+  * order_id : integer <<FK>>
+  order_partner_id : integer <<FK>>
+  product_id : integer <<FK>>
+  <i>+ FK a sale_order_line</i>
+  * product_uom_qty : numeric
+  * price_unit : numeric
+  discount : numeric
+  qty_delivered : numeric
+  qty_invoiced : numeric
+}
+entity "crm_lead" as crm_lead #DCEBFA {
+  * id : integer <<PK>>
+  --
+  partner_id : integer <<FK>>
+  * name : varchar
+  * type : varchar
+  expected_revenue : numeric
+}
+entity "account_move" as account_move #E3F0F0 {
+  * id : integer <<PK>>
+  --
+  * journal_id : integer <<FK>>
+  partner_id : integer <<FK>>
+  commercial_partner_id : integer <<FK>>
+  <i>+ FK a account_move ×4, res_partner</i>
+  name : varchar
+  * state : varchar
+  * move_type : varchar
+  payment_state : varchar
+  invoice_date : date
+  invoice_date_due : date
+  amount_total : numeric
+}
+entity "account_move_line" as account_move_line #E3F0F0 {
+  * id : integer <<PK>>
+  --
+  * move_id : integer <<FK>>
+  journal_id : integer <<FK>>
+  partner_id : integer <<FK>>
+  product_id : integer <<FK>>
+  <i>+ FK a account_move_line</i>
+  debit : numeric
+  credit : numeric
+  quantity : numeric
+  price_unit : numeric
+}
+entity "account_journal" as account_journal #E3F0F0 {
+  * id : integer <<PK>>
+  --
+  * code : varchar(5)
+  * type : varchar
+  * name : jsonb
+}
+product_pricelist_item }o--o| product_pricelist : pricelist_id, base_pricelist_id
+product_pricelist_item }o--o| product_template : product_tmpl_id
+product_pricelist_item }o--o| product_product : product_id
+product_product }o--|| product_template : product_tmpl_id
+sale_order }o--|| res_partner : partner_id, partner_invoice_id (+1)
+sale_order }o--o| account_journal : journal_id
+sale_order }o--o| product_pricelist : pricelist_id
+sale_order }o--o| crm_lead : opportunity_id
+sale_order_line }o--|| sale_order : order_id
+sale_order_line }o--o| res_partner : order_partner_id
+sale_order_line }o--o| product_product : product_id
+crm_lead }o--o| res_partner : partner_id
+account_move }o--|| account_journal : journal_id
+account_move }o--o| res_partner : partner_id, commercial_partner_id (+1)
+account_move_line }o--|| account_move : move_id
+account_move_line }o--o| account_journal : journal_id
+account_move_line }o--o| res_partner : partner_id
+account_move_line }o--o| product_product : product_id
+legend bottom
+  * = no admite nulo · <<PK>> clave primaria · <<FK>> clave foránea · solo columnas clave
+  Pata de gallo: ||  uno exacto · o|  cero o uno · }o  cero o muchos
+endlegend
+@enduml
