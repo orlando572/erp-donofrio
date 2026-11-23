@@ -58,5 +58,51 @@ def _programar_plan_contable(env):
         compania = env.ref('base.main_company')
         if compania.chart_template != 'pe':
             env['account.chart.template'].try_loading('pe', compania)
+        crear_punto_de_venta(env)
 
     env.registry._auto_install_template = cargar_plan_contable
+
+
+def crear_punto_de_venta(env):
+    """HU-10: crea el PdV «Heladería Av. Venezuela» con pago en efectivo y Yape (03 §3.3 a).
+
+    Va en el hook y no en un XML porque necesita los diarios y cuentas del plan contable, que se
+    cargan al terminar de instalar el módulo (ver ``_programar_plan_contable``). Es idempotente.
+    """
+    _habilitar_productos_en_pdv(env)
+    if env.ref('donofrio_base.pos_config_venezuela', raise_if_not_found=False):
+        return
+    compania = env.ref('base.main_company')
+    Diario = env['account.journal']
+    efectivo = Diario.create({'name': 'Efectivo PdV', 'type': 'cash', 'code': 'EFEPV', 'company_id': compania.id})
+    yape = Diario.create({'name': 'Yape', 'type': 'bank', 'code': 'YAPE', 'company_id': compania.id})
+    Metodo = env['pos.payment.method']
+    metodo_efectivo = Metodo.create({'name': 'Efectivo', 'journal_id': efectivo.id, 'company_id': compania.id})
+    metodo_yape = Metodo.create({'name': 'Yape', 'journal_id': yape.id, 'company_id': compania.id})
+    config = env['pos.config'].create({
+        'name': 'Heladería Av. Venezuela',
+        'company_id': compania.id,
+        'picking_type_id': env.ref('stock.warehouse0').pos_type_id.id,
+        'payment_method_ids': [(6, 0, (metodo_efectivo | metodo_yape).ids)],
+    })
+    env['ir.model.data']._update_xmlids([
+        {'xml_id': f'donofrio_base.{nombre}', 'record': registro, 'noupdate': True}
+        for nombre, registro in (
+            ('diario_efectivo_pdv', efectivo), ('diario_yape', yape),
+            ('pdv_metodo_efectivo', metodo_efectivo), ('pdv_metodo_yape', metodo_yape),
+            ('pos_config_venezuela', config),
+        )
+    ])
+
+
+def _habilitar_productos_en_pdv(env):
+    """Marca los productos terminados como disponibles en el PdV; sin esto el catálogo del cajero sale vacío.
+
+    Los insumos no se venden en mostrador. Se hace aquí y no en ``productos_data.xml`` porque esos
+    registros son ``noupdate`` y un XML no los cambiaría en una base que ya existe.
+    """
+    terminados = env['product.template'].search([
+        ('categ_id', 'child_of', env.ref('donofrio_base.cat_terminados').id),
+        ('available_in_pos', '=', False),
+    ])
+    terminados.write({'available_in_pos': True})

@@ -17,6 +17,7 @@ Todos los datos (RUC, clientes, empleados, precios) son ficticios.
         'data/compania_data.xml',
         'data/almacenes_data.xml',
         'security/donofrio_security.xml',
+        'security/ir.model.access.csv',
         'data/usuarios_data.xml',
         'data/productos_data.xml',
         'data/crm_data.xml',
