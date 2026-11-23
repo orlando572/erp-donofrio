@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" id="def_to_be_produccion" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:collaboration id="colab_to_be_produccion">
+    <bpmn:participant id="pool_to_be_produccion" name="TO-BE · Producción con Odoo estándar (Fase 1)" processRef="proc_to_be_produccion" />
+  </bpmn:collaboration>
+  <bpmn:process id="proc_to_be_produccion" isExecutable="false">
+    <bpmn:laneSet id="carriles">
+      <bpmn:lane id="carril_0" name="Operario de línea">
+        <bpmn:flowNodeRef>produce</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>controla</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>cumple</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>hecho</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="carril_1" name="Jefe de Producción">
+        <bpmn:flowNodeRef>inicio</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>op</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>decide</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>fin_no</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="carril_2" name="Almacén">
+        <bpmn:flowNodeRef>reserva</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>entrega</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>stock</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>fin</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="inicio" name="Llega la demanda del mes o de la campaña">
+      <bpmn:outgoing>flujo_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="op" name="Crea la orden de producción desde la receta (BoM) y la confirma">
+      <bpmn:incoming>flujo_1</bpmn:incoming>
+      <bpmn:outgoing>flujo_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="reserva" name="Odoo reserva los insumos por FEFO: sale primero el lote que vence antes">
+      <bpmn:incoming>flujo_2</bpmn:incoming>
+      <bpmn:outgoing>flujo_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="entrega" name="Entrega los insumos reservados a la línea">
+      <bpmn:incoming>flujo_3</bpmn:incoming>
+      <bpmn:outgoing>flujo_4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="produce" name="Ejecuta cada operación en su centro de trabajo y registra el tiempo">
+      <bpmn:incoming>flujo_4</bpmn:incoming>
+      <bpmn:outgoing>flujo_5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="controla" name="Verifica los controles críticos de la operación y los anota en la orden">
+      <bpmn:incoming>flujo_5</bpmn:incoming>
+      <bpmn:outgoing>flujo_6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="cumple" name="¿Cumple los controles?">
+      <bpmn:incoming>flujo_6</bpmn:incoming>
+      <bpmn:outgoing>flujo_7</bpmn:outgoing>
+      <bpmn:outgoing>flujo_8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="hecho" name="Marca la orden como hecha: Odoo crea el lote con vencimiento y calcula el costo">
+      <bpmn:incoming>flujo_7</bpmn:incoming>
+      <bpmn:outgoing>flujo_10</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="decide" name="Decide reproceso o descarte y lo deja escrito en la orden">
+      <bpmn:incoming>flujo_8</bpmn:incoming>
+      <bpmn:outgoing>flujo_9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="fin_no" name="Lote reprocesado o descartado">
+      <bpmn:incoming>flujo_9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="stock" name="El lote entra a Lima/Stock listo para salir por FEFO">
+      <bpmn:incoming>flujo_10</bpmn:incoming>
+      <bpmn:outgoing>flujo_11</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="fin" name="Producto terminado en almacén">
+      <bpmn:incoming>flujo_11</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="flujo_1" sourceRef="inicio" targetRef="op" />
+    <bpmn:sequenceFlow id="flujo_2" sourceRef="op" targetRef="reserva" />
+    <bpmn:sequenceFlow id="flujo_3" sourceRef="reserva" targetRef="entrega" />
+    <bpmn:sequenceFlow id="flujo_4" sourceRef="entrega" targetRef="produce" />
+    <bpmn:sequenceFlow id="flujo_5" sourceRef="produce" targetRef="controla" />
+    <bpmn:sequenceFlow id="flujo_6" sourceRef="controla" targetRef="cumple" />
+    <bpmn:sequenceFlow id="flujo_7" name="Sí" sourceRef="cumple" targetRef="hecho" />
+    <bpmn:sequenceFlow id="flujo_8" name="No" sourceRef="cumple" targetRef="decide" />
+    <bpmn:sequenceFlow id="flujo_9" sourceRef="decide" targetRef="fin_no" />
+    <bpmn:sequenceFlow id="flujo_10" sourceRef="hecho" targetRef="stock" />
+    <bpmn:sequenceFlow id="flujo_11" sourceRef="stock" targetRef="fin" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="diagrama">
+    <bpmndi:BPMNPlane id="plano" bpmnElement="colab_to_be_produccion">
+      <bpmndi:BPMNShape id="pool_to_be_produccion_di" bpmnElement="pool_to_be_produccion" isHorizontal="true">
+        <dc:Bounds x="20" y="20" width="1745" height="450" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="carril_0_di" bpmnElement="carril_0" isHorizontal="true">
+        <dc:Bounds x="50" y="20" width="1715" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="carril_1_di" bpmnElement="carril_1" isHorizontal="true">
+        <dc:Bounds x="50" y="170" width="1715" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="carril_2_di" bpmnElement="carril_2" isHorizontal="true">
+        <dc:Bounds x="50" y="320" width="1715" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="inicio_di" bpmnElement="inicio">
+        <dc:Bounds x="146" y="227" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="104" y="267" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="op_di" bpmnElement="op">
+        <dc:Bounds x="255" y="208" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="reserva_di" bpmnElement="reserva">
+        <dc:Bounds x="405" y="358" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="entrega_di" bpmnElement="entrega">
+        <dc:Bounds x="555" y="358" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="produce_di" bpmnElement="produce">
+        <dc:Bounds x="705" y="58" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="controla_di" bpmnElement="controla">
+        <dc:Bounds x="855" y="58" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="cumple_di" bpmnElement="cumple" isMarkerVisible="true">
+        <dc:Bounds x="1039" y="70" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1004" y="36" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="hecho_di" bpmnElement="hecho">
+        <dc:Bounds x="1155" y="58" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="decide_di" bpmnElement="decide">
+        <dc:Bounds x="1155" y="208" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="fin_no_di" bpmnElement="fin_no">
+        <dc:Bounds x="1346" y="227" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1304" y="267" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="stock_di" bpmnElement="stock">
+        <dc:Bounds x="1455" y="358" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="fin_di" bpmnElement="fin">
+        <dc:Bounds x="1646" y="377" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1604" y="417" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="flujo_1_di" bpmnElement="flujo_1">
+        <di:waypoint x="182" y="245" />
+        <di:waypoint x="255" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_2_di" bpmnElement="flujo_2">
+        <di:waypoint x="373" y="245" />
+        <di:waypoint x="389" y="245" />
+        <di:waypoint x="389" y="395" />
+        <di:waypoint x="405" y="395" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_3_di" bpmnElement="flujo_3">
+        <di:waypoint x="523" y="395" />
+        <di:waypoint x="555" y="395" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_4_di" bpmnElement="flujo_4">
+        <di:waypoint x="673" y="395" />
+        <di:waypoint x="689" y="395" />
+        <di:waypoint x="689" y="95" />
+        <di:waypoint x="705" y="95" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_5_di" bpmnElement="flujo_5">
+        <di:waypoint x="823" y="95" />
+        <di:waypoint x="855" y="95" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_6_di" bpmnElement="flujo_6">
+        <di:waypoint x="973" y="95" />
+        <di:waypoint x="1039" y="95" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_7_di" bpmnElement="flujo_7">
+        <di:waypoint x="1089" y="95" />
+        <di:waypoint x="1155" y="95" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1095" y="75" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_8_di" bpmnElement="flujo_8">
+        <di:waypoint x="1064" y="120" />
+        <di:waypoint x="1064" y="245" />
+        <di:waypoint x="1155" y="245" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1070" y="124" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_9_di" bpmnElement="flujo_9">
+        <di:waypoint x="1273" y="245" />
+        <di:waypoint x="1346" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_10_di" bpmnElement="flujo_10">
+        <di:waypoint x="1273" y="95" />
+        <di:waypoint x="1439" y="95" />
+        <di:waypoint x="1439" y="395" />
+        <di:waypoint x="1455" y="395" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_11_di" bpmnElement="flujo_11">
+        <di:waypoint x="1573" y="395" />
+        <di:waypoint x="1646" y="395" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

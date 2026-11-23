@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Genera los BPMN AS-IS del Sprint 1 (tres de Evelyn y dos de Orlando) como archivo .bpmn (editable en bpmn.io) y .svg.
+"""Genera los BPMN AS-IS del Sprint 1 y los TO-BE del Sprint 2 como archivo .bpmn (editable en bpmn.io) y .svg.
 
 Uso:  python3 docs/diagramas/generar_bpmn.py        (escribe en docs/diagramas/bpmn/)
 El PNG se obtiene del SVG (ver docs/diagramas/README.md).
@@ -7,7 +7,8 @@ El PNG se obtiene del SVG (ver docs/diagramas/README.md).
 Cada proceso se describe con carriles (roles), nodos ubicados por carril y columna, y flujos.
 La disposición es automática: un nodo ocupa (columna, carril); los flujos son rectos o con un
 codo a media distancia entre columnas, de modo que nunca cruzan una tarea. Las tareas con
-``dolor=True`` marcan un punto débil de la situación actual (supuesto S7) y salen en rojo claro.
+``dolor=True`` marcan un punto débil de la situación actual (supuesto S7) y salen en rojo claro. En los TO-BE,
+las tareas con ``f2=True`` dependen de un módulo propio de la Fase 2 y salen en amarillo.
 """
 from pathlib import Path
 from xml.sax.saxutils import escape, quoteattr
@@ -26,9 +27,9 @@ COMPUERTA = 50
 
 
 class Nodo:
-    def __init__(self, id_, tipo, nombre, carril, col, dolor=False):
+    def __init__(self, id_, tipo, nombre, carril, col, dolor=False, f2=False):
         self.id, self.tipo, self.nombre = id_, tipo, nombre
-        self.carril, self.col, self.dolor = carril, col, dolor
+        self.carril, self.col, self.dolor, self.f2 = carril, col, dolor, f2
         self.w, self.h = {'tarea': TAREA, 'inicio': (EVENTO, EVENTO), 'fin': (EVENTO, EVENTO),
                           'compuerta': (COMPUERTA, COMPUERTA)}[tipo]
         self.cx = X0 + CABECERA + MARGEN + col * PASO + TAREA[0] / 2
@@ -41,8 +42,8 @@ class Proceso:
         self.id, self.titulo, self.carriles = id_, titulo, carriles
         self.nodos, self.flujos, self.salidas = {}, [], {}
 
-    def nodo(self, id_, tipo, nombre, carril, col, dolor=False):
-        self.nodos[id_] = Nodo(id_, tipo, nombre, self.carriles.index(carril), col, dolor)
+    def nodo(self, id_, tipo, nombre, carril, col, dolor=False, f2=False):
+        self.nodos[id_] = Nodo(id_, tipo, nombre, self.carriles.index(carril), col, dolor, f2)
 
     def flujo(self, origen, destino, etiqueta='', salida='derecha'):
         """``salida``: lado del nodo de origen por donde sale el flujo ('derecha', 'abajo' o 'arriba')."""
@@ -216,12 +217,96 @@ def recepcion_despacho_frio():
     return p
 
 
+# ----------------------------------------------------------------------------- procesos TO-BE (Sprint 2)
+
+def to_be_produccion():
+    """Fase 1: orden de producción de Odoo con FEFO, lote, costo y controles en las operaciones."""
+    p = Proceso('to_be_produccion', 'TO-BE · Producción con Odoo estándar (Fase 1)',
+                ['Operario de línea', 'Jefe de Producción', 'Almacén'])
+    p.nodo('inicio', 'inicio', 'Llega la demanda del mes o de la campaña', 'Jefe de Producción', 0)
+    p.nodo('op', 'tarea', 'Crea la orden de producción desde la receta (BoM) y la confirma', 'Jefe de Producción', 1)
+    p.nodo('reserva', 'tarea', 'Odoo reserva los insumos por FEFO: sale primero el lote que vence antes', 'Almacén', 2)
+    p.nodo('entrega', 'tarea', 'Entrega los insumos reservados a la línea', 'Almacén', 3)
+    p.nodo('produce', 'tarea', 'Ejecuta cada operación en su centro de trabajo y registra el tiempo', 'Operario de línea', 4)
+    p.nodo('controla', 'tarea', 'Verifica los controles críticos de la operación y los anota en la orden', 'Operario de línea', 5)
+    p.nodo('cumple', 'compuerta', '¿Cumple los controles?', 'Operario de línea', 6)
+    p.nodo('hecho', 'tarea', 'Marca la orden como hecha: Odoo crea el lote con vencimiento y calcula el costo', 'Operario de línea', 7)
+    p.nodo('decide', 'tarea', 'Decide reproceso o descarte y lo deja escrito en la orden', 'Jefe de Producción', 7)
+    p.nodo('fin_no', 'fin', 'Lote reprocesado o descartado', 'Jefe de Producción', 8)
+    p.nodo('stock', 'tarea', 'El lote entra a Lima/Stock listo para salir por FEFO', 'Almacén', 9)
+    p.nodo('fin', 'fin', 'Producto terminado en almacén', 'Almacén', 10)
+    for a_, b_ in [('inicio', 'op'), ('op', 'reserva'), ('reserva', 'entrega'), ('entrega', 'produce'),
+                   ('produce', 'controla'), ('controla', 'cumple')]:
+        p.flujo(a_, b_)
+    p.flujo('cumple', 'hecho', 'Sí')
+    p.flujo('cumple', 'decide', 'No', salida='abajo')
+    p.flujo('decide', 'fin_no')
+    p.flujo('hecho', 'stock')
+    p.flujo('stock', 'fin')
+    return p
+
+
+def to_be_produccion_m1():
+    """Con el módulo M1 (Fase 2): inspección ligada a la OP y al lote, bloqueo y certificado."""
+    p = Proceso('to_be_produccion_m1', 'TO-BE · Producción con inspección de calidad (M1, Fase 2)',
+                ['Operario de línea', 'Almacén', 'Inspector de Calidad', 'Jefe de Producción'])
+    p.nodo('inicio', 'inicio', 'Llega la demanda del mes o de la campaña', 'Jefe de Producción', 0)
+    p.nodo('op', 'tarea', 'Crea la orden desde la receta y Odoo reserva los insumos por FEFO', 'Jefe de Producción', 1)
+    p.nodo('produce', 'tarea', 'Ejecuta las operaciones y registra los tiempos', 'Operario de línea', 2)
+    p.nodo('termina', 'tarea', 'Termina la orden: Odoo crea el lote con su vencimiento', 'Operario de línea', 3)
+    p.nodo('inspeccion', 'tarea', 'Se crea la inspección ligada a la orden y al lote', 'Inspector de Calidad', 4, f2=True)
+    p.nodo('mide', 'tarea', 'Mide en cada punto de control (pasteurización, peso, microbiología)', 'Inspector de Calidad', 5, f2=True)
+    p.nodo('aprueba', 'compuerta', '¿Aprueba el lote?', 'Inspector de Calidad', 6)
+    p.nodo('certifica', 'tarea', 'Emite el certificado de calidad del lote', 'Inspector de Calidad', 7, f2=True)
+    p.nodo('rechaza', 'tarea', 'Lote rechazado: Odoo bloquea su despacho; el jefe decide su destino', 'Jefe de Producción', 7, f2=True)
+    p.nodo('fin_no', 'fin', 'Lote reprocesado o descartado', 'Jefe de Producción', 8)
+    p.nodo('libera', 'tarea', 'El lote liberado queda disponible para el despacho FEFO', 'Almacén', 8)
+    p.nodo('fin', 'fin', 'Lote liberado en almacén', 'Almacén', 9)
+    for a_, b_ in [('inicio', 'op'), ('op', 'produce'), ('produce', 'termina'), ('termina', 'inspeccion'),
+                   ('inspeccion', 'mide'), ('mide', 'aprueba')]:
+        p.flujo(a_, b_)
+    p.flujo('aprueba', 'certifica', 'Sí')
+    p.flujo('aprueba', 'rechaza', 'No', salida='abajo')
+    p.flujo('rechaza', 'fin_no')
+    p.flujo('certifica', 'libera')
+    p.flujo('libera', 'fin')
+    return p
+
+
+def to_be_recepcion_despacho():
+    """Fase 1: recepción desde la OC con lote, despacho en 2 pasos y reposición a Arequipa."""
+    p = Proceso('to_be_recepcion_despacho', 'TO-BE · Recepción y despacho con Odoo estándar (Fase 1)',
+                ['Proveedor', 'Almacén', 'Despacho', 'Cliente', 'CD Arequipa'])
+    p.nodo('inicio', 'inicio', 'Llega el camión con una orden de compra confirmada', 'Proveedor', 0)
+    p.nodo('recibe', 'tarea', 'Recibe contra la recepción que creó la OC y escribe lote y vencimiento', 'Almacén', 1)
+    p.nodo('guarda', 'tarea', 'Odoo guarda el lote en su cámara y valoriza el stock por FIFO', 'Almacén', 2)
+    p.nodo('alerta', 'tarea', 'Odoo avisa al jefe de almacén 30 días antes de que el lote venza', 'Almacén', 3)
+    p.nodo('pedido', 'tarea', 'Llega un pedido confirmado o una reposición a Arequipa', 'Despacho', 4)
+    p.nodo('pick', 'tarea', 'Pick: Odoo reserva por FEFO y arma la lista de recolección', 'Despacho', 5)
+    p.nodo('ship', 'tarea', 'Ship: verifica el pick, despacha desde la zona de salida y emite la guía', 'Despacho', 6)
+    p.nodo('destino', 'compuerta', '¿Quién recibe?', 'Despacho', 7)
+    p.nodo('cliente', 'tarea', 'El cliente recibe y firma la entrega', 'Cliente', 8)
+    p.nodo('transito', 'tarea', 'El CD Arequipa recibe la transferencia y el stock queda en AQP', 'CD Arequipa', 8)
+    p.nodo('fin', 'fin', 'Entrega cerrada', 'Cliente', 9)
+    for a_, b_ in [('inicio', 'recibe'), ('recibe', 'guarda'), ('guarda', 'alerta'), ('alerta', 'pedido'),
+                   ('pedido', 'pick'), ('pick', 'ship'), ('ship', 'destino')]:
+        p.flujo(a_, b_)
+    p.flujo('destino', 'cliente', 'Cliente')
+    p.flujo('destino', 'transito', 'Arequipa', salida='abajo')
+    p.flujo('cliente', 'fin')
+    p.flujo('transito', 'fin')
+    return p
+
+
 PROCESOS = {
     'as-is_venta_b2b': venta_b2b,
     'as-is_liquidacion_heladero': liquidacion_heladero,
     'as-is_compras_insumos': compra_insumos,
     'as-is_produccion_calidad': produccion_calidad,
     'as-is_recepcion_despacho_frio': recepcion_despacho_frio,
+    'to-be_produccion': to_be_produccion,
+    'to-be_produccion_m1': to_be_produccion_m1,
+    'to-be_recepcion_despacho': to_be_recepcion_despacho,
 }
 
 # ----------------------------------------------------------------------------- BPMN 2.0 XML
@@ -359,7 +444,7 @@ def a_svg(p):
             s.append(f'<text x="{lx:.0f}" y="{ly + 11:.0f}" font-size="11" font-weight="bold">{escape(et)}</text>')
     for n in p.nodos.values():
         if n.tipo == 'tarea':
-            relleno, borde = ('#fde0dc', '#c0392b') if n.dolor else ('#f4f7fb', '#222')
+            relleno, borde = ('#fde0dc', '#c0392b') if n.dolor else ('#fff3c4', '#b7950b') if n.f2 else ('#f4f7fb', '#222')
             s.append(f'<rect x="{n.x:.0f}" y="{n.y:.0f}" width="{n.w}" height="{n.h}" rx="8" fill="{relleno}" '
                      f'stroke="{borde}" stroke-width="1.5"/>' + texto_svg(n.cx, n.cy, partir(n.nombre)))
         elif n.tipo == 'compuerta':
@@ -373,9 +458,17 @@ def a_svg(p):
             s.append(f'<circle cx="{n.cx:.0f}" cy="{n.cy:.0f}" r="{n.w / 2}" fill="#e8f5e9" stroke="#222" '
                      f'stroke-width="{grosor}"/>' + texto_svg(n.cx, n.cy + n.h / 2 + 18, partir(n.nombre, 22)))
     ly = Y0 + p.alto() + 28
-    s.append(f'<rect x="{X0}" y="{ly - 12}" width="16" height="14" rx="3" fill="#fde0dc" stroke="#c0392b"/>'
-             f'<text x="{X0 + 24}" y="{ly}" font-size="11">Punto débil de la situación actual (supuesto S7 del plan: '
-             'los datos de procesos son ficticios y verosímiles)</text>')
+    if any(n.dolor for n in p.nodos.values()):
+        s.append(f'<rect x="{X0}" y="{ly - 12}" width="16" height="14" rx="3" fill="#fde0dc" stroke="#c0392b"/>'
+                 f'<text x="{X0 + 24}" y="{ly}" font-size="11">Punto débil de la situación actual (supuesto S7 del plan: '
+                 'los datos de procesos son ficticios y verosímiles)</text>')
+    else:
+        s.append(f'<rect x="{X0}" y="{ly - 12}" width="16" height="14" rx="3" fill="#f4f7fb" stroke="#222"/>'
+                 f'<text x="{X0 + 24}" y="{ly}" font-size="11">Tarea con Odoo estándar (Fase 1)</text>')
+        if any(n.f2 for n in p.nodos.values()):
+            s.append(f'<rect x="{X0 + 230}" y="{ly - 12}" width="16" height="14" rx="3" fill="#fff3c4" stroke="#b7950b"/>'
+                     f'<text x="{X0 + 254}" y="{ly}" font-size="11">Depende del módulo propio de la Fase 2 '
+                     '(si no se construye, queda como diseño)</text>')
     s.append('</svg>')
     return '\n'.join(s)
 
