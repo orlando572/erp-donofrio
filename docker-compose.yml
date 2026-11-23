@@ -41,6 +41,8 @@ services:
       # Las usa docker/odoo/entrypoint.sh para generar odoo.conf
       ODOO_DB: ${ODOO_DB:-donofrio}
       ODOO_ADMIN_PASSWD: ${ODOO_ADMIN_PASSWD:?Falta ODOO_ADMIN_PASSWD en .env}
+      # Contraseña de prueba de los usuarios por rol de donofrio_base (la aplica el post_init_hook)
+      DONOFRIO_USER_PASSWORD: ${DONOFRIO_USER_PASSWORD:-}
     volumes:
       - ./addons:/mnt/extra-addons:ro
       - odoo-data:/var/lib/odoo

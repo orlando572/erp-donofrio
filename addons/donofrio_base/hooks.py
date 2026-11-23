@@ -1,4 +1,37 @@
+import logging
+import os
+
+_logger = logging.getLogger(__name__)
+
+
 def post_init_hook(env):
+    """Pasos que no se pueden expresar como datos XML y corren al instalar el módulo."""
+    _asignar_clave_a_usuarios(env)
+    _programar_plan_contable(env)
+
+
+def _asignar_clave_a_usuarios(env):
+    """Pone la contraseña de prueba (variable DONOFRIO_USER_PASSWORD de .env) a los usuarios del módulo.
+
+    La contraseña nunca va en el código ni en los datos. Si la variable no existe, los usuarios
+    quedan sin contraseña (no pueden iniciar sesión) y se avisa en el registro.
+    """
+    ids = env['ir.model.data'].search([
+        ('module', '=', 'donofrio_base'),
+        ('model', '=', 'res.users'),
+    ]).mapped('res_id')
+    usuarios = env['res.users'].browse(ids)
+    clave = os.environ.get('DONOFRIO_USER_PASSWORD')
+    if not clave:
+        _logger.warning(
+            'DONOFRIO_USER_PASSWORD no está definida: los %s usuarios de donofrio_base quedan sin contraseña.',
+            len(usuarios),
+        )
+        return
+    usuarios.write({'password': clave})
+
+
+def _programar_plan_contable(env):
     """Carga el plan contable peruano (plantilla ``pe`` de ``l10n_pe``) en la compañía principal.
 
     Se hace aquí y no en un XML porque, al instalar ``l10n_pe`` con la compañía aún sin país,
