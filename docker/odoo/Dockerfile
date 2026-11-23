@@ -1,3 +1,7 @@
+# HU-29: etapa de los módulos propios. Vacía por defecto (en desarrollo el compose monta ./addons); la release la llena con
+#   docker buildx build --build-context addons=./addons ...   para publicar una imagen que corre sin montar nada.
+FROM scratch AS addons
+
 # Imagen de Odoo 19.0 Community con la etiqueta fechada fija (06 §6.5):
 # el CI y las dos PC usan exactamente la misma. Para actualizarla, cambiar la fecha aquí.
 FROM odoo:19.0-20261112
@@ -15,6 +19,9 @@ RUN mkdir -p /opt/oca \
 # porque odoo.conf no expande variables y /etc/odoo es de solo lectura para el usuario odoo.
 COPY --chmod=0644 odoo.conf.template /etc/odoo/odoo.conf.template
 COPY --chmod=0755 entrypoint.sh /usr/local/bin/donofrio-entrypoint.sh
+
+# Módulos propios dentro de la imagen (solo cuando la release pasa --build-context addons=./addons)
+COPY --from=addons / /mnt/extra-addons/
 
 USER odoo
 ENTRYPOINT ["/usr/local/bin/donofrio-entrypoint.sh"]

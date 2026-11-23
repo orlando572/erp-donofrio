@@ -1,0 +1,34 @@
+# HU-29: evidencias de la release (ensayo local; la corrida real queda en Actions)
+# Generado el 23/11/2026 15:48
+
+## docker buildx build --build-context addons=./addons (imagen con los módulos dentro)
+imagen erp-donofrio-release-test:vtest  tamaño 3.25GB
+
+## scripts/probar_imagen.sh
+1) Versión de Odoo
+  Odoo Server 19.0-20261112
+2) Módulos propios y auditlog (OCA) dentro de la imagen
+/mnt/extra-addons/donofrio_base/__manifest__.py
+/opt/oca/auditlog/__manifest__.py
+3) La configuración se genera (desarrollo)
+  dev:  addons_path = /mnt/extra-addons,/opt/oca
+  dev:  list_db = False
+  dev:  workers = 0
+  dev:  proxy_mode = False
+4) Modo producción (workers, proxy_mode y rechazo de la contraseña de ejemplo)
+  prod: workers = 2
+  prod: proxy_mode = True
+  la contraseña de ejemplo se rechaza, como se espera
+Imagen verificada: erp-donofrio-release-test:vtest
+
+## scripts/empaquetar_release.sh v0.0.0-prueba (tag de ensayo, ya borrado)
+dist/erp-donofrio-v0.0.0-prueba.zip: 17M, 349 entradas
+erp-donofrio-v0.0.0-prueba/addons/donofrio_base/__manifest__.py
+erp-donofrio-v0.0.0-prueba/docker-compose.yml
+erp-donofrio-v0.0.0-prueba/docker/odoo/Dockerfile
+erp-donofrio-v0.0.0-prueba/docs/manuales/manual_instalacion.md
+
+## La imagen corre sola (sin montar ./addons) contra la BD de desarrollo
+2026-11-23 20:48:57,015 1 INFO donofrio odoo.modules.loading: 1 modules loaded in 0.00s, 0 queries (+0 extra) 
+2026-11-23 20:48:57,648 1 INFO donofrio odoo.modules.loading: 109 modules loaded in 0.61s, 0 queries (+0 extra) 
+2026-11-23 20:48:57,907 1 INFO donofrio odoo.registry: Registry loaded in 0.911s 
