@@ -1,0 +1,85 @@
+# HU-30: Plan de pruebas de usabilidad (6.12, RNF003)
+
+> **Estado:** borrador del 23/11/2026, **en revisión y en iteración** · **Responsable:** Evelyn (PO) · **Revisa:** Orlando · **Participantes:** 5 personas reales, que harán la prueba **después de la revisión y de la iteración** descritas más abajo
+>
+> RNF003: interfaz en español, tareas clave en ≤ 3 pasos y **SUS ≥ 70**, con 5 usuarios y 4 tareas cronometradas.
+
+## Objetivo
+
+Comprobar que una persona sin entrenamiento previo puede hacer cuatro tareas de los procesos estándar de Odoo configurado para D'Onofrio, y medir qué tan usable le parece el sistema con el cuestionario SUS (*System Usability Scale*).
+
+## Participantes
+
+- **5 personas** que no hayan participado en el proyecto (compañeros de otra carrera, familiares o conocidos). Con 5 usuarios se detecta la mayoría de los problemas de usabilidad (Nielsen) y es lo que pide el plan.
+- Sin experiencia previa con Odoo. Se anota su edad, su experiencia con sistemas de gestión (ninguna, poca, media o mucha) y si usa a diario el computador.
+- **Consentimiento:** se les dice que se prueba el sistema y no a ellos, que pueden parar cuando quieran y que se guardan solo su código (P1 a P5), la edad y la experiencia. **No se registran nombres ni datos personales** (Ley 29733).
+
+## Entorno
+
+- Base de datos con los datos de demostración cargados (`scripts/cargar_transacciones.py`) y el idioma `es_PE`.
+- Navegador en pantalla de escritorio, ventana nueva, sesión **ya iniciada** con el usuario de la tarea (el inicio de sesión no se cronometra). Las claves de prueba no se escriben en este documento.
+- Quien modera **no ayuda**: solo lee la consigna, cronometra y anota. Si la persona se queda atascada más de 3 minutos en una tarea, se marca como **no completada** y se pasa a la siguiente.
+
+## Las cuatro tareas
+
+Cada tarea se lee tal cual, sin decir dónde hacer clic. Los pasos esperados son una estimación: **la prueba piloto (ver abajo) debe confirmarlos** contra la interfaz real.
+
+| # | Proceso | Usuario | Consigna para la persona | Éxito si… | Pasos esperados | Tiempo objetivo |
+|---|---|---|---|---|---|---|
+| T1 | CRM (CU001) | Vendedor | «Un nuevo cliente, la *Bodega Don Pepe*, quiere comprar helados por unos S/ 3 000. Regístrelo como una posibilidad de venta y márquelo con la etiqueta «Bodega».» | Existe la oportunidad con «Bodega Don Pepe» (como empresa o como nombre), un ingreso esperado de unos S/ 3 000 y la etiqueta «Bodega». **La etapa no importa;** si la persona la deja en «Ganado» sin querer, es un error de uso que se anota, no un fracaso | 4 | 120 s |
+| T2 | Cotización (CU002) | Vendedor | «Prepare un pedido de 100 paletas de fresa para la *Distribuidora del Sur Ejemplo SAC* y confírmelo.» | El pedido está confirmado, con la lista de precios del cliente y la entrega creada | 3 | 180 s |
+| T3 | Punto de venta (CU003) | Cajero | «Un cliente compra 2 paletas de fresa y paga en efectivo. Cobre la venta.» | La venta queda pagada y se muestra la boleta | 3 | 150 s |
+| T4 | Consulta (CU010) | Jefe de almacén | «Vea qué lotes de productos vencen en los próximos 30 días.» | Llega a la vista de lotes por vencer (la vista guardada «Stock por vencer (30 días)») | 3 | 90 s |
+
+**Sobre T1:** en Odoo 19 el formulario de una oportunidad **no deja elegir el equipo de ventas** (se asigna según el vendedor), así que la tarea usa la etiqueta, que sí se elige en el formulario y es como el embudo muestra el canal en las tarjetas. El formulario rápido del «+» del embudo (empresa, contacto, nombre, correo, teléfono e ingreso) **no tiene la etiqueta**: la persona debe pulsar «Editar» o abrir la tarjeta después de «Agregar». Odoo 19 **no tiene un botón «Guardar» con texto**: junto al título hay un icono de nube (guardar) y una X (descartar), y además guarda solo al volver al embudo o al pasar a otro registro. Si la persona no encuentra el icono, se anota; si vuelve al embudo y el cambio quedó guardado, la tarea cuenta como completada. En la barra de etapas del formulario está «Ganado» al lado de las demás etapas y es fácil pulsarla sin querer: se anota. Para T3 hay que abrir antes una sesión de la Heladería Av. Venezuela (todas las de los datos de demostración están cerradas); la persona solo cobra. Para T2 el producto «Paleta de fresa» tiene existencias en Lima.
+
+## Qué se anota por tarea y por persona
+
+1. **Completada o no** (sin ayuda).
+2. **Tiempo** en segundos, desde que termina de leer la consigna hasta que dice que terminó.
+3. **Errores:** clics en un lugar equivocado o pasos de más, y una frase con lo que le costó.
+4. Lo que dice en voz alta (qué esperaba ver y no vio).
+
+Todo se registra en [`resultados_plantilla.csv`](resultados_plantilla.csv) (una fila por persona).
+
+## Reinicio entre personas
+
+Cada persona debe partir de lo mismo. Al terminar con una, el moderador:
+
+1. **Archiva la oportunidad «Bodega Don Pepe»** (T1).
+2. **Archiva el contacto «Bodega Don Pepe»**: el «+» del embudo lo crea junto con la oportunidad, y si queda, la persona siguiente lo encontraría ya hecho.
+3. **Cancela el pedido** de las 100 paletas de fresa (T2).
+4. Deja abierta la sesión del PdV y las tres ventanas en su pantalla de partida (la venta de T3 queda registrada; no hace falta borrarla).
+
+## Cuestionario SUS
+
+Al terminar las cuatro tareas, cada persona responde las 10 preguntas del [formulario SUS](formulario_sus.md), en una escala de 1 (muy en desacuerdo) a 5 (muy de acuerdo). Se puede pasar por Google Forms (el plan lo indica) copiando los enunciados del archivo; el resultado se pasa al mismo CSV.
+
+## Cómo se calcula
+
+El script [`scripts/usabilidad_sus.py`](../../scripts/usabilidad_sus.py) lee el CSV y calcula:
+
+- **SUS de cada persona:** (suma de las preguntas impares − 1 y de las pares 5 − valor) × 2.5, de 0 a 100.
+- **SUS promedio y mediana** del grupo. **Se cumple RNF003 si el promedio es ≥ 70.** (68 es el promedio de la industria.)
+- **Tasa de éxito** por tarea y **tiempo mediano** frente al objetivo.
+
+```bash
+python3 scripts/usabilidad_sus.py docs/usabilidad/resultados.csv
+```
+
+## Revisión e iteración antes de las cinco personas
+
+Las pruebas con las 5 personas se harán **después** de estos pasos, para no gastar a los participantes con un plan que todavía tiene errores:
+
+1. **Revisión del plan por Orlando y por Evelyn** (revisión cruzada de este PR): las consignas, los criterios de éxito, los tiempos objetivo, el cuestionario y el script de cálculo.
+2. **Prueba piloto de las cuatro tareas** con la interfaz real, hecha por alguien del equipo que no haya armado esa parte, para confirmar que las consignas se entienden, que los pasos y tiempos esperados son razonables y que los usuarios y datos de cada tarea existen. Los datos del piloto **no** cuentan en los resultados.
+3. **Iteración:** se corrige lo que salga de la revisión y del piloto (consignas, criterios, tiempos, datos de partida o pantallas de inicio) y se actualiza este documento. Si el cambio es grande, se repite el piloto de esa tarea.
+4. **Pruebas con las 5 personas**, con el plan ya corregido, y cálculo del SUS.
+
+Lo que ya se corrigió con una primera revisión de la tarea 1 en la interfaz: el equipo de ventas no se elige en el formulario de la oportunidad, así que la consigna usa la etiqueta «Bodega»; el formulario rápido del «+» no tiene la etiqueta; y entre persona y persona hay que archivar la oportunidad y el contacto de prueba. Las otras tres tareas **siguen pendientes de este piloto**.
+
+## Limitaciones previstas
+
+- Cinco personas dan una idea y no una estadística firme.
+- No son los usuarios reales de D'Onofrio (distribuidores, heladeros, cajeros): son voluntarios, así que el resultado orienta pero no es una validación del negocio.
+- Las pantallas de la Fase 2 (liquidación, inspección, tablero propio) no se prueban: se midieron solo las del núcleo.
