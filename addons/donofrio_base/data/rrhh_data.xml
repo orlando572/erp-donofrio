@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HU-05 (RF017): organigrama (01 §1.5), puestos y empleados de D'Onofrio en RR. HH.
+     Los departamentos forman la jerarquía con parent_id; hr_org_chart la muestra como organigrama.
+     Los 21 empleados son ficticios. Diez de ellos están vinculados a los usuarios por rol de HU-04
+     (usuarios_data.xml). Los heladeros NO son empleados: se modelan como contactos-concesionarios (Fase 2).
+     En Odoo 19 el departamento, el puesto y el jefe del empleado viven en su hr.version vigente;
+     al crear el empleado se escriben directamente y Odoo los pasa a la versión. -->
+<odoo>
+<data noupdate="1">
+
+    <!-- Departamentos (jerarquía del organigrama) -->
+    <record id="dep_gerencia" model="hr.department">
+        <field name="name">Gerencia General</field>
+        <field name="color" eval="5"/>
+    </record>
+
+    <record id="dep_ventas" model="hr.department">
+        <field name="name">Marketing y Ventas</field>
+        <field name="parent_id" ref="dep_gerencia"/>
+        <field name="color" eval="9"/>
+    </record>
+
+    <record id="dep_canal_moderno" model="hr.department">
+        <field name="name">Canal Moderno</field>
+        <field name="parent_id" ref="dep_ventas"/>
+        <field name="color" eval="9"/>
+    </record>
+
+    <record id="dep_canal_tradicional" model="hr.department">
+        <field name="name">Canal Tradicional</field>
+        <field name="parent_id" ref="dep_ventas"/>
+        <field name="color" eval="9"/>
+    </record>
+
+    <record id="dep_heladeros" model="hr.department">
+        <field name="name">Heladeros (rutas y liquidación)</field>
+        <field name="parent_id" ref="dep_ventas"/>
+        <field name="color" eval="9"/>
+    </record>
+
+    <record id="dep_logistica" model="hr.department">
+        <field name="name">Logística y Distribución</field>
+        <field name="parent_id" ref="dep_gerencia"/>
+        <field name="color" eval="3"/>
+    </record>
+
+    <record id="dep_alm_lima" model="hr.department">
+        <field name="name">Almacén Planta Lima (cámaras de frío)</field>
+        <field name="parent_id" ref="dep_logistica"/>
+        <field name="color" eval="3"/>
+    </record>
+
+    <record id="dep_cd_arequipa" model="hr.department">
+        <field name="name">CD Arequipa</field>
+        <field name="parent_id" ref="dep_logistica"/>
+        <field name="color" eval="3"/>
+    </record>
+
+    <record id="dep_despacho" model="hr.department">
+        <field name="name">Despacho</field>
+        <field name="parent_id" ref="dep_logistica"/>
+        <field name="color" eval="3"/>
+    </record>
+
+    <record id="dep_produccion" model="hr.department">
+        <field name="name">Producción y Operaciones</field>
+        <field name="parent_id" ref="dep_gerencia"/>
+        <field name="color" eval="10"/>
+    </record>
+
+    <record id="dep_linea_helados" model="hr.department">
+        <field name="name">Línea Helados</field>
+        <field name="parent_id" ref="dep_produccion"/>
+        <field name="color" eval="10"/>
+    </record>
+
+    <record id="dep_linea_chocolates" model="hr.department">
+        <field name="name">Línea Chocolates</field>
+        <field name="parent_id" ref="dep_produccion"/>
+        <field name="color" eval="10"/>
+    </record>
+
+    <record id="dep_linea_paneton" model="hr.department">
+        <field name="name">Línea Panetón</field>
+        <field name="parent_id" ref="dep_produccion"/>
+        <field name="color" eval="10"/>
+    </record>
+
+    <record id="dep_calidad" model="hr.department">
+        <field name="name">Aseguramiento de Calidad</field>
+        <field name="parent_id" ref="dep_produccion"/>
+        <field name="color" eval="10"/>
+    </record>
+
+    <record id="dep_compras" model="hr.department">
+        <field name="name">Compras</field>
+        <field name="parent_id" ref="dep_gerencia"/>
+        <field name="color" eval="2"/>
+    </record>
+
+    <record id="dep_finanzas" model="hr.department">
+        <field name="name">Administración y Finanzas (Facturación)</field>
+        <field name="parent_id" ref="dep_gerencia"/>
+        <field name="color" eval="8"/>
+    </record>
+
+    <record id="dep_rrhh" model="hr.department">
+        <field name="name">Recursos Humanos</field>
+        <field name="parent_id" ref="dep_gerencia"/>
+        <field name="color" eval="6"/>
+    </record>
+
+    <record id="dep_ti" model="hr.department">
+        <field name="name">Tecnologías de la Información</field>
+        <field name="parent_id" ref="dep_gerencia"/>
+        <field name="color" eval="4"/>
+    </record>
+
+    <!-- Puestos -->
+    <record id="job_gerente" model="hr.job">
+        <field name="name">Gerente General</field>
+    </record>
+
+    <record id="job_jefe_ventas" model="hr.job">
+        <field name="name">Jefe de Marketing y Ventas</field>
+    </record>
+
+    <record id="job_vendedor" model="hr.job">
+        <field name="name">Vendedor de Canal Moderno</field>
+    </record>
+
+    <record id="job_ejecutivo_tradicional" model="hr.job">
+        <field name="name">Ejecutivo de Canal Tradicional</field>
+    </record>
+
+    <record id="job_cajero" model="hr.job">
+        <field name="name">Cajero de Punto de Venta</field>
+    </record>
+
+    <record id="job_sup_heladeros" model="hr.job">
+        <field name="name">Supervisor de Heladeros</field>
+    </record>
+
+    <record id="job_liquidador" model="hr.job">
+        <field name="name">Liquidador de Heladeros</field>
+    </record>
+
+    <record id="job_jefe_almacen" model="hr.job">
+        <field name="name">Jefe de Almacén</field>
+    </record>
+
+    <record id="job_encargado_almacen" model="hr.job">
+        <field name="name">Encargado de Almacén</field>
+    </record>
+
+    <record id="job_coord_despacho" model="hr.job">
+        <field name="name">Coordinador de Despacho</field>
+    </record>
+
+    <record id="job_jefe_produccion" model="hr.job">
+        <field name="name">Jefe de Producción</field>
+    </record>
+
+    <record id="job_tecnico_linea" model="hr.job">
+        <field name="name">Técnico de Línea de Producción</field>
+    </record>
+
+    <record id="job_inspector" model="hr.job">
+        <field name="name">Inspector de Calidad</field>
+    </record>
+
+    <record id="job_comprador" model="hr.job">
+        <field name="name">Comprador</field>
+    </record>
+
+    <record id="job_contador" model="hr.job">
+        <field name="name">Contador</field>
+    </record>
+
+    <record id="job_asist_facturacion" model="hr.job">
+        <field name="name">Asistente de Facturación</field>
+    </record>
+
+    <record id="job_jefe_rrhh" model="hr.job">
+        <field name="name">Jefa de Recursos Humanos</field>
+    </record>
+
+    <record id="job_analista_ti" model="hr.job">
+        <field name="name">Analista de TI</field>
+    </record>
+
+    <!-- Empleados (el jefe de cada uno forma el organigrama de personas) -->
+    <record id="emp_gerente" model="hr.employee">
+        <field name="name">Marco Antonio Salazar Quispe</field>
+        <field name="job_id" ref="job_gerente"/>
+        <field name="department_id" ref="dep_gerencia"/>
+        <field name="user_id" ref="user_gerente"/>
+    </record>
+
+    <record id="emp_jefe_ventas" model="hr.employee">
+        <field name="name">Lucía Fernández Rojas</field>
+        <field name="job_id" ref="job_jefe_ventas"/>
+        <field name="department_id" ref="dep_ventas"/>
+        <field name="parent_id" ref="emp_gerente"/>
+        <field name="user_id" ref="user_jefe_ventas"/>
+    </record>
+
+    <record id="emp_vendedor" model="hr.employee">
+        <field name="name">Carlos Mamani Huanca</field>
+        <field name="job_id" ref="job_vendedor"/>
+        <field name="department_id" ref="dep_canal_moderno"/>
+        <field name="parent_id" ref="emp_jefe_ventas"/>
+        <field name="user_id" ref="user_vendedor"/>
+    </record>
+
+    <record id="emp_cajero" model="hr.employee">
+        <field name="name">Julio Cárdenas Ibáñez</field>
+        <field name="job_id" ref="job_cajero"/>
+        <field name="department_id" ref="dep_canal_moderno"/>
+        <field name="parent_id" ref="emp_jefe_ventas"/>
+        <field name="user_id" ref="user_cajero_pdv"/>
+    </record>
+
+    <record id="emp_ejecutiva_tradicional" model="hr.employee">
+        <field name="name">Rosa Condori Apaza</field>
+        <field name="job_id" ref="job_ejecutivo_tradicional"/>
+        <field name="department_id" ref="dep_canal_tradicional"/>
+        <field name="parent_id" ref="emp_jefe_ventas"/>
+    </record>
+
+    <record id="emp_sup_heladeros" model="hr.employee">
+        <field name="name">Jorge Paredes Cáceres</field>
+        <field name="job_id" ref="job_sup_heladeros"/>
+        <field name="department_id" ref="dep_heladeros"/>
+        <field name="parent_id" ref="emp_jefe_ventas"/>
+    </record>
+
+    <record id="emp_liquidador" model="hr.employee">
+        <field name="name">Elena Ccori Mendoza</field>
+        <field name="job_id" ref="job_liquidador"/>
+        <field name="department_id" ref="dep_heladeros"/>
+        <field name="parent_id" ref="emp_sup_heladeros"/>
+        <field name="user_id" ref="user_liquidador"/>
+    </record>
+
+    <record id="emp_jefe_almacen" model="hr.employee">
+        <field name="name">Miguel Torres Vega</field>
+        <field name="job_id" ref="job_jefe_almacen"/>
+        <field name="department_id" ref="dep_logistica"/>
+        <field name="parent_id" ref="emp_gerente"/>
+        <field name="user_id" ref="user_jefe_almacen"/>
+    </record>
+
+    <record id="emp_enc_lima" model="hr.employee">
+        <field name="name">Diana Huamán Flores</field>
+        <field name="job_id" ref="job_encargado_almacen"/>
+        <field name="department_id" ref="dep_alm_lima"/>
+        <field name="parent_id" ref="emp_jefe_almacen"/>
+    </record>
+
+    <record id="emp_enc_aqp" model="hr.employee">
+        <field name="name">Pedro Choque Vilca</field>
+        <field name="job_id" ref="job_encargado_almacen"/>
+        <field name="department_id" ref="dep_cd_arequipa"/>
+        <field name="parent_id" ref="emp_jefe_almacen"/>
+    </record>
+
+    <record id="emp_despacho" model="hr.employee">
+        <field name="name">Walter Quispe Ramos</field>
+        <field name="job_id" ref="job_coord_despacho"/>
+        <field name="department_id" ref="dep_despacho"/>
+        <field name="parent_id" ref="emp_jefe_almacen"/>
+    </record>
+
+    <record id="emp_jefe_produccion" model="hr.employee">
+        <field name="name">Ana Gutiérrez Luna</field>
+        <field name="job_id" ref="job_jefe_produccion"/>
+        <field name="department_id" ref="dep_produccion"/>
+        <field name="parent_id" ref="emp_gerente"/>
+        <field name="user_id" ref="user_jefe_produccion"/>
+    </record>
+
+    <record id="emp_linea_helados" model="hr.employee">
+        <field name="name">Luis Rivera Medina</field>
+        <field name="job_id" ref="job_tecnico_linea"/>
+        <field name="department_id" ref="dep_linea_helados"/>
+        <field name="parent_id" ref="emp_jefe_produccion"/>
+    </record>
+
+    <record id="emp_linea_chocolates" model="hr.employee">
+        <field name="name">Sofía Delgado Pinto</field>
+        <field name="job_id" ref="job_tecnico_linea"/>
+        <field name="department_id" ref="dep_linea_chocolates"/>
+        <field name="parent_id" ref="emp_jefe_produccion"/>
+    </record>
+
+    <record id="emp_linea_paneton" model="hr.employee">
+        <field name="name">Raúl Ñahui Mayta</field>
+        <field name="job_id" ref="job_tecnico_linea"/>
+        <field name="department_id" ref="dep_linea_paneton"/>
+        <field name="parent_id" ref="emp_jefe_produccion"/>
+    </record>
+
+    <record id="emp_inspector" model="hr.employee">
+        <field name="name">Patricia Vargas Ledesma</field>
+        <field name="job_id" ref="job_inspector"/>
+        <field name="department_id" ref="dep_calidad"/>
+        <field name="parent_id" ref="emp_jefe_produccion"/>
+        <field name="user_id" ref="user_inspector_calidad"/>
+    </record>
+
+    <record id="emp_comprador" model="hr.employee">
+        <field name="name">Héctor Palomino Ruiz</field>
+        <field name="job_id" ref="job_comprador"/>
+        <field name="department_id" ref="dep_compras"/>
+        <field name="parent_id" ref="emp_gerente"/>
+        <field name="user_id" ref="user_compras"/>
+    </record>
+
+    <record id="emp_contador" model="hr.employee">
+        <field name="name">Marisol Chávez Torres</field>
+        <field name="job_id" ref="job_contador"/>
+        <field name="department_id" ref="dep_finanzas"/>
+        <field name="parent_id" ref="emp_gerente"/>
+        <field name="user_id" ref="user_contador"/>
+    </record>
+
+    <record id="emp_asist_facturacion" model="hr.employee">
+        <field name="name">Camila Núñez Arce</field>
+        <field name="job_id" ref="job_asist_facturacion"/>
+        <field name="department_id" ref="dep_finanzas"/>
+        <field name="parent_id" ref="emp_contador"/>
+    </record>
+
+    <record id="emp_jefe_rrhh" model="hr.employee">
+        <field name="name">Verónica Ramos Soto</field>
+        <field name="job_id" ref="job_jefe_rrhh"/>
+        <field name="department_id" ref="dep_rrhh"/>
+        <field name="parent_id" ref="emp_gerente"/>
+    </record>
+
+    <record id="emp_analista_ti" model="hr.employee">
+        <field name="name">Andrés Zegarra Bellido</field>
+        <field name="job_id" ref="job_analista_ti"/>
+        <field name="department_id" ref="dep_ti"/>
+        <field name="parent_id" ref="emp_gerente"/>
+    </record>
+
+</data>
+
+<!-- Jefes de departamento. Van aparte, con noupdate="0": Odoo ignora al actualizar (-u) los registros y las
+     funciones de un bloque noupdate="1", y aquí el resultado debe ser el mismo al instalar y al actualizar.
+     Si el departamento ya tiene jefe, solo reasigna a los empleados que no tenían jefe. -->
+<data noupdate="0">
+    <function model="hr.department" name="write">
+        <value eval="[ref('dep_gerencia')]"/>
+        <value eval="{'manager_id': ref('emp_gerente')}"/>
+    </function>
+    <function model="hr.department" name="write">
+        <value eval="[ref('dep_ventas')]"/>
+        <value eval="{'manager_id': ref('emp_jefe_ventas')}"/>
+    </function>
+    <function model="hr.department" name="write">
+        <value eval="[ref('dep_heladeros')]"/>
+        <value eval="{'manager_id': ref('emp_sup_heladeros')}"/>
+    </function>
+    <function model="hr.department" name="write">
+        <value eval="[ref('dep_logistica')]"/>
+        <value eval="{'manager_id': ref('emp_jefe_almacen')}"/>
+    </function>
+    <function model="hr.department" name="write">
+        <value eval="[ref('dep_alm_lima')]"/>
+        <value eval="{'manager_id': ref('emp_enc_lima')}"/>
+    </function>
+    <function model="hr.department" name="write">
+        <value eval="[ref('dep_cd_arequipa')]"/>
+        <value eval="{'manager_id': ref('emp_enc_aqp')}"/>
+    </function>
+    <function model="hr.department" name="write">
+        <value eval="[ref('dep_despacho')]"/>
+        <value eval="{'manager_id': ref('emp_despacho')}"/>
+    </function>
+    <function model="hr.department" name="write">
+        <value eval="[ref('dep_produccion')]"/>
+        <value eval="{'manager_id': ref('emp_jefe_produccion')}"/>
+    </function>
+    <function model="hr.department" name="write">
+        <value eval="[ref('dep_compras')]"/>
+        <value eval="{'manager_id': ref('emp_comprador')}"/>
+    </function>
+    <function model="hr.department" name="write">
+        <value eval="[ref('dep_finanzas')]"/>
+        <value eval="{'manager_id': ref('emp_contador')}"/>
+    </function>
+    <function model="hr.department" name="write">
+        <value eval="[ref('dep_rrhh')]"/>
+        <value eval="{'manager_id': ref('emp_jefe_rrhh')}"/>
+    </function>
+    <function model="hr.department" name="write">
+        <value eval="[ref('dep_ti')]"/>
+        <value eval="{'manager_id': ref('emp_analista_ti')}"/>
+    </function>
+
+</data>
+</odoo>
