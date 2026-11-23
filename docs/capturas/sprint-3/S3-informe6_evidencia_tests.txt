@@ -1,0 +1,40 @@
+# Informe 6.10: pruebas unitarias de donofrio_base
+# Corrida del 23/11/2026 (22:53 a 22:55 UTC) en la rama feature/S3-informe-6 sobre develop 1e303ed.
+# Se ejecutó en un proyecto de Compose aparte (COMPOSE_PROJECT_NAME=informe6tmp, puertos 25432/28069/28072/25433) con su base temporal;
+# no se tocaron los contenedores erp-donofrio ni sus bases. El proyecto temporal se borró después (docker compose down -v sobre ese proyecto).
+
+## COMPOSE_PROJECT_NAME=informe6tmp scripts/test.sh donofrio_base   (salida sin las líneas de Docker)
+Probando: donofrio_base  (BD temporal test_1795474378_444497)
+2026-11-23 22:55:01,610 1 INFO test_1795474378_444497 odoo.tests.result: 0 failed, 0 error(s) of 136 tests when loading database 'test_1795474378_444497' 
+OK: donofrio_base instalado y 136 pruebas sin errores.
+fin rc=0
+Tiempo: 125 s
+
+## Pruebas por archivo:  grep -cE '^\s+def test_' addons/donofrio_base/tests/test_*.py
+test_almacenes.py                             5
+test_clientes.py                              3
+test_compania.py                              7
+test_crm.py                                   5
+test_facturacion.py                           10
+test_fefo.py                                  10
+test_flujo_compra_produccion.py               4
+test_flujo_venta.py                           4
+test_gerencia.py                              5
+test_hardening.py                             12
+test_instalacion.py                           1
+test_mesa_servicios.py                        11
+test_pdv.py                                   6
+test_precios.py                               6
+test_produccion.py                            10
+test_productos.py                             11
+test_reabastecimiento.py                      5
+test_recepcion_despacho.py                    7
+test_rrhh.py                                  5
+test_seguridad.py                             9
+TOTAL 136 en 20 archivos (todas con @tagged('post_install', '-at_install'))
+
+## scripts/check_legacy.sh
+check_legacy: sin patrones legacy.
+
+## ruff 0.8.4:  ruff check addons
+All checks passed!
