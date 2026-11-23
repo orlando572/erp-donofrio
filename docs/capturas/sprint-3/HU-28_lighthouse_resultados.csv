@@ -1,0 +1,7 @@
+etiqueta,pagina,corridas,rendimiento,fcp_s,lcp_s,tbt_ms,cls,si_s,peticiones,transferido_kb
+ANTES,login,3,98,0.66,0.78,24,0.004,1.51,8,4119
+ANTES,backend,3,35,9.93,12.15,461,0.0,9.93,20,13973
+ANTES,dashboard,3,45,9.97,11.7,255,0.001,9.97,54,19023
+DESPUES,login,3,100,0.29,0.37,8,0.004,0.43,8,626
+DESPUES,backend,3,59,1.63,2.19,384,0.0,3.28,20,2082
+DESPUES,dashboard,3,80,1.64,1.9,148,0.001,1.89,35,2826

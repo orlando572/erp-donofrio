@@ -12,6 +12,14 @@ Tomadas el 23/11/2026 en la BD `donofrio` con los datos de `scripts/cargar_trans
 | `HU-23_vista_produccion_producto_mes` | HU-23 | Vista guardada «Producción por producto y mes»: cantidad producida por producto y mes de inicio de la orden (agosto a noviembre) |
 | `HU-23_vista_stock_por_vencer` | HU-23 | Vista guardada «Stock por vencer (30 días)»: lotes con existencias que vencen en 30 días |
 
+## Evidencias de HU-28, mi parte: Lighthouse (Evelyn)
+
+Medido el 23/11/2026 con Lighthouse 12 (modo escritorio) en el login, el backend y el dashboard; mediana de 3 corridas. Análisis en [`docs/informe/04_06_wpo.md`](../../informe/04_06_wpo.md).
+
+| Archivo | HU | Qué contiene |
+|---|---|---|
+| `HU-28_lighthouse_resultados.csv` | HU-28 | Una fila por vista y etiqueta (`ANTES` en desarrollo con `?debug=assets`; `DESPUES` con Nginx y TLS): puntaje, FCP, LCP, TBT, CLS, Speed Index, peticiones y KB transferidos |
+
 ## Capturas de HU-32 (Evelyn)
 
 Tomadas el 23/11/2026 en la BD `donofrio`, con los cinco tickets de ejemplo de la «Mesa de Servicios TI» (proyecto de la app Project de Community, cargado por `donofrio_base`).
