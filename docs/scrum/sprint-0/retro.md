@@ -6,7 +6,7 @@
 ## Empezar
 
 - Invitar a Evelyn al repo apenas exista su cuenta, para que la revisión cruzada sea real.
-- Verificar los límites de cada plataforma gratuita (GitHub, Monday) **antes** de planificar con ellas.
+- Verificar los límites de cada plataforma gratuita (GitHub) y probar a escala pequeña antes de migrar (127 issues eran demasiados; el plan pasó a ~25) **antes** de planificar con ellas. La gestión del proyecto usa GitHub Projects, integrado con issues y PR.
 
 ## Dejar de hacer
 
@@ -22,4 +22,4 @@
 | # | Acción | Responsable | Para cuándo |
 |---|---|---|---|
 | 1 | Revisar y aprobar los artefactos del PO redactados en el S0 | Evelyn | Antes del Planning del S1 |
-| 2 | Crear los 3 tableros de Monday, importar los CSV y capturarlos | Evelyn | S1 |
+| 2 | Revisar el GitHub Project (campos y vistas), ajustar la agrupación y el orden a mano y capturar cada vista | Evelyn | S1 |

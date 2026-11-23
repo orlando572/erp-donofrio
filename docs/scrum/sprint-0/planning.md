@@ -18,7 +18,7 @@ El S0 no tiene historias de usuario (0 puntos). Son tareas de arranque, tomadas 
 | Acta de constitución y registro de interesados | Evelyn | `docs/pm/acta_constitucion.md`, `interesados.md` |
 | Roles (tabla 7), plan de comunicaciones y plan de calidad | Evelyn | `docs/pm/roles.md`, `comunicaciones.md`, `plan_calidad.md` |
 | Plan de riesgos (tabla 10) | Evelyn | `docs/pm/plan_riesgos.md` |
-| Los 3 tableros de Monday con la columna "Fase" y el backlog por fases | Evelyn | `docs/pm/monday/*.csv` (importables) |
+| El GitHub Project «Scrum ERP D'Onofrio» (campos y vistas de [04 §4.11](../../plan/04_scrum_pmbok.md)) y el backlog por fases | Evelyn | Project #4 y `docs/pm/github-projects/` (datos de origen y scripts) |
 | Confirmar con el docente que D'Onofrio no se repite | Evelyn | Confirmado: el docente asignó D'Onofrio y somos el único grupo |
 
 **Nota:** las tareas de Evelyn las redactó Orlando por encargo suyo; quedan "En revisión" hasta que ella las revise.
@@ -27,5 +27,5 @@ El S0 no tiene historias de usuario (0 puntos). Son tareas de arranque, tomadas 
 
 - Artefactos en el repo, con fecha en los commits.
 - Repo con ramas protegidas, plantillas y etiquetas.
-- Evidencias de los tableros: se capturan cuando los tableros estén creados en Monday.
+- Evidencias: capturas de cada vista del Project, que se toman al cierre del sprint.
 - Revisión del otro integrante: pendiente de Evelyn.

@@ -14,7 +14,7 @@ La calidad se controla con dos mecanismos: la **Definition of Done** (personas) 
 4. Se actualiza el módulo sin errores (`-u`) sobre una BD con datos.
 5. Los textos visibles están en español y los criterios de aceptación se verificaron en la UI.
 6. Hay capturas de evidencia en `docs/capturas/sprint-N/` (`HU-xx_descripcion.png`).
-7. El ítem de Monday está en "Hecho" con el enlace al PR; el issue se cierra con `Closes #n`.
+7. El ítem del Project está en "Hecho" con el enlace al PR; el PR dice `Parte de #n` y marca su HU en la épica; el último PR de la épica la cierra con `Closes #n`.
 8. La sección del informe que corresponde tiene al menos un borrador.
 
 **Módulo de la F2:** sus HU cumplen la DoD, hay tag de release, las secciones afectadas del informe están actualizadas, el ER y el diccionario se extrajeron de nuevo y el mini gate está escrito.

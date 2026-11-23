@@ -26,7 +26,7 @@ El negocio es estacional: helados en verano y panetón en Navidad (ver [01 §1.1
 
 ## 4. Alcance en dos fases
 
-- **Fase 1, núcleo (garantizada, 83 puntos):** Docker, GitHub, CI y Monday; `donofrio_base` con datos y configuración por código; CRM, Ventas, PdV, Inventario con lotes y FEFO, MRP, Compras, Facturación `l10n_pe` y RR. HH.; dashboards estándar; réplica, respaldos, Nginx con TLS y seguridad; pruebas; release `v1.0.0`; informe completo para ese alcance.
+- **Fase 1, núcleo (garantizada, 83 puntos):** Docker, GitHub, CI y GitHub Projects; `donofrio_base` con datos y configuración por código; CRM, Ventas, PdV, Inventario con lotes y FEFO, MRP, Compras, Facturación `l10n_pe` y RR. HH.; dashboards estándar; réplica, respaldos, Nginx con TLS y seguridad; pruebas; release `v1.0.0`; informe completo para ese alcance.
 - **Gate 0:** el agente de IA se detiene y entrega un informe; el equipo decide por criterios si empieza la Fase 2. No empieza ningún módulo propio sin confirmación explícita de Evelyn u Orlando.
 - **Fase 2, extensión (si alcanza el tiempo, 37 puntos):** M1 `donofrio_calidad`, M2 `donofrio_heladeros`, M3 cadena de frío, M4 `donofrio_tablero` + branding, uno a uno y con mini gate. Lo inconcluso no se fusiona y queda como trabajo futuro con su diseño.
 
@@ -42,7 +42,7 @@ El negocio es estacional: helados en verano y panetón en Navidad (ver [01 §1.1
 
 - **Plazo único:** entrega de todo el **viernes 27 de noviembre de 2026, 14:30**, por UTP+Class, **un solo integrante y un solo intento**. El "18 de julio, 07:00" del PDF es un dato de la plantilla.
 - Equipo de **2 personas** (los lineamientos permiten hasta 3) más un asistente de IA que no es un rol.
-- **S/ 0 en licencias:** solo software libre y planes gratuitos (Odoo Community, Monday gratis con 2 usuarios y 3 tableros, GitHub gratis).
+- **S/ 0 en licencias:** solo software libre y planes gratuitos (Odoo Community, GitHub y GitHub Projects).
 - Solo Odoo 19.0 Community: nada de Enterprise (Calidad, `account_reports`, `hr_payroll`, `l10n_pe_edi`, `web_enterprise`).
 - Datos ficticios: RUC ficticio con dígito verificador válido, personas y precios inventados (Ley 29733).
 - Informe sobre la plantilla del docente, en PDF, con APA 7 y uso de IA declarado.

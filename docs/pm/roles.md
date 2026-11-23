@@ -8,7 +8,7 @@ La Guía Scrum 2020 permite que el Product Owner y el Scrum Master también sean
 
 | Rol | Responsable | Responsabilidades | Por qué esa persona |
 |---|---|---|---|
-| **Product Owner** | **Evelyn** | Ordena el Product Backlog; redacta las HU y los criterios de aceptación; representa a D'Onofrio (gerencia y áreas); acepta o rechaza los incrementos en la Review; mantiene el tablero de Monday; redacta los informes de gate y lleva la decisión | Lidera el análisis empresarial y las áreas de cara al negocio (Ventas, Heladeros, Gerencia) |
+| **Product Owner** | **Evelyn** | Ordena el Product Backlog; redacta las HU y los criterios de aceptación; representa a D'Onofrio (gerencia y áreas); acepta o rechaza los incrementos en la Review; mantiene el GitHub Project; redacta los informes de gate y lleva la decisión | Lidera el análisis empresarial y las áreas de cara al negocio (Ventas, Heladeros, Gerencia) |
 | **Scrum Master** | **Orlando** | Facilita los eventos; cuida la DoD y el CI; elimina impedimentos técnicos (Docker, Odoo, agente IA); mide la velocidad y el burndown; protege el *timebox*; verifica los criterios de salida del gate | Lidera la infraestructura, el repo y la automatización, donde surgen los impedimentos |
 | **Developers** | **Evelyn y Orlando** | Construyen el incremento: módulos, configuración, pruebas y documentación; cada uno revisa **todos** los PR del otro | Revisión cruzada obligatoria |
 

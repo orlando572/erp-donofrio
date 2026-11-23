@@ -2,7 +2,7 @@
 
 [← docs/pm](.) · Detalle y justificación de cada riesgo: [docs/plan/07_riesgos_entrega.md](../plan/07_riesgos_entrega.md)
 
-Versión S0, 22/11/2026. Redactado por Orlando por encargo de Evelyn (PO), que debe revisarlo. El mismo registro se importa al tablero 2 de Monday ([monday/tablero2_riesgos.csv](monday/tablero2_riesgos.csv)).
+Versión S0, 22/11/2026. Redactado por Orlando por encargo de Evelyn (PO), que debe revisarlo. Este archivo es el registro de riesgos; se enlaza desde el issue «Registro de riesgos» del GitHub Project, que lleva un comentario en cada Retro.
 
 ## Escalas
 
@@ -27,7 +27,7 @@ Versión S0, 22/11/2026. Redactado por Orlando por encargo de Evelyn (PO), que d
 
 | Impacto \ Probabilidad | 1 | 2 | 3 |
 |---|---|---|---|
-| **3** | RS-03, R8 | R3, R4, R5, R15, R17, R9, R14, RS-02, RS-04 | R1, R2 |
+| **3** | R3, RS-03, R8 | R4, R5, R15, R17, R9, R14, RS-02, RS-04 | R1, R2 |
 | **2** | RS-06 | R16, R18, R19, R20, R7, R11, R13, RS-01, RS-05 | R6 |
 | **1** | · | R10, R12 | · |
 
@@ -39,13 +39,13 @@ Los riesgos **RS-xx** son propuestos en el S0 a partir de los ejemplos de las ta
 |---|---|---|---|---|---|---|---|---|---|---|
 | R1 | Desarrollo | Externo | Plazo muy corto: entrega de todo el viernes 27/11, 14:30 | 3 | 3 | 9 | Alta | Mitigar: sprints de ~1 día en orden fijo; la F1 garantiza el entregable; Gate 0 por criterios; Cierre reservado | Evelyn | Abierto |
 | R2 | Desarrollo | Técnico | API obsoleta de Odoo generada por el agente de IA o tutoriales viejos | 3 | 3 | 9 | Alta | Mitigar: fuentes 19.0 locales, ficha de cambios, hook, check_legacy en CI, instalación con tests en cada PR | Orlando | Mitigando (capas 1-4 hechas en S0; falta CI) |
-| R3 | Desarrollo | Organizacional | Otro grupo elige la misma empresa | 3 | 2 | 6 | Alta | Evitar: confirmar D'Onofrio con el docente en S0 | Evelyn | Cerrado (22/11: el docente asignó D'Onofrio; único grupo) |
+| R3 | Desarrollo | Organizacional | Otro grupo elige la misma empresa | 3 | 1 | 3 | Media | Evitar: el docente asignó D'Onofrio al grupo en S0 y es el único grupo con esta empresa | Evelyn | Cerrado (22/11: el docente asignó D'Onofrio; único grupo) |
 | R4 | Desarrollo | Humano | Carga desigual o un integrante no puede defender su parte | 3 | 2 | 6 | Alta | Mitigar: reparto por áreas de punta a punta, revisión cruzada, demos cruzadas, 2 ensayos | Evelyn + Orlando | Abierto (en S0 Orlando cubrió el trabajo de PO; Evelyn debe revisarlo) |
 | R5 | Desarrollo | Organizacional | Uso de IA no declarado se interpreta como plagio | 3 | 2 | 6 | Alta | Evitar: declarar el asistente de IA en la metodología; todo revisado y entendido por quien lo firma; fuentes citadas | Evelyn + Orlando | Abierto |
 | R6 | Desarrollo | Técnico | Módulo OCA o funcionalidad no disponible en Community 19 | 2 | 3 | 6 | Alta | Aceptar/Mitigar: módulo propio pequeño; EDI y nómina declarados como limitación | Orlando | Abierto |
 | R10 | Desarrollo | Externo | Cambia el escenario Froneri antes de la entrega | 1 | 2 | 2 | Baja | Aceptar: fecha de corte 2026 declarada; solo se actualiza el párrafo del entorno | Evelyn | Abierto |
-| R12 | Desarrollo | Técnico | Límites del plan gratuito de Monday (2 usuarios, 3 tableros, sin integraciones) | 1 | 2 | 2 | Baja | Aceptar: 3 tableros justos; tareas finas en GitHub Issues | Evelyn | Abierto |
-| R15 | Desarrollo | Organizacional | La documentación se deja para el final | 3 | 2 | 6 | Alta | Evitar: la DoD exige un borrador por HU; tablero 3; el Gate 0 exige el informe en borrador | Evelyn | Abierto |
+| R12 | Desarrollo | Organizacional | El título 6.3 de la plantilla nombra otra herramienta y el evaluador espera verla | 1 | 2 | 2 | Baja | Mitigar: una línea bajo el título que justifica GitHub Projects (04 §4.11) y aviso al docente | Evelyn | Abierto |
+| R15 | Desarrollo | Organizacional | La documentación se deja para el final | 3 | 2 | 6 | Alta | Evitar: la DoD exige un borrador por HU; checklist de secciones en el issue «Informe final»; el Gate 0 exige el informe en borrador | Evelyn | Abierto |
 | R16 | Desarrollo | Técnico | La evidencia de Scrum se concentra en pocos días | 2 | 2 | 4 | Media | Mitigar: commits pequeños y diarios de ambos; actas fechadas | Orlando | Abierto |
 | R17 | Desarrollo | Organizacional | La Fase 2 se come el tiempo del Cierre o deja un módulo a medias | 3 | 2 | 6 | Alta | Evitar: Gate 0 y mini gates por criterios; cierre reservado; lo inconcluso no se fusiona | Orlando (criterios), Evelyn (decisión) | Abierto (se revisa en cada gate) |
 | R18 | Desarrollo | Técnico | El agente de IA sigue con la Fase 2 sin autorización tras el gate | 2 | 2 | 4 | Media | Evitar: regla del gate en CLAUDE.md; solo vale la confirmación explícita en el chat | Orlando | Mitigado (regla en CLAUDE.md desde S0) |
@@ -68,6 +68,6 @@ Los riesgos **RS-xx** son propuestos en el S0 a partir de los ejemplos de las ta
 
 ## Seguimiento y validación
 
-- **Seguimiento:** en cada Planning y Retro; **R2, R17 y R18** también en cada gate. Se registra en el tablero 2 de Monday.
+- **Seguimiento:** en cada Planning y Retro; **R2, R17 y R18** también en cada gate. Se registra con un comentario en el issue «Registro de riesgos».
 - **Validación:** el PO valida y ambos revisan.
 - **Tablas 11-13 del informe:** se construyen desde las etapas *Desarrollo*, *Despliegue* y *Mantenimiento* de este registro, con seguimiento, frecuencia, herramienta y validación.
