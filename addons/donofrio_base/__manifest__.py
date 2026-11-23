@@ -11,10 +11,12 @@ Todos los datos (RUC, clientes, empleados, precios) son ficticios.
     'category': 'Customizations',
     'version': '19.0.1.0.0',
     'license': 'LGPL-3',
-    'depends': ['base', 'l10n_pe', 'stock'],
+    'depends': ['base', 'l10n_pe', 'stock', 'sale', 'purchase', 'mrp', 'point_of_sale'],
     'data': [
         'data/compania_data.xml',
         'data/almacenes_data.xml',
+        'security/donofrio_security.xml',
+        'data/usuarios_data.xml',
     ],
     'post_init_hook': 'post_init_hook',
     'installable': True,

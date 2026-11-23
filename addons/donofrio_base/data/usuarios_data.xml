@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HU-04: un usuario por rol, con los permisos mínimos para su trabajo (ISO 27001 5.15 y 8.3).
+     Todos son ficticios. La contraseña de prueba NO está aquí: hooks.py la toma de DONOFRIO_USER_PASSWORD (.env).
+     El liquidador de heladeros es el usuario del CD Arequipa (plan 09, anexo 10.3). -->
+<odoo noupdate="1">
+
+    <record id="user_gerente" model="res.users">
+        <field name="name">Gerente General</field>
+        <field name="login">gerente@donofrio.example.com</field>
+        <field name="email">gerente@donofrio.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="tz">America/Lima</field>
+        <field name="group_ids" eval="[Command.set([
+            ref('base.group_user'),
+            ref('sales_team.group_sale_salesman_all_leads'),
+            ref('stock.group_stock_user'),
+            ref('mrp.group_mrp_user'),
+            ref('account.group_account_readonly'),
+        ])]"/>
+    </record>
+
+    <record id="user_jefe_ventas" model="res.users">
+        <field name="name">Jefe de Ventas</field>
+        <field name="login">jefe.ventas@donofrio.example.com</field>
+        <field name="email">jefe.ventas@donofrio.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="tz">America/Lima</field>
+        <field name="group_ids" eval="[Command.set([
+            ref('base.group_user'),
+            ref('sales_team.group_sale_manager'),
+        ])]"/>
+    </record>
+
+    <record id="user_vendedor" model="res.users">
+        <field name="name">Vendedor</field>
+        <field name="login">vendedor@donofrio.example.com</field>
+        <field name="email">vendedor@donofrio.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="tz">America/Lima</field>
+        <field name="group_ids" eval="[Command.set([
+            ref('base.group_user'),
+            ref('sales_team.group_sale_salesman'),
+        ])]"/>
+    </record>
+
+    <record id="user_cajero_pdv" model="res.users">
+        <field name="name">Cajero PdV</field>
+        <field name="login">cajero@donofrio.example.com</field>
+        <field name="email">cajero@donofrio.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="tz">America/Lima</field>
+        <field name="group_ids" eval="[Command.set([
+            ref('base.group_user'),
+            ref('point_of_sale.group_pos_user'),
+        ])]"/>
+    </record>
+
+    <record id="user_jefe_almacen" model="res.users">
+        <field name="name">Jefe de Almacén</field>
+        <field name="login">jefe.almacen@donofrio.example.com</field>
+        <field name="email">jefe.almacen@donofrio.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="tz">America/Lima</field>
+        <field name="group_ids" eval="[Command.set([
+            ref('base.group_user'),
+            ref('stock.group_stock_manager'),
+        ])]"/>
+    </record>
+
+    <record id="user_jefe_produccion" model="res.users">
+        <field name="name">Jefe de Producción</field>
+        <field name="login">jefe.produccion@donofrio.example.com</field>
+        <field name="email">jefe.produccion@donofrio.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="tz">America/Lima</field>
+        <field name="group_ids" eval="[Command.set([
+            ref('base.group_user'),
+            ref('mrp.group_mrp_manager'),
+            ref('stock.group_stock_user'),
+        ])]"/>
+    </record>
+
+    <!-- En la Fase 1 no hay módulo de calidad: solo consulta lotes y existencias.
+         El grupo de inspector de donofrio_calidad (F2-M1) se sumaría aquí. -->
+    <record id="user_inspector_calidad" model="res.users">
+        <field name="name">Inspector de Calidad</field>
+        <field name="login">inspector@donofrio.example.com</field>
+        <field name="email">inspector@donofrio.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="tz">America/Lima</field>
+        <field name="group_ids" eval="[Command.set([
+            ref('base.group_user'),
+            ref('stock.group_stock_user'),
+        ])]"/>
+    </record>
+
+    <!-- Usuario del CD Arequipa: ve solo las operaciones de ese almacén -->
+    <record id="user_liquidador" model="res.users">
+        <field name="name">Liquidador de Heladeros (CD Arequipa)</field>
+        <field name="login">liquidador@donofrio.example.com</field>
+        <field name="email">liquidador@donofrio.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="tz">America/Lima</field>
+        <field name="group_ids" eval="[Command.set([
+            ref('base.group_user'),
+            ref('sales_team.group_sale_salesman'),
+            ref('stock.group_stock_user'),
+            ref('group_cd_arequipa'),
+        ])]"/>
+    </record>
+
+    <record id="user_compras" model="res.users">
+        <field name="name">Comprador</field>
+        <field name="login">compras@donofrio.example.com</field>
+        <field name="email">compras@donofrio.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="tz">America/Lima</field>
+        <field name="group_ids" eval="[Command.set([
+            ref('base.group_user'),
+            ref('purchase.group_purchase_user'),
+        ])]"/>
+    </record>
+
+    <record id="user_contador" model="res.users">
+        <field name="name">Contador</field>
+        <field name="login">contador@donofrio.example.com</field>
+        <field name="email">contador@donofrio.example.com</field>
+        <field name="lang">es_PE</field>
+        <field name="tz">America/Lima</field>
+        <field name="group_ids" eval="[Command.set([
+            ref('base.group_user'),
+            ref('account.group_account_user'),
+        ])]"/>
+    </record>
+
+</odoo>

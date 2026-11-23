@@ -32,6 +32,25 @@ Abre <http://localhost:8069>. `donofrio_base` deja la compañía con localizaci�
 | `docker compose down -v` | Apaga y **borra** la BD y el filestore (volver a empezar) |
 | `scripts/init_db.sh modulo1,modulo2` | Crea la BD (si no existe) instalando esos módulos |
 
+### Usuarios de prueba (HU-04)
+
+`donofrio_base` crea 10 usuarios, uno por rol, con los permisos mínimos para su trabajo. Entran con su correo y la contraseña `DONOFRIO_USER_PASSWORD` de tu `.env` (nunca está en el código; si la variable no existe, quedan sin contraseña).
+
+| Rol | Usuario |
+|---|---|
+| Gerente General | `gerente@donofrio.example.com` |
+| Jefe de Ventas | `jefe.ventas@donofrio.example.com` |
+| Vendedor | `vendedor@donofrio.example.com` |
+| Cajero PdV | `cajero@donofrio.example.com` |
+| Jefe de Almacén | `jefe.almacen@donofrio.example.com` |
+| Jefe de Producción | `jefe.produccion@donofrio.example.com` |
+| Inspector de Calidad | `inspector@donofrio.example.com` |
+| Liquidador de Heladeros (CD Arequipa) | `liquidador@donofrio.example.com` |
+| Comprador | `compras@donofrio.example.com` |
+| Contador | `contador@donofrio.example.com` |
+
+El liquidador pertenece al grupo «Solo operaciones del CD Arequipa»: una regla de registro (`ir.rule`) le muestra únicamente las transferencias, movimientos y existencias de ese almacén. Las contraseñas se aplican al **instalar** el módulo; si cambias `DONOFRIO_USER_PASSWORD` después, hay que recrear la BD (`docker compose down -v`).
+
 Detalles:
 - Los puertos se publican solo en `127.0.0.1`. Si alguno está ocupado en tu PC, cambia `ODOO_PORT`, `ODOO_LONGPOLLING_PORT` o `DB_PORT` en `.env`.
 - PostgreSQL queda en `localhost:5432` para DBeaver, con el rol `odoo` (sin superusuario) y la contraseña de `.env`.
