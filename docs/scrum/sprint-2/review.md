@@ -46,7 +46,7 @@
 - **PDF de la boleta:** la plantilla estándar la titula «Factura» y rotula «RUC» al DNI. Se declara como limitación; no hay envío a SUNAT (el EDI es Enterprise).
 - **Datos `noupdate`:** las recetas ajustadas en HU-14 obligan a recrear la base en cada PC. Orlando la recreó; Evelyn ya lo hizo con HU-16.
 - **Stock de terminados sin receta:** solo tienen inventario inicial; las ventas se dimensionaron con el resumen que imprime el script.
-- **Protección de `develop`:** sigue sin aplicar a administradores (`enforce_admins` desactivado). Decisión abierta desde el S1.
+- **Protección de `develop`:** no aplica a administradores (`enforce_admins` desactivado). **Decidido el 23/11/2026 por Evelyn (PO): se deja desactivado**, para conservar la salida de emergencia. Se compensa con la regla de cumplir siempre la revisión cruzada y el CI en verde.
 - **Demo cruzada** (05 §5.1): falta que Evelyn demuestre una HU de Orlando (por ejemplo HU-11 o HU-14) y Orlando una de Evelyn (por ejemplo HU-15 o HU-10). Se hace antes del Gate 0.
 - **Valoración y costos:** las categorías usan FIFO y los asientos de valoración salen de cuentas asignadas por código a las ubicaciones virtuales, porque `l10n_pe` no las trae en Odoo 19.
 
@@ -58,4 +58,4 @@ Se acepta con estas salvedades, que no bloquean el incremento:
 
 - **Demo cruzada:** el guion y la verificación de HU-14 sobre la base de Evelyn están hechos ([demo_cruzada.md](demo_cruzada.md)); falta repetirla en vivo con Orlando antes del Gate 0.
 - **Limitaciones declaradas** de la Fase 1: FEFO no aplicado en el PdV (RNF005), boleta con la plantilla estándar de factura y sin envío a SUNAT.
-- **`enforce_admins`:** decisión abierta, pasa al Sprint 3.
+- **`enforce_admins`:** decidido, se deja desactivado (ver «Pendiente y deuda técnica»).

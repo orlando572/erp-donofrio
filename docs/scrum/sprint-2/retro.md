@@ -7,7 +7,7 @@
 
 | # | Acción | Resultado |
 |---|---|---|
-| 1 | Decidir si se activa `enforce_admins` en `develop` | **Sigue abierta.** La protección exige 1 aprobación y los checks `lint` y `test`, pero no aplica a administradores. Pasa al S3 |
+| 1 | Decidir si se activa `enforce_admins` en `develop` | **Decidida el 23/11/2026 por Evelyn (PO): se deja desactivado.** La protección exige 1 aprobación y los checks `lint` y `test`, pero no aplica a administradores; se conserva esa salida de emergencia y se compensa cumpliendo siempre la revisión cruzada |
 | 2 | Un PR por HU, directo contra `develop`, sin apilar | **Cumplida.** Los 8 PR del S2 (#173 a #180) se abrieron contra `develop`, se fusionaron en orden y ninguno perdió su aprobación |
 | 3 | Demo cruzada de una HU ajena en la Review | **Pendiente.** No se hizo en el S2; se hace antes del Gate 0 |
 | 4 | Cerrar el registro de riesgos (#131) y las Dailies (#132) | **Pendiente.** Siguen abiertos; se cierran en el S3 |
@@ -44,7 +44,7 @@
 
 | # | Acción | Responsable | Para cuándo |
 |---|---|---|---|
-| 1 | Decidir si se activa `enforce_admins` en `develop` | Orlando y Evelyn | Antes del Gate 0 |
+| 1 | ~~Decidir si se activa `enforce_admins` en `develop`~~ Decidido: queda desactivado; solo fusionar con la aprobación del otro y el CI en verde | Orlando y Evelyn | Hecho (23/11) |
 | 2 | Hacer la demo cruzada de una HU ajena (Evelyn una de Orlando y viceversa) | Orlando y Evelyn | Antes del Gate 0 |
 | 3 | Cerrar el registro de riesgos (#131) y las Dailies (#132) | Evelyn y Orlando | S3 |
 | 4 | Marcar la checklist de la épica con el enlace al PR y pasarla a «Hecho» al fusionar cada HU | Evelyn y Orlando | S3 |
