@@ -16,8 +16,8 @@
 | CU006 | Registrar temperaturas y alertar (cadena de frío) | Logística | RF008 | HU-19 | **F2** (M3) | **Propuesto** | Orlando |
 | CU007 | Planificar y ejecutar una orden de producción con lote | Producción | RF009, RF010 | HU-07, HU-14 | F1 | Planificado | Orlando |
 | CU008 | Inspeccionar la calidad y liberar el lote | Producción | RF011, RF012 | HU-17, HU-18 | **F2** (M1) | **Propuesto** | Orlando |
-| CU009 | Consultar el tablero gerencial de KPIs | Gerencia | RF013 | HU-23 (F1), HU-22 (F2) | F1 (estándar) | Planificado | Evelyn |
-| CU010 | Analizar ventas por línea, canal y temporada | Gerencia | RF014 | HU-23 | F1 | Planificado | Evelyn |
+| CU009 | Consultar el tablero gerencial de KPIs | Gerencia | RF013 | HU-23 (F1), HU-22 (F2) | F1 (estándar) | Implementado | Evelyn |
+| CU010 | Analizar ventas por línea, canal y temporada | Gerencia | RF014 | HU-23 | F1 | Implementado | Evelyn |
 | CU011 | Comprar insumos con reabastecimiento mín./máx. | Compras | RF015 | HU-13 | F1 | Implementado | Evelyn |
 | CU012 | Facturar con IGV (factura 01 o boleta 03) | Facturación | RF016 | HU-15 | F1 | Implementado | Evelyn |
 
@@ -212,7 +212,7 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Flujos alternos** | A1. Exporta el resultado a Excel.<br>A2. Guarda un filtro propio |
 | **Postcondiciones** | El usuario obtiene una comparación por línea, canal y temporada para planificar campañas |
 | **Reglas de negocio** | Los filtros son compartidos; los datos son ficticios (supuesto S2) |
-| **Evidencia / prueba** | Capturas del pivote y del gráfico (Sprint 3) |
+| **Evidencia / prueba** | Capturas `HU-23_*` (dashboards estándar y vistas guardadas); `tests/test_gerencia.py` |
 
 ### CU011: Comprar insumos con reabastecimiento mín./máx.
 
