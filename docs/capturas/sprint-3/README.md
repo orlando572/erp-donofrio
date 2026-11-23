@@ -19,3 +19,12 @@ Medido el 23/11/2026 con Lighthouse 12 (modo escritorio) en el login, el backend
 | Archivo | HU | Qué contiene |
 |---|---|---|
 | `HU-28_lighthouse_resultados.csv` | HU-28 | Una fila por vista y etiqueta (`ANTES` en desarrollo con `?debug=assets`; `DESPUES` con Nginx y TLS): puntaje, FCP, LCP, TBT, CLS, Speed Index, peticiones y KB transferidos |
+
+## Capturas de HU-32 (Evelyn)
+
+Tomadas el 23/11/2026 en la BD `donofrio`, con los cinco tickets de ejemplo de la «Mesa de Servicios TI» (proyecto de la app Project de Community, cargado por `donofrio_base`).
+
+| Archivo | HU | Qué muestra |
+|---|---|---|
+| `HU-32_mesa_servicios_kanban` | HU-32 | Tablero Kanban de la mesa con las etapas Nuevo, En análisis, En atención, Resuelto y Cerrado (plegada); tickets abiertos con su tipo ITIL, prioridad en estrellas y fecha límite del SLA |
+| `HU-32_pivote_cumplimiento_sla` | HU-32 | Vista guardada «Cumplimiento del SLA por tipo de ticket»: 5 tickets por tipo (Incidente, Solicitud de servicio y Solicitud de acceso) y por estado del SLA (abierto, cumplido, incumplido) |
