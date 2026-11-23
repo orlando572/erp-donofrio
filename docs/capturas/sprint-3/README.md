@@ -67,3 +67,17 @@ Extraídas el 23/11/2026 con `gh` y `git` en modo de solo lectura (no cambian el
 | `S3-informe6_evidencia_github.txt` | 6.4 a 6.6 | Configuración del repositorio (métodos de fusión permitidos), protección de `develop` y `main` (`enforce_admins`), ramas remotas, resumen de los 49 PR, ejecuciones y jobs de GitHub Actions, y la ausencia de releases, tags y paquete GHCR |
 | `S3-informe6_prs_fusionados.tsv` | 6.6 y trazabilidad | Una fila por PR fusionado: autor, quién fusionó, método (squash o merge commit), aprobación del otro integrante, rama, fecha, commits y merges de `develop`. La lee `scripts/trazabilidad.py` |
 | `S3-informe6_evidencia_tests.txt` | 6.10 | `scripts/test.sh donofrio_base` (136 pruebas, 0 fallidas, 125 s), pruebas por archivo, `check_legacy.sh` y `ruff` |
+
+## Evidencias de las secciones 6.1 a 6.3, 6.7 y 6.8 (Evelyn)
+
+Extraídas el 23/11/2026 de GitHub en modo de solo lectura (`gh`, `git` y capturas de las páginas públicas del repositorio y del Project). Texto en [`06_01_a_06_03_equipo_sprints_y_project.md`](../../informe/06_01_a_06_03_equipo_sprints_y_project.md) y [`06_07_a_06_08_commits_e_issues.md`](../../informe/06_07_a_06_08_commits_e_issues.md).
+
+| Archivo | Sección | Qué contiene |
+|---|---|---|
+| `S3-informe6_burndown.csv` / `.svg` / `.png` | 6.2 | Burndown por puntos de los sprints 1 a 3 (`scripts/burndown.py --csv --svg`): puntos pendientes tras cada HU terminada |
+| `S3-6.3_project_sprint_actual.png` | 6.3 | Vista «Sprint actual» (tablero) del GitHub Project |
+| `S3-6.3_project_product_backlog.png` | 6.3 | Vista «Product Backlog» (tabla de épicas) |
+| `S3-6.3_project_roadmap.png` | 6.3 | Vista «Roadmap» con las iteraciones planificadas |
+| `S3-6.3_project_insights.png` | 6.3 | Insights: gráfico *burn up* de ítems |
+| `S3-6.7_github_contributors.png` | 6.7 | Contributors de GitHub: commits y líneas por autor en `develop` |
+| `S3-informe6_estadisticas_commits_issues.md` | 6.7 y 6.8 | Salida de `scripts/estadisticas_repo.py`: commits por autor y tipo, convención e issues por tipo, área, fase y milestone |

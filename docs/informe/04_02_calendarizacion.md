@@ -16,7 +16,7 @@ El plazo es de pocos días, así que cada sprint dura **un día** (*timebox* de 
 | H1 | Entorno Docker + repo + CI en verde | S1 | O | 22/11/2026 | Hecho |
 | H2 | Datos maestros de D'Onofrio por código (`donofrio_base`) | S1 | O | 23/11/2026 | Hecho |
 | H3 | Ciclo estándar de punta a punta + transacciones | S2 | E+O | 23/11/2026 | Hecho: HU-08 a HU-16 fusionadas en `develop`, 16 semanas de datos de demostración |
-| **H4** | **Núcleo v1.0.0 entregable → Gate 0** | **S3** | **E+O** | 24/11/2026 (previsto) | Pendiente |
+| **H4** | **Núcleo v1.0.0 entregable → Gate 0** | **S3** | **E+O** | 24/11/2026 (previsto) | En curso: 8 de 9 HU del S3 terminadas el 23/11 (falta HU-30); faltan el informe del Gate 0 y el tag `v1.0.0` |
 | H5 | Módulos de la F2 confirmados en el gate, cada uno con su tag (v1.1.0…) | S4 | E+O | 25-26/11/2026 (previsto) | Pendiente: lo decide el equipo en el Gate 0 |
 | H6 | Informe PDF, manuales, PPT y zip finales | Cierre | E+O | 26/11/2026 (previsto) | Pendiente |
 | H7 | 2 ensayos cronometrados (≤ 10 min) | Cierre | E+O | 26/11/2026 (previsto) | Pendiente |
@@ -34,7 +34,7 @@ gantt
     S1 Fundaciones (HU-01 a HU-07) :done, s1, 2026-11-22 12:00, 1d
     S2 Procesos estándar (HU-08 a HU-16) :done, s2, 2026-11-23 08:00, 1d
     section Previsto
-    S3 Calidad del núcleo (H4)     :active, s3, 2026-11-24 08:00, 1d
+    S3 Calidad del núcleo (H4), en curso desde el 23/11 :active, s3, 2026-11-23 15:00, 1d
     Gate 0                         :milestone, g0, 2026-11-24 20:00, 0d
     S4 Módulos propios, uno a uno  :s4, 2026-11-25 08:00, 2d
     Cierre: informe, manuales, PPT, ensayos :cierre, 2026-11-26 08:00, 1d
