@@ -31,7 +31,7 @@
 
 - Dar por buena una receta o un dato maestro sin revisar su costo: las recetas de HU-07 daban un costo por unidad mayor que el precio de venta y se descubrió recién en HU-14.
 - Asumir que `l10n_pe` deja la valoración lista: en Odoo 19 no trae cuentas en las ubicaciones virtuales y los asientos de valoración no se generaban.
-- Dejar la documentación del sprint para el final: la de Evelyn sigue en preparación cuando el código ya está fusionado.
+- Dejar la documentación del sprint para el final: la de Evelyn entró (PR #181) horas después de que el código ya estaba fusionado.
 
 ## Continuar
 
@@ -46,9 +46,8 @@
 |---|---|---|---|
 | 1 | Decidir si se activa `enforce_admins` en `develop` | Orlando y Evelyn | Antes del Gate 0 |
 | 2 | Hacer la demo cruzada de una HU ajena (Evelyn una de Orlando y viceversa) | Orlando y Evelyn | Antes del Gate 0 |
-| 3 | Subir la documentación de Evelyn del S2 (BPMN TO-BE de ventas, heladeros y compras, wireframes y mockups, fichas de CU, 4.2.9) | Evelyn | Hoy, antes de iniciar el S3 |
-| 4 | Cerrar el registro de riesgos (#131) y las Dailies (#132) | Evelyn y Orlando | S3 |
-| 5 | Marcar la checklist de la épica con el enlace al PR y pasarla a «Hecho» al fusionar cada HU | Evelyn y Orlando | S3 |
+| 3 | Cerrar el registro de riesgos (#131) y las Dailies (#132) | Evelyn y Orlando | S3 |
+| 4 | Marcar la checklist de la épica con el enlace al PR y pasarla a «Hecho» al fusionar cada HU | Evelyn y Orlando | S3 |
 
 ## Riesgos
 
