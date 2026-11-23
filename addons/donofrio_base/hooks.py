@@ -7,6 +7,7 @@ _logger = logging.getLogger(__name__)
 def post_init_hook(env):
     """Pasos que no se pueden expresar como datos XML y corren al instalar el módulo."""
     _asignar_clave_a_usuarios(env)
+    _asignar_responsable_de_inventario(env)
     _programar_plan_contable(env)
 
 
@@ -29,6 +30,18 @@ def _asignar_clave_a_usuarios(env):
         )
         return
     usuarios.write({'password': clave})
+
+
+def _asignar_responsable_de_inventario(env):
+    """HU-11: el jefe de almacén es el responsable de todos los terminados e insumos.
+
+    Odoo crea la actividad «Alerta de vencimiento» (30 días antes en los terminados) a nombre del
+    responsable del producto; sin él, la actividad iría al superusuario y nadie la vería.
+    """
+    jefe = env.ref('donofrio_base.user_jefe_almacen')
+    categorias = env.ref('donofrio_base.cat_terminados') | env.ref('donofrio_base.cat_insumos')
+    productos = env['product.template'].search([('categ_id', 'child_of', categorias.ids)])
+    productos.write({'responsible_id': jefe.id})
 
 
 def _programar_plan_contable(env):
