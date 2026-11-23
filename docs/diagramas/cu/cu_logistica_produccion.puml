@@ -1,0 +1,61 @@
+@startuml cu_logistica_produccion
+' Casos de uso de Logística y Producción (CU005 a CU008).
+' CU005 y CU007 son Fase 1 (Odoo estándar). CU006 (cadena de frío, M3) y CU008 (calidad, M1) son Fase 2: propuestos.
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam actorStyle awesome
+skinparam usecase {
+  BackgroundColor #F4F7FB
+  BorderColor #222222
+}
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #222222
+}
+title Casos de uso: Logística y Producción
+
+actor "Jefe de Almacén" as ALM
+actor "Jefe de Producción" as PRO
+actor "Operario de línea" as OPE
+actor "Inspector de Calidad" as INS
+actor "Comprador" as COM
+
+rectangle "ERP D'Onofrio (Odoo 19 Community)" {
+  usecase "CU005\nRecibir, almacenar y despachar\ncon lotes y FEFO" as CU005 #E8F5E9
+  usecase "Recibir insumos desde la OC\ncon lote y vencimiento" as REC #E8F5E9
+  usecase "Despachar en 2 pasos\n(pick + ship) y reponer Arequipa" as DES #E8F5E9
+  usecase "Alertar lotes por vencer\n(30 días antes)" as ALE #E8F5E9
+  usecase "CU007\nPlanificar y ejecutar una orden\nde producción con lote" as CU007 #E8F5E9
+  usecase "Reservar insumos por FEFO" as FEF #E8F5E9
+  usecase "Crear el lote con vencimiento\ny calcular el costo" as LOT #E8F5E9
+  usecase "CU006\nRegistrar temperaturas y alertar\n(propuesto, Fase 2 · M3)" as CU006 #FFF3CD
+  usecase "CU008\nInspeccionar la calidad y liberar el lote\n(propuesto, Fase 2 · M1)" as CU008 #FFF3CD
+  usecase "Bloquear el despacho\nde un lote rechazado" as BLO #FFF3CD
+}
+
+COM --> REC : confirma la OC
+ALM --> CU005
+ALM --> CU006
+PRO --> CU007
+OPE --> CU007 : ejecuta las operaciones
+INS --> CU008
+
+CU005 ..> REC : <<include>>
+CU005 ..> DES : <<include>>
+CU005 ..> ALE : <<include>>
+CU007 ..> FEF : <<include>>
+CU007 ..> LOT : <<include>>
+FEF ..> DES : usa la regla FEFO
+CU006 ..> CU005 : controla las cámaras
+CU008 ..> CU007 : inspecciona al terminar la OP
+BLO ..> CU008 : <<extend>>
+BLO ..> DES : impide el despacho
+
+legend right
+  Verde: implementable con Odoo estándar (Fase 1).
+  Amarillo: módulos propios donofrio_calidad (M1) y
+  cadena de frío (M3), solo si el equipo los confirma
+  tras el Gate 0 (trabajo futuro si no).
+endlegend
+@enduml

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1635" height="678" viewBox="0 0 1635 678" font-family="DejaVu Sans, Arial, sans-serif">
+<defs><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222"/></marker></defs>
+<rect width="1635" height="678" fill="#fff"/>
+<rect x="20" y="20" width="1595" height="600" fill="none" stroke="#222" stroke-width="1.5"/>
+<line x1="50" y1="20" x2="50" y2="620" stroke="#222"/>
+<g transform="rotate(-90 35 320.0)"><text x="35" y="324" text-anchor="middle" font-size="12" font-weight="bold">TO-BE · Producción con inspección de calidad (M1, Fase 2)</text></g>
+<line x1="72" y1="20" x2="72" y2="170" stroke="#222"/>
+<g transform="rotate(-90 61 95.0)"><text x="61" y="99" text-anchor="middle" font-size="11" font-weight="bold">Operario de línea</text></g>
+<line x1="50" y1="170" x2="1615" y2="170" stroke="#222"/>
+<line x1="72" y1="170" x2="72" y2="320" stroke="#222"/>
+<g transform="rotate(-90 61 245.0)"><text x="61" y="249" text-anchor="middle" font-size="11" font-weight="bold">Almacén</text></g>
+<line x1="50" y1="320" x2="1615" y2="320" stroke="#222"/>
+<line x1="72" y1="320" x2="72" y2="470" stroke="#222"/>
+<g transform="rotate(-90 61 395.0)"><text x="61" y="399" text-anchor="middle" font-size="11" font-weight="bold">Inspector de Calidad</text></g>
+<line x1="50" y1="470" x2="1615" y2="470" stroke="#222"/>
+<line x1="72" y1="470" x2="72" y2="620" stroke="#222"/>
+<g transform="rotate(-90 61 545.0)"><text x="61" y="549" text-anchor="middle" font-size="11" font-weight="bold">Jefe de Producción</text></g>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="182,545 255,545"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="373,545 389,545 389,95 405,95"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="523,95 555,95"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="673,95 689,95 689,395 705,395"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="823,395 855,395"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="973,395 1039,395"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1089,395 1155,395"/>
+<text x="1095" y="386" font-size="11" font-weight="bold">Sí</text>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1064,420 1064,545 1155,545"/>
+<text x="1070" y="435" font-size="11" font-weight="bold">No</text>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1273,545 1346,545"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1273,395 1289,395 1289,245 1305,245"/>
+<polyline fill="none" stroke="#222" stroke-width="1.4" marker-end="url(#flecha)" points="1423,245 1496,245"/>
+<circle cx="164" cy="545" r="18.0" fill="#e8f5e9" stroke="#222" stroke-width="1.5"/><text x="164" y="578" text-anchor="middle" font-size="11" font-weight="normal">Llega la demanda del</text><text x="164" y="591" text-anchor="middle" font-size="11" font-weight="normal">mes o de la campaña</text>
+<rect x="255" y="508" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="314" y="529" text-anchor="middle" font-size="11" font-weight="normal">Crea la orden</text><text x="314" y="542" text-anchor="middle" font-size="11" font-weight="normal">desde la receta y</text><text x="314" y="555" text-anchor="middle" font-size="11" font-weight="normal">Odoo reserva los</text><text x="314" y="568" text-anchor="middle" font-size="11" font-weight="normal">insumos por FEFO</text>
+<rect x="405" y="58" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="464" y="79" text-anchor="middle" font-size="11" font-weight="normal">Ejecuta las</text><text x="464" y="92" text-anchor="middle" font-size="11" font-weight="normal">operaciones y</text><text x="464" y="105" text-anchor="middle" font-size="11" font-weight="normal">registra los</text><text x="464" y="118" text-anchor="middle" font-size="11" font-weight="normal">tiempos</text>
+<rect x="555" y="58" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="614" y="79" text-anchor="middle" font-size="11" font-weight="normal">Termina la orden:</text><text x="614" y="92" text-anchor="middle" font-size="11" font-weight="normal">Odoo crea el lote</text><text x="614" y="105" text-anchor="middle" font-size="11" font-weight="normal">con su</text><text x="614" y="118" text-anchor="middle" font-size="11" font-weight="normal">vencimiento</text>
+<rect x="705" y="358" width="118" height="74" rx="8" fill="#fff3c4" stroke="#b7950b" stroke-width="1.5"/><text x="764" y="379" text-anchor="middle" font-size="11" font-weight="normal">Se crea la</text><text x="764" y="392" text-anchor="middle" font-size="11" font-weight="normal">inspección ligada</text><text x="764" y="405" text-anchor="middle" font-size="11" font-weight="normal">a la orden y al</text><text x="764" y="418" text-anchor="middle" font-size="11" font-weight="normal">lote</text>
+<rect x="855" y="358" width="118" height="74" rx="8" fill="#fff3c4" stroke="#b7950b" stroke-width="1.5"/><text x="914" y="373" text-anchor="middle" font-size="11" font-weight="normal">Mide en cada</text><text x="914" y="386" text-anchor="middle" font-size="11" font-weight="normal">punto de control</text><text x="914" y="399" text-anchor="middle" font-size="11" font-weight="normal">(pasteurización,</text><text x="914" y="412" text-anchor="middle" font-size="11" font-weight="normal">peso,</text><text x="914" y="425" text-anchor="middle" font-size="11" font-weight="normal">microbiología)</text>
+<polygon points="1064,370 1089,395 1064,420 1039,395" fill="#fff8e1" stroke="#222" stroke-width="1.5"/><path d="M1055,386 L1073,404 M1073,386 L1055,404" stroke="#222" stroke-width="2.5"/><text x="1064" y="354" text-anchor="middle" font-size="11" font-weight="bold">¿Aprueba el lote?</text>
+<rect x="1155" y="358" width="118" height="74" rx="8" fill="#fff3c4" stroke="#b7950b" stroke-width="1.5"/><text x="1214" y="386" text-anchor="middle" font-size="11" font-weight="normal">Emite el</text><text x="1214" y="399" text-anchor="middle" font-size="11" font-weight="normal">certificado de</text><text x="1214" y="412" text-anchor="middle" font-size="11" font-weight="normal">calidad del lote</text>
+<rect x="1155" y="508" width="118" height="74" rx="8" fill="#fff3c4" stroke="#b7950b" stroke-width="1.5"/><text x="1214" y="529" text-anchor="middle" font-size="11" font-weight="normal">Lote rechazado:</text><text x="1214" y="542" text-anchor="middle" font-size="11" font-weight="normal">Odoo bloquea su</text><text x="1214" y="555" text-anchor="middle" font-size="11" font-weight="normal">despacho; el jefe</text><text x="1214" y="568" text-anchor="middle" font-size="11" font-weight="normal">decide su destino</text>
+<circle cx="1364" cy="545" r="18.0" fill="#e8f5e9" stroke="#222" stroke-width="4"/><text x="1364" y="578" text-anchor="middle" font-size="11" font-weight="normal">Lote reprocesado o</text><text x="1364" y="591" text-anchor="middle" font-size="11" font-weight="normal">descartado</text>
+<rect x="1305" y="208" width="118" height="74" rx="8" fill="#f4f7fb" stroke="#222" stroke-width="1.5"/><text x="1364" y="229" text-anchor="middle" font-size="11" font-weight="normal">El lote liberado</text><text x="1364" y="242" text-anchor="middle" font-size="11" font-weight="normal">queda disponible</text><text x="1364" y="255" text-anchor="middle" font-size="11" font-weight="normal">para el despacho</text><text x="1364" y="268" text-anchor="middle" font-size="11" font-weight="normal">FEFO</text>
+<circle cx="1514" cy="245" r="18.0" fill="#e8f5e9" stroke="#222" stroke-width="4"/><text x="1514" y="278" text-anchor="middle" font-size="11" font-weight="normal">Lote liberado en</text><text x="1514" y="291" text-anchor="middle" font-size="11" font-weight="normal">almacén</text>
+<rect x="20" y="636" width="16" height="14" rx="3" fill="#f4f7fb" stroke="#222"/><text x="44" y="648" font-size="11">Tarea con Odoo estándar (Fase 1)</text>
+<rect x="250" y="636" width="16" height="14" rx="3" fill="#fff3c4" stroke="#b7950b"/><text x="274" y="648" font-size="11">Depende del módulo propio de la Fase 2 (si no se construye, queda como diseño)</text>
+</svg>

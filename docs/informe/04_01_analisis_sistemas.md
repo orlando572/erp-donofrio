@@ -34,7 +34,7 @@ Sistemas y herramientas que se asumen en uso, por área, y las brechas que justi
 
 ## 4.1.2 Procesos AS-IS (BPMN)
 
-Los diagramas se editan en **bpmn.io** (archivo `.bpmn`) y se exportan a PNG. Los tres primeros son de Evelyn y los dos últimos de Orlando (Sprint 1). Se muestran los procesos **tal como se supone que funcionan hoy** (S7). Los TO-BE en Odoo se hacen en el Sprint 2.
+Los diagramas se editan en **bpmn.io** (archivo `.bpmn`) y se exportan a PNG. Los tres primeros son de Evelyn y los dos últimos de Orlando (Sprint 1). Se muestran los procesos **tal como se supone que funcionan hoy** (S7). Los TO-BE en Odoo de producción y de recepción y despacho (Orlando) están al final de esta sección (Sprint 2); los de ventas, heladeros y compras los agrega Evelyn.
 
 | # | Proceso AS-IS | Responsable | Archivo | Estado |
 |---|---|---|---|---|
@@ -75,3 +75,52 @@ El jefe de producción programa la producción en Excel según la demanda del me
 El proveedor entrega los insumos y el almacén los recibe con la guía, sin registrar lote ni vencimiento. El producto se guarda en la cámara que corresponde y la temperatura se anota en una planilla de papel dos veces al día; si está fuera de rango, el problema se detecta tarde y se avisa por llamada al jefe. Las salidas y los saldos se llevan en un kárdex de Excel. Para despachar, el pedido se arma revisando las fechas a ojo, sin FEFO, y se entrega con guía en papel; la transferencia al CD Arequipa se coordina por teléfono. Puntos débiles: sin lote ni vencimiento en el sistema, sin historial de temperaturas por ubicación y sin alertas automáticas (problemas 2 y 3 de la tabla 1).
 
 > En los diagramas, las tareas en **rojo claro** marcan los puntos débiles de la situación actual. Siguen la notación BPMN 2.0 (carriles por rol, eventos de inicio y fin, tareas y compuertas exclusivas). Se generan con [`docs/diagramas/generar_bpmn.py`](../diagramas/generar_bpmn.py) para que el diseño sea reproducible y se pueden abrir y retocar en bpmn.io.
+
+---
+
+## 4.1.2 (continuación) Procesos TO-BE en Odoo: producción y almacén (Sprint 2)
+
+Son los mismos procesos de producción y de almacén, ahora **ejecutados con Odoo 19 Community**. Se dibujan con el mismo generador que los AS-IS ([`generar_bpmn.py`](../diagramas/generar_bpmn.py)). Las tareas en azul claro son de la **Fase 1** (Odoo estándar configurado por `donofrio_base`); las tareas en **amarillo** dependen de un módulo propio de la Fase 2 y, si el equipo no lo construye tras el Gate 0, quedan como diseño («trabajo futuro»).
+
+| # | Proceso TO-BE | Responsable | Archivo | Estado |
+|---|---|---|---|---|
+| 6 | Producción con Odoo estándar (Fase 1) | Orlando | [to-be_produccion.png](../diagramas/bpmn/to-be_produccion.png) · [.bpmn](../diagramas/bpmn/to-be_produccion.bpmn) | Borrador S2 |
+| 7 | Producción con inspección de calidad (M1, Fase 2) | Orlando | [to-be_produccion_m1.png](../diagramas/bpmn/to-be_produccion_m1.png) · [.bpmn](../diagramas/bpmn/to-be_produccion_m1.bpmn) | Borrador S2 (diseño) |
+| 8 | Recepción y despacho con Odoo estándar (Fase 1) | Orlando | [to-be_recepcion_despacho.png](../diagramas/bpmn/to-be_recepcion_despacho.png) · [.bpmn](../diagramas/bpmn/to-be_recepcion_despacho.bpmn) | Borrador S2 |
+
+### 6. Producción con Odoo estándar (Fase 1)
+
+![BPMN TO-BE producción con Odoo estándar](../diagramas/bpmn/to-be_produccion.png)
+
+El jefe de producción crea la orden de producción desde la receta (lista de materiales) y la confirma. Odoo reserva los insumos **por FEFO**: sale primero el lote que vence antes, y un lote vencido o ya en su fecha de retiro no se reserva. El almacén entrega lo reservado a la línea. El operario ejecuta cada operación en su centro de trabajo (el sistema registra el tiempo real) y verifica los controles críticos que están escritos en el nombre de la operación (pasteurizar a 80-85 °C, endurecer a -18 °C o menos); el resultado se anota en la orden. Si no cumple, el jefe decide reproceso o descarte y lo deja escrito en la orden. Si cumple, el operario marca la orden como hecha: Odoo **crea el lote con su fecha de vencimiento** (12 meses en helados y chocolates, 4 en panetón), **calcula el costo** (insumos más horas de línea, con valoración FIFO) y el lote entra a Lima/Stock listo para salir por FEFO.
+
+Limitación declarada: en Community no hay inspecciones de calidad ligadas a la orden, así que en la Fase 1 el control es **documental** (instrucciones de la operación y nota en la orden). Eso lo cubre el módulo M1 de la Fase 2.
+
+### 7. Producción con inspección de calidad (M1, Fase 2)
+
+![BPMN TO-BE producción con inspección de calidad](../diagramas/bpmn/to-be_produccion_m1.png)
+
+Con el módulo `donofrio_calidad` (diseño, sin construir hasta confirmar el Gate 0), al terminar la orden se crea una **inspección ligada a la orden y al lote**. El inspector mide en cada punto de control (pasteurización, peso neto, microbiología) y aprueba o rechaza. Si aprueba, se emite el certificado de calidad y el lote queda disponible para el despacho FEFO. Si rechaza, Odoo **bloquea el despacho del lote** (RNF005) y el jefe de producción decide su destino con el motivo registrado.
+
+### 8. Recepción y despacho con Odoo estándar (Fase 1)
+
+![BPMN TO-BE recepción y despacho](../diagramas/bpmn/to-be_recepcion_despacho.png)
+
+El comprador confirma la orden de compra y Odoo crea la recepción en Lima. Al llegar el camión, el almacén recibe contra esa recepción y **escribe el lote y la fecha de vencimiento** (sin lote no se puede validar). Odoo guarda el lote en su cámara, valoriza el stock por FIFO y **avisa al jefe de almacén 30 días antes** de que el lote venza. Cuando llega un pedido confirmado o una reposición a Arequipa, el despacho en Lima es en **dos pasos**: *pick* (Odoo reserva por FEFO y arma la lista de recolección) y *ship* (se verifica y se despacha desde la zona de salida con su guía). La entrega al cliente se cierra con su firma; la reposición pasa por la ubicación de tránsito y el CD Arequipa la recibe con su lote.
+
+Limitación declarada: la temperatura de las cámaras se sigue controlando fuera del sistema en la Fase 1; el registro con rangos y alertas es la cadena de frío (M3) de la Fase 2.
+
+### Cómo resuelve el TO-BE los puntos débiles del AS-IS
+
+| Punto débil del AS-IS | Cómo lo resuelve el TO-BE | HU | Estado |
+|---|---|---|---|
+| Recepción sin lote ni vencimiento | La recepción exige lote y fecha | HU-11, HU-12 | Probado con tests |
+| Despacho «a ojo», sin FEFO | Reserva por FEFO en el pick; un lote vencido no se reserva | HU-11 | Probado con tests |
+| Vencimientos no controlados | Alerta 30 días antes al jefe de almacén | HU-11 | Probado con tests |
+| Transferencia a Arequipa por teléfono | Reposición Lima → Arequipa con pick, ship y recepción | HU-12 | Probado con tests |
+| Vale de papel que no descuenta insumos | La orden de producción reserva y consume insumos por FEFO | HU-14 | Probado con tests |
+| Lote con código manual y kárdex en Excel | Lote con vencimiento creado por la orden, trazable a sus insumos | HU-14 | Probado con tests |
+| Costo del lote desconocido | Costo FIFO: insumos más horas de centro de trabajo, con sus asientos | HU-14 | Probado con tests |
+| Temperaturas en papel | Se mantiene en papel en la Fase 1 | — | Pendiente: M3 (Fase 2) |
+| Inspección en papel y lotes no conformes sin registro | Inspección ligada a la orden y bloqueo del despacho | — | Pendiente: M1 (Fase 2) |
+
