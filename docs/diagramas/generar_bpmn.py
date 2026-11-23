@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Genera los BPMN AS-IS de Evelyn (Sprint 1) como archivo .bpmn (editable en bpmn.io) y .svg.
+"""Genera los BPMN AS-IS del Sprint 1 (tres de Evelyn y dos de Orlando) como archivo .bpmn (editable en bpmn.io) y .svg.
 
 Uso:  python3 docs/diagramas/generar_bpmn.py        (escribe en docs/diagramas/bpmn/)
 El PNG se obtiene del SVG (ver docs/diagramas/README.md).
@@ -166,10 +166,62 @@ def compra_insumos():
     return p
 
 
+def produccion_calidad():
+    p = Proceso('as_is_produccion_calidad', 'AS-IS · Producción y calidad',
+                ['Jefe de Producción', 'Calidad', 'Operario de línea', 'Almacén'])
+    p.nodo('inicio', 'inicio', 'Llega la demanda del mes o de la campaña', 'Jefe de Producción', 0)
+    p.nodo('programa', 'tarea', 'Programa la producción en Excel y imprime la orden', 'Jefe de Producción', 1, dolor=True)
+    p.nodo('insumos', 'tarea', 'Entrega los insumos con un vale de papel, sin lote ni vencimiento', 'Almacén', 2, dolor=True)
+    p.nodo('produce', 'tarea', 'Produce siguiendo la fórmula impresa', 'Operario de línea', 3)
+    p.nodo('anota', 'tarea', 'Anota a mano las temperaturas de cada etapa (80-85 °C)', 'Operario de línea', 4, dolor=True)
+    p.nodo('inspecciona', 'tarea', 'Inspecciona una muestra y llena el formato en papel', 'Calidad', 5, dolor=True)
+    p.nodo('cumple', 'compuerta', '¿El lote cumple?', 'Calidad', 6)
+    p.nodo('decide', 'tarea', 'Decide a criterio si se reprocesa o se descarta, sin registro', 'Calidad', 7, dolor=True)
+    p.nodo('fin_no', 'fin', 'Lote reprocesado o descartado', 'Calidad', 8)
+    p.nodo('etiqueta', 'tarea', 'Etiqueta el lote con un código manual y lo envía al almacén', 'Operario de línea', 7, dolor=True)
+    p.nodo('kardex', 'tarea', 'Registra la entrada en el kárdex de Excel', 'Almacén', 8, dolor=True)
+    p.nodo('fin', 'fin', 'Producto terminado en almacén', 'Almacén', 9)
+    for a_, b_ in [('inicio', 'programa'), ('programa', 'insumos'), ('insumos', 'produce'), ('produce', 'anota'),
+                   ('anota', 'inspecciona'), ('inspecciona', 'cumple')]:
+        p.flujo(a_, b_)
+    p.flujo('cumple', 'decide', 'No')
+    p.flujo('cumple', 'etiqueta', 'Sí', salida='abajo')
+    p.flujo('decide', 'fin_no')
+    p.flujo('etiqueta', 'kardex')
+    p.flujo('kardex', 'fin')
+    return p
+
+
+def recepcion_despacho_frio():
+    p = Proceso('as_is_recepcion_despacho_frio', 'AS-IS · Recepción y despacho con cadena de frío',
+                ['Proveedor', 'Cámara de frío', 'Almacén', 'Despacho', 'Cliente o CD Arequipa'])
+    p.nodo('inicio', 'inicio', 'Llega el camión con insumos', 'Proveedor', 0)
+    p.nodo('recibe', 'tarea', 'Descarga y recibe con la guía, sin registrar lote ni vencimiento', 'Almacén', 1, dolor=True)
+    p.nodo('guarda', 'tarea', 'Guarda el producto en la cámara que corresponde', 'Cámara de frío', 2)
+    p.nodo('temperatura', 'tarea', 'Anota la temperatura en una planilla de papel, dos veces al día', 'Cámara de frío', 3, dolor=True)
+    p.nodo('rango', 'compuerta', '¿Fuera de rango?', 'Cámara de frío', 4)
+    p.nodo('avisa', 'tarea', 'Detecta tarde el problema y avisa por llamada al jefe', 'Almacén', 5, dolor=True)
+    p.nodo('kardex', 'tarea', 'Registra salidas y saldos en el kárdex de Excel', 'Almacén', 6, dolor=True)
+    p.nodo('prepara', 'tarea', 'Prepara el pedido revisando las fechas a ojo, sin FEFO', 'Despacho', 7, dolor=True)
+    p.nodo('despacha', 'tarea', 'Despacha con guía en papel; Arequipa se coordina por teléfono', 'Despacho', 8, dolor=True)
+    p.nodo('recibe_cliente', 'tarea', 'Recibe la mercadería y firma la guía', 'Cliente o CD Arequipa', 9)
+    p.nodo('fin', 'fin', 'Entrega cerrada', 'Cliente o CD Arequipa', 10)
+    for a_, b_ in [('inicio', 'recibe'), ('recibe', 'guarda'), ('guarda', 'temperatura'), ('temperatura', 'rango')]:
+        p.flujo(a_, b_)
+    p.flujo('rango', 'avisa', 'Sí', salida='abajo')
+    p.flujo('rango', 'kardex', 'No')
+    for a_, b_ in [('avisa', 'kardex'), ('kardex', 'prepara'), ('prepara', 'despacha'),
+                   ('despacha', 'recibe_cliente'), ('recibe_cliente', 'fin')]:
+        p.flujo(a_, b_)
+    return p
+
+
 PROCESOS = {
     'as-is_venta_b2b': venta_b2b,
     'as-is_liquidacion_heladero': liquidacion_heladero,
     'as-is_compras_insumos': compra_insumos,
+    'as-is_produccion_calidad': produccion_calidad,
+    'as-is_recepcion_despacho_frio': recepcion_despacho_frio,
 }
 
 # ----------------------------------------------------------------------------- BPMN 2.0 XML

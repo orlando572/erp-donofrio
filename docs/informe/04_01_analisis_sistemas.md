@@ -34,15 +34,15 @@ Sistemas y herramientas que se asumen en uso, por área, y las brechas que justi
 
 ## 4.1.2 Procesos AS-IS (BPMN)
 
-Los diagramas se editan en **bpmn.io** (archivo `.bpmn`) y se exportan a PNG. Los tres primeros son de Evelyn (Sprint 1); los dos últimos son de Orlando. Se muestran los procesos **tal como se supone que funcionan hoy** (S7). Los TO-BE en Odoo se hacen en el Sprint 2.
+Los diagramas se editan en **bpmn.io** (archivo `.bpmn`) y se exportan a PNG. Los tres primeros son de Evelyn y los dos últimos de Orlando (Sprint 1). Se muestran los procesos **tal como se supone que funcionan hoy** (S7). Los TO-BE en Odoo se hacen en el Sprint 2.
 
 | # | Proceso AS-IS | Responsable | Archivo | Estado |
 |---|---|---|---|---|
 | 1 | Venta a cliente B2B (autoservicio o distribuidor) | Evelyn | [as-is_venta_b2b.png](../diagramas/bpmn/as-is_venta_b2b.png) · [.bpmn](../diagramas/bpmn/as-is_venta_b2b.bpmn) | Borrador S1 |
 | 2 | Liquidación diaria del heladero | Evelyn | [as-is_liquidacion_heladero.png](../diagramas/bpmn/as-is_liquidacion_heladero.png) · [.bpmn](../diagramas/bpmn/as-is_liquidacion_heladero.bpmn) | Borrador S1 |
 | 3 | Compra de insumos | Evelyn | [as-is_compras_insumos.png](../diagramas/bpmn/as-is_compras_insumos.png) · [.bpmn](../diagramas/bpmn/as-is_compras_insumos.bpmn) | Borrador S1 |
-| 4 | Producción y calidad | Orlando | Pendiente | S1 (Orlando) |
-| 5 | Recepción y despacho con cadena de frío | Orlando | Pendiente | S1 (Orlando) |
+| 4 | Producción y calidad | Orlando | [as-is_produccion_calidad.png](../diagramas/bpmn/as-is_produccion_calidad.png) · [.bpmn](../diagramas/bpmn/as-is_produccion_calidad.bpmn) | Borrador S1 |
+| 5 | Recepción y despacho con cadena de frío | Orlando | [as-is_recepcion_despacho_frio.png](../diagramas/bpmn/as-is_recepcion_despacho_frio.png) · [.bpmn](../diagramas/bpmn/as-is_recepcion_despacho_frio.bpmn) | Borrador S1 |
 
 ### 1. Venta a cliente B2B
 
@@ -61,5 +61,17 @@ El heladero recoge su carga con un vale de papel y sale a la ruta. Al volver, el
 ![BPMN AS-IS compra de insumos](../diagramas/bpmn/as-is_compras_insumos.png)
 
 El almacén detecta un faltante por revisión visual y lo pide por correo a Compras. Compras cotiza por teléfono y correo a varios proveedores y compara en Excel; la aprobación de la gerencia es una firma en papel. La orden se emite en Word, el proveedor entrega y el almacén recibe sin registrar lote ni vencimiento. Finanzas digita la factura del proveedor. Puntos débiles: sin reabastecimiento automático, recepción sin comparar con la orden y sin lote.
+
+### 4. Producción y calidad
+
+![BPMN AS-IS producción y calidad](../diagramas/bpmn/as-is_produccion_calidad.png)
+
+El jefe de producción programa la producción en Excel según la demanda del mes o de la campaña e imprime la orden con la fórmula. El almacén entrega los insumos con un vale de papel, sin registrar lote ni vencimiento. El operario produce siguiendo la fórmula impresa y anota a mano las temperaturas de cada etapa (por ejemplo, la pasteurización a 80-85 °C). Calidad inspecciona una muestra y llena un formato en papel; si el lote no cumple, se decide a criterio si se reprocesa o se descarta, sin dejar registro. Si cumple, el operario lo etiqueta con un código manual y el almacén lo registra en el kárdex de Excel. Puntos débiles: la receta no descuenta insumos del inventario, el lote no queda ligado a sus insumos ni a la inspección, y las decisiones sobre lotes no conformes no se registran (problemas 2 y 4 de la tabla 1).
+
+### 5. Recepción y despacho con cadena de frío
+
+![BPMN AS-IS recepción y despacho con cadena de frío](../diagramas/bpmn/as-is_recepcion_despacho_frio.png)
+
+El proveedor entrega los insumos y el almacén los recibe con la guía, sin registrar lote ni vencimiento. El producto se guarda en la cámara que corresponde y la temperatura se anota en una planilla de papel dos veces al día; si está fuera de rango, el problema se detecta tarde y se avisa por llamada al jefe. Las salidas y los saldos se llevan en un kárdex de Excel. Para despachar, el pedido se arma revisando las fechas a ojo, sin FEFO, y se entrega con guía en papel; la transferencia al CD Arequipa se coordina por teléfono. Puntos débiles: sin lote ni vencimiento en el sistema, sin historial de temperaturas por ubicación y sin alertas automáticas (problemas 2 y 3 de la tabla 1).
 
 > En los diagramas, las tareas en **rojo claro** marcan los puntos débiles de la situación actual. Siguen la notación BPMN 2.0 (carriles por rol, eventos de inicio y fin, tareas y compuertas exclusivas). Se generan con [`docs/diagramas/generar_bpmn.py`](../diagramas/generar_bpmn.py) para que el diseño sea reproducible y se pueden abrir y retocar en bpmn.io.
