@@ -47,3 +47,13 @@ Generadas el 23/11/2026; las consultas a PostgreSQL fueron de solo lectura y las
 |---|---|---|
 | `S3-informe5_evidencia_tests_y_dependencias.txt` | 5.4, 5.5 y 5.13 | `scripts/test.sh donofrio_base` (136 pruebas, 0 fallidas, 2 min 1 s) y la salida de `scripts/grafo_dependencias.py` (62 módulos en el árbol de `depends`, 122 con `auto_install`, comparación con una base real) |
 | `S3-informe5_evidencia_inyeccion_xss.txt` | 5.12 | Intento de inyección SQL en la búsqueda de contactos (0 filas y la tabla intacta) y de XSS en el parámetro `redirect` del login (sale escapado) |
+
+## Capturas de la sección 4.6 (Evelyn)
+
+Tomadas el 23/11/2026 en la BD `donofrio` con los datos de demostración. Son las pantallas reales que se comparan con los mockups en [`04_06_prototipos_web_y_reportes.md`](../../informe/04_06_prototipos_web_y_reportes.md).
+
+| Archivo | Qué muestra |
+|---|---|
+| `S3-4.6_pantalla_pedido_de_venta` | Pedido de venta S00437 (lista «Heladero», IGV 18 %, entrega y facturas ligadas) |
+| `S3-4.6_reporte_nota_de_entrega` | PDF de la nota de entrega AQP/OUT/00230, con el logo y los datos de la compañía |
+| `S3-4.6_reporte_orden_de_produccion` | PDF de la orden de producción WH/MO/00188 con sus operaciones y códigos de barras |
