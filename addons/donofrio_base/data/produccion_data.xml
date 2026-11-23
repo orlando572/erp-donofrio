@@ -25,47 +25,49 @@
         <field name="note" type="html"><p>Controles críticos (supuestos): fermentación a 28-30 °C por 8 h; horneado a 170-180 °C; enfriar hasta 25 °C antes de empacar.</p></field>
     </record>
 
-    <!-- Recetas -->
+    <!-- Recetas: cada lista de materiales es una tanda industrial (la receta de 100 paletas pasa a 10 000, etc.).
+         Así el costo de las horas de línea se reparte entre miles de unidades y el costo unitario del lote
+         queda por debajo del precio de venta. Los insumos por unidad no cambian. -->
     <record id="bom_pt_h01" model="mrp.bom">
         <field name="product_tmpl_id" ref="pt_h01"/>
-        <field name="product_qty">100</field>
+        <field name="product_qty">10000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="type">normal</field>
     </record>
     <record id="bom_pt_h01_l1" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_pulpa_fresa')).product_variant_id.id"/>
-        <field name="product_qty">4</field>
+        <field name="product_qty">400</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h01_l2" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
-        <field name="product_qty">3</field>
+        <field name="product_qty">300</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h01_l3" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_glucosa')).product_variant_id.id"/>
-        <field name="product_qty">1</field>
+        <field name="product_qty">100</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h01_l4" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_leche')).product_variant_id.id"/>
-        <field name="product_qty">10</field>
+        <field name="product_qty">1000</field>
         <field name="product_uom_id" ref="uom.product_uom_litre"/>
     </record>
     <record id="bom_pt_h01_l5" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_palito')).product_variant_id.id"/>
-        <field name="product_qty">100</field>
+        <field name="product_qty">10000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_h01_l6" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_envoltura')).product_variant_id.id"/>
-        <field name="product_qty">100</field>
+        <field name="product_qty">10000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_h01_op1" model="mrp.routing.workcenter">
@@ -99,50 +101,50 @@
 
     <record id="bom_pt_h03" model="mrp.bom">
         <field name="product_tmpl_id" ref="pt_h03"/>
-        <field name="product_qty">100</field>
+        <field name="product_qty">10000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="type">normal</field>
     </record>
     <record id="bom_pt_h03_l1" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h03"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_leche')).product_variant_id.id"/>
-        <field name="product_qty">12</field>
+        <field name="product_qty">1200</field>
         <field name="product_uom_id" ref="uom.product_uom_litre"/>
     </record>
     <record id="bom_pt_h03_l2" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h03"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_crema')).product_variant_id.id"/>
-        <field name="product_qty">2</field>
+        <field name="product_qty">200</field>
         <field name="product_uom_id" ref="uom.product_uom_litre"/>
     </record>
     <record id="bom_pt_h03_l3" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h03"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
-        <field name="product_qty">4</field>
+        <field name="product_qty">400</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h03_l4" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h03"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_cacao')).product_variant_id.id"/>
-        <field name="product_qty">2</field>
+        <field name="product_qty">200</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h03_l5" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h03"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_manteca_cacao')).product_variant_id.id"/>
-        <field name="product_qty">1</field>
+        <field name="product_qty">100</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h03_l6" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h03"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_palito')).product_variant_id.id"/>
-        <field name="product_qty">100</field>
+        <field name="product_qty">10000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_h03_l7" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h03"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_envoltura')).product_variant_id.id"/>
-        <field name="product_qty">100</field>
+        <field name="product_qty">10000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_h03_op1" model="mrp.routing.workcenter">
@@ -176,50 +178,50 @@
 
     <record id="bom_pt_h05" model="mrp.bom">
         <field name="product_tmpl_id" ref="pt_h05"/>
-        <field name="product_qty">100</field>
+        <field name="product_qty">10000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="type">normal</field>
     </record>
     <record id="bom_pt_h05_l1" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h05"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_leche')).product_variant_id.id"/>
-        <field name="product_qty">10</field>
+        <field name="product_qty">1000</field>
         <field name="product_uom_id" ref="uom.product_uom_litre"/>
     </record>
     <record id="bom_pt_h05_l2" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h05"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_crema')).product_variant_id.id"/>
-        <field name="product_qty">3</field>
+        <field name="product_qty">300</field>
         <field name="product_uom_id" ref="uom.product_uom_litre"/>
     </record>
     <record id="bom_pt_h05_l3" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h05"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
-        <field name="product_qty">4</field>
+        <field name="product_qty">400</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h05_l4" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h05"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_leche_polvo')).product_variant_id.id"/>
-        <field name="product_qty">1</field>
+        <field name="product_qty">100</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h05_l5" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h05"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_vainilla')).product_variant_id.id"/>
-        <field name="product_qty">0.2</field>
+        <field name="product_qty">20</field>
         <field name="product_uom_id" ref="uom.product_uom_litre"/>
     </record>
     <record id="bom_pt_h05_l6" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h05"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_cono')).product_variant_id.id"/>
-        <field name="product_qty">100</field>
+        <field name="product_qty">10000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_h05_l7" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h05"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_envoltura')).product_variant_id.id"/>
-        <field name="product_qty">100</field>
+        <field name="product_qty">10000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_h05_op1" model="mrp.routing.workcenter">
@@ -253,32 +255,32 @@
 
     <record id="bom_pt_h07" model="mrp.bom">
         <field name="product_tmpl_id" ref="pt_h07"/>
-        <field name="product_qty">100</field>
+        <field name="product_qty">10000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="type">normal</field>
     </record>
     <record id="bom_pt_h07_l1" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h07"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_leche')).product_variant_id.id"/>
-        <field name="product_qty">10</field>
+        <field name="product_qty">1000</field>
         <field name="product_uom_id" ref="uom.product_uom_litre"/>
     </record>
     <record id="bom_pt_h07_l2" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h07"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_pulpa_lucuma')).product_variant_id.id"/>
-        <field name="product_qty">5</field>
+        <field name="product_qty">500</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h07_l3" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h07"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
-        <field name="product_qty">4</field>
+        <field name="product_qty">400</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h07_l4" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h07"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_vaso')).product_variant_id.id"/>
-        <field name="product_qty">100</field>
+        <field name="product_qty">10000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_h07_op1" model="mrp.routing.workcenter">
@@ -312,50 +314,50 @@
 
     <record id="bom_pt_h10" model="mrp.bom">
         <field name="product_tmpl_id" ref="pt_h10"/>
-        <field name="product_qty">50</field>
+        <field name="product_qty">5000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="type">normal</field>
     </record>
     <record id="bom_pt_h10_l1" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h10"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_leche')).product_variant_id.id"/>
-        <field name="product_qty">25</field>
+        <field name="product_qty">2500</field>
         <field name="product_uom_id" ref="uom.product_uom_litre"/>
     </record>
     <record id="bom_pt_h10_l2" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h10"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_crema')).product_variant_id.id"/>
-        <field name="product_qty">6</field>
+        <field name="product_qty">600</field>
         <field name="product_uom_id" ref="uom.product_uom_litre"/>
     </record>
     <record id="bom_pt_h10_l3" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h10"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
-        <field name="product_qty">8</field>
+        <field name="product_qty">800</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h10_l4" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h10"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_leche_polvo')).product_variant_id.id"/>
-        <field name="product_qty">3</field>
+        <field name="product_qty">300</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h10_l5" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h10"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_glucosa')).product_variant_id.id"/>
-        <field name="product_qty">2</field>
+        <field name="product_qty">200</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h10_l6" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h10"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_vainilla')).product_variant_id.id"/>
-        <field name="product_qty">0.3</field>
+        <field name="product_qty">30</field>
         <field name="product_uom_id" ref="uom.product_uom_litre"/>
     </record>
     <record id="bom_pt_h10_l7" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h10"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_envase_1l')).product_variant_id.id"/>
-        <field name="product_qty">50</field>
+        <field name="product_qty">5000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_h10_op1" model="mrp.routing.workcenter">
@@ -389,44 +391,44 @@
 
     <record id="bom_pt_h11" model="mrp.bom">
         <field name="product_tmpl_id" ref="pt_h11"/>
-        <field name="product_qty">50</field>
+        <field name="product_qty">5000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="type">normal</field>
     </record>
     <record id="bom_pt_h11_l1" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h11"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_leche')).product_variant_id.id"/>
-        <field name="product_qty">25</field>
+        <field name="product_qty">2500</field>
         <field name="product_uom_id" ref="uom.product_uom_litre"/>
     </record>
     <record id="bom_pt_h11_l2" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h11"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_crema')).product_variant_id.id"/>
-        <field name="product_qty">6</field>
+        <field name="product_qty">600</field>
         <field name="product_uom_id" ref="uom.product_uom_litre"/>
     </record>
     <record id="bom_pt_h11_l3" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h11"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
-        <field name="product_qty">8</field>
+        <field name="product_qty">800</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h11_l4" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h11"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_cacao')).product_variant_id.id"/>
-        <field name="product_qty">4</field>
+        <field name="product_qty">400</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h11_l5" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h11"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_glucosa')).product_variant_id.id"/>
-        <field name="product_qty">2</field>
+        <field name="product_qty">200</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h11_l6" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h11"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_envase_1l')).product_variant_id.id"/>
-        <field name="product_qty">50</field>
+        <field name="product_qty">5000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_h11_op1" model="mrp.routing.workcenter">
@@ -460,38 +462,38 @@
 
     <record id="bom_pt_h12" model="mrp.bom">
         <field name="product_tmpl_id" ref="pt_h12"/>
-        <field name="product_qty">50</field>
+        <field name="product_qty">5000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="type">normal</field>
     </record>
     <record id="bom_pt_h12_l1" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h12"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_leche')).product_variant_id.id"/>
-        <field name="product_qty">22</field>
+        <field name="product_qty">2200</field>
         <field name="product_uom_id" ref="uom.product_uom_litre"/>
     </record>
     <record id="bom_pt_h12_l2" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h12"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_crema')).product_variant_id.id"/>
-        <field name="product_qty">5</field>
+        <field name="product_qty">500</field>
         <field name="product_uom_id" ref="uom.product_uom_litre"/>
     </record>
     <record id="bom_pt_h12_l3" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h12"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_pulpa_lucuma')).product_variant_id.id"/>
-        <field name="product_qty">12</field>
+        <field name="product_qty">1200</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h12_l4" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h12"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
-        <field name="product_qty">6</field>
+        <field name="product_qty">600</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_h12_l5" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_h12"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_envase_1l')).product_variant_id.id"/>
-        <field name="product_qty">50</field>
+        <field name="product_qty">5000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_h12_op1" model="mrp.routing.workcenter">
@@ -525,44 +527,44 @@
 
     <record id="bom_pt_c01" model="mrp.bom">
         <field name="product_tmpl_id" ref="pt_c01"/>
-        <field name="product_qty">200</field>
+        <field name="product_qty">20000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="type">normal</field>
     </record>
     <record id="bom_pt_c01_l1" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_c01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_cacao')).product_variant_id.id"/>
-        <field name="product_qty">2.5</field>
+        <field name="product_qty">250</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_c01_l2" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_c01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_manteca_cacao')).product_variant_id.id"/>
-        <field name="product_qty">1.5</field>
+        <field name="product_qty">150</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_c01_l3" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_c01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
-        <field name="product_qty">2.0</field>
+        <field name="product_qty">200</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_c01_l4" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_c01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_leche_polvo')).product_variant_id.id"/>
-        <field name="product_qty">1.2</field>
+        <field name="product_qty">120</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_c01_l5" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_c01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_mani')).product_variant_id.id"/>
-        <field name="product_qty">1.5</field>
+        <field name="product_qty">150</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_c01_l6" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_c01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_envoltura')).product_variant_id.id"/>
-        <field name="product_qty">200</field>
+        <field name="product_qty">20000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_c01_op1" model="mrp.routing.workcenter">
@@ -589,38 +591,38 @@
 
     <record id="bom_pt_c02" model="mrp.bom">
         <field name="product_tmpl_id" ref="pt_c02"/>
-        <field name="product_qty">200</field>
+        <field name="product_qty">20000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="type">normal</field>
     </record>
     <record id="bom_pt_c02_l1" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_c02"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_cacao')).product_variant_id.id"/>
-        <field name="product_qty">2.0</field>
+        <field name="product_qty">200</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_c02_l2" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_c02"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_manteca_cacao')).product_variant_id.id"/>
-        <field name="product_qty">1.4</field>
+        <field name="product_qty">140</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_c02_l3" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_c02"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
-        <field name="product_qty">1.8</field>
+        <field name="product_qty">180</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_c02_l4" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_c02"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_leche_polvo')).product_variant_id.id"/>
-        <field name="product_qty">1.0</field>
+        <field name="product_qty">100</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_c02_l5" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_c02"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_envoltura')).product_variant_id.id"/>
-        <field name="product_qty">200</field>
+        <field name="product_qty">20000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_c02_op1" model="mrp.routing.workcenter">
@@ -647,32 +649,32 @@
 
     <record id="bom_pt_c03" model="mrp.bom">
         <field name="product_tmpl_id" ref="pt_c03"/>
-        <field name="product_qty">100</field>
+        <field name="product_qty">10000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="type">normal</field>
     </record>
     <record id="bom_pt_c03_l1" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_c03"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_cacao')).product_variant_id.id"/>
-        <field name="product_qty">2.0</field>
+        <field name="product_qty">200</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_c03_l2" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_c03"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_manteca_cacao')).product_variant_id.id"/>
-        <field name="product_qty">1.0</field>
+        <field name="product_qty">100</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_c03_l3" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_c03"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
-        <field name="product_qty">1.2</field>
+        <field name="product_qty">120</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_c03_l4" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_c03"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_envoltura')).product_variant_id.id"/>
-        <field name="product_qty">100</field>
+        <field name="product_qty">10000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_c03_op1" model="mrp.routing.workcenter">
@@ -699,50 +701,50 @@
 
     <record id="bom_pt_p01" model="mrp.bom">
         <field name="product_tmpl_id" ref="pt_p01"/>
-        <field name="product_qty">50</field>
+        <field name="product_qty">5000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="type">normal</field>
     </record>
     <record id="bom_pt_p01_l1" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_p01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_harina')).product_variant_id.id"/>
-        <field name="product_qty">25</field>
+        <field name="product_qty">2500</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_p01_l2" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_p01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
-        <field name="product_qty">6</field>
+        <field name="product_qty">600</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_p01_l3" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_p01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_huevos')).product_variant_id.id"/>
-        <field name="product_qty">150</field>
+        <field name="product_qty">15000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_p01_l4" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_p01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_mantequilla')).product_variant_id.id"/>
-        <field name="product_qty">6</field>
+        <field name="product_qty">600</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_p01_l5" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_p01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_frutas_confitadas')).product_variant_id.id"/>
-        <field name="product_qty">7</field>
+        <field name="product_qty">700</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_p01_l6" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_p01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_pasas')).product_variant_id.id"/>
-        <field name="product_qty">3</field>
+        <field name="product_qty">300</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_p01_l7" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_p01"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_caja_paneton')).product_variant_id.id"/>
-        <field name="product_qty">50</field>
+        <field name="product_qty">5000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_p01_op1" model="mrp.routing.workcenter">
@@ -783,50 +785,50 @@
 
     <record id="bom_pt_p02" model="mrp.bom">
         <field name="product_tmpl_id" ref="pt_p02"/>
-        <field name="product_qty">50</field>
+        <field name="product_qty">5000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="type">normal</field>
     </record>
     <record id="bom_pt_p02_l1" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_p02"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_harina')).product_variant_id.id"/>
-        <field name="product_qty">25</field>
+        <field name="product_qty">2500</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_p02_l2" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_p02"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_azucar')).product_variant_id.id"/>
-        <field name="product_qty">6</field>
+        <field name="product_qty">600</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_p02_l3" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_p02"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_huevos')).product_variant_id.id"/>
-        <field name="product_qty">200</field>
+        <field name="product_qty">20000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_p02_l4" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_p02"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_mantequilla')).product_variant_id.id"/>
-        <field name="product_qty">9</field>
+        <field name="product_qty">900</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_p02_l5" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_p02"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_frutas_confitadas')).product_variant_id.id"/>
-        <field name="product_qty">9</field>
+        <field name="product_qty">900</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_p02_l6" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_p02"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_pasas')).product_variant_id.id"/>
-        <field name="product_qty">5</field>
+        <field name="product_qty">500</field>
         <field name="product_uom_id" ref="uom.product_uom_kgm"/>
     </record>
     <record id="bom_pt_p02_l7" model="mrp.bom.line">
         <field name="bom_id" ref="bom_pt_p02"/>
         <field name="product_id" model="product.template" eval="obj(ref('in_caja_paneton')).product_variant_id.id"/>
-        <field name="product_qty">50</field>
+        <field name="product_qty">5000</field>
         <field name="product_uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="bom_pt_p02_op1" model="mrp.routing.workcenter">
