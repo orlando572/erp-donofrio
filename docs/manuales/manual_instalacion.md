@@ -155,6 +155,10 @@ Qué protege (todo por código, ver `docker/nginx/` y `donofrio_base`):
 
 Los usuarios de prueba (`DONOFRIO_USER_PASSWORD`) tienen 18 caracteres y cumplen la política. Si tu `.env` tiene una más corta, la instalación de `donofrio_base` fallará: usa 12 o más.
 
+### 6.3 Pruebas de carga y de seguridad (opcional)
+
+Con el despliegue protegido levantado (§6.2) y la base con datos de demostración (§4.5): `scripts/perf/k6.sh` (20 usuarios virtuales con k6, umbral de RNF002: p95 < 2 s) y `scripts/perf/zap.sh` (OWASP ZAP baseline, sin alertas altas). Cómo se leen los reportes y qué resultados dieron: [docs/dev/pruebas_no_funcionales.md](../dev/pruebas_no_funcionales.md).
+
 ## 7. Actualizar, reiniciar y desinstalar
 
 | Quiero… | Comando |

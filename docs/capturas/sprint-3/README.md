@@ -28,3 +28,13 @@ Tomadas el 23/11/2026 en la BD `donofrio`, con los cinco tickets de ejemplo de l
 |---|---|---|
 | `HU-32_mesa_servicios_kanban` | HU-32 | Tablero Kanban de la mesa con las etapas Nuevo, En análisis, En atención, Resuelto y Cerrado (plegada); tickets abiertos con su tipo ITIL, prioridad en estrellas y fecha límite del SLA |
 | `HU-32_pivote_cumplimiento_sla` | HU-32 | Vista guardada «Cumplimiento del SLA por tipo de ticket»: 5 tickets por tipo (Incidente, Solicitud de servicio y Solicitud de acceso) y por estado del SLA (abierto, cumplido, incumplido) |
+
+## Evidencias de HU-28 (Orlando): k6 y ZAP
+
+Corridas del 23/11/2026 sobre el despliegue protegido (`scripts/levantar_prod.sh`) y una base con los datos completos de `scripts/cargar_transacciones.py`. Cómo repetirlas y qué significan: [docs/dev/pruebas_no_funcionales.md](../../dev/pruebas_no_funcionales.md).
+
+| Archivo | HU | Qué muestra |
+|---|---|---|
+| `HU-28_evidencia_k6_zap.txt` | HU-28 | Salida real de `verificar_despliegue.sh`, de k6 (normal y de esfuerzo, con `docker stats`) y de ZAP antes y después, con el volumen de datos |
+| `HU-28_k6_resumen.json`, `HU-28_k6_esfuerzo_resumen.json` | HU-28 | Resumen de métricas de k6 (`--summary-export`) de la prueba normal y de la de esfuerzo |
+| `HU-28_zap_reporte.html`, `HU-28_zap_reporte.json` | HU-28 | Reporte de ZAP baseline final: 0 alertas altas; las medias y bajas están aceptadas con su motivo en `scripts/perf/zap-reglas.conf` |

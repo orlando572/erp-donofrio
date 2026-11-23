@@ -1,0 +1,484 @@
+# HU-28 (parte de Orlando): evidencias de la prueba de carga (k6) y del análisis de seguridad (ZAP baseline)
+# Generado el 23/11/2026 16:46 sobre el despliegue protegido (scripts/levantar_prod.sh: Nginx + TLS, Odoo con workers=2 y proxy_mode).
+# Todo sale de corridas reales; las contraseñas no aparecen (k6 las toma de DONOFRIO_USER_PASSWORD del .env).
+
+## Equipo y datos con los que se midió
+Equipo: 12 CPU lógicas, 14 GB de RAM, Docker 29.1.3, contenedores sin límites de CPU ni de memoria
+Base medida: 'donofrio_perf' = donofrio_base + scripts/cargar_transacciones.py completo (16 semanas, 3/8 al 22/11/2026); tamaño 143 MB
+pedidos de venta (sale_order): 437
+líneas de pedido: 1454
+pedidos del PdV (pos_order): 939
+transferencias (stock_picking): 1647
+movimientos de stock (stock_move): 6063
+lotes (stock_lot): 488
+asientos y facturas (account_move): 3369
+órdenes de producción (mrp_production): 188
+órdenes de compra (purchase_order): 101
+contactos (res_partner): 63
+productos (product_template): 48
+
+## Imágenes fijadas
+k6:  grafana/k6:1.7.1          ZAP: ghcr.io/zaproxy/zaproxy:2.17.0          Nginx: nginx version: nginx/1.30.7
+
+## 1) scripts/verificar_despliegue.sh tras los cambios de docker/nginx/ (CSP, Permissions-Policy, COOP y cookies Secure/SameSite)
+1) HTTP redirige a HTTPS
+  OK    80 → 443 (301)
+2) Versiones de TLS
+  OK    acepta TLS 1.2
+  OK    acepta TLS 1.3
+  OK    rechaza TLS 1.1 y menores
+3) Cabeceras de seguridad en el login (cada una una sola vez)
+  OK    Strict-Transport-Security: max-age=31536000
+  OK    X-Content-Type-Options: nosniff
+  OK    X-Frame-Options: SAMEORIGIN
+  OK    Referrer-Policy: strict-origin-when-cross-origin
+  OK    Server sin versión (server: nginx)
+4) El gestor de bases de datos no se publica
+  OK    /web/database/manager → 404
+  OK    /web/database/create → 404
+5) Compresión, caché de assets y websocket
+  OK    gzip en el login
+  OK    assets con Cache-Control de un año (/web/assets/6f9f281/web.assets_frontend.min.css)
+  OK    assets comprimidos
+  OK    /websocket se actualiza a 101 (puerto 8072)
+6) Odoo en modo producción
+  OK    odoo.conf: workers = 2
+  OK    odoo.conf: proxy_mode = True
+  OK    odoo.conf: list_db = False
+  OK    admin_passwd de 16 o más caracteres, no la de ejemplo
+  OK    Odoo se niega a arrancar en producción con la contraseña de ejemplo
+7) Bloqueo por intentos fallidos (base.login_cooldown_*)
+  umbral 5 fallos, 2 workers: se hacen 12 intentos
+  OK    de 12 intentos fallidos seguidos, 2 se rechazaron por bloqueo ("Too many login failures")
+  OK    el bloqueo quedó en el registro de Odoo (Login attempt ignored)
+
+Despliegue protegido verificado: todas las comprobaciones pasaron.
+
+## 2) k6 normal: scripts/perf/k6.sh  (20 usuarios virtuales: 20 s de subida, 3 min con los 20 activos, 10 s de bajada; pausas de 1 a 3 s)
+
+
+  █ THRESHOLDS 
+
+    checks
+    ✓ 'rate>0.99' rate=100.00%
+
+    errores_rpc
+    ✓ 'rate<0.01' rate=0.00%
+
+    http_req_duration{tipo:app}
+    ✓ 'p(95)<2000' p(95)=17.78ms
+
+    http_req_duration{tipo:formulario}
+    ✓ 'p(95)<2000' p(95)=9.09ms
+
+    http_req_duration{tipo:lista}
+    ✓ 'p(95)<2000' p(95)=11.58ms
+
+    http_req_duration{tipo:login}
+    ✓ 'p(95)<2000' p(95)=341.8ms
+
+    http_req_duration{tipo:tablero}
+    ✓ 'p(95)<2000' p(95)=13.03ms
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 2765    12.485485/s
+    checks_succeeded...: 100.00% 2765 out of 2765
+    checks_failed......: 0.00%   0 out of 2765
+
+    ✓ inicio de sesión correcto
+    ✓ la app carga (200)
+    ✓ menús (200)
+    ✓ sale.order web_search_read: respuesta correcta
+    ✓ stock.picking web_search_read: respuesta correcta
+    ✓ res.partner web_search_read: respuesta correcta
+    ✓ account.move web_search_read: respuesta correcta
+    ✓ product.template web_search_read: respuesta correcta
+    ✓ stock.lot web_search_read: respuesta correcta
+    ✓ sale.order web_read: respuesta correcta
+    ✓ mrp.production web_search_read: respuesta correcta
+    ✓ sale.report web_read_group: respuesta correcta
+    ✓ stock.picking web_read: respuesta correcta
+    ✓ stock.lot web_read_group: respuesta correcta
+
+    CUSTOM
+    errores_rpc....................: 0.00%   0 out of 2101
+
+    HTTP
+    http_req_duration..............: min=2.04ms   med=7.87ms   avg=10.81ms  p(90)=15.88ms p(95)=16.69ms p(99)=20.97ms  max=346.38ms
+      { expected_response:true }...: min=2.04ms   med=7.87ms   avg=10.81ms  p(90)=15.88ms p(95)=16.69ms p(99)=20.97ms  max=346.38ms
+      { tipo:app }.................: min=2.04ms   med=10.11ms  avg=9.61ms   p(90)=17.21ms p(95)=17.78ms p(99)=20.97ms  max=29.99ms 
+      { tipo:formulario }..........: min=5.77ms   med=7.53ms   avg=7.6ms    p(90)=8.5ms   p(95)=9.09ms  p(99)=11.39ms  max=12.62ms 
+      { tipo:lista }...............: min=3.83ms   med=7.81ms   avg=7.94ms   p(90)=10.97ms p(95)=11.58ms p(99)=13.33ms  max=22.08ms 
+      { tipo:login }...............: min=324.44ms med=329.77ms avg=331.63ms p(90)=337.1ms p(95)=341.8ms p(99)=345.46ms max=346.38ms
+      { tipo:tablero }.............: min=4.8ms    med=9.26ms   avg=9.35ms   p(90)=12.52ms p(95)=13.03ms p(99)=14.06ms  max=17.31ms 
+    http_req_failed................: 0.00%   0 out of 2765
+    http_reqs......................: 2765    12.485485/s
+
+    EXECUTION
+    iteration_duration.............: min=8.29s    med=12.03s   avg=12.06s   p(90)=14.06s  p(95)=14.81s  p(99)=15.9s    max=16.77s  
+    iterations.....................: 332     1.499161/s
+    vus............................: 1       min=0         max=20
+    vus_max........................: 20      min=20        max=20
+
+    NETWORK
+    data_received..................: 28 MB   127 kB/s
+    data_sent......................: 1000 kB 4.5 kB/s
+
+
+
+
+## 2b) CPU y memoria de los contenedores durante la prueba normal (docker stats cada 10 s)
+# 16:39:56
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         32.51%    438.5MiB / 14.31GiB
+erp-donofrio-nginx-1        0.00%     16.73MiB / 14.31GiB
+erp-donofrio-db-1           6.06%     194.7MiB / 14.31GiB
+# 16:40:08
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         39.00%    439.5MiB / 14.31GiB
+erp-donofrio-nginx-1        0.67%     18.43MiB / 14.31GiB
+erp-donofrio-db-1           4.02%     193.6MiB / 14.31GiB
+# 16:40:20
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         11.15%    440MiB / 14.31GiB
+erp-donofrio-nginx-1        0.82%     18.44MiB / 14.31GiB
+erp-donofrio-db-1           4.58%     194.1MiB / 14.31GiB
+# 16:40:32
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         8.81%     440.1MiB / 14.31GiB
+erp-donofrio-nginx-1        0.67%     18.84MiB / 14.31GiB
+erp-donofrio-db-1           9.08%     195.3MiB / 14.31GiB
+# 16:40:44
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         10.83%    440MiB / 14.31GiB
+erp-donofrio-nginx-1        0.60%     18.37MiB / 14.31GiB
+erp-donofrio-db-1           4.17%     195.3MiB / 14.31GiB
+# 16:40:56
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         11.18%    439.4MiB / 14.31GiB
+erp-donofrio-nginx-1        0.78%     18.45MiB / 14.31GiB
+erp-donofrio-db-1           4.41%     194.1MiB / 14.31GiB
+# 16:41:08
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         7.27%     439.1MiB / 14.31GiB
+erp-donofrio-nginx-1        0.52%     18.25MiB / 14.31GiB
+erp-donofrio-db-1           3.94%     193.6MiB / 14.31GiB
+# 16:41:20
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         10.49%    439.8MiB / 14.31GiB
+erp-donofrio-nginx-1        0.73%     18.75MiB / 14.31GiB
+erp-donofrio-db-1           3.68%     194.7MiB / 14.31GiB
+# 16:41:32
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         8.54%     439.2MiB / 14.31GiB
+erp-donofrio-nginx-1        0.63%     17.79MiB / 14.31GiB
+erp-donofrio-db-1           7.87%     194.8MiB / 14.31GiB
+# 16:41:44
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         12.12%    440.1MiB / 14.31GiB
+erp-donofrio-nginx-1        0.66%     18.75MiB / 14.31GiB
+erp-donofrio-db-1           3.98%     194.5MiB / 14.31GiB
+# 16:41:56
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         9.40%     439.4MiB / 14.31GiB
+erp-donofrio-nginx-1        0.65%     18.5MiB / 14.31GiB
+erp-donofrio-db-1           3.77%     194.1MiB / 14.31GiB
+# 16:42:08
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         8.72%     439.7MiB / 14.31GiB
+erp-donofrio-nginx-1        0.77%     18.03MiB / 14.31GiB
+erp-donofrio-db-1           3.59%     194.5MiB / 14.31GiB
+# 16:42:20
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         8.51%     440.2MiB / 14.31GiB
+erp-donofrio-nginx-1        0.65%     18.52MiB / 14.31GiB
+erp-donofrio-db-1           3.72%     195MiB / 14.31GiB
+# 16:42:32
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         12.50%    439.7MiB / 14.31GiB
+erp-donofrio-nginx-1        0.57%     18.23MiB / 14.31GiB
+erp-donofrio-db-1           8.54%     194.4MiB / 14.31GiB
+# 16:42:45
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         7.10%     440.1MiB / 14.31GiB
+erp-donofrio-nginx-1        0.32%     18.29MiB / 14.31GiB
+erp-donofrio-db-1           2.27%     193.8MiB / 14.31GiB
+# 16:42:57
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         11.24%    440MiB / 14.31GiB
+erp-donofrio-nginx-1        0.67%     18.27MiB / 14.31GiB
+erp-donofrio-db-1           4.27%     194.6MiB / 14.31GiB
+# 16:43:09
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         10.58%    440.3MiB / 14.31GiB
+erp-donofrio-nginx-1        0.70%     18.04MiB / 14.31GiB
+erp-donofrio-db-1           4.42%     194.7MiB / 14.31GiB
+# 16:43:21
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         6.26%     440.1MiB / 14.31GiB
+erp-donofrio-nginx-1        0.51%     18.04MiB / 14.31GiB
+erp-donofrio-db-1           3.33%     195.4MiB / 14.31GiB
+# 16:43:33
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         0.60%     440.1MiB / 14.31GiB
+erp-donofrio-nginx-1        0.06%     18.02MiB / 14.31GiB
+erp-donofrio-db-1           1.19%     194.5MiB / 14.31GiB
+
+## 3) k6 de esfuerzo: PAUSA=0 DURACION=1m scripts/perf/k6.sh  (los mismos 20 usuarios sin pausas: ritmo 20 veces mayor que el de una persona)
+
+
+  █ THRESHOLDS 
+
+    checks
+    ✓ 'rate>0.99' rate=99.99%
+
+    errores_rpc
+    ✓ 'rate<0.01' rate=0.00%
+
+    http_req_duration{tipo:app}
+    ✓ 'p(95)<2000' p(95)=103.01ms
+
+    http_req_duration{tipo:formulario}
+    ✓ 'p(95)<2000' p(95)=100.13ms
+
+    http_req_duration{tipo:lista}
+    ✓ 'p(95)<2000' p(95)=98.69ms
+
+    http_req_duration{tipo:login}
+    ✓ 'p(95)<2000' p(95)=565.89ms
+
+    http_req_duration{tipo:tablero}
+    ✓ 'p(95)<2000' p(95)=101.3ms
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 20888  231.988989/s
+    checks_succeeded...: 99.99% 20887 out of 20888
+    checks_failed......: 0.00%  1 out of 20888
+
+    ✓ inicio de sesión correcto
+    ✓ la app carga (200)
+    ✗ menús (200)
+      ↳  99% — ✓ 2515 / ✗ 1
+    ✓ sale.order web_search_read: respuesta correcta
+    ✓ res.partner web_search_read: respuesta correcta
+    ✓ product.template web_search_read: respuesta correcta
+    ✓ sale.order web_read: respuesta correcta
+    ✓ sale.report web_read_group: respuesta correcta
+    ✓ stock.picking web_search_read: respuesta correcta
+    ✓ stock.lot web_search_read: respuesta correcta
+    ✓ mrp.production web_search_read: respuesta correcta
+    ✓ stock.picking web_read: respuesta correcta
+    ✓ stock.lot web_read_group: respuesta correcta
+    ✓ account.move web_search_read: respuesta correcta
+
+    CUSTOM
+    errores_rpc....................: 0.00%  0 out of 15856
+
+    HTTP
+    http_req_duration..............: min=2.13ms   med=71.92ms  avg=71.46ms  p(90)=92.91ms  p(95)=100.64ms p(99)=123.66ms max=30s    
+      { expected_response:true }...: min=2.13ms   med=71.92ms  avg=70.03ms  p(90)=92.9ms   p(95)=100.63ms p(99)=123.57ms max=7.27s  
+      { tipo:app }.................: min=2.13ms   med=73.18ms  avg=77.33ms  p(90)=95.95ms  p(95)=103.01ms p(99)=125.18ms max=30s    
+      { tipo:formulario }..........: min=5.95ms   med=72.41ms  avg=68ms     p(90)=92.15ms  p(95)=100.13ms p(99)=120.74ms max=166.3ms
+      { tipo:lista }...............: min=3.7ms    med=71.19ms  avg=69.31ms  p(90)=90.85ms  p(95)=98.69ms  p(99)=120.91ms max=7.27s  
+      { tipo:login }...............: min=321.42ms med=355.65ms avg=511.16ms p(90)=384.01ms p(95)=565.89ms p(99)=2.89s    max=3.47s  
+      { tipo:tablero }.............: min=4.6ms    med=72.53ms  avg=68.96ms  p(90)=93.47ms  p(95)=101.3ms  p(99)=118.66ms max=2.11s  
+    http_req_failed................: 0.00%  1 out of 20888
+    http_reqs......................: 20888  231.988989/s
+
+    EXECUTION
+    iteration_duration.............: min=56.99ms  med=610.37ms avg=595.63ms p(90)=727.71ms p(95)=771.63ms p(99)=952.19ms max=30.58s 
+    iterations.....................: 2516   27.943522/s
+    vus............................: 1      min=0          max=20
+    vus_max........................: 20     min=20         max=20
+
+    NETWORK
+    data_received..................: 212 MB 2.4 MB/s
+    data_sent......................: 7.3 MB 81 kB/s
+
+
+
+
+## 3b) CPU y memoria durante la prueba de esfuerzo
+# 16:43:42
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         73.27%    439.9MiB / 14.31GiB
+erp-donofrio-nginx-1        2.75%     18.45MiB / 14.31GiB
+erp-donofrio-db-1           0.00%     193.7MiB / 14.31GiB
+# 16:43:54
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         159.84%   441.3MiB / 14.31GiB
+erp-donofrio-nginx-1        7.49%     20.39MiB / 14.31GiB
+erp-donofrio-db-1           46.56%    193.8MiB / 14.31GiB
+# 16:44:06
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         152.13%   441.3MiB / 14.31GiB
+erp-donofrio-nginx-1        8.38%     21.37MiB / 14.31GiB
+erp-donofrio-db-1           55.16%    194.9MiB / 14.31GiB
+# 16:44:18
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         151.38%   441.1MiB / 14.31GiB
+erp-donofrio-nginx-1        8.23%     21.83MiB / 14.31GiB
+erp-donofrio-db-1           56.96%    200.7MiB / 14.31GiB
+# 16:44:30
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         152.90%   512.8MiB / 14.31GiB
+erp-donofrio-nginx-1        8.45%     23.35MiB / 14.31GiB
+erp-donofrio-db-1           53.75%    195.3MiB / 14.31GiB
+# 16:44:42
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         146.74%   512.9MiB / 14.31GiB
+erp-donofrio-nginx-1        66.54%    23.16MiB / 14.31GiB
+erp-donofrio-db-1           52.31%    193.9MiB / 14.31GiB
+# 16:44:54
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         149.82%   513.3MiB / 14.31GiB
+erp-donofrio-nginx-1        7.64%     23.15MiB / 14.31GiB
+erp-donofrio-db-1           57.09%    195MiB / 14.31GiB
+# 16:45:06
+NAME                        CPU %     MEM USAGE / LIMIT
+erp-donofrio-odoo-1         152.27%   512.9MiB / 14.31GiB
+erp-donofrio-nginx-1        8.43%     24.34MiB / 14.31GiB
+erp-donofrio-db-1           53.24%    194.7MiB / 14.31GiB
+
+## 4) ZAP baseline ANTES de corregir Nginx y sin reglas aceptadas (primera corrida)
+## 4) ZAP baseline ANTES de corregir Nginx y sin reglas aceptadas (primera corrida, zap-reglas.conf vacío)
+Alertas por nivel:  Alto 0 · Medio 6 · Bajo 7 · Informativo 8
+  Medio        10098  Cross-Domain Misconfiguration (2 instancias)
+  Medio        10055  CSP: style-src unsafe-inline (3 instancias)
+  Medio        10055  CSP: script-src unsafe-inline (3 instancias)
+  Medio        10055  CSP: Wildcard Directive (3 instancias)
+  Medio        10055  CSP: Failure to Define Directive with No Fallback (3 instancias)
+  Medio        10038  Content Security Policy (CSP) Header Not Set (3 instancias)
+  Bajo         90004  Cross-Origin-Resource-Policy Header Missing or Invalid (5 instancias)
+  Bajo         90004  Cross-Origin-Opener-Policy Header Missing or Invalid (3 instancias)
+  Bajo         90004  Cross-Origin-Embedder-Policy Header Missing or Invalid (3 instancias)
+  Bajo         10063  Permissions Policy Header Not Set (5 instancias)
+  Bajo         10054  Cookie without SameSite Attribute (5 instancias)
+  Bajo         10011  Cookie Without Secure Flag (5 instancias)
+  Bajo         10010  Cookie No HttpOnly Flag (5 instancias)
+  Informativo  10112  Session Management Response Identified (5 instancias)
+  Informativo  10111  Authentication Request Identified (1 instancias)
+  Informativo  10109  Modern Web Application (5 instancias)
+  Informativo  10049  Storable but Non-Cacheable Content (2 instancias)
+  Informativo  10049  Storable and Cacheable Content (4 instancias)
+  Informativo  10049  Non-Storable Content (5 instancias)
+  Informativo  10031  User Controllable HTML Element Attribute (Potential XSS) (10 instancias)
+  Informativo  10015  Re-examine Cache-control Directives (5 instancias)
+FAIL-NEW: 0
+
+## 5) ZAP baseline DESPUÉS: Nginx corregido + scripts/perf/zap-reglas.conf  (scripts/perf/zap.sh; reporte completo en HU-28_zap_reporte.html y .json)
+PASS: Vulnerable JS Library (Powered by Retire.js) [10003]
+PASS: In Page Banner Information Leak [10009]
+PASS: Cookie Without Secure Flag [10011]
+PASS: Cross-Domain JavaScript Source File Inclusion [10017]
+PASS: Content-Type Header Missing [10019]
+PASS: Anti-clickjacking Header [10020]
+PASS: X-Content-Type-Options Header Missing [10021]
+PASS: Information Disclosure - Debug Error Messages [10023]
+PASS: Information Disclosure - Sensitive Information in URL [10024]
+PASS: Information Disclosure - Sensitive Information in HTTP Referrer Header [10025]
+PASS: HTTP Parameter Override [10026]
+PASS: Information Disclosure - Suspicious Comments [10027]
+PASS: Off-site Redirect [10028]
+PASS: Cookie Poisoning [10029]
+PASS: User Controllable Charset [10030]
+PASS: Viewstate [10032]
+PASS: Directory Browsing [10033]
+PASS: Heartbleed OpenSSL Vulnerability (Indicative) [10034]
+PASS: Strict-Transport-Security Header [10035]
+PASS: HTTP Server Response Header [10036]
+PASS: Server Leaks Information via "X-Powered-By" HTTP Response Header Field(s) [10037]
+PASS: Content Security Policy (CSP) Header Not Set [10038]
+PASS: X-Backend-Server Header Information Leak [10039]
+PASS: Secure Pages Include Mixed Content [10040]
+PASS: HTTP to HTTPS Insecure Transition in Form Post [10041]
+PASS: HTTPS to HTTP Insecure Transition in Form Post [10042]
+PASS: User Controllable JavaScript Event (XSS) [10043]
+PASS: Big Redirect Detected (Potential Sensitive Information Leak) [10044]
+PASS: Retrieved from Cache [10050]
+PASS: X-ChromeLogger-Data (XCOLD) Header Information Leak [10052]
+PASS: Cookie without SameSite Attribute [10054]
+PASS: X-Debug-Token Information Leak [10056]
+PASS: Username Hash Found [10057]
+PASS: X-AspNet-Version Response Header [10061]
+PASS: PII Disclosure [10062]
+PASS: Permissions Policy Header Not Set [10063]
+PASS: Timestamp Disclosure [10096]
+PASS: Hash Disclosure [10097]
+PASS: Source Code Disclosure [10099]
+PASS: Weak Authentication Method [10105]
+PASS: Reverse Tabnabbing [10108]
+PASS: Dangerous JS Functions [10110]
+PASS: Verification Request Identified [10113]
+PASS: Script Served From Malicious Domain (polyfill) [10115]
+PASS: ZAP is Out of Date [10116]
+PASS: Absence of Anti-CSRF Tokens [10202]
+PASS: Private IP Disclosure [2]
+PASS: Server Side Technology Version with Known Vulnerabilities [20020]
+PASS: Session ID in URL Rewrite [3]
+PASS: Script Passive Scan Rules [50001]
+PASS: Stats Passive Scan Rule [50003]
+PASS: Insecure JSF ViewState [90001]
+PASS: Java Serialization Object [90002]
+PASS: Sub Resource Integrity Attribute Missing [90003]
+PASS: Charset Mismatch [90011]
+PASS: Application Error Disclosure [90022]
+PASS: WSDL File Detection [90030]
+PASS: Loosely Scoped Cookie [90033]
+IGNORE: Cookie No HttpOnly Flag [10010] x 5 
+IGNORE: Re-examine Cache-control Directives [10015] x 5 
+IGNORE: User Controllable HTML Element Attribute (Potential XSS) [10031] x 6 
+IGNORE: Non-Storable Content [10049] x 9 
+IGNORE: CSP: script-src unsafe-eval [10055] x 15 
+IGNORE: Cross-Domain Misconfiguration [10098] x 2 
+IGNORE: Modern Web Application [10109] x 5 
+IGNORE: Authentication Request Identified [10111] x 1 
+IGNORE: Session Management Response Identified [10112] x 6 
+IGNORE: Cross-Origin-Embedder-Policy Header Missing or Invalid [90004] x 8 
+FAIL-NEW: 0	FAIL-INPROG: 0	WARN-NEW: 0	WARN-INPROG: 0	INFO: 0	IGNORE: 10	PASS: 58
+zap-baseline terminó con código 0 (0 limpio, 1 FAIL, 2 avisos, 3 error de ejecución)
+Alertas por nivel:  Alto 0 · Medio 4 · Bajo 3 · Informativo 8
+  Medio        10098  Cross-Domain Misconfiguration (2 instancias)
+  Medio        10055  CSP: style-src unsafe-inline (5 instancias)
+  Medio        10055  CSP: script-src unsafe-inline (5 instancias)
+  Medio        10055  CSP: script-src unsafe-eval (5 instancias)
+  Bajo         90004  Cross-Origin-Resource-Policy Header Missing or Invalid (5 instancias)
+  Bajo         90004  Cross-Origin-Embedder-Policy Header Missing or Invalid (3 instancias)
+  Bajo         10010  Cookie No HttpOnly Flag (5 instancias)
+  Informativo  10112  Session Management Response Identified (6 instancias)
+  Informativo  10111  Authentication Request Identified (1 instancias)
+  Informativo  10109  Modern Web Application (5 instancias)
+  Informativo  10049  Storable but Non-Cacheable Content (3 instancias)
+  Informativo  10049  Storable and Cacheable Content (1 instancias)
+  Informativo  10049  Non-Storable Content (5 instancias)
+  Informativo  10031  User Controllable HTML Element Attribute (Potential XSS) (6 instancias)
+  Informativo  10015  Re-examine Cache-control Directives (5 instancias)
+
+## 6) Cabeceras y cookies de /web/login con Nginx corregido (curl -skI)
+HTTP/2 200 
+server: nginx
+date: Mon, 23 Nov 2026 21:46:36 GMT
+content-type: text/html; charset=utf-8
+content-length: 5939
+vary: Accept-Encoding
+cache-control: no-cache
+content-security-policy: frame-ancestors 'self'
+set-cookie: session_id=<valor>; Expires=Tue, 23 Nov 2027 21:46:36 GMT; Max-Age=604800; HttpOnly; Path=/; Secure; SameSite=Lax
+strict-transport-security: max-age=31536000
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: strict-origin-when-cross-origin
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self'; frame-src 'self' blob:; worker-src 'self' blob:; object-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+cross-origin-opener-policy: same-origin
+permissions-policy: geolocation=(self), camera=(self), microphone=(self), payment=(), usb=()
+

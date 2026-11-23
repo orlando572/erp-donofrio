@@ -105,6 +105,7 @@ En Ubuntu nativo, instala Docker Engine con el plugin Compose (`docker compose`)
 
 - Plan completo: [docs/plan/PLAN_PROYECTO.md](docs/plan/PLAN_PROYECTO.md)
 - Ficha de cambios de Odoo 19: [docs/dev/odoo19_cambios.md](docs/dev/odoo19_cambios.md)
+- Pruebas de carga (k6) y de seguridad (ZAP): [docs/dev/pruebas_no_funcionales.md](docs/dev/pruebas_no_funcionales.md)
 
 ## Estructura
 
