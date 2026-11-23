@@ -9,7 +9,40 @@ ERP académico para **D'Onofrio como unidad de helados y confitería** (corte 20
 
 ## Estado
 
-Sprint 0 (Inicio). Solo hay planificación; el entorno Docker llega en el Sprint 1 (HU-01).
+Sprint 0 cerrado. El entorno Docker llega en el Sprint 1 (HU-01).
+
+## Preparar tu PC
+
+El proyecto se trabaja en **Linux**: Ubuntu nativo o **Ubuntu dentro de WSL2** en Windows.
+
+### Windows 10 u 11: WSL2
+
+1. En PowerShell como administrador: `wsl --install -d Ubuntu`. Reinicia y crea tu usuario de Ubuntu. Windows 10 necesita la versión 2004 o superior.
+2. Instala **Docker Desktop** y activa *Settings → Resources → WSL integration → Ubuntu*.
+3. Abre la terminal de **Ubuntu** y sigue los pasos comunes. Clona el repo dentro de Ubuntu (`~/`), **no** en `C:\` ni en `/mnt/c`, porque Docker es lento ahí y cambian los saltos de línea.
+4. Edita el código con VS Code y la extensión **WSL**, o ejecuta Claude Code dentro de Ubuntu.
+
+### Pasos comunes (Ubuntu o WSL2)
+
+```bash
+sudo apt update && sudo apt install -y git python3 ripgrep gh
+git config --global user.name "Tu Nombre"
+git config --global user.email "tu-correo-de-github"
+gh auth login
+git clone https://github.com/orlando572/erp-donofrio.git ~/erp-donofrio
+cd ~/erp-donofrio && git switch develop
+# Fuentes de referencia de Odoo 19 para el agente de IA (fuera del repo)
+git clone --depth 1 -b 19.0 https://github.com/odoo/odoo.git ~/src/odoo-19.0
+git clone --depth 1 -b 19.0 https://github.com/odoo/documentation.git ~/src/odoo-docs-19.0
+```
+
+En Ubuntu nativo, instala Docker Engine con el plugin Compose (`docker compose`).
+
+### Agente de IA (Claude Code)
+
+- Abre Claude Code en la carpeta del repo y acepta **confiar en el proyecto**. Así se activa el hook anti-legacy (`.claude/settings.json`).
+- Las reglas están en [CLAUDE.md](CLAUDE.md). Antes de escribir código Odoo, el agente consulta [docs/dev/odoo19_cambios.md](docs/dev/odoo19_cambios.md) y `~/src/odoo-19.0`.
+- Para revisar el código existente: `scripts/check_legacy.sh`.
 
 ## Documentación
 
