@@ -81,7 +81,7 @@ Limitación declarada: en la Fase 1 el proyecto **no define modelos nuevos**: co
 
 ## 4.3.3 Configuración de herramientas: desarrollo, despliegue, mantenimiento y monitoreo
 
-Lineamientos breves; el detalle de cada comando está en el README del repositorio y en el **Manual de herramientas** (se entrega en el Cierre).
+Lineamientos breves; el detalle de cada comando está en el README del repositorio y en el [**Manual de instalación y configuración de las herramientas**](../manuales/manual_herramientas.md) (borrador del Sprint 3; se exporta a PDF en el Cierre), que para cada herramienta explica el uso en este proyecto, la versión, la instalación en Ubuntu y WSL2, la comprobación y los problemas frecuentes, y dice cuáles del plan no se usaron (SchemaSpy, draw.io, Camunda Modeler). El ERP se instala con el [Manual de instalación](../manuales/manual_instalacion.md).
 
 | Etapa | Herramientas y configuración | Lineamiento |
 |---|---|---|

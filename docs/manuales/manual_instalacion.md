@@ -1,7 +1,7 @@
 # Manual de instalación (borrador)
 
-> **Estado:** borrador del Sprint 2 · **Autor:** Orlando · **Revisa:** Evelyn · Se completa y se exporta a PDF en el Cierre.
-> Cubre el ERP de la **Fase 1** (Odoo 19 Community + PostgreSQL 16 en Docker). Los datos son ficticios.
+> **Estado:** borrador del Sprint 3 (puesto al día el 23/11/2026 con lo que hay en `develop`) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · Se completa y se exporta a PDF en el Cierre.
+> Cubre el ERP de la **Fase 1** (Odoo 19 Community + PostgreSQL 16 en Docker). Las herramientas (Docker, Git, `gh`, VS Code, DBeaver, k6, ZAP, etc.) se explican en el [Manual de herramientas](manual_herramientas.md). Los datos son ficticios.
 
 ## 1. Qué se instala
 
@@ -9,7 +9,9 @@
 |---|---|---|
 | Odoo Community | 19.0 (imagen `odoo:19.0-20261112`, con la etiqueta fija) | Imagen de Docker construida desde `docker/odoo` |
 | PostgreSQL | 16 | Imagen `postgres:16` |
+| Módulo OCA `auditlog` | 19.0.2.0.2 (fijado por *commit* en el Dockerfile) | Dentro de la imagen de Odoo; lo necesita `donofrio_base` (auditoría de cambios) |
 | Módulo `donofrio_base` | 19.0.1.0.0 | Carpeta `addons/`, montada en el contenedor |
+| Nginx (solo en el despliegue protegido, §6.2) | imagen `nginx:stable` | Perfil `proxy` de Compose |
 
 Todo corre en contenedores. No hace falta instalar Python, Odoo ni PostgreSQL en la PC.
 
@@ -18,7 +20,7 @@ Todo corre en contenedores. No hace falta instalar Python, Odoo ni PostgreSQL en
 - **Sistema:** Ubuntu 22.04 o superior, o Windows 10/11 con WSL2 y Ubuntu.
 - **Recursos:** unos 4 GB de RAM libres y unos 6 GB de disco.
 - **Software:** Docker con el plugin Compose, Git y `python3`. Para Windows, Docker Desktop con la integración WSL activada para Ubuntu.
-- **Puertos libres en la PC:** 8069 (Odoo), 8072 (*websocket*) y 5432 (PostgreSQL). Si alguno está ocupado, se cambia en `.env` (paso 4.2).
+- **Puertos libres en la PC:** 8069 (Odoo), 8072 (*websocket*) y 5432 (PostgreSQL). Si alguno está ocupado, se cambia en `.env` (paso 4.2). Solo si usas los perfiles opcionales: 5433 (réplica, §6.1) y 8080 y 8443 (Nginx, §6.2).
 
 ## 3. Preparar la PC
 
@@ -28,7 +30,7 @@ Todo corre en contenedores. No hace falta instalar Python, Odoo ni PostgreSQL en
 sudo apt update && sudo apt install -y git python3
 ```
 
-Instala Docker Engine con el plugin Compose siguiendo la guía oficial de Docker para Ubuntu y comprueba:
+Instala Docker Engine con el plugin Compose siguiendo la guía oficial de Docker para Ubuntu (o los pasos del [Manual de herramientas §3](manual_herramientas.md)) y comprueba:
 
 ```bash
 docker --version && docker compose version
@@ -61,9 +63,12 @@ cp .env.example .env
 | Variable | Para qué sirve |
 |---|---|
 | `ODOO_DB` | Nombre de la base de datos (`donofrio`) |
-| `DONOFRIO_USER_PASSWORD` | Contraseña de prueba de los 10 usuarios por rol. Se aplica **al instalar** el módulo |
-| `ODOO_ADMIN_PASSWD`, `POSTGRES_PASSWORD`, `ODOO_DB_PASSWORD` | Claves de Odoo y PostgreSQL. Cámbialas si expones los puertos |
+| `DONOFRIO_USER_PASSWORD` | Contraseña de prueba de los 10 usuarios por rol. Se aplica **al instalar** el módulo y debe tener **12 caracteres o más** (política de contraseñas, HU-27); con menos, la instalación de `donofrio_base` falla |
+| `ODOO_ADMIN_PASSWD`, `POSTGRES_PASSWORD`, `ODOO_DB_PASSWORD` | Claves de Odoo y PostgreSQL. Cámbialas si expones los puertos. En el despliegue protegido (§6.2), `ODOO_ADMIN_PASSWD` debe tener **16 caracteres o más** y no ser la de ejemplo |
+| `REPLICADOR_PASSWORD` | Clave del rol `replicador` de la réplica (§6.1). Solo se usa con el perfil `replica` |
 | `ODOO_PORT`, `ODOO_LONGPOLLING_PORT`, `DB_PORT` | Puertos publicados en `127.0.0.1` |
+| `REPLICA_PORT` | Puerto de la réplica en `127.0.0.1` (por defecto 5433) |
+| `NGINX_HTTP_PORT`, `NGINX_HTTPS_PORT` | Puertos de Nginx en el despliegue protegido (por defecto 8080 y 8443) |
 
 ### 4.3 Levantar los contenedores
 
@@ -102,7 +107,7 @@ Abre <http://localhost:8069> y entra con:
 
 | Usuario | Contraseña | Uso |
 |---|---|---|
-| `admin` | `admin` | Administración y verificación (solo desarrollo; cámbiala si expones el puerto) |
+| `admin` | `admin` | Administración y verificación (solo desarrollo; cámbiala si expones el puerto). En el despliegue protegido (§6.2) pide segundo factor, igual que `gerente@donofrio.example.com` |
 | `jefe.almacen@donofrio.example.com` y los otros 9 de la lista del README | El valor de `DONOFRIO_USER_PASSWORD` en tu `.env` | Probar cada rol con sus permisos mínimos |
 
 ## 6. Verificar la instalación
@@ -111,13 +116,15 @@ Abre <http://localhost:8069> y entra con:
 scripts/test.sh donofrio_base
 ```
 
-Instala el módulo en una base temporal y corre todas sus pruebas; imprime solo los errores y termina con `OK` si todo pasó. Para revisar patrones de versiones anteriores de Odoo: `scripts/check_legacy.sh`.
+Instala el módulo en una base temporal y corre todas sus pruebas (136 al 23/11/2026, unos 2 minutos); imprime solo los errores y termina con `OK: donofrio_base instalado y 136 pruebas sin errores.` si todo pasó. Para revisar patrones de versiones anteriores de Odoo: `scripts/check_legacy.sh` (debe decir «sin patrones legacy»).
 
 Qué deberías ver en la interfaz:
 
 - **Inventario → Almacenes:** WH-LIM Planta Lima y WH-AQP CD Arequipa, con sus cámaras de frío.
 - **Fabricación → Productos → Listas de materiales:** 12 recetas con sus operaciones.
 - **Inventario → Productos → Números de serie/lote:** lotes con fecha de caducidad (si cargaste los datos de demostración).
+
+Los apartados 6.1 a 6.3 son **opcionales**: se usan para la réplica, el despliegue «en producción» y las pruebas de carga y de seguridad.
 
 ### 6.1 Réplica de la base de datos (opcional)
 
@@ -166,12 +173,14 @@ Con el despliegue protegido levantado (§6.2) y la base con datos de demostraci�
 | Ver el estado | `docker compose ps` |
 | Ver el registro de Odoo | `docker compose logs -f odoo` |
 | Apagar y conservar los datos | `docker compose down` |
-| Actualizar el módulo tras un `git pull` | `docker compose run --rm odoo odoo -d donofrio -u donofrio_base --stop-after-init` |
+| Actualizar el módulo tras un `git pull` | `docker compose up -d --build odoo` (reconstruye la imagen si cambió el Dockerfile) y luego `docker compose run --rm odoo odoo -d donofrio -u donofrio_base --stop-after-init` |
 | **Empezar de cero** (borra la base y los archivos) | `docker compose down -v`, luego `docker compose up -d` y `scripts/init_db.sh` |
 
 > **Importante:** los datos de configuración se cargan con `noupdate`. Si un cambio modifica esos datos (por ejemplo las recetas), `-u` **no** los actualiza: hay que recrear la base (última fila). Si cambias `DONOFRIO_USER_PASSWORD`, también.
 
-### 7.1 Copias de seguridad y restauración
+**Al traer los cambios de la HU-27** (seguridad), la imagen de Odoo cambió: ahora descarga el módulo `auditlog` de OCA y `donofrio_base` depende de él y de `auth_totp_mail` y `auth_password_policy`. Hay que **reconstruir la imagen** (`docker compose build odoo`) y **actualizar la base con `-u donofrio_base`**, que instala `auditlog`, la política de contraseñas, el 2FA del administrador y el gerente, y las reglas de auditoría. Si no reconstruyes, Odoo no encuentra `auditlog` y la actualización falla. Antes de actualizar una base con datos conviene un respaldo (§7.1).
+
+### 7.1 Copias de seguridad y restauración (opcional pero recomendado)
 
 ```bash
 scripts/backup.sh                                   # respaldo ahora
@@ -193,8 +202,13 @@ Para que sea diario, agrega al `crontab -e` del equipo (02:00): `0 2 * * * cd /r
 | Muy lento en Windows | El repositorio está en `C:\` o `/mnt/c` | Clónalo dentro de Ubuntu (`~/erp-donofrio`) |
 | `scripts/init_db.sh` dice que la base ya existe | La base se creó antes | Es normal; para recrearla, usa «Empezar de cero» |
 | El script de datos de demostración falla con «could not serialize access due to concurrent update» | El servicio web corría a la vez y sus tareas programadas tocaron las mismas existencias | Recrea la base (sección 7), detén el servicio web (`docker compose stop odoo`) y repite la carga |
+| La instalación de `donofrio_base` falla al aplicar la contraseña de los usuarios | `DONOFRIO_USER_PASSWORD` tiene menos de 12 caracteres (política de contraseñas) | Pon una de 12 o más en `.env` y recrea la base (sección 7) |
+| `scripts/levantar_prod.sh` termina con «la contraseña maestra (admin_passwd) debe tener 16 caracteres o más» | `ODOO_ADMIN_PASSWD` es la de ejemplo o tiene menos de 16 caracteres | Cambia la clave en `.env` (§6.2) |
+| Tras un `git pull`, Odoo no encuentra `auditlog` | La imagen es anterior a la HU-27 | `docker compose build odoo` y luego `-u donofrio_base` (sección 7) |
 
 ## 9. Pendiente para el Cierre
 
-- Capturas de cada paso en una PC limpia y la prueba con Evelyn siguiendo solo este manual.
+- Capturas de cada paso en una PC limpia y la prueba con Evelyn siguiendo solo este manual (checklist de entrega de [07](../plan/07_riesgos_entrega.md)).
+- Ejecutar la instalación con el código del tag `v1.0.0` y comprobar que las rutas y comandos de este manual siguen valiendo. Aún **no existe ese tag ni la imagen en GHCR**: se publican en el Gate 0 con [`release.yml`](../../.github/workflows/release.yml) ([cómo](../dev/release.md)); mientras tanto la instalación es por `git clone` y `docker compose up -d --build`.
 - Despliegue en una VM en la nube (Let's Encrypt en lugar del certificado autofirmado y servidor de correo para el 2FA por correo), solo si se decide hacerlo.
+- Exportar a PDF (`G<N>_ManualProyecto.pdf`).
