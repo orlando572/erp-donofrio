@@ -104,7 +104,7 @@ stock_location 1───* donofrio_temperatura *───1 res_users
 | `TestSeguridadFrio` | 3 | Operario crea y edita pero no borra; jefe borra; usuario interno solo lee |
 | `TestCronLotesPorVencer` | 9 | Parámetro por defecto (7); sin lotes por vencer no crea nada; una actividad por lote con stock; no repite aunque se atienda; ignora lotes sin stock, vencidos o fuera de la ventana; el parámetro cambia la ventana y uno inválido vuelve a 7; varios lotes, cada uno una vez; el cron existe, activo y diario |
 
-Corrida del 24/11/2026 sobre una base nueva con el código de la rama: `44 post-tests`, `0 failed, 0 error(s) of 44 tests`, sin `ERROR`, `CRITICAL` ni `WARNING` en el registro. `scripts/check_legacy.sh`: «sin patrones legacy».
+Corrida del 24/11/2026 sobre una base nueva con el código de la rama: `44 post-tests`, `0 failed, 0 error(s) of 44 tests`, sin `ERROR`, `CRITICAL` ni `WARNING` en el registro. `scripts/check_legacy.sh`: «sin patrones legacy». **Actualización (`-u`):** se instaló M1 (código del commit anterior) sobre una base nueva con los datos de `donofrio_base` y se actualizó con el código de M3, sin `ERROR` ni `WARNING`; las cuatro cámaras quedaron con su rango y el cron y el parámetro (7) existen. No se probó sobre la base de desarrollo `donofrio`.
 
 Capturas (base nueva con `donofrio_base`, `donofrio_calidad` y `donofrio_heladeros`, más datos ficticios cargados por script; usuario «Jefe de Almacén», 24/11/2026; PNG de 800 × 500):
 
