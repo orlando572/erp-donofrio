@@ -6,7 +6,7 @@
 
 ## Cómo se clasifican y se verifican
 
-- **Clasificación:** cada RNF se asigna a una característica del modelo de calidad **ISO/IEC 25010:2023 [cita]**, que tiene nueve: adecuación funcional, eficiencia de desempeño, compatibilidad, capacidad de interacción, fiabilidad, seguridad, mantenibilidad, flexibilidad (antes portabilidad) y protección (*safety*). Ninguno de los RNF de este proyecto cae en *compatibilidad* ni en *protección*.
+- **Clasificación:** cada RNF se asigna a una característica del modelo de calidad **ISO/IEC 25010:2023** (ISO/IEC, 2023), que tiene nueve: adecuación funcional, eficiencia de desempeño, compatibilidad, capacidad de interacción, fiabilidad, seguridad, mantenibilidad, flexibilidad (antes portabilidad) y protección (*safety*). Ninguno de los RNF de este proyecto cae en *compatibilidad* ni en *protección*.
 - **Verificación:** cada RNF tiene una métrica y una prueba concreta. Las pruebas automáticas viven en `addons/donofrio_base/tests/` y corren en el CI en cada PR; las no funcionales (k6, ZAP, Lighthouse, restauración cronometrada y réplica) se ejecutaron en el Sprint 3 y sus resultados están en la sección [5.14](05_13_a_05_14_pruebas.md); el SUS (HU-30) quedó diferido por decisión del equipo.
 - **Trazabilidad:** RNF → HU → épica (issue) → prueba, como en [4.2.1](04_02_requerimientos_funcionales.md).
 
@@ -14,7 +14,7 @@
 
 **Estado al cierre del Sprint 3** (23/11/2026): *Cumple* (hecho, medido o probado, con evidencia en el repositorio), *Cumple con límites* (cumple la meta, con una limitación declarada que no la invalida), *Parcial* (una parte cumple y otra no) o *Pendiente* (todavía no se hizo). El detalle de cada RNF, con su evidencia y sus límites, está en las fichas del [Anexo 10.2](anexo_10_02_fichas_rnf.md).
 
-| Área | ID | Requerimiento no funcional | Característica 25010:2023 **[cita]** | Métrica o prueba | HU · sprint | Estado al cierre del S3 |
+| Área | ID | Requerimiento no funcional | Característica 25010:2023 (ISO/IEC, 2023) | Métrica o prueba | HU · sprint | Estado al cierre del S3 |
 |---|---|---|---|---|---|---|
 | **Marketing y Ventas** | RNF001 | Portabilidad: navegadores Chrome, Firefox y Edge; responsive en móvil (pedidos y PdV; liquidación si hay F2) | Flexibilidad (adaptabilidad) | Prueba manual en 3 navegadores y en vista móvil | HU-09, HU-10 · S2-S3 | **Pendiente**: la prueba manual en los tres navegadores y en vista móvil no se hizo ni se registró |
 | | RNF002 | Rendimiento: p95 < 2 s en listas y formularios con 20 usuarios concurrentes | Eficiencia de desempeño (comportamiento temporal) | k6 con 20 usuarios virtuales | HU-28 · S3 | **Cumple** (k6, 23/11/2026): p95 de **11.6 ms** en listas y **9.1 ms** en formularios con 20 usuarios y pausas; unos 100 ms sin pausas. [5.14, Tabla 22](05_13_a_05_14_pruebas.md) |
