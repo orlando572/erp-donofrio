@@ -22,6 +22,7 @@ Incluye el color de marca y el favicon del backend. Todos los datos son ficticio
         ],
         'web.assets_backend': [
             'donofrio_tablero/static/src/tablero/*',
+            'donofrio_tablero/static/src/scss/sin_datos.scss',
         ],
     },
     'installable': True,
