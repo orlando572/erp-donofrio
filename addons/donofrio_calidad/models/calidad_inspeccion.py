@@ -60,6 +60,10 @@ class CalidadInspeccion(models.Model):
                 raise UserError(self.env._('No se puede aprobar: hay puntos de control sin medir o que no cumplen.'))
             ins.state = 'aprobada'
 
+    def action_imprimir_certificado(self):
+        self.ensure_one()
+        return self.env.ref('donofrio_calidad.action_report_certificado').report_action(self)
+
     def action_rechazar(self):
         for ins in self:
             if ins.state != 'en_curso':

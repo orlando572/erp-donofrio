@@ -17,6 +17,7 @@ Todos los datos son ficticios.
         'security/ir.model.access.csv',
         'data/calidad_data.xml',
         'views/calidad_views.xml',
+        'report/calidad_report.xml',
     ],
     'installable': True,
     'application': True,

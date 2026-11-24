@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_certificado" model="ir.actions.report">
+        <field name="name">Certificado de calidad del lote</field>
+        <field name="model">donofrio.calidad.inspeccion</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">donofrio_calidad.report_certificado</field>
+        <field name="report_file">donofrio_calidad.report_certificado</field>
+        <field name="print_report_name">'Certificado de calidad - %s' % (object.lot_id.name or '')</field>
+        <field name="binding_model_id" ref="model_donofrio_calidad_inspeccion"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_certificado">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">Certificado de calidad del lote</h2>
+                        <p class="text-center text-muted"><span t-field="o.name"/></p>
+                        <div class="row mt-4 mb-4">
+                            <div class="col-6">
+                                <strong>Producto:</strong> <span t-field="o.product_id.display_name"/><br/>
+                                <strong>Lote:</strong> <span t-field="o.lot_id.name"/><br/>
+                                <strong>Vencimiento:</strong> <span t-field="o.lot_id.expiration_date" t-options="{'widget': 'date'}"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Orden de producción:</strong> <span t-field="o.production_id.name"/><br/>
+                                <strong>Responsable de calidad:</strong> <span t-field="o.inspector_id.name"/><br/>
+                                <strong>Empresa:</strong> <span t-field="o.company_id.name"/>
+                            </div>
+                        </div>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Punto de control</th>
+                                    <th>Norma</th>
+                                    <th class="text-end">Medición</th>
+                                    <th>Resultado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.linea_ids" t-as="lin">
+                                    <td><span t-field="lin.punto_id.name"/></td>
+                                    <td><span t-field="lin.norma"/></td>
+                                    <td class="text-end">
+                                        <t t-if="lin.tipo == 'rango'"><span t-out="'%g' % lin.medicion"/> <span t-field="lin.punto_id.unidad"/></t>
+                                        <t t-else="">-</t>
+                                    </td>
+                                    <td><span t-field="lin.resultado"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="mt-4">El lote cumplió todos los puntos de control y fue <strong>aprobado</strong> para su despacho.</p>
+                        <div class="row" style="margin-top: 80px;">
+                            <div class="col-6 text-center">
+                                <hr style="width: 60%;"/>
+                                <span t-field="o.inspector_id.name"/><br/>Inspector de calidad
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -148,3 +148,31 @@ class TestInspeccionCalidad(DonofrioStockCase):
             'group_ids': [Command.set([self.env.ref('base.group_user').id])]})
         with self.assertRaises(AccessError):
             inspeccion.with_user(sin_grupo).read(['name'])
+
+
+@tagged('post_install', '-at_install')
+class TestCertificadoCalidad(TestInspeccionCalidad):
+    """HU-18 (RF012): el certificado en PDF solo existe para inspecciones aprobadas."""
+
+    def test_certificado_de_una_inspeccion_aprobada(self):
+        _, inspeccion = self._inspeccion()
+        inspeccion.action_iniciar()
+        self._medir_todo_bien(inspeccion)
+        inspeccion.action_aprobar()
+        reporte = self.env.ref('donofrio_calidad.action_report_certificado')
+        html, _tipo = reporte._render_qweb_html(reporte.report_name, inspeccion.ids)
+        texto = html.decode()
+        self.assertIn(inspeccion.lot_id.name, texto)
+        self.assertIn('Pasteurización', texto)
+        self.assertEqual(inspeccion.action_imprimir_certificado()['type'], 'ir.actions.report')
+
+    def test_no_hay_certificado_si_no_esta_aprobada(self):
+        _, inspeccion = self._inspeccion()
+        reporte = self.env.ref('donofrio_calidad.action_report_certificado')
+        with self.assertRaises(UserError):
+            reporte._render_qweb_html(reporte.report_name, inspeccion.ids)
+        inspeccion.action_iniciar()
+        inspeccion.motivo_rechazo = 'Fuera de norma'
+        inspeccion.action_rechazar()
+        with self.assertRaises(UserError):
+            reporte._render_qweb_html(reporte.report_name, inspeccion.ids)
