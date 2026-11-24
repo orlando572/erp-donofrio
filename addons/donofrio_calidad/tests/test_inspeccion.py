@@ -81,7 +81,7 @@ class TestInspeccionCalidad(DonofrioStockCase):
         with self.assertRaises(UserError):
             inspeccion.action_aprobar()
         self._medir_todo_bien(inspeccion)
-        pasteurizacion = inspeccion.linea_ids.filtered(lambda l: l.punto_id == self.env.ref('donofrio_calidad.punto_pasteurizacion'))
+        pasteurizacion = inspeccion.linea_ids.filtered(lambda lin: lin.punto_id == self.env.ref('donofrio_calidad.punto_pasteurizacion'))
         pasteurizacion.medicion = 70
         self.assertEqual(pasteurizacion.resultado, 'no_cumple')
         with self.assertRaises(UserError):

@@ -28,7 +28,7 @@ class CalidadInspeccion(models.Model):
     @api.depends('linea_ids.resultado')
     def _compute_todos_cumplen(self):
         for ins in self:
-            ins.todos_cumplen = bool(ins.linea_ids) and all(l.resultado == 'cumple' for l in ins.linea_ids)
+            ins.todos_cumplen = bool(ins.linea_ids) and all(lin.resultado == 'cumple' for lin in ins.linea_ids)
 
     @api.model_create_multi
     def create(self, vals_list):
