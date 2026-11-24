@@ -29,7 +29,7 @@
 | 11 | Validación de servicios, pruebas RF y RNF | 5.13, 5.14 y 6.9 a 6.13 | E+O |
 | 12 | Despliegue: herramientas, procedimiento y resultados | 5.15 | O |
 
-Entregables a-f del lineamiento: ver el checklist en [07_riesgos_entrega.md](07_riesgos_entrega.md).
+Entregables a-f del lineamiento: ver el checklist en [07_riesgos_entrega.md](07_riesgos_entrega.md). Además se entrega el **manual de usuario** con la plantilla del docente (checklist g; estructura en §2.4).
 
 ## 2.2 Sección por sección de la plantilla
 
@@ -99,7 +99,7 @@ La plantilla no trae números visibles en los títulos. Esta numeración sigue s
 | 5.11 Identificación de controles de seguridad | Tabla 17 + escalas | Tabla | O | S3 → Cierre |
 | 5.12 Identificación de ataques y defensa | Tabla 18 (SQLi, XSS, fuerza bruta, gestor de BD expuesto, robo de sesión, pérdida de datos, caída) | Tabla + prueba con OWASP ZAP | O | S3 → Cierre |
 | 5.13 Validación del servicio: validación y verificación de requerimientos de software, pruebas funcionales | Tablas 19, 20 (casos TC con estado) y 21 | Tests de Odoo + pruebas manuales | E (ventas, heladeros, gerencia), O (logística, producción, calidad) | S3 → Cierre |
-| 5.14 Validación y verificación de requerimientos de software, pruebas no funcionales | Tablas 22, 23 y 24: carga (k6), seguridad (ZAP), WPO (Lighthouse), disponibilidad, respaldo | k6, ZAP, Lighthouse | O (carga, seguridad), E (WPO, usabilidad) | S3 → Cierre |
+| 5.14 Validación y verificación de requerimientos de software, pruebas no funcionales | Tablas 22, 23 y 24: carga (k6), seguridad (ZAP), WPO (Lighthouse), disponibilidad, respaldo; usabilidad (SUS) cuando se haga la HU-30 en el Cierre | k6, ZAP, Lighthouse | O (carga, seguridad), E (WPO, usabilidad) | S3 → Cierre |
 | 5.15 Despliegue: enfoque y herramientas utilizadas, mejores prácticas | URLs de publicación; enfoque *rolling* con un solo nodo + rollback por imagen etiquetada; ilustración 32 (pipeline CI/CD); tabla 25; mejores prácticas (monitoreo, backups, secretos) | GitHub Actions, Docker, GHCR | O | S3 → Cierre |
 | 5.16 **Entradas huérfanas del índice** → **Gestión de servicios (ITIL 4 / ISO 20000-1)** | El índice de figuras y tablas lista BPMN de solicitudes de servicios, información y accesos, control de cambios de CI y capacidad (ilustraciones 33-37) y las tablas 26-38 (herramientas de control de cambios, capacidad, rendimiento, proyección de usuarios), pero **esas secciones no existen en el cuerpo**. Plan: un subapartado breve "Gestión de servicios" dentro de Despliegue, con 2 BPMN (control de cambios vía PR/CI y solicitud de acceso) y una tabla resumen de herramientas y capacidad. Antes, **consultar al docente** si las espera | bpmn.io + tablas | O | S3 → Cierre |
 | **6. Documentación de la solución** | | | | |
@@ -114,7 +114,7 @@ La plantilla no trae números visibles en los títulos. Esta numeración sigue s
 | 6.9 Resumen de pruebas | Tabla consolidada: unitarias, integrales, usabilidad y seguridad × desarrollo, despliegue y mantenimiento | Tabla | E+O | S3 → Cierre |
 | 6.10 Pruebas unitarias (desarrollo, despliegue, mantenimiento) | `TransactionCase` de `donofrio_base` (datos, seguridad) y de los módulos de la F2 que se terminen; en CI; *smoke test* post-despliegue; ejecución programada semanal | Odoo test runner + Actions | O | S3 (+F2) |
 | 6.11 Pruebas integrales | **F1** (HU-33): pedido → entrega FEFO → factura; compra → recepción; OP → lote. **F2:** OP → inspección → bloqueo de despacho; liquidación → pedido | Odoo + Actions | O | S3 → Cierre |
-| 6.12 Pruebas de usabilidad | Tareas cronometradas con 5 usuarios + cuestionario SUS | Google Forms | E | S3 → Cierre |
+| 6.12 Pruebas de usabilidad | Tareas cronometradas con 5 usuarios + cuestionario SUS (HU-30, **diferida al Cierre** por decisión del 23/11/2026) | Google Forms | E | Cierre |
 | 6.13 Pruebas de seguridad | ZAP baseline, pruebas de permisos (`AccessError`), política de contraseñas, `list_db=False` | ZAP, tests | O | S3 → Cierre |
 | **7. Conclusiones** | Una por objetivo y por área | Texto | E+O | S3 → Cierre |
 | **8. Recomendaciones** | Trabajo futuro: los módulos de la F2 que no se hayan terminado (con su diseño), EDI SUNAT vía OSE, app móvil para heladeros, plan para la transición a Froneri (migración de compañía) | Texto | E+O | S3 → Cierre |
@@ -136,7 +136,7 @@ Una sección está completa cuando cumple todo esto:
 
 ## 2.3 Secciones del informe que cambian según se llegue o no a la Fase 2
 
-**Regla:** el informe siempre está completo con la Fase 1. Cada módulo de la F2 que se termina (y pasa su mini gate) **actualiza** las filas de esta tabla. Lo que no llega se marca como "Diseñado – trabajo futuro" y nunca se presenta como implementado. Con el plazo actual, el escenario más probable es **Fase 1 + M1**: conviene redactar primero las columnas "Solo Fase 1" y "M1".
+**Regla:** el informe siempre está completo con la Fase 1. Cada módulo de la F2 que se termina (y pasa su mini gate) **actualiza** las filas de esta tabla. Lo que no llega se marca como "Diseñado – trabajo futuro" y nunca se presenta como implementado. El objetivo es la **Fase 2 completa** (decisión del 23/11/2026) y el informe final se redacta en el Cierre, después de la hora de corte (jueves 26/11, 08:00), sobre lo que realmente quedó fusionado: cada columna se aplica solo a los módulos que entraron.
 
 | Sección | Solo Fase 1 (núcleo) | Si se termina M1 `donofrio_calidad` (+M3 frío) | Si se termina M2 `donofrio_heladeros` | Si se termina M4 `donofrio_tablero` |
 |---|---|---|---|---|
@@ -160,3 +160,19 @@ Una sección está completa cuando cumple todo esto:
 | 9 normas ([09](09_normas_marcos.md)): ISO 9001 / HACCP | Trazabilidad por lote, FEFO, fecha de retiro, PCC documentados en las operaciones | + liberación y no conformes; + monitoreo de PCC de temperatura | — | — |
 | 7-8 Conclusiones y recomendaciones | Los módulos de la F2 no hechos pasan a trabajo futuro | Se quita de trabajo futuro | Idem | Idem |
 | Presentación | Variante "Solo Fase 1" ([05 §5.4](05_reparto_equipo.md)) | Demo 2 con inspección | Demo 1 con liquidación | Demo 1 con tablero |
+
+## 2.4 Manual de usuario (entregable adicional)
+
+El manual de usuario no figura en las letras a-f del lineamiento, pero el docente entrega una plantilla propia (`docs/TEMPLATE - MANUAL DE USUARIO.docx`, ignorada por git: no se sube al repositorio). Se agrega como entregable **g** del checklist ([07 §7.2](07_riesgos_entrega.md)).
+
+| Entregable | Qué se entrega | Herramienta / origen | Resp. | Sprint |
+|---|---|---|---|---|
+| **Manual de usuario (PDF)** | Manual sobre la plantilla del docente, para el estado final del sistema; capturas reales del ERP | Plantilla del docente (Word → PDF) | E (redacta), O (verifica) | Cierre |
+
+**Estructura de la plantilla** (leída del archivo, resumida):
+- **Carátula y control de versiones:** versión, fecha de elaboración, elaborado por, descripción, revisado por y fecha de revisión.
+- **1. Presentación:** descripción de la aplicación; requisitos mínimos (hardware y software); punto de inicio para la instalación y configuración; instalación; configuración; otros.
+- **2. Módulo de usuario:** estructura visual (panel derecho de información, panel izquierdo de tareas, panel inferior) y funcionalidades (el ejemplo de la plantilla es de una tienda: productos, carrito, pagos, mapas o chat).
+- **3. Módulo de administración:** la misma estructura visual y las funcionalidades de mantenimiento (usuarios, productos, proveedores, transacciones, mapas o chat).
+
+La plantilla es genérica (ejemplos de comercio electrónico): al redactar se adapta cada título a los procesos reales de D'Onofrio y a los roles de Odoo, y se omite lo que no aplique, con una línea que lo explique. El manual se redacta en el Cierre porque describe el estado final, que depende de los módulos de la Fase 2 que hayan entrado a la hora de corte.
