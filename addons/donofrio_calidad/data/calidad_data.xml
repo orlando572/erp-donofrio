@@ -53,4 +53,27 @@
     <record id="donofrio_base.user_inspector_calidad" model="res.users">
         <field name="group_ids" eval="[Command.link(ref('group_calidad_inspector'))]"/>
     </record>
+
+    <!-- HU-19: rangos de las cámaras de donofrio_base. Esas ubicaciones son noupdate, así que un <record> no se
+         aplicaría al actualizar un módulo ya instalado: la función es idempotente y respeta lo que se edite a mano -->
+    <function model="stock.location" name="_cargar_rangos_frio"/>
+
+    <!-- Días de anticipación del cron de lotes por vencer: se puede cambiar sin que una actualización lo pise -->
+    <data noupdate="1">
+        <record id="param_dias_alerta_vencimiento" model="ir.config_parameter">
+            <field name="key">donofrio_calidad.dias_alerta_vencimiento</field>
+            <field name="value">7</field>
+        </record>
+    </data>
+
+    <record id="ir_cron_lotes_por_vencer" model="ir.cron">
+        <field name="name">Calidad: lotes por vencer</field>
+        <field name="model_id" ref="stock.model_stock_lot"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_lotes_por_vencer()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
 </odoo>

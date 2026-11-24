@@ -4,6 +4,7 @@
     'description': """
 Módulo propio de la Fase 2 (M1). La Calidad estándar de Odoo es Enterprise, así que este módulo
 crea los puntos de control, las inspecciones con sus mediciones y el bloqueo del despacho de un lote rechazado.
+Incremento M3 (cadena de frío): rango de temperatura por ubicación, lecturas con alerta fuera de rango y cron de lotes por vencer.
 Todos los datos son ficticios.
 """,
     'author': "Evelyn y Orlando (UTP Arequipa)",
