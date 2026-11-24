@@ -13,7 +13,7 @@ Estos riesgos se registran en `docs/pm/plan_riesgos.md`, enlazado desde el issue
 
 | Id | Tipo | Riesgo | I | P | Nivel | Prio | Estrategia | Resp. |
 |---|---|---|---|---|---|---|---|---|
-| R1 | Externo | **Plazo muy corto: todo se entrega el viernes 27 de noviembre, 14:30** (el "18 de julio, 07:00" del PDF es un dato de la plantilla) | 3 | 3 | 9 | Alta | **Mitigar:** sprints con *timebox* de ~1 día en orden fijo ([04 §4.6](04_scrum_pmbok.md)); la Fase 1 garantiza un entregable aunque la Fase 2 no alcance; Gate 0 por criterios; Cierre reservado; lo más probable es que de la F2 solo entre M1 | E |
+| R1 | Externo | **Plazo muy corto: todo se entrega el viernes 27 de noviembre, 14:30** (el "18 de julio, 07:00" del PDF es un dato de la plantilla) | 3 | 3 | 9 | Alta | **Mitigar:** sprints con *timebox* de ~1 día en orden fijo ([04 §4.6](04_scrum_pmbok.md)); la Fase 1 garantiza un entregable aunque la Fase 2 no alcance; Gate 0 por criterios; Cierre reservado; el objetivo es la F2 completa y la **hora de corte (jueves 26/11, 08:00)** protege el Cierre (ver R17). Sin cambio de nivel | E |
 | R2 | Técnico | El agente de IA o tutoriales viejos generan **API obsoleta de Odoo** (`attrs`, `<tree>`, `_sql_constraints`…) que rompe la instalación | 3 | 3 | 9 | Alta | **Mitigar:** código fuente 19.0 local, ficha de cambios, hook que bloquea, `check_legacy` en CI, instalación con tests en cada PR ([08](08_estrategia_agente_ia.md)) | O |
 | R3 | Organizacional | **Otro grupo elige la misma empresa** (prohibido por la regla 10) | 3 | 1 | 3 | Media | **Evitar:** el docente asignó D'Onofrio al grupo en S0 y es el único grupo con esta empresa | E |
 | R4 | Humano | **Carga desigual** o un integrante no puede defender su parte (la nota también es individual) | 3 | 2 | 6 | Alta | **Mitigar:** reparto por áreas de punta a punta, revisión cruzada de todos los PR, demos cruzadas en la Review, 2 ensayos | E+O |
@@ -27,9 +27,9 @@ Estos riesgos se registran en `docs/pm/plan_riesgos.md`, enlazado desde el issue
 | R12 | Organizacional | El título 6.3 de la plantilla ("Resumen del Monday") nombra otra herramienta y el evaluador espera verla | 1 | 2 | 2 | Baja | **Mitigar:** una línea bajo el título que justifica GitHub Projects ([04 §4.11](04_scrum_pmbok.md)) y aviso al docente | E |
 | R13 | Humano | La **exposición pasa de 10 minutos** y se corta | 2 | 2 | 4 | Media | **Mitigar:** guion cronometrado, punto de corte a los 8:30, video de respaldo | E+O |
 | R14 | Técnico | La demo en vivo falla (Docker, red, datos) | 3 | 2 | 6 | Alta | **Mitigar:** BD de demo pre-cargada y respaldada, video grabado, PC probada el día anterior | O |
-| R15 | Organizacional | La documentación se deja para el final y no da el tiempo | 3 | 2 | 6 | Alta | **Evitar:** la DoD exige un borrador de la sección por HU; checklist de secciones en el issue "Informe final"; el Gate 0 exige el informe completo en borrador para el alcance de la F1 | E |
+| R15 | Organizacional | La documentación se deja para el final y no da el tiempo | 3 | 2 | 6 | Alta | **Evitar:** la DoD exige un borrador de la sección por HU; checklist de secciones en el issue "Informe final"; el Gate 0 exige el informe completo en borrador para el alcance de la F1. **Desde el 23/11/2026 el informe final y los manuales se redactan en el Cierre (≈30 h), después de la F2: es una decisión consciente, no un descuido.** La documentación por módulo se mantiene en paralelo (la hace quien no construye). Sin cambio de nivel; el equipo puede subir P a 3 si el Cierre se acorta | E |
 | R16 | Técnico | La evidencia de Scrum se concentra en pocos días (commits todos juntos) | 2 | 2 | 4 | Media | **Mitigar:** commits pequeños y diarios de ambos, sprints con fechas reales, actas fechadas | O |
-| R17 | Organizacional | **La Fase 2 se come el tiempo del cierre** o la entrega queda con un módulo a medias | 3 | 2 | 6 | Alta | **Evitar:** Gate 0 y mini gates por criterios (F1 completa; el módulo se termina y documenta antes del Cierre); cierre reservado que la F2 no puede usar; orden fijo M1 → M4; lo inconcluso no se fusiona y se documenta como trabajo futuro | O (criterios), E (decisión) |
+| R17 | Organizacional | **La Fase 2 se come el tiempo del cierre** o la entrega queda con un módulo a medias. **Riesgo principal desde el 23/11/2026:** el objetivo pasó de «probablemente solo M1» a la F2 completa (M1-M4) | 3 | 3 | 9 | Alta | **Evitar:** **hora de corte de la F2: jueves 26/11/2026, 08:00** (se congela; lo fusionado entra, lo demás no se fusiona y queda como «Diseñado – trabajo futuro»; el Cierre de ≈30 h no se toca); Gate 0 y mini gates por criterios (el módulo se termina y documenta antes del corte); orden fijo M1 → M4; un módulo a la vez. **Cambio de nivel: P de 2 a 3 (nivel de 6 a 9)** porque hay más módulos que entregar en el mismo plazo | O (criterios), E (decisión) |
 | R18 | Técnico | El agente de IA **sigue con la Fase 2 sin autorización** después del gate | 2 | 2 | 4 | Media | **Evitar:** la regla del gate en el CLAUDE.md; solo vale la confirmación explícita en el chat de Evelyn u Orlando; los PR de la F2 requieren revisión humana | O |
 | R19 | Humano | Sin Fase 2, un integrante se queda **sin código propio que defender** | 2 | 2 | 4 | Media | **Mitigar:** desde la F1, cada uno es dueño de sus archivos de datos, tests y configuración en `donofrio_base` ([05 §5.1](05_reparto_equipo.md)) | E+O |
 | R20 | Humano | **Fatiga** por el ritmo de un sprint por día: errores y retrabajo | 2 | 2 | 4 | Media | **Mitigar:** dailies cortas, revisión cruzada obligatoria, CI como red de seguridad, Cierre sin desarrollo | E+O |
@@ -52,9 +52,10 @@ Cada tabla agrega:
 - [ ] **a. Informe final (PDF)** sobre la plantilla del docente, sin texto de ejemplo; secciones 1-10; índices actualizados; leyendas numeradas; APA 7; historial de revisiones lleno
 - [ ] **b. Manual de instalación y configuración del proyecto (PDF)**: requisitos, clonar, `.env`, `docker compose up`, `init_db.sh`, carga de transacciones, usuarios de prueba, perfiles (réplica, proxy), backup y restauración, actualización de módulos, solución de problemas
 - [ ] **c. Manual de instalación y configuración de las herramientas (PDF)**: Docker, Git, VS Code, DBeaver, SchemaSpy, bpmn.io/Camunda Modeler, draw.io, PlantUML, Lighthouse, k6, OWASP ZAP, GitHub (Actions, GHCR, Projects y la CLI `gh` con el permiso `project`), asistente de IA
-- [ ] **d. Material audiovisual (PPTX o PDF)** para 10 minutos + video de respaldo de la demo
+- [ ] **d. Material audiovisual (PPTX o PDF)** para 10 minutos + video de respaldo de la demo (el video se graba en el Cierre, [04 §4.6](04_scrum_pmbok.md))
 - [ ] **e. Enlace al repositorio** (público o con acceso del docente) que muestre el 100 % de la construcción: releases, Actions, issues, PR
 - [ ] **f. Código fuente comprimido** (`erp-donofrio-v1.0.0.zip` de la Release) con un README de indicaciones y especificaciones
+- [ ] **g. Manual de usuario (PDF)**, entregable adicional con la plantilla del docente (no está en las letras a-f del lineamiento, por eso conserva la letra g y no desplaza a las demás): estructura y alcance en [02 §2.4](02_mapeo_plantilla.md); dueña Evelyn, verifica Orlando; se redacta en el Cierre, para el estado final del sistema
 
 ### Reglas
 
@@ -68,6 +69,8 @@ Cada tabla agrega:
 ### Estado de las fases
 
 - [ ] Gate 0 y mini gates archivados en `docs/scrum/gates/`, con la decisión del equipo
+- [ ] Hora de corte de la F2 (jueves 26/11, 08:00) aplicada: lo no fusionado figura como «Diseñado – trabajo futuro» en el informe ([registro de decisiones](../scrum/gates/decisiones-2026-11-23.md))
+- [ ] Desviaciones del Gate 0 cerradas en el Cierre: HU-30 (SUS), demo cruzada y video
 - [ ] La entrega corresponde a la **última release que cumplió su DoD** (`v1.0.0` como mínimo); nada a medias en `main`
 - [ ] Las secciones de la [§2.3](02_mapeo_plantilla.md) reflejan los módulos de la F2 realmente terminados. Los no terminados aparecen como "Diseñado – trabajo futuro" en los RF, CU, clases y recomendaciones, y la PPT usa la variante correcta
 
@@ -84,5 +87,6 @@ Nombres de archivo sugeridos:
 - `G<N>_InformeFinal_ERP_DOnofrio.pdf`
 - `G<N>_ManualProyecto.pdf`
 - `G<N>_ManualHerramientas.pdf`
+- `G<N>_ManualUsuario.pdf`
 - `G<N>_Presentacion.pdf`
 - `G<N>_CodigoFuente_v1.0.0.zip`

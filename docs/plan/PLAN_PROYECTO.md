@@ -19,6 +19,8 @@
 | 8 | [08_estrategia_agente_ia.md](08_estrategia_agente_ia.md) | Cómo evitar código legacy (fuentes 19.0 locales, CLAUDE.md **con la regla del gate**, ficha de cambios, hook, verificación en Docker) y prácticas para ahorrar tokens |
 | 9 | [09_normas_marcos.md](09_normas_marcos.md) | Normas y marcos (ISO 27001/27002, ITIL 4 + ISO 20000-1 y COBIT 2019 como núcleo; ISO 31000, 25010, 22301, 9001/HACCP, OWASP y Ley 29733 de apoyo): mapeo a la plantilla, controles demostrados en Odoo 19, mesa de servicios ITIL en Community, SoA reducida y trazabilidad hacia las evidencias |
 
+Decisiones del equipo posteriores al plan (23/11/2026: Fase 2 completa con hora de corte, Cierre ampliado y manual de usuario): [`docs/scrum/gates/decisiones-2026-11-23.md`](../scrum/gates/decisiones-2026-11-23.md).
+
 ## Resumen en una página
 
 - **Qué se construye:** un ERP en Odoo 19 Community para las 5 áreas que piden los lineamientos, en **dos fases**:
@@ -28,18 +30,18 @@
     - Procesos estándar de punta a punta: CRM, Ventas, PdV, Inventario con lotes y FEFO, MRP, Compras, Facturación `l10n_pe` y RR. HH.
     - Gerencia con los dashboards estándar y vistas pivote y gráfico guardadas.
     - Réplica, respaldos, Nginx con TLS, seguridad Community (2FA, política de contraseñas), mesa de servicios ITIL en Project.
-    - Pruebas (unitarias, integrales, k6, ZAP, Lighthouse, SUS), release `v1.0.0` y el informe completo para ese alcance.
+    - Pruebas (unitarias, integrales, k6, ZAP, Lighthouse; el SUS se difiere al Cierre), release `v1.0.0` y el informe completo para ese alcance.
   - **Gate 0:** el agente de IA se detiene y entrega un informe (qué está listo de la F1, qué falta y qué módulos de la F2 recomienda); el equipo decide por criterios, no por horas. **No empieza ningún módulo propio sin la confirmación explícita de Evelyn u Orlando.**
-  - **Fase 2, extensión (si alcanza el tiempo),** uno a uno y con un mini gate después de cada uno:
+  - **Fase 2, extensión (el objetivo es completarla; hora de corte: jueves 26/11/2026, 08:00),** uno a uno y con un mini gate después de cada uno:
     1. M1 `donofrio_calidad`.
     2. M2 `donofrio_heladeros`.
     3. M3 cadena de frío.
     4. M4 `donofrio_tablero` + branding.
     5. Opcionales.
 
-    Cada módulo es entregable por sí solo: lo inconcluso no se fusiona y queda como trabajo futuro, con su diseño. Con este plazo, lo más probable es que solo entre M1.
+    Cada módulo es entregable por sí solo: lo inconcluso no se fusiona y queda como trabajo futuro, con su diseño. A la hora de corte se congela la Fase 2 y empieza el Cierre.
 - **Normas:** alineación (no certificación) con ISO 27001, ITIL 4 y COBIT 2019, demostradas con controles reales de Odoo 19 Community, todos de la Fase 1. Detalle en [09](09_normas_marcos.md).
-- **Calendario:** S0 Inicio → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo → Gate 0 → S4 Módulos propios (uno a uno, con mini gates) → Cierre (informe, manuales, PPT, zip, ensayo y entrega). Cada sprint tiene un *timebox* de ~1 día.
+- **Calendario:** S0 Inicio → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo → Gate 0 → S4 Módulos propios (uno a uno, con mini gates) → Cierre (HU-30, demo cruzada y video diferidos; informe final, manuales de instalación, herramientas y usuario, PPT, zip, ensayos y entrega). Cada sprint tiene un *timebox* de ~1 día.
   - **Único límite: entrega de todo el viernes 27 de noviembre, 14:30.**
 
 ## Decisiones clave y dudas abiertas

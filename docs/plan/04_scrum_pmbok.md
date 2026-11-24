@@ -67,8 +67,8 @@ Todos son **F1**: los RNF se verifican sobre el núcleo. Los módulos de la F2 s
 ## 4.3 Estructura en dos fases con punto de control
 
 ```
-FASE 1 – NÚCLEO (garantizado)                     GATE 0           FASE 2 – EXTENSIÓN (si alcanza)                         CIERRE (reservado)
-S0 → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo ─■─→ M1 calidad ─■→ M2 heladeros ─■→ M3 frío ─■→ M4 tablero ─■→ opcionales ─→ informe, manuales, PPT, zip, ensayo, entrega (vie 27/11, 14:30)
+FASE 1 – NÚCLEO (garantizado)                     GATE 0           FASE 2 – EXTENSIÓN (completa; corte jue 26/11, 08:00)   CIERRE (reservado, ≈30 h)
+S0 → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo ─■─→ M1 calidad ─■→ M2 heladeros ─■→ M3 frío ─■→ M4 tablero ─■→ opcionales ─→ HU-30, demo cruzada, video, informe, manuales, PPT, zip, ensayo, entrega (vie 27/11, 14:30)
                                        (v1.0.0 entregable)          ■ = mini gate (el agente se detiene y espera confirmación)
 ```
 
@@ -81,15 +81,15 @@ S0 → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo ─�
 
 ### Criterios de salida de la Fase 1 (para pasar el Gate 0)
 
-1. Todas las HU de la F1 están en "Hecho" (DoD); CI en verde en `main`; tag **`v1.0.0`** (núcleo entregable).
-2. Hay un video corto de la demo de punta a punta de los procesos estándar:
+1. Todas las HU de la F1 están en "Hecho" (DoD), **salvo HU-30, diferida al Cierre** (desviación aceptada, ver más abajo); CI en verde en `main`; tag **`v1.0.0`** (núcleo entregable).
+2. Hay un video corto de la demo de punta a punta de los procesos estándar (**diferido al final del Cierre**, desviación aceptada: mientras tanto, la evidencia son las pruebas y las capturas por flujo):
    - CRM → pedido → entrega FEFO → factura/boleta.
    - PdV.
    - Compra → recepción.
    - OP → lote.
    - Dashboards.
-3. Hay evidencias de la réplica, los respaldos, la seguridad (roles, 2FA, política de contraseñas, TLS), las pruebas (unitarias e integrales de `donofrio_base`, k6, ZAP, Lighthouse, SUS) y el despliegue.
-4. Informe con **todas las secciones 1-10 en borrador completo** para el alcance de F1. Los ítems de F2 aparecen como "propuesta / trabajo futuro" y ya tienen su CU, wireframe y mockup. Los dos manuales también están en borrador.
+3. Hay evidencias de la réplica, los respaldos, la seguridad (roles, 2FA, política de contraseñas, TLS), las pruebas (unitarias e integrales de `donofrio_base`, k6, ZAP, Lighthouse; el SUS de HU-30 se difiere al Cierre) y el despliegue.
+4. Informe con **todas las secciones 1-10 en borrador completo** para el alcance de F1. Los ítems de F2 aparecen como "propuesta / trabajo futuro" y ya tienen su CU, wireframe y mockup. Los manuales de instalación y de herramientas también están en borrador; el **manual de usuario** se redacta en el Cierre, sobre el estado final del sistema.
 5. El GitHub Project está al día (estado de cada épica, checklist de HU marcada, enlaces a los PR).
 
 ### Punto de control (Gate 0) y mini gates
@@ -111,10 +111,17 @@ S0 → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo ─�
 
 **Criterios de decisión** (no se decide por horas):
 1. La F1 cumple **todos** sus criterios de salida; si falta algo, se termina eso primero.
-2. El módulo siguiente en el orden fijo se puede terminar **y documentar** antes de empezar el Cierre, que no se toca.
+2. El módulo siguiente en el orden fijo se puede terminar **y documentar** antes de la hora de corte (jueves 26/11, 08:00), para no tocar el Cierre.
 3. Lo que no cumple su DoD de módulo no se fusiona: queda como trabajo futuro con su diseño.
 
-> **Nota sobre el plazo:** con la entrega el viernes 27 de noviembre, 14:30, **lo más probable es que solo entre M1** (`donofrio_calidad`). M2, M3, M4 y los opcionales siguen en el plan y, si no alcanzan, se documentan como trabajo futuro (RF "Diseñado – trabajo futuro", CU, wireframe y mockup ya hechos).
+> **Decisión del equipo del 23/11/2026 sobre el plazo** ([registro](../scrum/gates/decisiones-2026-11-23.md)): **el objetivo es la Fase 2 completa** (M1 → M2 → M3 → M4, en el orden fijo y uno a uno, con mini gate después de cada uno). Cada módulo sigue empezando solo con la confirmación explícita de Evelyn u Orlando en el chat. La red de seguridad es la **hora de corte de la Fase 2: jueves 26/11/2026, 08:00.** A esa hora se congela: lo fusionado entra; lo que no esté listo (o no cumpla su DoD) no se fusiona y queda como «Diseñado – trabajo futuro» con su CU, wireframe y mockup (RF en ese estado). Desde ahí empieza el Cierre (≈30 h hasta la entrega), que no se toca. La hora de corte aplica a toda la F2, opcionales incluidos.
+>
+> **Diferidos al final (después del S4, dentro del Cierre) y registrados en el Gate 0 como desviaciones aceptadas por el equipo, no como cumplidos:**
+> - **HU-30:** pruebas de usabilidad con 5 personas, 4 tareas cronometradas y SUS.
+> - **Demo cruzada:** Evelyn demuestra una HU de Orlando y viceversa (guion del S2 en [`demo_cruzada.md`](../scrum/sprint-2/demo_cruzada.md)).
+> - **Video** de la demo (el del criterio 2 y los de respaldo de la presentación de 10 minutos).
+>
+> **El informe final y los manuales se redactan después de terminar la F2**, en el Cierre. La documentación por módulo (5.5, clases, ER y diccionario, capturas, mini gate) no cambia: la hace quien no construye el módulo mientras el dueño lo construye ([05 §5.3](05_reparto_equipo.md)).
 
 **Si la Fase 1 se atrasa:**
 - La Fase 2 no empieza hasta cumplir los criterios de salida.
@@ -151,7 +158,7 @@ Los ítems de documentación (DOC-xx) son tareas del Sprint Backlog: no llevan p
 | HU-27 | Como **responsable de seguridad**, quiero el despliegue protegido | Nginx con TLS, `list_db=False`, `admin_passwd` desde secreto; `auth_totp` + `auth_totp_mail` para el administrador y la gerencia; `auth_password_policy` (minlength 12); *cooldown* de login; `auditlog` | 5 | S3 | O | RNF009, RNF010 |
 | HU-28 | Como **equipo**, quiero pruebas de carga, seguridad y WPO con resultados | k6 (20 usuarios virtuales) y ZAP baseline sin alertas altas → O; Lighthouse antes/después (debug=assets frente a prod + Nginx) en login, backend y dashboard → E | 5 | S3 | O+E | RNF002, RNF008, RNF009 |
 | HU-29 | Como **equipo**, quiero una *release* automática | Un tag `v*` publica la imagen en GHCR y el zip del código en GitHub Releases; **`v1.0.0` = núcleo** | 3 | S3 | O | RNF012 |
-| HU-30 | Como **PO**, quiero validar la usabilidad con usuarios | 5 participantes, 4 tareas de procesos estándar cronometradas, SUS calculado | 2 | S3 | E | RNF003 |
+| HU-30 | Como **PO**, quiero validar la usabilidad con usuarios | 5 participantes, 4 tareas de procesos estándar cronometradas, SUS calculado. **Diferida al Cierre** (decisión del 23/11/2026) | 2 | S3 → Cierre | E | RNF003 |
 | HU-32 | Como **responsable de TI**, quiero una mesa de servicios en Project con tipos de ticket ITIL y SLA por prioridad | Proyecto y etapas cargados por código; etiquetas Incidente, Solicitud de servicio y Solicitud de acceso; fecha límite según prioridad; pivote de cumplimiento del SLA ([09 §9.3](09_normas_marcos.md)) | 2 | S3 | E | RNF011 |
 | HU-33 | Como **equipo**, quiero tests de integración de los flujos estándar | En `donofrio_base/tests`: pedido → entrega FEFO → factura (E); compra → recepción y OP → lote con vencimiento (O); todos en CI | 3 | S3 | O+E | RNF004 |
 
@@ -196,7 +203,7 @@ Cada módulo incluye sus tests, la sección 5.5, el diagrama de clases actualiza
 
 ## 4.6 Sprints (en orden, sin fechas)
 
-Hay **un solo plan**. Los sprints van en orden fijo y cada uno tiene un *timebox* de **~1 día**; el límite es uno solo: **entrega de todo el viernes 27 de noviembre, 14:30**. La Guía Scrum solo exige que el sprint dure como máximo un mes y que la duración sea constante; la plantilla no fija una.
+Hay **un solo plan**. Los sprints van en orden fijo y cada uno tiene un *timebox* de **~1 día**; el límite externo es uno solo: **entrega de todo el viernes 27 de noviembre, 14:30**. Para proteger el Cierre, el equipo fijó la **hora de corte de la Fase 2: jueves 26/11/2026, 08:00** (§4.3). La Guía Scrum solo exige que el sprint dure como máximo un mes y que la duración sea constante; la plantilla no fija una.
 
 **S0 Inicio → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo → Gate 0 → S4 Módulos propios (uno a uno, con mini gates) → Cierre**
 
@@ -207,8 +214,8 @@ Hay **un solo plan**. Los sprints van en orden fijo y cada uno tiene un *timebox
 | **S2 Procesos estándar** | F1 | "El ciclo vender-comprar-producir-facturar funciona de punta a punta con datos" | HU-08 a HU-16 (30) | E: BPMN TO-BE, **wireframes y mockups de todas las pantallas, incluidas las de la F2**, fichas de CU, 4.2.9 · O: 4.3.2, 4.3.3, manual de instalación (borrador) |
 | **S3 Calidad del núcleo** | F1 | "Núcleo v1.0.0 entregable: seguro, replicado, probado, desplegado y documentado" | HU-23, 25-30, 32, 33 (29) | E: 4.6 (prototipos y reportes estándar, WPO), 4.7, 6.1-6.3, 6.7-6.8, 6.12 · O: 4.2.5-4.2.8 (clases del dominio, ER y diccionario del núcleo), 5.1-5.15, 6.4-6.6, 6.9-6.11, 6.13, SoA |
 | **GATE 0** | — | Informe del gate; el agente se detiene; el equipo confirma qué módulos hacer | — | `docs/scrum/gates/gate-0-fase1.md` |
-| **S4 Módulos propios** | F2 | "Agregar M1 → M2 → M3 → M4, uno a uno (mini gate tras cada uno), hasta donde alcance" | HU-17-22, 24 (37), (+31) | Por cada módulo: 5.5, clases, ER y diccionario actualizados, prototipos y reportes nuevos, RF a "Implementado"; mini gate |
-| **Cierre** (reservado) | — | "Entrega" | — | Informe final en PDF, manuales en PDF, PPT, zip de la última release, 2 ensayos y entrega antes del viernes 27, 14:30 |
+| **S4 Módulos propios** | F2 | "Fase 2 completa: M1 → M2 → M3 → M4, uno a uno (mini gate tras cada uno), con la hora de corte del jueves 26/11, 08:00" | HU-17-22, 24 (37), (+31) | Por cada módulo: 5.5, clases, ER y diccionario actualizados, prototipos y reportes nuevos, RF a "Implementado"; mini gate |
+| **Cierre** (reservado, ≈30 h desde el corte) | — | "Entrega" | — | **Diferidos del Gate 0:** HU-30 (5 personas, 4 tareas, SUS), demo cruzada y video de la demo · **Entregables:** informe final en PDF, manuales en PDF (instalación, herramientas y **usuario**), presentación, zip de la última release, 2 ensayos y entrega antes del viernes 27, 14:30 |
 
 ### Sprint Backlog: formato (tabla 9 de la plantilla)
 
@@ -303,8 +310,8 @@ Los hitos van en orden y sin fechas; el único plazo es el de H8.
 | H2 | Datos maestros de D'Onofrio por código (`donofrio_base`) | S1 | O |
 | H3 | Ciclo estándar de punta a punta + transacciones | S2 | E+O |
 | **H4** | **Núcleo v1.0.0 entregable → Gate 0** | **S3** | E+O |
-| H5 | Módulos de la F2 confirmados en el gate, cada uno con su tag (v1.1.0…) | S4 | E+O |
-| H6 | Informe PDF, manuales, PPT y zip finales | Cierre | E+O |
+| H5 | Módulos de la F2 confirmados en el gate, cada uno con su tag (v1.1.0…); **corte de la F2: jueves 26/11, 08:00** | S4 | E+O |
+| H6 | Informe PDF, manuales (instalación, herramientas y usuario), PPT y zip finales; HU-30, demo cruzada y video | Cierre | E+O |
 | H7 | 2 ensayos cronometrados (≤ 10 min) | Cierre | E+O |
 | H8 | **Entrega de todo: viernes 27 de noviembre, 14:30** (UTP+Class, un integrante, un solo intento) | Cierre | E (sube), O (verifica) |
 
@@ -330,7 +337,7 @@ Las HU van como **checklist dentro de un issue de épica** (una por área y due�
 | 10 | Inventario y producción | Épica | S2 | Orlando | Must | HU-11, HU-12, HU-14 | 11 |
 | 11 | Transacciones de demostración | Épica | S2 | Orlando | Must | HU-16 | 5 |
 | 12 | Infraestructura, réplica y seguridad | Épica | S3 | Orlando | Must | HU-25, HU-26, HU-27, HU-29 | 14 |
-| 13 | Gerencia, KPIs y mesa de servicios ITIL | Épica | S3 | Evelyn | Must | HU-23, HU-30, HU-32 | 7 |
+| 13 | Gerencia, KPIs y mesa de servicios ITIL | Épica | S3 (HU-30: Cierre) | Evelyn | Must | HU-23, HU-30, HU-32 | 7 |
 | 14 | Pruebas y calidad del software | Épica | S3 | Orlando | Must | HU-28, HU-33 | 8 |
 | 15 | Gate 0 | Gestión | S3 | Evelyn | Must | — | 0 |
 | 16 | M1 `donofrio_calidad` | Épica | S4 | Orlando | Should | HU-17, HU-18 | 11 |
