@@ -1,0 +1,45 @@
+@startuml cu_ventas
+' Casos de uso de Marketing y Ventas (CU001 a CU003). Fase 1: todo con Odoo estándar.
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam actorStyle awesome
+skinparam usecase {
+  BackgroundColor #F4F7FB
+  BorderColor #222222
+}
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #222222
+}
+title Casos de uso: Marketing y Ventas (Fase 1)
+
+actor "Ejecutivo comercial" as EJE
+actor "Vendedor" as VEN
+actor "Jefe de Ventas" as JEF
+actor "Cajero de PdV" as CAJ
+actor "Cliente" as CLI
+
+rectangle "ERP D'Onofrio (Odoo 19 Community)" {
+  usecase "CU001\nRegistrar oportunidad\nen el embudo CRM" as CU001
+  usecase "CU002\nCotizar y confirmar pedido\ncon lista de precios" as CU002
+  usecase "Aplicar lista de precios\npor canal y temporada" as LP
+  usecase "Aprobar descuento\no condición especial" as APR
+  usecase "CU003\nVender en el punto de venta\ncon boleta" as CU003
+  usecase "Cerrar la sesión de caja" as CIE
+}
+
+EJE --> CU001
+VEN --> CU001
+VEN --> CU002
+JEF --> APR
+CAJ --> CU003
+CAJ --> CIE
+CLI --> CU002 : pide y recibe
+CLI --> CU003 : compra
+
+CU001 ..> CU002 : genera la cotización\n(oportunidad ganada)
+CU002 ..> LP : <<include>>
+APR ..> CU002 : <<extend>>
+CIE ..> CU003 : <<extend>>
+@enduml

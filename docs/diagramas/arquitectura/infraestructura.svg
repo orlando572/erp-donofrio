@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="760" viewBox="0 0 1500 760" font-family="DejaVu Sans, Arial, sans-serif">
+<defs><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker></defs>
+<rect width="1500" height="760" fill="#fff"/>
+<text x="750" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#222">Infraestructura tecnológica del ERP de D'Onofrio</text>
+<text x="750" y="54" text-anchor="middle" font-size="12" font-weight="normal" fill="#555">Línea continua: existe en develop (Sprint 3) · Línea punteada: opcional o aún sin publicar (GHCR espera el primer tag v*)</text>
+<rect x="120" y="75" width="790" height="70" rx="8" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<text x="130" y="95" text-anchor="start" font-size="13" font-weight="bold" fill="#222">Usuario (navegador)</text>
+<text x="130" y="114" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Chrome, Firefox o Edge · https://localhost:8443 con el perfil proxy · http://localhost:8069 en desarrollo</text>
+<rect x="20" y="170" width="1130" height="400" rx="8" fill="#fafafa" stroke="#555" stroke-width="1.5"/>
+<text x="30" y="190" text-anchor="start" font-size="13" font-weight="bold" fill="#222">PC de desarrollo (Ubuntu o WSL2) · una por integrante</text>
+<rect x="40" y="205" width="1090" height="350" rx="8" fill="#f4f7fb" stroke="#2c5282" stroke-width="1.5"/>
+<text x="50" y="225" text-anchor="start" font-size="13" font-weight="bold" fill="#222">Docker Engine · proyecto «erp-donofrio» (docker-compose.yml)</text>
+<rect x="60" y="245" width="245" height="170" rx="8" fill="#e8f4ff" stroke="#2c5282" stroke-width="1.5"/>
+<text x="70" y="265" text-anchor="start" font-size="13" font-weight="bold" fill="#222">nginx · nginx:stable</text>
+<text x="70" y="284" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Perfil proxy · HU-27</text>
+<text x="70" y="301" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• TLS 1.2/1.3, HSTS, CSP, gzip y</text>
+<text x="70" y="316" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  caché de assets</text>
+<text x="70" y="333" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Puertos 8080 y 8443</text>
+<rect x="335" y="245" width="245" height="170" rx="8" fill="#e8f4ff" stroke="#2c5282" stroke-width="1.5"/>
+<text x="345" y="265" text-anchor="start" font-size="13" font-weight="bold" fill="#222">odoo · odoo:19.0-20261112</text>
+<text x="345" y="284" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Imagen propia (docker/odoo)</text>
+<text x="345" y="301" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Puertos 8069 y 8072, solo en</text>
+<text x="345" y="316" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  127.0.0.1</text>
+<text x="345" y="333" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Monta ./addons en lectura</text>
+<text x="345" y="350" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Healthcheck /web/health</text>
+<rect x="610" y="245" width="245" height="170" rx="8" fill="#e8f4ff" stroke="#2c5282" stroke-width="1.5"/>
+<text x="620" y="265" text-anchor="start" font-size="13" font-weight="bold" fill="#222">db · postgres:16</text>
+<text x="620" y="284" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Puerto 5432, solo en 127.0.0.1</text>
+<text x="620" y="299" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  (DBeaver)</text>
+<text x="620" y="316" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Rol «odoo» sin superusuario</text>
+<text x="620" y="333" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Healthcheck pg_isready</text>
+<rect x="885" y="245" width="225" height="170" rx="8" fill="#e8f4ff" stroke="#2c5282" stroke-width="1.5"/>
+<text x="895" y="265" text-anchor="start" font-size="13" font-weight="bold" fill="#222">db-replica · postgres:16</text>
+<text x="895" y="284" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Perfil replica · HU-25</text>
+<text x="895" y="301" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Streaming replication, solo</text>
+<text x="895" y="316" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  lectura</text>
+<text x="895" y="333" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Puerto 5433 en 127.0.0.1</text>
+<rect x="335" y="455" width="245" height="80" rx="8" fill="#fffbe6" stroke="#8a6d00" stroke-width="1.5"/>
+<text x="345" y="475" text-anchor="start" font-size="13" font-weight="bold" fill="#222">Volumen odoo-data</text>
+<text x="345" y="494" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• /var/lib/odoo: filestore</text>
+<rect x="610" y="455" width="245" height="80" rx="8" fill="#fffbe6" stroke="#8a6d00" stroke-width="1.5"/>
+<text x="620" y="475" text-anchor="start" font-size="13" font-weight="bold" fill="#222">Volumen pgdata</text>
+<text x="620" y="494" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• /var/lib/postgresql/data</text>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="180,145 180,245"/>
+<text x="188" y="163" text-anchor="start" font-size="11" font-weight="normal" fill="#333">HTTPS</text>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="457,145 457,245"/>
+<text x="465" y="163" text-anchor="start" font-size="11" font-weight="normal" fill="#333">HTTP 8069</text>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="305,330 335,330"/>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-start="url(#flecha)" marker-end="url(#flecha)" points="580,330 610,330"/>
+<text x="595" y="322" text-anchor="middle" font-size="10" font-weight="normal" fill="#333">SQL</text>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="855,330 885,330"/>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="457,415 457,455"/>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="732,415 732,455"/>
+<rect x="1190" y="75" width="290" height="490" rx="8" fill="#fafafa" stroke="#555" stroke-width="1.5"/>
+<text x="1200" y="95" text-anchor="start" font-size="13" font-weight="bold" fill="#222">GitHub · repo erp-donofrio (público)</text>
+<rect x="1205" y="115" width="260" height="100" rx="8" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<text x="1215" y="135" text-anchor="start" font-size="13" font-weight="bold" fill="#222">Repositorio y Projects</text>
+<text x="1215" y="154" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Ramas main, develop y feature/HU-xx</text>
+<text x="1215" y="171" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• PR con revisión cruzada</text>
+<text x="1215" y="188" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Project «Scrum ERP D'Onofrio»</text>
+<rect x="1205" y="230" width="260" height="130" rx="8" fill="#e8f9ee" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="1215" y="250" text-anchor="start" font-size="13" font-weight="bold" fill="#222">Actions · runner ubuntu-24.04</text>
+<text x="1215" y="269" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• ci.yml: jobs lint, test, replica,</text>
+<text x="1215" y="284" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  backup y proxy</text>
+<text x="1215" y="301" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• perf.yml (manual): k6 y ZAP</text>
+<text x="1215" y="318" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• release.yml: imagen y zip</text>
+<rect x="1205" y="375" width="260" height="175" rx="8" fill="#fff" stroke="#555" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="1215" y="395" text-anchor="start" font-size="13" font-weight="bold" fill="#222">GHCR ·</text>
+<text x="1215" y="411" text-anchor="start" font-size="13" font-weight="bold" fill="#222">ghcr.io/orlando572/erp-donofrio</text>
+<text x="1215" y="430" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Imagen de Odoo en cada tag v*</text>
+<text x="1215" y="447" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Zip del código en la Release</text>
+<text x="1215" y="464" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• HU-29: workflow listo y probado en</text>
+<text x="1215" y="479" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  ensayo; aún no hay tag publicado</text>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="1150,330 1190,330"/>
+<text x="1170" y="318" text-anchor="middle" font-size="11" font-weight="normal" fill="#333">push</text>
+<rect x="1190" y="600" width="290" height="130" rx="8" fill="#fff" stroke="#555" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="1200" y="620" text-anchor="start" font-size="13" font-weight="bold" fill="#222">VM en la nube (opcional)</text>
+<text x="1200" y="639" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Oracle Free u otra, con Docker Compose</text>
+<text x="1200" y="656" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Nginx y Let's Encrypt</text>
+<text x="1200" y="673" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Despliegue por SSH desde Actions</text>
+<polyline fill="none" stroke="#333" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#flecha)" points="1335,565 1335,600"/>
+<rect x="20" y="600" width="1130" height="130" rx="8" fill="#fff" stroke="#999" stroke-width="1.5"/>
+<text x="30" y="620" text-anchor="start" font-size="13" font-weight="bold" fill="#222">Cómo se usa</text>
+<text x="30" y="639" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Cada integrante levanta todo con: cp .env.example .env · docker compose up -d --build · scripts/init_db.sh</text>
+<text x="30" y="656" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Los puertos de Odoo y PostgreSQL solo escuchan en 127.0.0.1; Nginx publica 8080 y 8443. Perfiles opcionales: docker compose --profile replica up -d y</text>
+<text x="30" y="671" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  scripts/levantar_prod.sh (proxy)</text>
+<text x="30" y="688" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• El CI de GitHub usa el mismo docker-compose.yml y la misma imagen fechada que las PC (RNF012)</text>
+</svg>

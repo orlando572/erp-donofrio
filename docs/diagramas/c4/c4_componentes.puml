@@ -1,0 +1,31 @@
+@startuml c4_componentes
+' 5.8 Diagrama C4, nivel 3 (componentes del contenedor odoo). Salen de addons/donofrio_base y de sus depends. Regenerar: ver docs/diagramas/README.md
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+title Componentes del contenedor odoo y su integración con PostgreSQL
+
+Container(nginx, "nginx", "nginx:stable", "Proxy TLS")
+ContainerDb(db, "db (primario)", "PostgreSQL 16", "Tablas de los modelos, ir_model_data y ACL")
+ContainerDb(replica, "db-replica", "PostgreSQL 16", "Réplica de solo lectura")
+
+Container_Boundary(odoo, "odoo · Odoo 19.0 Community") {
+    Component(cliente, "Cliente web", "OWL + QWeb (JavaScript en el navegador)", "Vistas list, form, kanban y pivot; dashboards spreadsheet_dashboard_*; PdV (/pos/ui). Habla JSON-RPC con el servidor")
+    Component(http, "Capa HTTP y controladores", "odoo.http · workers (2 en producción)", "Rutas /web, /odoo, /web/session/authenticate y /web/health; login con cooldown de 5 intentos; websocket por el puerto 8072")
+    Component(orm, "ORM y registro de modelos", "odoo.models · odoo.api", "Mapea modelos a tablas, aplica ACL (ir.model.access) y reglas de registro (ir.rule), tracking en el chatter. No se escribe SQL a mano")
+    Component(estandar, "Módulos estándar de negocio", "sale, purchase, purchase_stock, stock, product_expiry, mrp, point_of_sale, crm, hr, project, l10n_pe", "Ventas, compras, inventario con lotes y FEFO, producción, PdV, CRM, RR. HH., mesa de servicios y facturación con IGV")
+    Component(seg, "Módulos de seguridad", "auth_totp_mail, auth_password_policy, auditlog (OCA)", "2FA, política de 12 caracteres y bitácora de cambios (quién, cuándo, antes y después)")
+    Component(base, "donofrio_base", "Módulo propio (LGPL-3)", "Extiende sale.order, res.users, project.task y auditlog.rule; 13 archivos de datos por área; security/ con grupos, 4 ir.rule y 1 ACL; post_init_hook; 20 archivos de pruebas")
+    Component(cron, "Tareas programadas", "ir.cron", "Alertas de vencimiento de lotes (product_expiry) y planificador de reabastecimiento")
+}
+
+Rel(nginx, http, "Proxy inverso", "HTTP 8069 y 8072")
+Rel(cliente, http, "Llamadas", "JSON-RPC (web_search_read, web_read, ...)")
+Rel(http, orm, "Ejecuta métodos del modelo", "Python")
+Rel(orm, estandar, "Registra sus modelos", "")
+Rel(orm, seg, "Aplica 2FA, política y auditoría", "")
+Rel(base, estandar, "_inherit y datos XML", "depends (19 módulos)")
+Rel(base, seg, "Reglas de auditoría y parámetros", "XML y _inherit")
+Rel(cron, orm, "Invoca", "")
+Rel(orm, db, "Consultas y transacciones", "psycopg2 · 5432")
+Rel_R(db, replica, "WAL", "streaming")
+@enduml

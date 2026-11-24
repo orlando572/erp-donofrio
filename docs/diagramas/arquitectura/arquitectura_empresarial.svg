@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="640" viewBox="0 0 1500 640" font-family="DejaVu Sans, Arial, sans-serif">
+<defs><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker></defs>
+<rect width="1500" height="640" fill="#fff"/>
+<text x="750" y="34" text-anchor="middle" font-size="18" font-weight="bold" fill="#222">Arquitectura empresarial de D'Onofrio: situación actual (AS-IS) y propuesta (TO-BE)</text>
+<text x="750" y="56" text-anchor="middle" font-size="12" font-weight="normal" fill="#555">Capas TOGAF simplificadas: negocio, datos, aplicación y tecnología (los datos de la situación actual son un supuesto, S7)</text>
+<text x="480" y="94" text-anchor="middle" font-size="15" font-weight="bold" fill="#c0392b">AS-IS · situación actual</text>
+<text x="1160" y="94" text-anchor="middle" font-size="15" font-weight="bold" fill="#1e7e34">TO-BE · propuesta con Odoo 19</text>
+<rect x="20" y="112" width="140" height="118" rx="8" fill="#fff8e1" stroke="#222" stroke-width="1.5"/>
+<text x="90" y="176" text-anchor="middle" font-size="15" font-weight="bold" fill="#222">Negocio</text>
+<rect x="175" y="112" width="610" height="118" rx="8" fill="#fdf2f0" stroke="#c0392b" stroke-width="1.5"/>
+<text x="185" y="132" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Cinco áreas con procesos manuales: ventas B2B, liquidación de heladeros,</text>
+<text x="185" y="148" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  producción y calidad, almacén con cadena de frío y compras</text>
+<text x="185" y="166" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Cada área decide con sus propios papeles; la gerencia recibe reportes armados a</text>
+<text x="185" y="182" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  mano al cierre</text>
+<rect x="840" y="112" width="640" height="118" rx="8" fill="#f0f9f2" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="850" y="132" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Procesos de punta a punta en un solo flujo: CRM → pedido → entrega FEFO → factura;</text>
+<text x="850" y="148" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  compra → recepción; orden de producción → lote</text>
+<text x="850" y="166" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Punto de venta con boleta; gerencia con dashboards y vistas pivote; mesa de servicios</text>
+<text x="850" y="182" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  TI</text>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="785,171 840,171"/>
+<rect x="20" y="242" width="140" height="118" rx="8" fill="#eef7ee" stroke="#222" stroke-width="1.5"/>
+<text x="90" y="306" text-anchor="middle" font-size="15" font-weight="bold" fill="#222">Datos</text>
+<rect x="175" y="242" width="610" height="118" rx="8" fill="#fdf2f0" stroke="#c0392b" stroke-width="1.5"/>
+<text x="185" y="262" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Excel por área, kárdex, planillas de temperatura y formatos de inspección en</text>
+<text x="185" y="278" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  papel</text>
+<text x="185" y="296" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Sin lote ni vencimiento en un sistema; el mismo dato se digita dos o más veces</text>
+<rect x="840" y="242" width="640" height="118" rx="8" fill="#f0f9f2" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="850" y="262" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Una sola base PostgreSQL 16: el lote, el vencimiento y el movimiento quedan ligados</text>
+<text x="850" y="280" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Datos maestros cargados por código (donofrio_base); réplica de lectura (HU-25) y</text>
+<text x="850" y="296" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  respaldos con restauración probada (HU-26)</text>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="785,301 840,301"/>
+<rect x="20" y="372" width="140" height="118" rx="8" fill="#eef3fb" stroke="#222" stroke-width="1.5"/>
+<text x="90" y="436" text-anchor="middle" font-size="15" font-weight="bold" fill="#222">Aplicación</text>
+<rect x="175" y="372" width="610" height="118" rx="8" fill="#fdf2f0" stroke="#c0392b" stroke-width="1.5"/>
+<text x="185" y="392" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Excel, correo y Word; un sistema contable aislado; sin integración entre áreas</text>
+<rect x="840" y="372" width="640" height="118" rx="8" fill="#f0f9f2" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="850" y="392" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Odoo 19 Community: Ventas, CRM, Punto de venta, Inventario, Manufactura, Compras,</text>
+<text x="850" y="408" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  Facturación (l10n_pe), RR. HH. y Project</text>
+<text x="850" y="426" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• donofrio_base en la Fase 1; donofrio_calidad, donofrio_heladeros y donofrio_tablero en</text>
+<text x="850" y="442" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  la Fase 2, solo si se confirman en el gate</text>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="785,431 840,431"/>
+<rect x="20" y="502" width="140" height="118" rx="8" fill="#f3eefb" stroke="#222" stroke-width="1.5"/>
+<text x="90" y="566" text-anchor="middle" font-size="15" font-weight="bold" fill="#222">Tecnología</text>
+<rect x="175" y="502" width="610" height="118" rx="8" fill="#fdf2f0" stroke="#c0392b" stroke-width="1.5"/>
+<text x="185" y="522" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• PC de oficina y un servidor de archivos (supuesto)</text>
+<text x="185" y="540" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Sin entornos separados ni respaldos verificados</text>
+<rect x="840" y="502" width="640" height="118" rx="8" fill="#f0f9f2" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="850" y="522" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Docker Compose (Odoo 19 + PostgreSQL 16), Nginx con TLS (perfil proxy) y réplica de</text>
+<text x="850" y="538" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  PostgreSQL (perfil replica)</text>
+<text x="850" y="556" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• GitHub (código, Projects), Actions (CI) y GHCR (imágenes); Ubuntu o WSL2 en las PC de</text>
+<text x="850" y="572" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  desarrollo</text>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="785,561 840,561"/>
+</svg>

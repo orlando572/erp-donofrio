@@ -38,3 +38,5 @@ zap-report.*
 .DS_Store
 Thumbs.db
 node_modules/
+docker/nginx/certs/
+scripts/perf/resultados/

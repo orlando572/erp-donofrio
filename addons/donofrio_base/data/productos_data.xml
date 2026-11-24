@@ -1,0 +1,1055 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HU-07: categorías, proveedores, insumos y productos terminados (03 §3.3 b y c).
+     Generado a partir de tablas de redacción; los datos son ficticios y verosímiles (supuesto S2 del plan). -->
+<odoo noupdate="1">
+
+    <!-- Lotes con vencimiento y operaciones de producción visibles para los usuarios internos -->
+    <record id="base.group_user" model="res.groups">
+        <field name="implied_ids" eval="[
+            Command.link(ref('stock.group_production_lot')),
+            Command.link(ref('mrp.group_mrp_routings')),
+        ]"/>
+    </record>
+
+    <!-- Categorías de producto. Todas retiran por FEFO (primero vence, primero sale) -->
+    <record id="cat_terminados" model="product.category">
+        <field name="name">Productos terminados</field>
+    </record>
+    <record id="cat_helados" model="product.category">
+        <field name="name">Helados</field>
+        <field name="parent_id" ref="cat_terminados"/>
+        <field name="removal_strategy_id" ref="product_expiry.removal_fefo"/>
+    </record>
+    <record id="cat_chocolates" model="product.category">
+        <field name="name">Chocolates</field>
+        <field name="parent_id" ref="cat_terminados"/>
+        <field name="removal_strategy_id" ref="product_expiry.removal_fefo"/>
+    </record>
+    <record id="cat_paneton" model="product.category">
+        <field name="name">Panetón</field>
+        <field name="parent_id" ref="cat_terminados"/>
+        <field name="removal_strategy_id" ref="product_expiry.removal_fefo"/>
+    </record>
+    <record id="cat_insumos" model="product.category">
+        <field name="name">Insumos</field>
+    </record>
+    <record id="cat_ins_lacteos" model="product.category">
+        <field name="name">Lácteos, huevos y refrigerados</field>
+        <field name="parent_id" ref="cat_insumos"/>
+        <field name="removal_strategy_id" ref="product_expiry.removal_fefo"/>
+    </record>
+    <record id="cat_ins_secos" model="product.category">
+        <field name="name">Secos y saborizantes</field>
+        <field name="parent_id" ref="cat_insumos"/>
+        <field name="removal_strategy_id" ref="product_expiry.removal_fefo"/>
+    </record>
+    <record id="cat_ins_frutas" model="product.category">
+        <field name="name">Frutas y frutos secos</field>
+        <field name="parent_id" ref="cat_insumos"/>
+        <field name="removal_strategy_id" ref="product_expiry.removal_fefo"/>
+    </record>
+    <record id="cat_ins_empaques" model="product.category">
+        <field name="name">Material de empaque</field>
+        <field name="parent_id" ref="cat_insumos"/>
+        <field name="removal_strategy_id" ref="product_expiry.removal_fefo"/>
+    </record>
+
+    <!-- Proveedores ficticios (sin RUC: no se emiten documentos con ellos en la demo) -->
+    <record id="prov_lacteos" model="res.partner">
+        <field name="name">Lácteos del Valle Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="country_id" ref="base.pe"/>
+        <field name="city">Arequipa</field>
+        <field name="lang">es_PE</field>
+    </record>
+    <record id="prov_cacao" model="res.partner">
+        <field name="name">Cacao y Derivados Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="country_id" ref="base.pe"/>
+        <field name="city">Lima</field>
+        <field name="lang">es_PE</field>
+    </record>
+    <record id="prov_molino" model="res.partner">
+        <field name="name">Molino y Azúcar Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="country_id" ref="base.pe"/>
+        <field name="city">Lima</field>
+        <field name="lang">es_PE</field>
+    </record>
+    <record id="prov_frutas" model="res.partner">
+        <field name="name">Frutas y Pulpas Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="country_id" ref="base.pe"/>
+        <field name="city">Lima</field>
+        <field name="lang">es_PE</field>
+    </record>
+    <record id="prov_envases" model="res.partner">
+        <field name="name">Envases y Empaques Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="country_id" ref="base.pe"/>
+        <field name="city">Lima</field>
+        <field name="lang">es_PE</field>
+    </record>
+    <record id="prov_cartones" model="res.partner">
+        <field name="name">Cartones y Cajas Ejemplo SAC</field>
+        <field name="is_company" eval="True"/>
+        <field name="country_id" ref="base.pe"/>
+        <field name="city">Lima</field>
+        <field name="lang">es_PE</field>
+    </record>
+
+    <!-- Insumos: seguimiento por lote y vida útil en los perecibles -->
+    <record id="in_leche" model="product.template">
+        <field name="name">Leche fresca</field>
+        <field name="default_code">IN-001</field>
+        <field name="categ_id" ref="cat_ins_lacteos"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_litre"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">2.8</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">10</field>
+        <field name="use_time">2</field>
+        <field name="removal_time">1</field>
+        <field name="alert_time">3</field>
+    </record>
+    <record id="in_crema" model="product.template">
+        <field name="name">Crema de leche</field>
+        <field name="default_code">IN-002</field>
+        <field name="categ_id" ref="cat_ins_lacteos"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_litre"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">12.0</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">15</field>
+        <field name="use_time">3</field>
+        <field name="removal_time">1</field>
+        <field name="alert_time">5</field>
+    </record>
+    <record id="in_leche_polvo" model="product.template">
+        <field name="name">Leche en polvo entera</field>
+        <field name="default_code">IN-003</field>
+        <field name="categ_id" ref="cat_ins_lacteos"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">22.0</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">18</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="in_mantequilla" model="product.template">
+        <field name="name">Mantequilla</field>
+        <field name="default_code">IN-004</field>
+        <field name="categ_id" ref="cat_ins_lacteos"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">28.0</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">120</field>
+        <field name="use_time">15</field>
+        <field name="removal_time">6</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="in_cacao" model="product.template">
+        <field name="name">Cacao en polvo</field>
+        <field name="default_code">IN-005</field>
+        <field name="categ_id" ref="cat_ins_secos"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">35.0</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">540</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">27</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="in_manteca_cacao" model="product.template">
+        <field name="name">Manteca de cacao</field>
+        <field name="default_code">IN-006</field>
+        <field name="categ_id" ref="cat_ins_secos"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">540</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">27</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="in_azucar" model="product.template">
+        <field name="name">Azúcar blanca</field>
+        <field name="default_code">IN-007</field>
+        <field name="categ_id" ref="cat_ins_secos"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">3.8</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">720</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">36</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="in_harina" model="product.template">
+        <field name="name">Harina de trigo</field>
+        <field name="default_code">IN-008</field>
+        <field name="categ_id" ref="cat_ins_secos"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">3.2</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">270</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">13</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="in_glucosa" model="product.template">
+        <field name="name">Glucosa</field>
+        <field name="default_code">IN-009</field>
+        <field name="categ_id" ref="cat_ins_secos"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">6.0</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">18</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="in_huevos" model="product.template">
+        <field name="name">Huevos</field>
+        <field name="default_code">IN-010</field>
+        <field name="categ_id" ref="cat_ins_lacteos"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">0.45</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">25</field>
+        <field name="use_time">6</field>
+        <field name="removal_time">1</field>
+        <field name="alert_time">5</field>
+    </record>
+    <record id="in_pulpa_fresa" model="product.template">
+        <field name="name">Pulpa de fresa</field>
+        <field name="default_code">IN-011</field>
+        <field name="categ_id" ref="cat_ins_frutas"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">14.0</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">270</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">13</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="in_pulpa_lucuma" model="product.template">
+        <field name="name">Pulpa de lúcuma</field>
+        <field name="default_code">IN-012</field>
+        <field name="categ_id" ref="cat_ins_frutas"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">18.0</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">270</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">13</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="in_frutas_confitadas" model="product.template">
+        <field name="name">Frutas confitadas</field>
+        <field name="default_code">IN-013</field>
+        <field name="categ_id" ref="cat_ins_frutas"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">16.0</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">18</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="in_pasas" model="product.template">
+        <field name="name">Pasas</field>
+        <field name="default_code">IN-014</field>
+        <field name="categ_id" ref="cat_ins_frutas"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">15.0</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">18</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="in_mani" model="product.template">
+        <field name="name">Maní tostado</field>
+        <field name="default_code">IN-015</field>
+        <field name="categ_id" ref="cat_ins_secos"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">17.0</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">270</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">13</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="in_vainilla" model="product.template">
+        <field name="name">Esencia de vainilla</field>
+        <field name="default_code">IN-016</field>
+        <field name="categ_id" ref="cat_ins_secos"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_litre"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">45.0</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">720</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">36</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="in_cono" model="product.template">
+        <field name="name">Cono de barquillo</field>
+        <field name="default_code">IN-017</field>
+        <field name="categ_id" ref="cat_ins_secos"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">0.35</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">180</field>
+        <field name="use_time">22</field>
+        <field name="removal_time">9</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="in_envoltura" model="product.template">
+        <field name="name">Envoltura impresa</field>
+        <field name="default_code">IN-018</field>
+        <field name="categ_id" ref="cat_ins_empaques"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">0.06</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+    </record>
+    <record id="in_palito" model="product.template">
+        <field name="name">Palito de madera</field>
+        <field name="default_code">IN-019</field>
+        <field name="categ_id" ref="cat_ins_empaques"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">0.03</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+    </record>
+    <record id="in_vaso" model="product.template">
+        <field name="name">Vaso de 120 ml con tapa</field>
+        <field name="default_code">IN-020</field>
+        <field name="categ_id" ref="cat_ins_empaques"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">0.22</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+    </record>
+    <record id="in_envase_1l" model="product.template">
+        <field name="name">Envase de 1 L con tapa</field>
+        <field name="default_code">IN-021</field>
+        <field name="categ_id" ref="cat_ins_empaques"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">0.95</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+    </record>
+    <record id="in_caja_paneton" model="product.template">
+        <field name="name">Caja de cartón para panetón</field>
+        <field name="default_code">IN-022</field>
+        <field name="categ_id" ref="cat_ins_empaques"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">0.0</field>
+        <field name="standard_price">1.6</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+    </record>
+
+    <!-- Proveedor y tiempo de entrega de cada insumo -->
+    <record id="si_in_leche" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_lacteos"/>
+        <field name="product_tmpl_id" ref="in_leche"/>
+        <field name="price">2.8</field>
+        <field name="delay">2</field>
+    </record>
+    <record id="si_in_crema" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_lacteos"/>
+        <field name="product_tmpl_id" ref="in_crema"/>
+        <field name="price">12.0</field>
+        <field name="delay">3</field>
+    </record>
+    <record id="si_in_leche_polvo" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_lacteos"/>
+        <field name="product_tmpl_id" ref="in_leche_polvo"/>
+        <field name="price">22.0</field>
+        <field name="delay">7</field>
+    </record>
+    <record id="si_in_mantequilla" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_lacteos"/>
+        <field name="product_tmpl_id" ref="in_mantequilla"/>
+        <field name="price">28.0</field>
+        <field name="delay">5</field>
+    </record>
+    <record id="si_in_cacao" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_cacao"/>
+        <field name="product_tmpl_id" ref="in_cacao"/>
+        <field name="price">35.0</field>
+        <field name="delay">14</field>
+    </record>
+    <record id="si_in_manteca_cacao" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_cacao"/>
+        <field name="product_tmpl_id" ref="in_manteca_cacao"/>
+        <field name="price">55.0</field>
+        <field name="delay">14</field>
+    </record>
+    <record id="si_in_azucar" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_molino"/>
+        <field name="product_tmpl_id" ref="in_azucar"/>
+        <field name="price">3.8</field>
+        <field name="delay">3</field>
+    </record>
+    <record id="si_in_harina" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_molino"/>
+        <field name="product_tmpl_id" ref="in_harina"/>
+        <field name="price">3.2</field>
+        <field name="delay">3</field>
+    </record>
+    <record id="si_in_glucosa" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_molino"/>
+        <field name="product_tmpl_id" ref="in_glucosa"/>
+        <field name="price">6.0</field>
+        <field name="delay">7</field>
+    </record>
+    <record id="si_in_huevos" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_molino"/>
+        <field name="product_tmpl_id" ref="in_huevos"/>
+        <field name="price">0.45</field>
+        <field name="delay">2</field>
+    </record>
+    <record id="si_in_pulpa_fresa" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_frutas"/>
+        <field name="product_tmpl_id" ref="in_pulpa_fresa"/>
+        <field name="price">14.0</field>
+        <field name="delay">7</field>
+    </record>
+    <record id="si_in_pulpa_lucuma" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_frutas"/>
+        <field name="product_tmpl_id" ref="in_pulpa_lucuma"/>
+        <field name="price">18.0</field>
+        <field name="delay">7</field>
+    </record>
+    <record id="si_in_frutas_confitadas" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_frutas"/>
+        <field name="product_tmpl_id" ref="in_frutas_confitadas"/>
+        <field name="price">16.0</field>
+        <field name="delay">10</field>
+    </record>
+    <record id="si_in_pasas" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_frutas"/>
+        <field name="product_tmpl_id" ref="in_pasas"/>
+        <field name="price">15.0</field>
+        <field name="delay">10</field>
+    </record>
+    <record id="si_in_mani" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_frutas"/>
+        <field name="product_tmpl_id" ref="in_mani"/>
+        <field name="price">17.0</field>
+        <field name="delay">7</field>
+    </record>
+    <record id="si_in_vainilla" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_molino"/>
+        <field name="product_tmpl_id" ref="in_vainilla"/>
+        <field name="price">45.0</field>
+        <field name="delay">10</field>
+    </record>
+    <record id="si_in_cono" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_molino"/>
+        <field name="product_tmpl_id" ref="in_cono"/>
+        <field name="price">0.35</field>
+        <field name="delay">7</field>
+    </record>
+    <record id="si_in_envoltura" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_envases"/>
+        <field name="product_tmpl_id" ref="in_envoltura"/>
+        <field name="price">0.06</field>
+        <field name="delay">10</field>
+    </record>
+    <record id="si_in_palito" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_envases"/>
+        <field name="product_tmpl_id" ref="in_palito"/>
+        <field name="price">0.03</field>
+        <field name="delay">10</field>
+    </record>
+    <record id="si_in_vaso" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_envases"/>
+        <field name="product_tmpl_id" ref="in_vaso"/>
+        <field name="price">0.22</field>
+        <field name="delay">10</field>
+    </record>
+    <record id="si_in_envase_1l" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_envases"/>
+        <field name="product_tmpl_id" ref="in_envase_1l"/>
+        <field name="price">0.95</field>
+        <field name="delay">10</field>
+    </record>
+    <record id="si_in_caja_paneton" model="product.supplierinfo">
+        <field name="partner_id" ref="prov_cartones"/>
+        <field name="product_tmpl_id" ref="in_caja_paneton"/>
+        <field name="price">1.6</field>
+        <field name="delay">12</field>
+    </record>
+
+    <!-- Productos terminados: seguimiento por lote, vida útil y alerta 30 días antes -->
+    <record id="pt_h01" model="product.template">
+        <field name="name">Paleta de fresa 60 g</field>
+        <field name="default_code">PT-H01</field>
+        <field name="categ_id" ref="cat_helados"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">1.5</field>
+        <field name="standard_price">0.55</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_h02" model="product.template">
+        <field name="name">Paleta de limón 60 g</field>
+        <field name="default_code">PT-H02</field>
+        <field name="categ_id" ref="cat_helados"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">1.5</field>
+        <field name="standard_price">0.5</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_h03" model="product.template">
+        <field name="name">Paleta de chocolate con cobertura 70 g</field>
+        <field name="default_code">PT-H03</field>
+        <field name="categ_id" ref="cat_helados"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">2.5</field>
+        <field name="standard_price">0.95</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_h04" model="product.template">
+        <field name="name">Paleta de crema de vainilla 70 g</field>
+        <field name="default_code">PT-H04</field>
+        <field name="categ_id" ref="cat_helados"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">2.0</field>
+        <field name="standard_price">0.75</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_h05" model="product.template">
+        <field name="name">Cono de vainilla con cobertura</field>
+        <field name="default_code">PT-H05</field>
+        <field name="categ_id" ref="cat_helados"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">3.5</field>
+        <field name="standard_price">1.35</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_h06" model="product.template">
+        <field name="name">Cono de chocolate</field>
+        <field name="default_code">PT-H06</field>
+        <field name="categ_id" ref="cat_helados"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">3.5</field>
+        <field name="standard_price">1.4</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_h07" model="product.template">
+        <field name="name">Vaso de lúcuma 120 ml</field>
+        <field name="default_code">PT-H07</field>
+        <field name="categ_id" ref="cat_helados"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">3.0</field>
+        <field name="standard_price">1.1</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_h08" model="product.template">
+        <field name="name">Vaso de fresa con crema 120 ml</field>
+        <field name="default_code">PT-H08</field>
+        <field name="categ_id" ref="cat_helados"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">3.0</field>
+        <field name="standard_price">1.05</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_h09" model="product.template">
+        <field name="name">Sándwich de vainilla</field>
+        <field name="default_code">PT-H09</field>
+        <field name="categ_id" ref="cat_helados"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">2.8</field>
+        <field name="standard_price">1.0</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_h10" model="product.template">
+        <field name="name">Helado familiar 1 L de vainilla</field>
+        <field name="default_code">PT-H10</field>
+        <field name="categ_id" ref="cat_helados"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">14.9</field>
+        <field name="standard_price">6.2</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_h11" model="product.template">
+        <field name="name">Helado familiar 1 L de chocolate</field>
+        <field name="default_code">PT-H11</field>
+        <field name="categ_id" ref="cat_helados"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">14.9</field>
+        <field name="standard_price">6.4</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_h12" model="product.template">
+        <field name="name">Helado familiar 1 L de lúcuma</field>
+        <field name="default_code">PT-H12</field>
+        <field name="categ_id" ref="cat_helados"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">16.9</field>
+        <field name="standard_price">7.1</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_h13" model="product.template">
+        <field name="name">Helado familiar 1 L de fresa</field>
+        <field name="default_code">PT-H13</field>
+        <field name="categ_id" ref="cat_helados"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">14.9</field>
+        <field name="standard_price">6.0</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_c01" model="product.template">
+        <field name="name">Chocolate de leche con maní 30 g</field>
+        <field name="default_code">PT-C01</field>
+        <field name="categ_id" ref="cat_chocolates"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">1.8</field>
+        <field name="standard_price">0.85</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_c02" model="product.template">
+        <field name="name">Chocolate de leche 25 g</field>
+        <field name="default_code">PT-C02</field>
+        <field name="categ_id" ref="cat_chocolates"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">1.5</field>
+        <field name="standard_price">0.7</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_c03" model="product.template">
+        <field name="name">Chocolate semiamargo 40 g</field>
+        <field name="default_code">PT-C03</field>
+        <field name="categ_id" ref="cat_chocolates"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">2.5</field>
+        <field name="standard_price">1.2</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_c04" model="product.template">
+        <field name="name">Bombón relleno de lúcuma 18 g</field>
+        <field name="default_code">PT-C04</field>
+        <field name="categ_id" ref="cat_chocolates"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">1.2</field>
+        <field name="standard_price">0.55</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_c05" model="product.template">
+        <field name="name">Barra de chocolate blanco 30 g</field>
+        <field name="default_code">PT-C05</field>
+        <field name="categ_id" ref="cat_chocolates"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">1.8</field>
+        <field name="standard_price">0.85</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_c06" model="product.template">
+        <field name="name">Chocolate con arroz crocante 28 g</field>
+        <field name="default_code">PT-C06</field>
+        <field name="categ_id" ref="cat_chocolates"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">1.6</field>
+        <field name="standard_price">0.75</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_c07" model="product.template">
+        <field name="name">Caja de bombones surtidos 200 g</field>
+        <field name="default_code">PT-C07</field>
+        <field name="categ_id" ref="cat_chocolates"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">24.9</field>
+        <field name="standard_price">11.5</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">365</field>
+        <field name="use_time">30</field>
+        <field name="removal_time">15</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_p01" model="product.template">
+        <field name="name">Panetón clásico 900 g</field>
+        <field name="default_code">PT-P01</field>
+        <field name="categ_id" ref="cat_paneton"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">29.9</field>
+        <field name="standard_price">14.5</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">120</field>
+        <field name="use_time">15</field>
+        <field name="removal_time">7</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_p02" model="product.template">
+        <field name="name">Panetón premium 900 g</field>
+        <field name="default_code">PT-P02</field>
+        <field name="categ_id" ref="cat_paneton"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">39.9</field>
+        <field name="standard_price">20.0</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">120</field>
+        <field name="use_time">15</field>
+        <field name="removal_time">7</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_p03" model="product.template">
+        <field name="name">Panetón clásico 500 g</field>
+        <field name="default_code">PT-P03</field>
+        <field name="categ_id" ref="cat_paneton"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">17.9</field>
+        <field name="standard_price">8.5</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">120</field>
+        <field name="use_time">15</field>
+        <field name="removal_time">7</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_p04" model="product.template">
+        <field name="name">Panetón de chocolate 900 g</field>
+        <field name="default_code">PT-P04</field>
+        <field name="categ_id" ref="cat_paneton"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">34.9</field>
+        <field name="standard_price">17.0</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">120</field>
+        <field name="use_time">15</field>
+        <field name="removal_time">7</field>
+        <field name="alert_time">30</field>
+    </record>
+    <record id="pt_p05" model="product.template">
+        <field name="name">Mini panetón 100 g</field>
+        <field name="default_code">PT-P05</field>
+        <field name="categ_id" ref="cat_paneton"/>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="list_price">4.5</field>
+        <field name="standard_price">2.1</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="use_expiration_date" eval="True"/>
+        <field name="expiration_time">120</field>
+        <field name="use_time">15</field>
+        <field name="removal_time">7</field>
+        <field name="alert_time">30</field>
+    </record>
+
+</odoo>

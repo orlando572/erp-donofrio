@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" id="def_to_be_compra_insumos" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:collaboration id="colab_to_be_compra_insumos">
+    <bpmn:participant id="pool_to_be_compra_insumos" name="TO-BE · Compra de insumos con Odoo estándar (Fase 1)" processRef="proc_to_be_compra_insumos" />
+  </bpmn:collaboration>
+  <bpmn:process id="proc_to_be_compra_insumos" isExecutable="false">
+    <bpmn:laneSet id="carriles">
+      <bpmn:lane id="carril_0" name="Almacén">
+        <bpmn:flowNodeRef>inicio</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>regla</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>recibe</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="carril_1" name="Compras">
+        <bpmn:flowNodeRef>rfq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>revisa</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="carril_2" name="Proveedor">
+        <bpmn:flowNodeRef>envia</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>entrega</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="carril_3" name="Finanzas">
+        <bpmn:flowNodeRef>factura</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>paga</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>fin</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="inicio" name="El stock de un insumo baja del mínimo">
+      <bpmn:outgoing>flujo_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="regla" name="La regla mín./máx. calcula el faltante hasta el máximo">
+      <bpmn:incoming>flujo_1</bpmn:incoming>
+      <bpmn:outgoing>flujo_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="rfq" name="Odoo genera una RFQ por proveedor, a cargo del Comprador">
+      <bpmn:incoming>flujo_2</bpmn:incoming>
+      <bpmn:outgoing>flujo_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="revisa" name="Revisa y confirma: la RFQ pasa a orden de compra">
+      <bpmn:incoming>flujo_3</bpmn:incoming>
+      <bpmn:outgoing>flujo_4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="envia" name="Recibe la orden de compra por correo desde Odoo">
+      <bpmn:incoming>flujo_4</bpmn:incoming>
+      <bpmn:outgoing>flujo_5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="entrega" name="Entrega los insumos con guía y factura">
+      <bpmn:incoming>flujo_5</bpmn:incoming>
+      <bpmn:outgoing>flujo_6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="recibe" name="Recibe contra la OC y registra lote y vencimiento">
+      <bpmn:incoming>flujo_6</bpmn:incoming>
+      <bpmn:outgoing>flujo_7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="factura" name="Registra la factura del proveedor (01) con IGV 18 %">
+      <bpmn:incoming>flujo_7</bpmn:incoming>
+      <bpmn:outgoing>flujo_8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="paga" name="Programa y registra el pago a la fecha de vencimiento">
+      <bpmn:incoming>flujo_8</bpmn:incoming>
+      <bpmn:outgoing>flujo_9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="fin" name="Compra cerrada">
+      <bpmn:incoming>flujo_9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="flujo_1" sourceRef="inicio" targetRef="regla" />
+    <bpmn:sequenceFlow id="flujo_2" sourceRef="regla" targetRef="rfq" />
+    <bpmn:sequenceFlow id="flujo_3" sourceRef="rfq" targetRef="revisa" />
+    <bpmn:sequenceFlow id="flujo_4" sourceRef="revisa" targetRef="envia" />
+    <bpmn:sequenceFlow id="flujo_5" sourceRef="envia" targetRef="entrega" />
+    <bpmn:sequenceFlow id="flujo_6" sourceRef="entrega" targetRef="recibe" />
+    <bpmn:sequenceFlow id="flujo_7" sourceRef="recibe" targetRef="factura" />
+    <bpmn:sequenceFlow id="flujo_8" sourceRef="factura" targetRef="paga" />
+    <bpmn:sequenceFlow id="flujo_9" sourceRef="paga" targetRef="fin" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="diagrama">
+    <bpmndi:BPMNPlane id="plano" bpmnElement="colab_to_be_compra_insumos">
+      <bpmndi:BPMNShape id="pool_to_be_compra_insumos_di" bpmnElement="pool_to_be_compra_insumos" isHorizontal="true">
+        <dc:Bounds x="20" y="20" width="1595" height="600" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="carril_0_di" bpmnElement="carril_0" isHorizontal="true">
+        <dc:Bounds x="50" y="20" width="1565" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="carril_1_di" bpmnElement="carril_1" isHorizontal="true">
+        <dc:Bounds x="50" y="170" width="1565" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="carril_2_di" bpmnElement="carril_2" isHorizontal="true">
+        <dc:Bounds x="50" y="320" width="1565" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="carril_3_di" bpmnElement="carril_3" isHorizontal="true">
+        <dc:Bounds x="50" y="470" width="1565" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="inicio_di" bpmnElement="inicio">
+        <dc:Bounds x="146" y="77" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="104" y="117" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="regla_di" bpmnElement="regla">
+        <dc:Bounds x="255" y="58" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="rfq_di" bpmnElement="rfq">
+        <dc:Bounds x="405" y="208" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="revisa_di" bpmnElement="revisa">
+        <dc:Bounds x="555" y="208" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="envia_di" bpmnElement="envia">
+        <dc:Bounds x="705" y="358" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="entrega_di" bpmnElement="entrega">
+        <dc:Bounds x="855" y="358" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recibe_di" bpmnElement="recibe">
+        <dc:Bounds x="1005" y="58" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="factura_di" bpmnElement="factura">
+        <dc:Bounds x="1155" y="508" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="paga_di" bpmnElement="paga">
+        <dc:Bounds x="1305" y="508" width="118" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="fin_di" bpmnElement="fin">
+        <dc:Bounds x="1496" y="527" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1454" y="567" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="flujo_1_di" bpmnElement="flujo_1">
+        <di:waypoint x="182" y="95" />
+        <di:waypoint x="255" y="95" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_2_di" bpmnElement="flujo_2">
+        <di:waypoint x="373" y="95" />
+        <di:waypoint x="389" y="95" />
+        <di:waypoint x="389" y="245" />
+        <di:waypoint x="405" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_3_di" bpmnElement="flujo_3">
+        <di:waypoint x="523" y="245" />
+        <di:waypoint x="555" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_4_di" bpmnElement="flujo_4">
+        <di:waypoint x="673" y="245" />
+        <di:waypoint x="689" y="245" />
+        <di:waypoint x="689" y="395" />
+        <di:waypoint x="705" y="395" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_5_di" bpmnElement="flujo_5">
+        <di:waypoint x="823" y="395" />
+        <di:waypoint x="855" y="395" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_6_di" bpmnElement="flujo_6">
+        <di:waypoint x="973" y="395" />
+        <di:waypoint x="989" y="395" />
+        <di:waypoint x="989" y="95" />
+        <di:waypoint x="1005" y="95" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_7_di" bpmnElement="flujo_7">
+        <di:waypoint x="1123" y="95" />
+        <di:waypoint x="1139" y="95" />
+        <di:waypoint x="1139" y="545" />
+        <di:waypoint x="1155" y="545" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_8_di" bpmnElement="flujo_8">
+        <di:waypoint x="1273" y="545" />
+        <di:waypoint x="1305" y="545" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flujo_9_di" bpmnElement="flujo_9">
+        <di:waypoint x="1423" y="545" />
+        <di:waypoint x="1496" y="545" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

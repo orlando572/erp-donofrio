@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HU-09: listas de precios por canal y temporada (03 §3.3 a).
+     Todas parten del precio de venta del producto. Los porcentajes son supuestos ficticios. -->
+<odoo noupdate="1">
+
+    <!-- Activa las listas de precios para los usuarios internos (equivale a Ajustes > Ventas > Listas de precios) -->
+    <record id="base.group_user" model="res.groups">
+        <field name="implied_ids" eval="[Command.link(ref('product.group_product_pricelist'))]"/>
+    </record>
+
+    <!-- Canal: Mayorista (distribuidores y autoservicios), 15 % sobre todo el catálogo -->
+    <record id="lista_mayorista" model="product.pricelist">
+        <field name="name">Mayorista</field>
+        <field name="currency_id" ref="base.PEN"/>
+    </record>
+    <record id="lista_mayorista_regla" model="product.pricelist.item">
+        <field name="pricelist_id" ref="lista_mayorista"/>
+        <field name="applied_on">3_global</field>
+        <field name="compute_price">percentage</field>
+        <field name="percent_price">15</field>
+    </record>
+
+    <!-- Canal: Bodega, 8 % sobre todo el catálogo -->
+    <record id="lista_bodega" model="product.pricelist">
+        <field name="name">Bodega</field>
+        <field name="currency_id" ref="base.PEN"/>
+    </record>
+    <record id="lista_bodega_regla" model="product.pricelist.item">
+        <field name="pricelist_id" ref="lista_bodega"/>
+        <field name="applied_on">3_global</field>
+        <field name="compute_price">percentage</field>
+        <field name="percent_price">8</field>
+    </record>
+
+    <!-- Canal: Heladero (concesionario ambulante), descuento supuesto del 25 % sobre todo el catálogo -->
+    <record id="lista_heladero" model="product.pricelist">
+        <field name="name">Heladero</field>
+        <field name="currency_id" ref="base.PEN"/>
+    </record>
+    <record id="lista_heladero_regla" model="product.pricelist.item">
+        <field name="pricelist_id" ref="lista_heladero"/>
+        <field name="applied_on">3_global</field>
+        <field name="compute_price">percentage</field>
+        <field name="percent_price">25</field>
+    </record>
+
+    <!-- Temporada: Verano (helados, diciembre a marzo). Una regla por temporada, con su vigencia.
+         Las fechas van en UTC: medianoche de Lima (UTC-5) es 05:00 UTC, y el fin es 23:59:59 hora de Lima -->
+    <record id="lista_verano" model="product.pricelist">
+        <field name="name">Verano</field>
+        <field name="currency_id" ref="base.PEN"/>
+    </record>
+    <record id="lista_verano_regla_2026" model="product.pricelist.item">
+        <field name="pricelist_id" ref="lista_verano"/>
+        <field name="applied_on">2_product_category</field>
+        <field name="categ_id" ref="cat_helados"/>
+        <field name="compute_price">percentage</field>
+        <field name="percent_price">10</field>
+        <field name="date_start">2026-01-01 05:00:00</field>
+        <field name="date_end">2026-04-01 04:59:59</field>
+    </record>
+    <record id="lista_verano_regla_2027" model="product.pricelist.item">
+        <field name="pricelist_id" ref="lista_verano"/>
+        <field name="applied_on">2_product_category</field>
+        <field name="categ_id" ref="cat_helados"/>
+        <field name="compute_price">percentage</field>
+        <field name="percent_price">10</field>
+        <field name="date_start">2026-12-01 05:00:00</field>
+        <field name="date_end">2027-04-01 04:59:59</field>
+    </record>
+
+    <!-- Temporada: Campaña Navidad (panetón, octubre a diciembre) -->
+    <record id="lista_navidad" model="product.pricelist">
+        <field name="name">Campaña Navidad</field>
+        <field name="currency_id" ref="base.PEN"/>
+    </record>
+    <record id="lista_navidad_regla_2025" model="product.pricelist.item">
+        <field name="pricelist_id" ref="lista_navidad"/>
+        <field name="applied_on">2_product_category</field>
+        <field name="categ_id" ref="cat_paneton"/>
+        <field name="compute_price">percentage</field>
+        <field name="percent_price">12</field>
+        <field name="date_start">2025-10-01 05:00:00</field>
+        <field name="date_end">2026-01-01 04:59:59</field>
+    </record>
+    <record id="lista_navidad_regla_2026" model="product.pricelist.item">
+        <field name="pricelist_id" ref="lista_navidad"/>
+        <field name="applied_on">2_product_category</field>
+        <field name="categ_id" ref="cat_paneton"/>
+        <field name="compute_price">percentage</field>
+        <field name="percent_price">12</field>
+        <field name="date_start">2026-10-01 05:00:00</field>
+        <field name="date_end">2027-01-01 04:59:59</field>
+    </record>
+
+</odoo>

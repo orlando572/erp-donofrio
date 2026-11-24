@@ -25,7 +25,7 @@ La complementariedad de helados en verano y panetón en Navidad permite usar la 
 
 **Entra** (en dos fases, ver [04 §4.3](04_scrum_pmbok.md)):
 - **Fase 1 (núcleo garantizado):** todo con Odoo estándar configurado por código en `donofrio_base`.
-- **Fase 2 (si alcanza el tiempo):** módulos propios para heladeros, calidad, cadena de frío y tablero OWL.
+- **Fase 2 (completa, con hora de corte el jueves 26/11/2026, 08:00; lo no fusionado queda como trabajo futuro):** módulos propios para heladeros, calidad, cadena de frío y tablero OWL.
 
 Las áreas que cubre:
 - Marketing y Ventas: CRM, Ventas, Punto de Venta y liquidación de heladeros.

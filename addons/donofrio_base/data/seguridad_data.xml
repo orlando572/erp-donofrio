@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HU-27: seguridad por código (09 §9.4, ISO 27001 5.17, 8.5, 8.15). Se vuelve a aplicar en cada -u. -->
+<odoo>
+
+    <!-- Contraseñas de 12 caracteres o más (auth_password_policy) -->
+    <function model="ir.config_parameter" name="set_param" eval="('auth_password_policy.minlength', '12')"/>
+
+    <!-- Bloqueo por intentos fallidos: tras 5 fallos seguidos, 60 s sin poder intentar (base) -->
+    <function model="ir.config_parameter" name="set_param" eval="('base.login_cooldown_after', '5')"/>
+    <function model="ir.config_parameter" name="set_param" eval="('base.login_cooldown_duration', '60')"/>
+
+    <!-- El gerente general también usa segundo factor (el administrador se agrega en security/donofrio_security.xml).
+         Se agrega desde el grupo y no desde el usuario: user_gerente es un registro noupdate y su cambio no se
+         aplicaría al actualizar una base que ya existe. -->
+    <record id="group_2fa_obligatorio" model="res.groups">
+        <field name="user_ids" eval="[Command.link(ref('user_gerente'))]"/>
+    </record>
+
+    <!-- Auditoría de cambios (RNF010, OCA auditlog): quién, cuándo y qué valor tenía antes y después.
+         Las reglas son datos «noupdate» (se pueden ajustar en la UI sin que un -u las pise) y se confirman
+         con un método idempotente, así que también quedan activas al actualizar una base existente.
+         Precios: todo cambio. Pedidos: solo modificaciones y borrados (en «fast») para no duplicar el chatter ni
+         frenar la carga de datos de demostración. -->
+    <data noupdate="1">
+        <record id="auditlog_rule_pricelist" model="auditlog.rule">
+            <field name="name">Listas de precios</field>
+            <field name="model_id" ref="product.model_product_pricelist"/>
+            <field name="log_create" eval="True"/>
+            <field name="log_write" eval="True"/>
+            <field name="log_unlink" eval="True"/>
+            <field name="log_type">full</field>
+        </record>
+        <record id="auditlog_rule_pricelist_item" model="auditlog.rule">
+            <field name="name">Líneas de listas de precios</field>
+            <field name="model_id" ref="product.model_product_pricelist_item"/>
+            <field name="log_create" eval="True"/>
+            <field name="log_write" eval="True"/>
+            <field name="log_unlink" eval="True"/>
+            <field name="log_type">full</field>
+        </record>
+        <record id="auditlog_rule_sale_order" model="auditlog.rule">
+            <field name="name">Pedidos de venta</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="log_create" eval="False"/>
+            <field name="log_write" eval="True"/>
+            <field name="log_unlink" eval="True"/>
+            <field name="log_type">fast</field>
+        </record>
+        <record id="auditlog_rule_purchase_order" model="auditlog.rule">
+            <field name="name">Órdenes de compra</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="log_create" eval="False"/>
+            <field name="log_write" eval="True"/>
+            <field name="log_unlink" eval="True"/>
+            <field name="log_type">fast</field>
+        </record>
+    </data>
+    <function model="auditlog.rule" name="_confirmar_reglas_donofrio"/>
+
+</odoo>

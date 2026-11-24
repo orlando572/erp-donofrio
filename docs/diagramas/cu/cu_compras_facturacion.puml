@@ -1,0 +1,44 @@
+@startuml cu_compras_facturacion
+' Casos de uso de Compras y Facturación (CU011 y CU012). Fase 1: todo con Odoo estándar.
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam actorStyle awesome
+skinparam usecase {
+  BackgroundColor #F4F7FB
+  BorderColor #222222
+}
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #222222
+}
+title Casos de uso: Compras y Facturación (Fase 1)
+
+actor "Comprador" as COM
+actor "Jefe de Almacén" as ALM
+actor "Contador" as CON
+actor "Proveedor" as PRO
+actor "Cliente" as CLI
+
+rectangle "ERP D'Onofrio (Odoo 19 Community)" {
+  usecase "CU011\nComprar insumos con\nreabastecimiento mín./máx." as CU011
+  usecase "Generar RFQ por proveedor" as RFQ
+  usecase "Recibir con lote y vencimiento" as REC
+  usecase "Registrar la factura\ndel proveedor (01)" as FPR
+  usecase "CU012\nFacturar con IGV\n(factura 01 o boleta 03)" as CU012
+  usecase "Registrar el pago" as PAG
+}
+
+COM --> CU011
+ALM --> REC
+CON --> FPR
+CON --> CU012
+CON --> PAG
+PRO --> CU011 : cotiza y entrega
+CLI --> CU012 : recibe y paga
+
+CU011 ..> RFQ : <<include>>
+REC ..> CU011 : <<extend>>
+FPR ..> CU011 : <<extend>>
+PAG ..> CU012 : <<extend>>
+@enduml

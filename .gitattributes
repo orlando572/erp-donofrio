@@ -1,0 +1,14 @@
+# Saltos de línea LF en todo el repo, también en Windows (scripts, Docker y CI).
+* text=auto eol=lf
+
+# Binarios: sin conversión.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.docx binary
+*.xlsx binary
+*.pptx binary
+*.zip binary

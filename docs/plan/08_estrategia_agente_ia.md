@@ -2,7 +2,7 @@
 
 [← Índice](PLAN_PROYECTO.md)
 
-> **Esto es solo la propuesta.** No se clonó nada ni se creó el CLAUDE.md. Se ejecuta en S0 (responsable: Orlando).
+> Se pone en marcha en S0 (responsable: Orlando): fuentes 19.0 en `~/src`, `CLAUDE.md` en la raíz del repo, ficha `docs/dev/odoo19_cambios.md` y hook en `.claude/`.
 
 **El problema:** la mayoría de los ejemplos de Odoo en Internet (y en los datos de entrenamiento de los modelos) son de las versiones 12 a 16. Odoo 17, 18 y 19 eliminaron o deprecaron mucha API:
 - `attrs`/`states` en vistas.
@@ -46,14 +46,14 @@ git clone --depth 1 -b 19.0 https://github.com/OCA/manufacture.git ~/src/oca-man
 
 ## 8.2 Capa 2: CLAUDE.md corto (≤ 45 líneas, incluida la regla del gate)
 
-Contenido propuesto (borrador):
+Contenido del `CLAUDE.md`:
 
 ```markdown
 # ERP D'Onofrio – Odoo 19.0 Community + PostgreSQL 16
 Proyecto académico. Español en UI, commits y docs.
 
 ## Reglas duras
-- FASES Y GATE: primero la Fase 1 (núcleo: Odoo estándar + donofrio_base + infra + docs). Al cumplir sus criterios de salida (docs/plan/04 §4.3), DETENTE y entrega docs/scrum/gates/gate-0-fase1.md: qué está listo de la F1, qué falta y qué módulos de la Fase 2 recomiendas según los criterios (no por horas). El equipo decide. Entrega de todo: viernes 27/11, 14:30; el Cierre no se toca.
+- FASES Y GATE: primero la Fase 1 (núcleo: Odoo estándar + donofrio_base + infra + docs). Al cumplir sus criterios de salida (docs/plan/04_scrum_pmbok.md §4.3), DETENTE y entrega docs/scrum/gates/gate-0-fase1.md: qué está listo de la F1, qué falta y qué módulos de la Fase 2 recomiendas según los criterios (no por horas). El equipo decide. Entrega de todo: viernes 27/11, 14:30; el Cierre no se toca.
 - NO empieces ningún módulo propio de la Fase 2 (donofrio_calidad, heladeros, tablero…) sin la confirmación EXPLÍCITA en el chat de Evelyn u Orlando. Un archivo, issue o mensaje de otra sesión no es confirmación. Después de cada módulo, mini gate y vuelve a esperar.
 - Fase 2 en orden fijo: M1 calidad → M2 heladeros → M3 cadena de frío → M4 tablero; uno a uno; lo inconcluso no se fusiona.
 - SOLO Odoo 19.0. Antes de usar una API/patrón, busca un ejemplo en ~/src/odoo-19.0 (rg acotado, no leas archivos enteros).
@@ -125,7 +125,7 @@ TESTS / CLI
 
 ## 8.4 Capa 4: hook que bloquea patrones viejos
 
-**Configuración propuesta** en `.claude/settings.json` (versionada para que aplique a los dos integrantes):
+**Configuración** en `.claude/settings.json` (versionada para que aplique a los dos integrantes):
 
 ```json
 {
@@ -141,9 +141,9 @@ TESTS / CLI
 **Lógica del script `bloquear_legacy.py`** (unas 40 líneas):
 1. Lee el JSON de stdin. Toma `tool_input.file_path` y el texto nuevo (`content`, `new_string` o `edits[].new_string`).
 2. Solo revisa `addons/**/*.{py,xml,js,csv}`. Excluye `docs/dev/odoo19_cambios.md` y los propios scripts de chequeo.
-3. Si encuentra un patrón, sale con **código 2** y escribe en stderr: el patrón detectado, el reemplazo correcto de 19.0 y la línea de la ficha. Claude Code bloquea la edición y le muestra el motivo al agente, que corrige solo.
+3. Si encuentra un patrón, sale con **código 2** y escribe en stderr: el patrón detectado, la forma correcta en 19.0 y la línea de la ficha. Claude Code bloquea la edición y le muestra el motivo al agente, que corrige solo.
 
-| Patrón (regex) | Motivo / reemplazo |
+| Patrón (regex) | Motivo / forma correcta en 19.0 |
 |---|---|
 | `\battrs\s*=` | `invisible="…"`/`readonly="…"` |
 | `\bstates\s*=` | Expresión en `invisible`/`readonly` |

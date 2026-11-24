@@ -1,6 +1,7 @@
 ## HU
 <!-- Título con el formato del commit: tipo(alcance): descripción [HU-xx] -->
-Closes #
+Parte de #
+<!-- Marca tu HU en la checklist de la épica. Solo el ÚLTIMO PR de la épica la cierra con `Closes #n` en lugar de `Parte de #n`. -->
 
 ## Qué cambia
 
@@ -17,5 +18,5 @@ Closes #
 - [ ] `-u` sobre una BD con datos sin errores
 - [ ] Textos visibles en español y criterios de aceptación verificados en la UI
 - [ ] Capturas de evidencia en `docs/capturas/sprint-N/`
-- [ ] Monday en "Hecho" con el enlace a este PR
+- [ ] El elemento del Project está en "Hecho" con el enlace a este PR
 - [ ] Hay al menos un borrador de la sección del informe

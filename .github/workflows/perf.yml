@@ -1,0 +1,66 @@
+name: Pruebas no funcionales
+
+# HU-28: carga con k6 (RNF002) y seguridad con OWASP ZAP baseline (RNF009) sobre el despliegue protegido
+# (Nginx con TLS + Odoo con workers). Son lentas: NO forman parte de los checks requeridos del PR, solo se
+# lanzan a mano (Actions → Pruebas no funcionales → Run workflow). Los reportes quedan como artefactos.
+on:
+  workflow_dispatch:
+    inputs:
+      semanas_demo:
+        description: 'Semanas de datos de demostración a cargar (0 = solo la base con donofrio_base, sin transacciones)'
+        default: '2'
+        required: true
+      vus:
+        description: 'Usuarios virtuales de k6'
+        default: '20'
+        required: true
+      duracion:
+        description: 'Tiempo de k6 con todos los usuarios activos (p. ej. 3m)'
+        default: '3m'
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  carga-y-seguridad:
+    name: k6 y ZAP
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      # Valor de prueba solo para este flujo: el modo protegido exige 16 caracteres o más y no la contraseña de ejemplo
+      ODOO_ADMIN_PASSWD: perf-clave-maestra-de-prueba-2026
+      SEMANAS_DEMO: ${{ inputs.semanas_demo }}
+      VUS: ${{ inputs.vus }}
+      DURACION: ${{ inputs.duracion }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preparar .env (valores de desarrollo del repo)
+        run: cp .env.example .env
+      - name: Construir la imagen de Odoo
+        run: docker compose build odoo
+      - name: Crear la base con donofrio_base (usuarios por rol para k6)
+        run: scripts/init_db.sh donofrio_base
+      - name: Cargar datos de demostración (ventas, PdV, compras, producción)
+        if: ${{ inputs.semanas_demo != '0' }}
+        run: |
+          docker compose run --rm -T -e DONOFRIO_DEMO_SEMANAS="$SEMANAS_DEMO" odoo \
+            odoo shell -d donofrio --no-http < scripts/cargar_transacciones.py
+      - name: Levantar Odoo detrás de Nginx con TLS (HU-27)
+        run: scripts/levantar_prod.sh
+      - name: "Carga con k6 (umbrales de RNF002: falla si no se cumplen)"
+        run: scripts/perf/k6.sh
+      - name: Análisis de seguridad con ZAP baseline (falla si hay alertas de riesgo alto)
+        if: ${{ !cancelled() }}
+        run: scripts/perf/zap.sh
+      - name: Subir los reportes
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: reportes-k6-zap
+          path: scripts/perf/resultados/
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Registro de los contenedores (solo si falló)
+        if: failure()
+        run: docker compose --profile proxy logs --no-color --tail=150

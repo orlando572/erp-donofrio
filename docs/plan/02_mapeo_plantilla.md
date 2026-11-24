@@ -29,7 +29,7 @@
 | 11 | Validación de servicios, pruebas RF y RNF | 5.13, 5.14 y 6.9 a 6.13 | E+O |
 | 12 | Despliegue: herramientas, procedimiento y resultados | 5.15 | O |
 
-Entregables a-f del lineamiento: ver el checklist en [07_riesgos_entrega.md](07_riesgos_entrega.md).
+Entregables a-f del lineamiento: ver el checklist en [07_riesgos_entrega.md](07_riesgos_entrega.md). Además se entrega el **manual de usuario** con la plantilla del docente (checklist g; estructura en §2.4).
 
 ## 2.2 Sección por sección de la plantilla
 
@@ -52,7 +52,7 @@ La plantilla no trae números visibles en los títulos. Esta numeración sigue s
 | 4.1.2 Procesos AS-IS | 5 diagramas BPMN: venta B2B, liquidación de heladero, producción y calidad, compras de insumos, recepción y despacho con cadena de frío. También los TO-BE (en Odoo) para contrastar | bpmn.io / Camunda Modeler (gratis), exportado a PNG | E (ventas, heladeros, compras), O (producción y calidad, almacén y cadena de frío) | S1 (AS-IS), S2 (TO-BE) |
 | 4.1.3 Arquitectura empresarial | Arquitectura actual y propuesta: software, datos y tecnología | draw.io (capas TOGAF simplificadas) | O | S1 |
 | 4.1.4 Identificación de oportunidades de innovación tecnológica | Tabla 1 (problema → oportunidad → tecnología), ya redactada en [01 §1.6](01_alcance_escenario.md) | Tabla | E | S1 |
-| 4.2.1 Gestión de requerimientos | Proceso: HU → RF/RNF → issue → prueba; matriz de trazabilidad | Tabla | E | S1 |
+| 4.2.1 Gestión de requerimientos | Proceso: HU → RF/RNF → épica (issue) → prueba; matriz de trazabilidad | Tabla | E | S1 |
 | 4.2.2 Requerimientos funcionales | Tabla 2: RF001 a RF018 por área, con columna de fase (ver [04 §4.2](04_scrum_pmbok.md)); el detalle en ficha va en el Anexo 10.1 | Tabla | E | S1 |
 | 4.2.3 Requerimientos no funcionales | Tabla 3: RNF001 a RNF013 por área; el detalle en ficha va en el Anexo 10.2 | Tabla | O | S1 |
 | 4.2.4 Diagramas de casos de uso | Diagrama general por área + CU001 a CU010, cada uno con su ficha (tabla 4) | PlantUML (en el repo, `docs/diagramas/*.puml`) | E (CU de ventas, heladeros, gerencia), O (CU de logística, producción, calidad) | S2 |
@@ -60,10 +60,10 @@ La plantilla no trae números visibles en los títulos. Esta numeración sigue s
 | 4.2.6 Diseño de base de datos: modelo ER | ER **extraído de la BD real** después de instalar, filtrado a unas 30 tablas relevantes (F1: núcleo; con cada módulo de la F2 se vuelve a extraer y se agregan las tablas `donofrio_*`) | SchemaSpy (Docker) + DBeaver | O | S3 (+F2) |
 | 4.2.7 Diseño lógico | **F1:** diagrama físico de las tablas centrales del negocio (pedidos, movimientos, lotes, OP, BoM). **F2:** + tablas `donofrio_*` y sus FK | DBeaver (diagrama ER) | O | S3 (+F2) |
 | 4.2.8 Diccionario de datos | Tabla 5 por entidad: PK/FK, nombre, campo, tipo, tamaño, descripción. Se genera con un script desde `information_schema` + `ir_model_fields`; en el informe van las tablas propias y el resto como anexo o archivo | `scripts/diccionario_datos.py` → XLSX/MD | O | S3 |
-| 4.2.9 Gestión de calendarización | Tabla 6 (cronograma de hitos en orden, ver [04 §4.10](04_scrum_pmbok.md)) + ilustración 6 (Gantt armado con las fechas reales de ejecución que registra Monday, no con fechas planificadas) | Monday (vista Gantt/Timeline) o diagrama Mermaid gantt | E | S0, se actualiza en cada sprint |
+| 4.2.9 Gestión de calendarización | Tabla 6 (cronograma de hitos en orden, ver [04 §4.10](04_scrum_pmbok.md)) + ilustración 6 (Gantt armado con las fechas reales de ejecución que registra el Project, no con fechas planificadas) | GitHub Projects (vista Roadmap) o diagrama Mermaid gantt | E | S0, se actualiza en cada sprint |
 | 4.2.10 Desarrollo ágil Scrum: roles | Tabla 7 | Texto | E | S0 |
-| 4.2.11 Artefactos | Product Backlog (tabla 8) y Sprint Backlog (tabla 9), con capturas de Monday | Monday | E | S0-S4 |
-| 4.2.12 Eventos | Sprint, Planning, Daily, Review y Retro, con evidencias (ilustración 7) | Monday + actas `docs/scrum/` | E | S0-S4 |
+| 4.2.11 Artefactos | Product Backlog (tabla 8) y Sprint Backlog (tabla 9), con capturas de las vistas "Product Backlog" y "Sprint actual" | GitHub Projects | E | S0-S4 |
+| 4.2.12 Eventos | Sprint, Planning, Daily, Review y Retro, con evidencias (ilustración 7) | GitHub Projects (issue "Dailies") + actas `docs/scrum/` | E | S0-S4 |
 | 4.3.1 Infraestructura tecnológica | Diagrama: PC de desarrollo, Docker, contenedores Odoo/PostgreSQL/réplica/Nginx, GitHub, runner de Actions y (opcional) VM en la nube | draw.io | O | S1 |
 | 4.3.2 Plataforma tecnológica | Odoo como MVC (ORM = DAO/Active Record, vistas XML/OWL, controladores), DTO (diccionarios JSON-RPC), SOLID aplicado a módulos y herencia | draw.io + texto | O | S2 |
 | 4.3.3 Configuración de herramientas: desarrollo, despliegue, mantenimiento y monitoreo | Lineamientos breves; el detalle va al **Manual de herramientas** | Texto | O | S2 |
@@ -72,10 +72,10 @@ La plantilla no trae números visibles en los títulos. Esta numeración sigue s
 | 4.3.6 Controles de versionamiento | Git + GitHub, ramas y responsables (resumen; el detalle va en 6.4 a 6.8) | Captura de GitHub | O | S1 |
 | 4.3.7 Máquinas virtuales y contenedores | Docker Compose: servicios, volúmenes, perfiles y redes | `docker compose ps` + captura | O | S1 |
 | 4.3.8 Plataformas cloud | GitHub (repo, Actions, GHCR) + VM en la nube opcional (decisión abierta) | Capturas | O | S3 → Cierre |
-| 4.3.9 Plataformas de gestión de proyectos | Monday: tableros, vistas y uso (ilustración 16) | Monday | E | S1 |
+| 4.3.9 Plataformas de gestión de proyectos | GitHub Projects: issues, campos, vistas y uso (ilustración 16), según [04 §4.11](04_scrum_pmbok.md) | GitHub Projects + CLI `gh` | E | S1 |
 | 4.4.1 Wireframes | Uno por caso de uso; detalle completo para las pantallas propias de la F2 (liquidación, inspección, temperatura, tablero), **que se diseñan en la F1 aunque no se implementen**, y versión simple para las estándar de Odoo | Excalidraw o Figma (gratis) | E | S2 |
 | 4.4.2 Mockups | Mockups en alta fidelidad con la paleta de marca (amarillo de los carritos) | Figma | E | S2 |
-| 4.5.1 Plan de gestión de riesgos | Tabla 10 + estrategias (evitar, mitigar, transferir, aceptar) + escalas 1-3 | Tabla + Monday (tablero de riesgos) | E | S0 |
+| 4.5.1 Plan de gestión de riesgos | Tabla 10 + estrategias (evitar, mitigar, transferir, aceptar) + escalas 1-3 | Tabla en `docs/pm/plan_riesgos.md` + issue "Registro de riesgos" | E | S0 |
 | 4.5.2 a 4.5.4 Riesgos por etapa: desarrollo, despliegue, mantenimiento | Tablas 11 a 13 con nivel = impacto × probabilidad, prioridad, seguimiento, frecuencia, herramienta y validación | Tabla (ver [07](07_riesgos_entrega.md)) | E (desarrollo), O (despliegue, mantenimiento) | S1, se actualiza en cada sprint |
 | 4.6.1 Buenas prácticas de conversión de prototipos a web UI/UX | Heurísticas de Nielsen, consistencia con el diseño de Odoo, accesibilidad (contraste), responsive, etiquetas en español | Texto | E | S3 |
 | 4.6.2 Propuesta de prototipos web | Pantallas reales implementadas, con capturas por caso de uso (F1: pantallas estándar configuradas; F2: + pantallas propias) | Odoo + navegador | E | S3 (+F2) |
@@ -99,22 +99,22 @@ La plantilla no trae números visibles en los títulos. Esta numeración sigue s
 | 5.11 Identificación de controles de seguridad | Tabla 17 + escalas | Tabla | O | S3 → Cierre |
 | 5.12 Identificación de ataques y defensa | Tabla 18 (SQLi, XSS, fuerza bruta, gestor de BD expuesto, robo de sesión, pérdida de datos, caída) | Tabla + prueba con OWASP ZAP | O | S3 → Cierre |
 | 5.13 Validación del servicio: validación y verificación de requerimientos de software, pruebas funcionales | Tablas 19, 20 (casos TC con estado) y 21 | Tests de Odoo + pruebas manuales | E (ventas, heladeros, gerencia), O (logística, producción, calidad) | S3 → Cierre |
-| 5.14 Validación y verificación de requerimientos de software, pruebas no funcionales | Tablas 22, 23 y 24: carga (k6), seguridad (ZAP), WPO (Lighthouse), disponibilidad, respaldo | k6, ZAP, Lighthouse | O (carga, seguridad), E (WPO, usabilidad) | S3 → Cierre |
+| 5.14 Validación y verificación de requerimientos de software, pruebas no funcionales | Tablas 22, 23 y 24: carga (k6), seguridad (ZAP), WPO (Lighthouse), disponibilidad, respaldo; usabilidad (SUS) cuando se haga la HU-30 en el Cierre | k6, ZAP, Lighthouse | O (carga, seguridad), E (WPO, usabilidad) | S3 → Cierre |
 | 5.15 Despliegue: enfoque y herramientas utilizadas, mejores prácticas | URLs de publicación; enfoque *rolling* con un solo nodo + rollback por imagen etiquetada; ilustración 32 (pipeline CI/CD); tabla 25; mejores prácticas (monitoreo, backups, secretos) | GitHub Actions, Docker, GHCR | O | S3 → Cierre |
 | 5.16 **Entradas huérfanas del índice** → **Gestión de servicios (ITIL 4 / ISO 20000-1)** | El índice de figuras y tablas lista BPMN de solicitudes de servicios, información y accesos, control de cambios de CI y capacidad (ilustraciones 33-37) y las tablas 26-38 (herramientas de control de cambios, capacidad, rendimiento, proyección de usuarios), pero **esas secciones no existen en el cuerpo**. Plan: un subapartado breve "Gestión de servicios" dentro de Despliegue, con 2 BPMN (control de cambios vía PR/CI y solicitud de acceso) y una tabla resumen de herramientas y capacidad. Antes, **consultar al docente** si las espera | bpmn.io + tablas | O | S3 → Cierre |
 | **6. Documentación de la solución** | | | | |
 | 6.1 Descripción del Scrum Team | Integrantes, roles y responsabilidades | Texto | E | S3 → Cierre |
-| 6.2 Resumen del cuadro de sprints | Tabla por sprint: objetivo, HU, puntos planificados y completados, fechas, incremento, burndown | Monday + `scripts/burndown.py` | E | S3 → Cierre |
-| 6.3 Resumen del Monday | Capturas de tableros, vistas Kanban/Gantt y actualizaciones (dailies) | Monday | E | S3 → Cierre |
+| 6.2 Resumen del cuadro de sprints | Tabla por sprint: objetivo, HU, puntos planificados y completados, fechas, incremento, burndown | GitHub Projects (Insights) + `scripts/burndown.py` (lee `gh project item-list --format json`, por puntos) | E | S3 → Cierre |
+| 6.3 Resumen del Monday | La sección se desarrolla con **GitHub Projects**, la herramienta de gestión del equipo, y lo dice en una línea bajo el título: es gratuita, está integrada con los issues, los PR y los commits, y el docente la ve sin invitación ([04 §4.11](04_scrum_pmbok.md)). Capturas de cada vista (Product Backlog, Sprint actual, Roadmap) y de Insights al cierre de cada sprint, y el issue "Dailies" | GitHub Projects | E | S3 → Cierre |
 | 6.4 Resumen del GitHub o GitLab | URLs del repo, releases, Actions y paquete GHCR; capturas (ver [06 §6.6](06_github_ci_infra.md)) | GitHub | O | S3 → Cierre |
 | 6.5 Ramificación o branching | Flujograma de ramas, esquema y listado de ramas | Mermaid gitGraph + capturas | O | S3 → Cierre |
 | 6.6 Merge strategy | PR → revisión cruzada → *squash merge* a `develop`; *merge commit* de `develop` a `main` con tag | Capturas de PR | O | S3 → Cierre |
 | 6.7 Resumen de commits | Convención, estadísticas por autor y capturas | GitHub Insights | E | S3 → Cierre |
-| 6.8 Resumen de issues | Issues por HU y por bug, etiquetas, milestones y prevención | GitHub Issues | E | S3 → Cierre |
+| 6.8 Resumen de issues | Unos 25 issues: épicas por área con su checklist de HU, issues de gestión y bugs; etiquetas, milestones, cierre con `Closes #n` y prevención | GitHub Issues | E | S3 → Cierre |
 | 6.9 Resumen de pruebas | Tabla consolidada: unitarias, integrales, usabilidad y seguridad × desarrollo, despliegue y mantenimiento | Tabla | E+O | S3 → Cierre |
 | 6.10 Pruebas unitarias (desarrollo, despliegue, mantenimiento) | `TransactionCase` de `donofrio_base` (datos, seguridad) y de los módulos de la F2 que se terminen; en CI; *smoke test* post-despliegue; ejecución programada semanal | Odoo test runner + Actions | O | S3 (+F2) |
 | 6.11 Pruebas integrales | **F1** (HU-33): pedido → entrega FEFO → factura; compra → recepción; OP → lote. **F2:** OP → inspección → bloqueo de despacho; liquidación → pedido | Odoo + Actions | O | S3 → Cierre |
-| 6.12 Pruebas de usabilidad | Tareas cronometradas con 5 usuarios + cuestionario SUS | Google Forms | E | S3 → Cierre |
+| 6.12 Pruebas de usabilidad | Tareas cronometradas con 5 usuarios + cuestionario SUS (HU-30, **diferida al Cierre** por decisión del 23/11/2026) | Google Forms | E | Cierre |
 | 6.13 Pruebas de seguridad | ZAP baseline, pruebas de permisos (`AccessError`), política de contraseñas, `list_db=False` | ZAP, tests | O | S3 → Cierre |
 | **7. Conclusiones** | Una por objetivo y por área | Texto | E+O | S3 → Cierre |
 | **8. Recomendaciones** | Trabajo futuro: los módulos de la F2 que no se hayan terminado (con su diseño), EDI SUNAT vía OSE, app móvil para heladeros, plan para la transición a Froneri (migración de compañía) | Texto | E+O | S3 → Cierre |
@@ -136,7 +136,7 @@ Una sección está completa cuando cumple todo esto:
 
 ## 2.3 Secciones del informe que cambian según se llegue o no a la Fase 2
 
-**Regla:** el informe siempre está completo con la Fase 1. Cada módulo de la F2 que se termina (y pasa su mini gate) **actualiza** las filas de esta tabla. Lo que no llega se marca como "Diseñado – trabajo futuro" y nunca se presenta como implementado. Con el plazo actual, el escenario más probable es **Fase 1 + M1**: conviene redactar primero las columnas "Solo Fase 1" y "M1".
+**Regla:** el informe siempre está completo con la Fase 1. Cada módulo de la F2 que se termina (y pasa su mini gate) **actualiza** las filas de esta tabla. Lo que no llega se marca como "Diseñado – trabajo futuro" y nunca se presenta como implementado. El objetivo es la **Fase 2 completa** (decisión del 23/11/2026) y el informe final se redacta en el Cierre, después de la hora de corte (jueves 26/11, 08:00), sobre lo que realmente quedó fusionado: cada columna se aplica solo a los módulos que entraron.
 
 | Sección | Solo Fase 1 (núcleo) | Si se termina M1 `donofrio_calidad` (+M3 frío) | Si se termina M2 `donofrio_heladeros` | Si se termina M4 `donofrio_tablero` |
 |---|---|---|---|---|
@@ -160,3 +160,19 @@ Una sección está completa cuando cumple todo esto:
 | 9 normas ([09](09_normas_marcos.md)): ISO 9001 / HACCP | Trazabilidad por lote, FEFO, fecha de retiro, PCC documentados en las operaciones | + liberación y no conformes; + monitoreo de PCC de temperatura | — | — |
 | 7-8 Conclusiones y recomendaciones | Los módulos de la F2 no hechos pasan a trabajo futuro | Se quita de trabajo futuro | Idem | Idem |
 | Presentación | Variante "Solo Fase 1" ([05 §5.4](05_reparto_equipo.md)) | Demo 2 con inspección | Demo 1 con liquidación | Demo 1 con tablero |
+
+## 2.4 Manual de usuario (entregable adicional)
+
+El manual de usuario no figura en las letras a-f del lineamiento, pero el docente entrega una plantilla propia (`docs/TEMPLATE - MANUAL DE USUARIO.docx`, ignorada por git: no se sube al repositorio). Se agrega como entregable **g** del checklist ([07 §7.2](07_riesgos_entrega.md)).
+
+| Entregable | Qué se entrega | Herramienta / origen | Resp. | Sprint |
+|---|---|---|---|---|
+| **Manual de usuario (PDF)** | Manual sobre la plantilla del docente, para el estado final del sistema; capturas reales del ERP | Plantilla del docente (Word → PDF) | E (redacta), O (verifica) | Cierre |
+
+**Estructura de la plantilla** (leída del archivo, resumida):
+- **Carátula y control de versiones:** versión, fecha de elaboración, elaborado por, descripción, revisado por y fecha de revisión.
+- **1. Presentación:** descripción de la aplicación; requisitos mínimos (hardware y software); punto de inicio para la instalación y configuración; instalación; configuración; otros.
+- **2. Módulo de usuario:** estructura visual (panel derecho de información, panel izquierdo de tareas, panel inferior) y funcionalidades (el ejemplo de la plantilla es de una tienda: productos, carrito, pagos, mapas o chat).
+- **3. Módulo de administración:** la misma estructura visual y las funcionalidades de mantenimiento (usuarios, productos, proveedores, transacciones, mapas o chat).
+
+La plantilla es genérica (ejemplos de comercio electrónico): al redactar se adapta cada título a los procesos reales de D'Onofrio y a los roles de Odoo, y se omite lo que no aplique, con una línea que lo explique. El manual se redacta en el Cierre porque describe el estado final, que depende de los módulos de la Fase 2 que hayan entrado a la hora de corte.

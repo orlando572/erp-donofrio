@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="200" viewBox="0 0 640 200">
+  <title>D'Onofrio (logo ficticio del proyecto académico)</title>
+  <g transform="translate(16 20)">
+    <circle cx="80" cy="76" r="76" fill="#F2B705"/>
+    <path d="M80 28 C104 28 118 46 118 66 L118 76 L42 76 L42 66 C42 46 56 28 80 28 Z" fill="#FFF8E1"/>
+    <path d="M42 76 L118 76 L80 140 Z" fill="#8A5A2B"/>
+    <circle cx="80" cy="22" r="10" fill="#C2410C"/>
+  </g>
+  <text x="196" y="112" font-family="DejaVu Sans, Arial, sans-serif" font-size="68" font-weight="700" fill="#5B3A29">D'Onofrio</text>
+  <text x="200" y="152" font-family="DejaVu Sans, Arial, sans-serif" font-size="26" fill="#C77D00" letter-spacing="2">Helados y Confitería</text>
+</svg>

@@ -20,11 +20,11 @@ Se verificó revisando si cada módulo existe en la rama `19.0` de `github.com/o
 | Studio, IA, firma, MPS, PLM, mantenimiento de equipos, *shop floor* | Enterprise | — | No se usan |
 
 **Cambios de Odoo 19 que afectan la carga de datos** (verificados en el código fuente 19.0):
-- **UoM sin categorías:** ahora se usa `uom.uom.relative_uom_id` + `relative_factor`.
+- **UoM sin categorías:** se usa `uom.uom.relative_uom_id` + `relative_factor`.
 - **Productos:** `product.template.type` (`consu`/`service`/`combo`) + `is_storable` (lo agrega `stock`).
-- **RR. HH.:** el módulo `hr_contract` ya no existe; los contratos se manejan con `hr.version`.
-- **Usuarios:** `res.users.group_ids` (antes `groups_id`) y `res.groups.privilege_id` (nuevo modelo `res.groups.privilege`).
-- **Datos demo:** desde 18.3 ya no se cargan por defecto (`--with-demo`).
+- **RR. HH.:** el módulo `hr_contract` no existe en 19.0; los contratos se manejan con `hr.version`.
+- **Usuarios:** `res.users.group_ids` (no `groups_id`) y `res.groups.privilege_id` (modelo `res.groups.privilege`).
+- **Datos demo:** desde 18.3 no se cargan por defecto (`--with-demo`).
 
 ## 3.2 Módulos OCA portados a 19.0 (verificado en las ramas `19.0` de GitHub)
 
@@ -121,14 +121,14 @@ Idioma `es_PE`, zona horaria `America/Lima` y moneda PEN se activan en el `post_
 | 3 | **CI/CD** en GitHub Actions: lint + chequeo legacy + instalación y tests en Docker + *release* con zip | **F1** | O | Secciones 5.15 y 6.4-6.10; entregable "código comprimido" |
 | 4 | **Nginx** con TLS, gzip y caché de `/web/assets` | **F1** | O | Seguridad (5.10-5.12) y WPO antes/después (4.6.4) |
 | 5 | Seguridad Community: `auth_totp` + `auth_totp_mail`, `auth_password_policy`, *cooldown*, OCA **`auditlog`** + `web_environment_ribbon` | **F1** | O | Controles de la SoA ([09](09_normas_marcos.md)) |
-| 6 | Pruebas no funcionales: **k6**, **OWASP ZAP baseline**, **Lighthouse**, **SUS** | **F1** | O (k6, ZAP), E (Lighthouse, SUS) | Tablas 22-24 y 6.9-6.13 |
+| 6 | Pruebas no funcionales: **k6**, **OWASP ZAP baseline**, **Lighthouse**, **SUS** | **F1** | O (k6, ZAP), E (Lighthouse, SUS; el SUS se difiere al Cierre) | Tablas 22-24 y 6.9-6.13 |
 | 7 | **SchemaSpy + script de diccionario de datos** | **F1** | O | 4.2.6-4.2.8 (núcleo); se vuelve a ejecutar con cada módulo de la F2 |
 | 8 | Gerencia mínima: dashboards estándar + `ir.filters` | **F1** | E | Cubre el área "Dirección o Gerencia General" sin código |
 | 9 | Mesa de servicios TI en Project (ITIL) | **F1** | E | ITIL 4 / ISO 20000-1 sin Helpdesk (Enterprise) |
 
 ### Fase 2: extensión (orden fijo, uno a uno, cada uno entregable por sí solo)
 
-El orden y las HU de cada módulo están en [04 §4.5](04_scrum_pmbok.md). Con el plazo (viernes 27 de noviembre, 14:30), lo más probable es que solo entre M1; el resto queda como trabajo futuro si no alcanza.
+El orden y las HU de cada módulo están en [04 §4.5](04_scrum_pmbok.md). El objetivo es la Fase 2 completa (decisión del 23/11/2026); lo que no esté fusionado a la hora de corte (jueves 26/11, 08:00) queda como trabajo futuro ([04 §4.3](04_scrum_pmbok.md)).
 
 | Orden | Módulo | Contenido | Dueño | Justificación del orden |
 |---|---|---|---|---|

@@ -1,0 +1,116 @@
+name: Release
+
+# HU-29 (06 §6.4): un tag vX.Y.Z publica la imagen en GHCR y el zip del código en GitHub Releases.
+#   v1.0.0 = núcleo (Fase 1); los módulos de la Fase 2 llevan v1.1.0, v1.2.0...
+# Cómo publicar: docs/dev/release.md
+# Sin tag (pull_request que toca la release, o ejecución manual) es un ENSAYO: construye, prueba y empaqueta, pero no publica nada.
+on:
+  push:
+    tags: ['v*']
+  pull_request:
+    paths:
+      - '.github/workflows/release.yml'
+      - 'docker/odoo/**'
+      - 'scripts/empaquetar_release.sh'
+      - 'scripts/probar_imagen.sh'
+  workflow_dispatch:
+
+permissions:
+  contents: write    # crear la GitHub Release y subir el zip
+  packages: write    # publicar la imagen en GHCR
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      PUBLICAR: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # el tag y la historia de main para comprobar de dónde sale
+
+      - name: Datos de la release
+        id: datos
+        run: |
+          if [ "$PUBLICAR" = "true" ]; then
+            tag="${GITHUB_REF_NAME}"
+            [[ "$tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::El tag '$tag' no tiene el formato vX.Y.Z"; exit 1; }
+            git merge-base --is-ancestor "$GITHUB_SHA" origin/main \
+              || echo "::warning::El commit del tag $tag no está en main (06 §6.2: las releases salen de main)"
+          else
+            tag="ensayo-$(git rev-parse --short HEAD)"
+            echo "::notice::Ensayo: no se publica la imagen ni la release"
+          fi
+          imagen="ghcr.io/${GITHUB_REPOSITORY,,}"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "imagen=$imagen" >> "$GITHUB_OUTPUT"
+          echo "Release: $tag → $imagen"
+
+      - uses: docker/setup-buildx-action@v3
+
+      # 1) Se construye la imagen (con los módulos propios dentro) y se prueba ANTES de publicarla
+      - name: Construir la imagen y cargarla para probarla
+        uses: docker/build-push-action@v6
+        with:
+          context: docker/odoo
+          build-contexts: addons=./addons
+          load: true
+          tags: ${{ steps.datos.outputs.imagen }}:prueba
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Probar la imagen (Odoo 19, módulos propios, configuración)
+        run: scripts/probar_imagen.sh "${{ steps.datos.outputs.imagen }}:prueba"
+
+      # 2) El zip del código (entregable «código fuente comprimido»)
+      - name: Empaquetar el código fuente (erp-donofrio-<tag>.zip)
+        run: |
+          ref="${{ steps.datos.outputs.tag }}"
+          [ "$PUBLICAR" = "true" ] || ref="$GITHUB_SHA"   # en el ensayo no hay tag
+          scripts/empaquetar_release.sh "$ref" dist
+      - name: Guardar el zip como artefacto del workflow
+        uses: actions/upload-artifact@v4
+        with:
+          name: erp-donofrio-${{ steps.datos.outputs.tag }}
+          path: dist/*.zip
+          retention-days: 30
+
+      # 3) Solo con un tag vX.Y.Z: imagen en GHCR y GitHub Release
+      - name: Iniciar sesión en GHCR
+        if: env.PUBLICAR == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publicar la imagen en GHCR
+        if: env.PUBLICAR == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          context: docker/odoo
+          build-contexts: addons=./addons
+          push: true
+          tags: |
+            ${{ steps.datos.outputs.imagen }}:${{ steps.datos.outputs.tag }}
+            ${{ steps.datos.outputs.imagen }}:latest
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.version=${{ steps.datos.outputs.tag }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.licenses=LGPL-3.0
+          cache-from: type=gha
+      - name: Crear la GitHub Release con el zip y las notas generadas
+        if: env.PUBLICAR == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.datos.outputs.tag }}
+        run: |
+          # v0.x = preliminar; v1.0.0 en adelante = release normal
+          [[ "$TAG" == v0.* ]] && marca="--prerelease" || marca=""
+          gh release create "$TAG" "dist/erp-donofrio-${TAG}.zip" \
+            --title "ERP D'Onofrio ${TAG}" --generate-notes --verify-tag $marca

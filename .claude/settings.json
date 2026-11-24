@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/bloquear_legacy.py\""
+            "command": "py=\"$(command -v python3 || command -v python)\" || { echo \"Hook anti-legacy: no se encontró Python (python3 o python)\" >&2; exit 1; }; \"$py\" \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/bloquear_legacy.py\""
           }
         ]
       }

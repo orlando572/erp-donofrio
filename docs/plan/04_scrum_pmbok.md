@@ -10,7 +10,7 @@ La Guía Scrum 2020 permite que el Product Owner y el Scrum Master también sean
 
 | Rol | Responsable | Responsabilidades | Por qué esa persona |
 |---|---|---|---|
-| **Product Owner** | **Evelyn** | Ordena el Product Backlog, redacta las HU y los criterios de aceptación, representa a "D'Onofrio" (gerencia y áreas), acepta o rechaza los incrementos en la Review y mantiene el tablero de Monday | Lidera el análisis empresarial (3, 4.1, 4.2) y las áreas de cara al negocio (Ventas, Heladeros, Gerencia) |
+| **Product Owner** | **Evelyn** | Ordena el Product Backlog, redacta las HU y los criterios de aceptación, representa a "D'Onofrio" (gerencia y áreas), acepta o rechaza los incrementos en la Review y mantiene el GitHub Project | Lidera el análisis empresarial (3, 4.1, 4.2) y las áreas de cara al negocio (Ventas, Heladeros, Gerencia) |
 | **Scrum Master** | **Orlando** | Facilita los eventos, cuida la DoD y el CI, elimina impedimentos técnicos (Docker, Odoo, agente IA), mide la velocidad y el *burndown* y protege el *timebox* | Lidera la infraestructura, el repo y la automatización, que es donde surgen los impedimentos |
 | **Developers** | **Evelyn y Orlando** | Construyen el incremento: módulos, configuración, pruebas y documentación. Cada uno revisa los PR del otro | Revisión cruzada obligatoria |
 
@@ -67,8 +67,8 @@ Todos son **F1**: los RNF se verifican sobre el núcleo. Los módulos de la F2 s
 ## 4.3 Estructura en dos fases con punto de control
 
 ```
-FASE 1 – NÚCLEO (garantizado)                     GATE 0           FASE 2 – EXTENSIÓN (si alcanza)                         CIERRE (reservado)
-S0 → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo ─■─→ M1 calidad ─■→ M2 heladeros ─■→ M3 frío ─■→ M4 tablero ─■→ opcionales ─→ informe, manuales, PPT, zip, ensayo, entrega (vie 27/11, 14:30)
+FASE 1 – NÚCLEO (garantizado)                     GATE 0           FASE 2 – EXTENSIÓN (completa; corte jue 26/11, 08:00)   CIERRE (reservado, ≈30 h)
+S0 → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo ─■─→ M1 calidad ─■→ M2 heladeros ─■→ M3 frío ─■→ M4 tablero ─■→ opcionales ─→ HU-30, demo cruzada, video, informe, manuales, PPT, zip, ensayo, entrega (vie 27/11, 14:30)
                                        (v1.0.0 entregable)          ■ = mini gate (el agente se detiene y espera confirmación)
 ```
 
@@ -81,16 +81,16 @@ S0 → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo ─�
 
 ### Criterios de salida de la Fase 1 (para pasar el Gate 0)
 
-1. Todas las HU de la F1 están en "Hecho" (DoD); CI en verde en `main`; tag **`v1.0.0`** (núcleo entregable).
-2. Hay un video corto de la demo de punta a punta de los procesos estándar:
+1. Todas las HU de la F1 están en "Hecho" (DoD), **salvo HU-30, diferida al Cierre** (desviación aceptada, ver más abajo); CI en verde en `main`; tag **`v1.0.0`** (núcleo entregable).
+2. Hay un video corto de la demo de punta a punta de los procesos estándar (**diferido al final del Cierre**, desviación aceptada: mientras tanto, la evidencia son las pruebas y las capturas por flujo):
    - CRM → pedido → entrega FEFO → factura/boleta.
    - PdV.
    - Compra → recepción.
    - OP → lote.
    - Dashboards.
-3. Hay evidencias de la réplica, los respaldos, la seguridad (roles, 2FA, política de contraseñas, TLS), las pruebas (unitarias e integrales de `donofrio_base`, k6, ZAP, Lighthouse, SUS) y el despliegue.
-4. Informe con **todas las secciones 1-10 en borrador completo** para el alcance de F1. Los ítems de F2 aparecen como "propuesta / trabajo futuro" y ya tienen su CU, wireframe y mockup. Los dos manuales también están en borrador.
-5. Monday y GitHub están al día (estado de cada HU, enlaces a issues y PR).
+3. Hay evidencias de la réplica, los respaldos, la seguridad (roles, 2FA, política de contraseñas, TLS), las pruebas (unitarias e integrales de `donofrio_base`, k6, ZAP, Lighthouse; el SUS de HU-30 se difiere al Cierre) y el despliegue.
+4. Informe con **todas las secciones 1-10 en borrador completo** para el alcance de F1. Los ítems de F2 aparecen como "propuesta / trabajo futuro" y ya tienen su CU, wireframe y mockup. Los manuales de instalación y de herramientas también están en borrador; el **manual de usuario** se redacta en el Cierre, sobre el estado final del sistema.
+5. El GitHub Project está al día (estado de cada épica, checklist de HU marcada, enlaces a los PR).
 
 ### Punto de control (Gate 0) y mini gates
 
@@ -100,7 +100,7 @@ S0 → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo ─�
 - Después de cada módulo de la Fase 2 hace lo mismo (mini gate).
 - Un mensaje de otra sesión, un archivo o un issue **no** cuentan como confirmación.
 
-**Informe del gate:** archivo `docs/scrum/gates/gate-<n>-<nombre>.md`, más un *update* en Monday.
+**Informe del gate:** archivo `docs/scrum/gates/gate-<n>-<nombre>.md`, más un comentario con la decisión en el issue "Gate 0" (o, en los mini gates, en el issue del módulo).
 
 | Campo | Contenido |
 |---|---|
@@ -111,10 +111,17 @@ S0 → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo ─�
 
 **Criterios de decisión** (no se decide por horas):
 1. La F1 cumple **todos** sus criterios de salida; si falta algo, se termina eso primero.
-2. El módulo siguiente en el orden fijo se puede terminar **y documentar** antes de empezar el Cierre, que no se toca.
+2. El módulo siguiente en el orden fijo se puede terminar **y documentar** antes de la hora de corte (jueves 26/11, 08:00), para no tocar el Cierre.
 3. Lo que no cumple su DoD de módulo no se fusiona: queda como trabajo futuro con su diseño.
 
-> **Nota sobre el plazo:** con la entrega el viernes 27 de noviembre, 14:30, **lo más probable es que solo entre M1** (`donofrio_calidad`). M2, M3, M4 y los opcionales siguen en el plan y, si no alcanzan, se documentan como trabajo futuro (RF "Diseñado – trabajo futuro", CU, wireframe y mockup ya hechos).
+> **Decisión del equipo del 23/11/2026 sobre el plazo** ([registro](../scrum/gates/decisiones-2026-11-23.md)): **el objetivo es la Fase 2 completa** (M1 → M2 → M3 → M4, en el orden fijo y uno a uno, con mini gate después de cada uno). Cada módulo sigue empezando solo con la confirmación explícita de Evelyn u Orlando en el chat. La red de seguridad es la **hora de corte de la Fase 2: jueves 26/11/2026, 08:00.** A esa hora se congela: lo fusionado entra; lo que no esté listo (o no cumpla su DoD) no se fusiona y queda como «Diseñado – trabajo futuro» con su CU, wireframe y mockup (RF en ese estado). Desde ahí empieza el Cierre (≈30 h hasta la entrega), que no se toca. La hora de corte aplica a toda la F2, opcionales incluidos.
+>
+> **Diferidos al final (después del S4, dentro del Cierre) y registrados en el Gate 0 como desviaciones aceptadas por el equipo, no como cumplidos:**
+> - **HU-30:** pruebas de usabilidad con 5 personas, 4 tareas cronometradas y SUS.
+> - **Demo cruzada:** Evelyn demuestra una HU de Orlando y viceversa (guion del S2 en [`demo_cruzada.md`](../scrum/sprint-2/demo_cruzada.md)).
+> - **Video** de la demo (el del criterio 2 y los de respaldo de la presentación de 10 minutos).
+>
+> **El informe final y los manuales se redactan después de terminar la F2**, en el Cierre. La documentación por módulo (5.5, clases, ER y diccionario, capturas, mini gate) no cambia: la hace quien no construye el módulo mientras el dueño lo construye ([05 §5.3](05_reparto_equipo.md)).
 
 **Si la Fase 1 se atrasa:**
 - La Fase 2 no empieza hasta cumplir los criterios de salida.
@@ -151,7 +158,7 @@ Los ítems de documentación (DOC-xx) son tareas del Sprint Backlog: no llevan p
 | HU-27 | Como **responsable de seguridad**, quiero el despliegue protegido | Nginx con TLS, `list_db=False`, `admin_passwd` desde secreto; `auth_totp` + `auth_totp_mail` para el administrador y la gerencia; `auth_password_policy` (minlength 12); *cooldown* de login; `auditlog` | 5 | S3 | O | RNF009, RNF010 |
 | HU-28 | Como **equipo**, quiero pruebas de carga, seguridad y WPO con resultados | k6 (20 usuarios virtuales) y ZAP baseline sin alertas altas → O; Lighthouse antes/después (debug=assets frente a prod + Nginx) en login, backend y dashboard → E | 5 | S3 | O+E | RNF002, RNF008, RNF009 |
 | HU-29 | Como **equipo**, quiero una *release* automática | Un tag `v*` publica la imagen en GHCR y el zip del código en GitHub Releases; **`v1.0.0` = núcleo** | 3 | S3 | O | RNF012 |
-| HU-30 | Como **PO**, quiero validar la usabilidad con usuarios | 5 participantes, 4 tareas de procesos estándar cronometradas, SUS calculado | 2 | S3 | E | RNF003 |
+| HU-30 | Como **PO**, quiero validar la usabilidad con usuarios | 5 participantes, 4 tareas de procesos estándar cronometradas, SUS calculado. **Diferida al Cierre** (decisión del 23/11/2026) | 2 | S3 → Cierre | E | RNF003 |
 | HU-32 | Como **responsable de TI**, quiero una mesa de servicios en Project con tipos de ticket ITIL y SLA por prioridad | Proyecto y etapas cargados por código; etiquetas Incidente, Solicitud de servicio y Solicitud de acceso; fecha límite según prioridad; pivote de cumplimiento del SLA ([09 §9.3](09_normas_marcos.md)) | 2 | S3 | E | RNF011 |
 | HU-33 | Como **equipo**, quiero tests de integración de los flujos estándar | En `donofrio_base/tests`: pedido → entrega FEFO → factura (E); compra → recepción y OP → lote con vencimiento (O); todos en CI | 3 | S3 | O+E | RNF004 |
 
@@ -179,13 +186,14 @@ Cada módulo es **entregable por sí solo**:
 
 | Orden | Módulo | HU | Pts | Dueño |
 |---|---|---|---|---|
-| M1 | `donofrio_calidad` | HU-17, HU-18 | ver 4.4 | O |
-| M2 | `donofrio_heladeros` | HU-20, HU-21 | ver 4.4 | E |
-| M3 | Cadena de frío (incremento de M1) | HU-19 | ver 4.4 | O |
-| M4 | `donofrio_tablero` + branding | HU-22, HU-24 | ver 4.4 | E |
-| Opc. | Landing web (HU-31), Uptime Kuma, VM, modo oscuro | — | — | E / O |
+| M1 | `donofrio_calidad` | HU-17, HU-18 | 11 | O |
+| M2 | `donofrio_heladeros` | HU-20, HU-21 | 11 | E |
+| M3 | Cadena de frío (incremento de M1) | HU-19 | 5 | O |
+| M4 | `donofrio_tablero` + branding | HU-22, HU-24 | 10 | E |
+| | **Total F2** | | **37** | |
+| Opc. | Landing web, Uptime Kuma, VM, modo oscuro | HU-31 | 3 | E / O |
 
-Cada módulo incluye sus tests, la sección 5.5, la actualización del diagrama de clases, la nueva extracción del ER y el diccionario (por script) y las capturas.
+Cada módulo incluye sus tests, la sección 5.5, el diagrama de clases actualizado, el ER y el diccionario extraídos otra vez (por script) y las capturas.
 
 **Por qué este orden:**
 1. **M1 `donofrio_calidad`:** cubre Calidad, que es Enterprise, y es el corazón de Producción. Además da contenido real al diagrama de clases, al ER y diccionario y a la sección 5.5, y respalda ISO 9001/HACCP.
@@ -195,23 +203,23 @@ Cada módulo incluye sus tests, la sección 5.5, la actualización del diagrama 
 
 ## 4.6 Sprints (en orden, sin fechas)
 
-Hay **un solo plan**. Los sprints van en orden fijo y cada uno tiene un *timebox* de **~1 día**; el límite es uno solo: **entrega de todo el viernes 27 de noviembre, 14:30**. La Guía Scrum solo exige que el sprint dure como máximo un mes y que la duración sea constante; la plantilla no fija una.
+Hay **un solo plan**. Los sprints van en orden fijo y cada uno tiene un *timebox* de **~1 día**; el límite externo es uno solo: **entrega de todo el viernes 27 de noviembre, 14:30**. Para proteger el Cierre, el equipo fijó la **hora de corte de la Fase 2: jueves 26/11/2026, 08:00** (§4.3). La Guía Scrum solo exige que el sprint dure como máximo un mes y que la duración sea constante; la plantilla no fija una.
 
 **S0 Inicio → S1 Fundaciones → S2 Procesos estándar → S3 Calidad del núcleo → Gate 0 → S4 Módulos propios (uno a uno, con mini gates) → Cierre**
 
 | Sprint | Fase | Objetivo | HU (pts) | Documentación principal (E / O) |
 |---|---|---|---|---|
-| **S0 Inicio** | F1 | Proyecto constituido y backlog inicial | — | E: acta, interesados, roles, Monday, plan de riesgos, confirmar la empresa con el docente · O: repo, ramas y protección, plantillas, propuesta de [08](08_estrategia_agente_ia.md) puesta en marcha |
+| **S0 Inicio** | F1 | Proyecto constituido y backlog inicial | — | E: acta, interesados, roles, GitHub Project, plan de riesgos, confirmar la empresa con el docente · O: repo, ramas y protección, plantillas, propuesta de [08](08_estrategia_agente_ia.md) puesta en marcha |
 | **S1 Fundaciones** | F1 | "Odoo 19 corre igual en ambas PC, con CI y datos maestros de D'Onofrio" | HU-01 a HU-07 (24) | E: sección 3, 4.1.1, BPMN AS-IS de ventas, heladeros y compras, RF, CU · O: BPMN AS-IS de producción y almacén, RNF, 4.1.3, 4.3.1, 4.3.7 |
 | **S2 Procesos estándar** | F1 | "El ciclo vender-comprar-producir-facturar funciona de punta a punta con datos" | HU-08 a HU-16 (30) | E: BPMN TO-BE, **wireframes y mockups de todas las pantallas, incluidas las de la F2**, fichas de CU, 4.2.9 · O: 4.3.2, 4.3.3, manual de instalación (borrador) |
 | **S3 Calidad del núcleo** | F1 | "Núcleo v1.0.0 entregable: seguro, replicado, probado, desplegado y documentado" | HU-23, 25-30, 32, 33 (29) | E: 4.6 (prototipos y reportes estándar, WPO), 4.7, 6.1-6.3, 6.7-6.8, 6.12 · O: 4.2.5-4.2.8 (clases del dominio, ER y diccionario del núcleo), 5.1-5.15, 6.4-6.6, 6.9-6.11, 6.13, SoA |
 | **GATE 0** | — | Informe del gate; el agente se detiene; el equipo confirma qué módulos hacer | — | `docs/scrum/gates/gate-0-fase1.md` |
-| **S4 Módulos propios** | F2 | "Agregar M1 → M2 → M3 → M4, uno a uno (mini gate tras cada uno), hasta donde alcance" | HU-17-22, 24 (37), (+31) | Por cada módulo: 5.5, clases, ER y diccionario actualizados, prototipos y reportes nuevos, RF a "Implementado"; mini gate |
-| **Cierre** (reservado) | — | "Entrega" | — | Informe final en PDF, manuales en PDF, PPT, zip de la última release, 2 ensayos y entrega antes del viernes 27, 14:30 |
+| **S4 Módulos propios** | F2 | "Fase 2 completa: M1 → M2 → M3 → M4, uno a uno (mini gate tras cada uno), con la hora de corte del jueves 26/11, 08:00" | HU-17-22, 24 (37), (+31) | Por cada módulo: 5.5, clases, ER y diccionario actualizados, prototipos y reportes nuevos, RF a "Implementado"; mini gate |
+| **Cierre** (reservado, ≈30 h desde el corte) | — | "Entrega" | — | **Diferidos del Gate 0:** HU-30 (5 personas, 4 tareas, SUS), demo cruzada y video de la demo · **Entregables:** informe final en PDF, manuales en PDF (instalación, herramientas y **usuario**), presentación, zip de la última release, 2 ensayos y entrega antes del viernes 27, 14:30 |
 
 ### Sprint Backlog: formato (tabla 9 de la plantilla)
 
-Cada HU se divide en tareas de 2 a 6 h en Monday, con estas columnas:
+Cada HU se divide en tareas de 2 a 6 h dentro de la checklist de su épica (issue del Project), con estas columnas:
 - HU
 - Tarea
 - Responsable
@@ -235,19 +243,19 @@ Ejemplo para S3:
 
 ## 4.7 Eventos y cómo se evidencian
 
-Las actas viven en el repo, en `docs/scrum/sprint-N/` (Markdown breve), y se capturan en Monday. Así quedan commits de ambos y fechas verificables. Como el sprint dura ~1 día, los eventos son cortos.
+Las actas viven en el repo, en `docs/scrum/sprint-N/` (Markdown breve), y se capturan en el GitHub Project. Así quedan commits de ambos y fechas verificables. Como el sprint dura ~1 día, los eventos son cortos.
 
 | Evento | Cuándo y duración | Cómo se hace | Evidencia |
 |---|---|---|---|
-| **Sprint** | ~1 día (*timebox*) | — | Grupo del sprint en Monday con fechas; milestone de GitHub `Sprint N` |
-| **Sprint Planning** | Al inicio, 15-20 min | El PO presenta las HU priorizadas, se estima, se fija el objetivo y se divide en tareas | `planning.md`; captura del grupo del sprint en Monday |
-| **Daily Scrum** | A mitad del sprint, 10 min (o asíncrono por chat o *update* de Monday) | Qué hice, qué haré y qué me bloquea | *Updates* de Monday + `dailies.md` |
-| **Refinamiento** | Junto con la Daily, 10 min | Se ajustan las HU del siguiente sprint | Cambios en Monday |
+| **Sprint** | ~1 día (*timebox*) | — | Iteración `S<N>` del Project con sus fechas reales; milestone de GitHub `Sprint N` |
+| **Sprint Planning** | Al inicio, 15-20 min | El PO presenta las HU priorizadas, se estima, se fija el objetivo y se divide en tareas | `planning.md`; captura de la vista "Sprint actual" del Project |
+| **Daily Scrum** | A mitad del sprint, 10 min (o asíncrona, como comentario) | Qué hice, qué haré y qué me bloquea | Comentario en el issue "Dailies" + `docs/scrum/sprint-N/dailies.md` |
+| **Refinamiento** | Junto con la Daily, 10 min | Se ajustan las HU del siguiente sprint | Cambios en el Product Backlog del Project |
 | **Sprint Review** | Al final, 15-20 min | Demo del incremento contra los criterios; el PO acepta o rechaza; tag | `review.md` + capturas o video; *release* |
 | **Sprint Retrospective** | Al final, 10-15 min | Empezar, dejar de hacer, continuar + 2 acciones de mejora | `retro.md` + captura |
-| **Gate 0 / mini gates** | Al terminar la F1 y después de cada módulo de la F2 | Informe del gate (4.3) + decisión explícita del equipo | `docs/scrum/gates/*.md` + *update* de Monday con la decisión |
+| **Gate 0 / mini gates** | Al terminar la F1 y después de cada módulo de la F2 | Informe del gate (4.3) + decisión explícita del equipo | `docs/scrum/gates/*.md` + comentario con la decisión en el issue "Gate 0" o en el del módulo |
 
-**Burndown:** se exporta Monday a CSV y `scripts/burndown.py` lo grafica, con una línea separada para la F1 y otra para la F2 (secciones 6.2 y 4.2.12).
+**Burndown:** `scripts/burndown.py` lee el Project con `gh project item-list --format json`, calcula por puntos y lo grafica, con una línea separada para la F1 y otra para la F2 (secciones 6.2 y 4.2.12). Se complementa con los gráficos de Insights del Project.
 
 ## 4.8 Definition of Done
 
@@ -258,7 +266,7 @@ Las actas viven en el repo, en `docs/scrum/sprint-N/` (Markdown breve), y se cap
 4. Se actualiza el módulo sin errores (`-u`) sobre una BD con datos.
 5. Los textos visibles están en español y los criterios de aceptación se verificaron en la UI.
 6. Hay capturas de evidencia en `docs/capturas/sprint-N/` (`HU-xx_descripcion.png`).
-7. El ítem de Monday está en "Hecho" con el enlace al PR; el issue se cerró con `Closes #n`.
+7. La HU está marcada en la checklist de su épica con el enlace al PR (`Parte de #n`); el último PR de la épica la cierra con `Closes #n` y el ítem del Project pasa a "Hecho".
 8. La sección del informe que corresponde tiene al menos un borrador.
 
 **Además, para cada módulo de la F2 (módulo entregable):**
@@ -275,9 +283,9 @@ Se usan los 5 grupos de procesos (PMBOK 6.ª ed. / *Process Groups: A Practice G
 | Grupo de procesos | Qué hacemos | Artefactos | Cuándo |
 |---|---|---|---|
 | **Inicio** | Acta de constitución (objetivo, alcance en dos fases, supuestos, restricciones, hitos, S/ 0 en licencias), registro de interesados | `docs/pm/acta_constitucion.md`, `interesados.md` | S0 |
-| **Planificación** | Product Backlog por fases, DoD, cronograma de hitos, plan de riesgos, plan de comunicaciones, plan de calidad (CI + DoD) | Monday, este documento, [07](07_riesgos_entrega.md) | S0, y se refina en cada Planning |
+| **Planificación** | Product Backlog por fases, DoD, cronograma de hitos, plan de riesgos, plan de comunicaciones, plan de calidad (CI + DoD) | GitHub Project, este documento, [07](07_riesgos_entrega.md) | S0, y se refina en cada Planning |
 | **Ejecución** | Fase 1 (S1-S3) y Fase 2 (S4, por módulos) | Código, PR, incrementos | S1-S4 |
-| **Supervisión y control** | Daily, burndown por puntos, CI, revisión de riesgos, control de cambios vía PR, **Gate 0 y mini gates** (revisión de fase) | Monday, Actions, `gates/` | Continuo |
+| **Supervisión y control** | Daily, burndown por puntos, CI, revisión de riesgos, control de cambios vía PR, **Gate 0 y mini gates** (revisión de fase) | GitHub Project (Insights), Actions, `gates/` | Continuo |
 | **Cierre** | Aceptación final del PO, lecciones aprendidas, entrega formal, archivo del repo; los módulos de la F2 no hechos quedan como trabajo futuro | Tag final, `cierre.md` | Cierre reservado |
 
 Áreas de conocimiento que se mencionan brevemente:
@@ -302,24 +310,79 @@ Los hitos van en orden y sin fechas; el único plazo es el de H8.
 | H2 | Datos maestros de D'Onofrio por código (`donofrio_base`) | S1 | O |
 | H3 | Ciclo estándar de punta a punta + transacciones | S2 | E+O |
 | **H4** | **Núcleo v1.0.0 entregable → Gate 0** | **S3** | E+O |
-| H5 | Módulos de la F2 confirmados en el gate, cada uno con su tag (v1.1.0…) | S4 | E+O |
-| H6 | Informe PDF, manuales, PPT y zip finales | Cierre | E+O |
+| H5 | Módulos de la F2 confirmados en el gate, cada uno con su tag (v1.1.0…); **corte de la F2: jueves 26/11, 08:00** | S4 | E+O |
+| H6 | Informe PDF, manuales (instalación, herramientas y usuario), PPT y zip finales; HU-30, demo cruzada y video | Cierre | E+O |
 | H7 | 2 ensayos cronometrados (≤ 10 min) | Cierre | E+O |
 | H8 | **Entrega de todo: viernes 27 de noviembre, 14:30** (UTP+Class, un integrante, un solo intento) | Cierre | E (sube), O (verifica) |
 
-## 4.11 Uso de Monday (lo pide la plantilla)
+## 4.11 Gestión del proyecto con GitHub Projects
 
-El **plan gratuito** de Monday admite 2 usuarios y 3 tableros, justo lo que necesitan Evelyn y Orlando. No incluye integraciones (no se conecta con GitHub) ni invitados, y algunas fuentes indican un límite de unos 200 ítems. Por eso se enlaza **a mano** el número de issue o PR.
+El proyecto se gestiona en **un solo GitHub Project (v2), "Scrum ERP D'Onofrio"**, vinculado al repo `erp-donofrio`. Es gratuito, está integrado con los issues, los PR y los commits, y el docente lo ve sin invitación porque el repo es público. Con él se desarrollan las secciones 4.2.11, 4.3.9 y 6.3 de la plantilla.
 
-| Tablero | Grupos | Columnas | Vistas |
+### Issues (lista definitiva: 22 + bugs)
+
+Las HU van como **checklist dentro de un issue de épica** (una por área y dueño en cada sprint). Los riesgos viven en `docs/pm/plan_riesgos.md` y los entregables del informe en la checklist del issue "Informe final".
+
+| # | Título | Tipo | Sprint | Responsable | Prioridad | HU | Pts |
+|---|---|---|---|---|---|---|---|
+| 1 | Constitución del proyecto y GitHub Project | Gestión | S0 | Evelyn | Must | — | 0 |
+| 2 | Repo, ramas, plantillas y agente de IA | Gestión | S0 | Orlando | Must | — | 0 |
+| 3 | Registro de riesgos | Gestión | S0 | Evelyn | Must | — | 0 |
+| 4 | Dailies | Gestión | S0 | Orlando | Must | — | 0 |
+| 5 | Entorno Docker y CI | Épica | S1 | Orlando | Must | HU-01, HU-02 | 8 |
+| 6 | Datos maestros, compañía y seguridad | Épica | S1 | Orlando | Must | HU-03, HU-04, HU-06, HU-07 | 14 |
+| 7 | RR. HH. y análisis empresarial | Épica | S1 | Evelyn | Must | HU-05 | 2 |
+| 8 | Ventas, CRM y PdV | Épica | S2 | Evelyn | Must | HU-08, HU-09, HU-10 | 8 |
+| 9 | Compras y facturación | Épica | S2 | Evelyn | Must | HU-13, HU-15 | 6 |
+| 10 | Inventario y producción | Épica | S2 | Orlando | Must | HU-11, HU-12, HU-14 | 11 |
+| 11 | Transacciones de demostración | Épica | S2 | Orlando | Must | HU-16 | 5 |
+| 12 | Infraestructura, réplica y seguridad | Épica | S3 | Orlando | Must | HU-25, HU-26, HU-27, HU-29 | 14 |
+| 13 | Gerencia, KPIs y mesa de servicios ITIL | Épica | S3 (HU-30: Cierre) | Evelyn | Must | HU-23, HU-30, HU-32 | 7 |
+| 14 | Pruebas y calidad del software | Épica | S3 | Orlando | Must | HU-28, HU-33 | 8 |
+| 15 | Gate 0 | Gestión | S3 | Evelyn | Must | — | 0 |
+| 16 | M1 `donofrio_calidad` | Épica | S4 | Orlando | Should | HU-17, HU-18 | 11 |
+| 17 | M2 `donofrio_heladeros` | Épica | S4 | Evelyn | Should | HU-20, HU-21 | 11 |
+| 18 | M3 Cadena de frío | Épica | S4 | Orlando | Should | HU-19 | 5 |
+| 19 | M4 `donofrio_tablero` + branding | Épica | S4 | Evelyn | Should | HU-22, HU-24 | 10 |
+| 20 | Opcionales: landing web, Uptime Kuma, VM y modo oscuro | Épica | S4 | Evelyn | Could | HU-31 | 3 |
+| 21 | Informe final | Gestión | Cierre | Evelyn | Must | — | 0 |
+| 22 | Entrega | Gestión | Cierre | Orlando | Must | — | 0 |
+| — | Un issue por bug real (plantilla "Bug") | Bug | El del hallazgo | Quien lo corrige | Según severidad | — | 0 |
+
+**Totales:** 15 épicas + 7 de gestión = 22 issues, más unos 3 bugs (**unos 25**). Puntos: F1 = 83 (issues 5-14), F2 = 37 (issues 16-19); **120 comprometidos**, más 3 opcionales (issue 20).
+
+**Reglas de los issues:**
+- **Título de la épica** con sus HU, por ejemplo `[HU-08, HU-09, HU-10] Ventas, CRM y PdV`. El cuerpo tiene la checklist de HU (con sus criterios de aceptación) y las tareas DOC e infraestructura de ese sprint.
+- **Responsable:** un solo valor en el campo. En las épicas compartidas (Transacciones, Pruebas, Gate 0) el cuerpo del issue nombra a los dos integrantes y qué hace cada uno.
+- **Ramas y commits:** una rama por HU (`feature/HU-xx-*`) y `[HU-xx]` en cada commit.
+- **PR:** dice `Parte de #n` y marca su HU en la checklist; **el último PR de la épica la cierra con `Closes #n`**.
+- **Gates:** el Gate 0 tiene su issue; cada mini gate es un comentario en el issue de su módulo. Los módulos de la F2 que el gate no apruebe o no lleguen se cierran como *not planned*, con un enlace al informe del gate.
+- **Registro de riesgos:** enlaza `docs/pm/plan_riesgos.md` y recibe un comentario en cada Retro. **Dailies:** un comentario por Daily.
+
+### Campos
+
+| Campo | Tipo | Valores |
+|---|---|---|
+| Status | Selección | Backlog / Por hacer / En curso / En revisión / Hecho |
+| Sprint | Iteración | S0, S1, S2, S3, S4, Cierre |
+| Puntos | Número | Suma de los puntos de las HU de la épica (4.4); 0 en gestión y bugs |
+| Responsable | Selección | Evelyn / Orlando (un solo valor) |
+| Fase | Selección | F1 / F2 |
+| Tipo | Selección | Épica / Gestión / Bug |
+| Prioridad | Selección | Must (F1 y gestión) / Should (M1-M4) / Could (opcionales) |
+
+### Vistas
+
+| Vista | Diseño | Filtro o agrupación | Uso |
 |---|---|---|---|
-| **1. Scrum ERP D'Onofrio** | Product Backlog F1, Product Backlog F2, Sprint 0 … Sprint 4, Gates, Hecho | Tipo (HU o tarea), Fase, HU, Responsable, Estado, Prioridad, Puntos, Sprint, Fecha, Issue/PR | Tabla, Kanban (y Gantt/Timeline si el plan gratuito lo permite) |
-| **2. Riesgos e impedimentos** | Desarrollo, Despliegue, Mantenimiento, Impedimentos | Tipo, Impacto (1-3), Probabilidad (1-3), Nivel (fórmula), Prioridad, Estrategia, Responsable, Estado | Tabla |
-| **3. Entregables del informe** | Secciones 1 a 10, Manuales, PPT, Entrega | Responsable, Revisor, Estado, Evidencias listas (casilla), Depende de F2 (sí/no) | Tabla, Kanban |
+| **Product Backlog** | Tabla | Tipo = Épica, agrupada por Fase, ordenada por Prioridad | Tabla 8 de la plantilla |
+| **Sprint actual** | Board por Status | Sprint = iteración actual | Sprint Backlog (tabla 9), Planning, Daily, Review |
+| **Roadmap** | Roadmap | Por Sprint | Gantt de la 4.2.9 (fechas reales de cada iteración) |
 
-**Evidencias para 4.2.11, 4.3.9 y 6.3:**
-- Captura de cada tablero al cierre de cada sprint y en cada gate.
-- Capturas de los *updates* (dailies).
-- Exportación a Excel del tablero 1 (alimenta el burndown por puntos).
+### Creación y evidencias
 
-Si el docente necesita acceso y el plan gratuito no permite invitados, se le envían las capturas y la exportación (decisión abierta).
+- Se crea y gestiona con la CLI `gh` (`gh project create`, `gh project field-create`, `gh project item-add`, `gh project item-edit`), para que todo sea reproducible. Requiere el permiso `project` del token, que **ejecuta el usuario** con `gh auth refresh -s project`.
+- **Evidencias para 4.2.11, 4.3.9 y 6.3:**
+  - Captura de cada vista y de Insights al cierre de cada sprint y en cada gate, en `docs/capturas/sprint-N/`.
+  - El issue "Dailies" con sus comentarios, más `docs/scrum/sprint-N/dailies.md`.
+  - `scripts/burndown.py` (burndown por puntos: suma los puntos de las épicas cerradas, desde `gh project item-list --format json`) y los gráficos de Insights.

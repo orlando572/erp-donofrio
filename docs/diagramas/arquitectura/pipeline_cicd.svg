@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="700" viewBox="0 0 1500 700" font-family="DejaVu Sans, Arial, sans-serif">
+<defs><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker></defs>
+<rect width="1500" height="700" fill="#fff"/>
+<text x="750" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#222">Pipeline CI/CD del ERP de D'Onofrio: de la rama de trabajo a la release y al despliegue</text>
+<text x="750" y="54" text-anchor="middle" font-size="12" font-weight="normal" fill="#555">Línea continua: automático en GitHub Actions · Línea punteada: paso manual en el nodo de despliegue</text>
+<rect x="20" y="90" width="230" height="150" rx="8" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<text x="30" y="110" text-anchor="start" font-size="13" font-weight="bold" fill="#222">1. Rama feature/HU-xx</text>
+<text x="30" y="129" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Commit convencional en español</text>
+<text x="30" y="146" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• scripts/test.sh y</text>
+<text x="30" y="161" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  check_legacy.sh en local</text>
+<text x="30" y="178" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Sale de develop</text>
+<rect x="290" y="90" width="230" height="150" rx="8" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<text x="300" y="110" text-anchor="start" font-size="13" font-weight="bold" fill="#222">2. Pull request a develop</text>
+<text x="300" y="129" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Plantilla con checklist de la</text>
+<text x="300" y="144" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  DoD</text>
+<text x="300" y="161" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• «Parte de #n» (la épica se</text>
+<text x="300" y="176" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  cierra en el último PR)</text>
+<rect x="560" y="90" width="470" height="150" rx="8" fill="#e8f9ee" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="570" y="110" text-anchor="start" font-size="13" font-weight="bold" fill="#222">3. ci.yml (pull_request, push y lunes 06:00 Lima)</text>
+<rect x="572" y="130" width="84" height="100" rx="8" fill="#d7f0d2" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="582" y="150" text-anchor="start" font-size="12" font-weight="bold" fill="#222">lint</text>
+<text x="582" y="168" text-anchor="start" font-size="10" font-weight="normal" fill="#222">• ruff y</text>
+<text x="582" y="181" text-anchor="start" font-size="10" font-weight="normal" fill="#222">  patrones</text>
+<text x="582" y="194" text-anchor="start" font-size="10" font-weight="normal" fill="#222">  legacy</text>
+<rect x="662" y="130" width="84" height="100" rx="8" fill="#d7f0d2" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="672" y="150" text-anchor="start" font-size="12" font-weight="bold" fill="#222">test</text>
+<text x="672" y="168" text-anchor="start" font-size="10" font-weight="normal" fill="#222">• instala y</text>
+<text x="672" y="181" text-anchor="start" font-size="10" font-weight="normal" fill="#222">  prueba</text>
+<rect x="752" y="130" width="84" height="100" rx="8" fill="#fff" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="762" y="150" text-anchor="start" font-size="12" font-weight="bold" fill="#222">replica</text>
+<text x="762" y="168" text-anchor="start" font-size="10" font-weight="normal" fill="#222">• streaming</text>
+<rect x="842" y="130" width="84" height="100" rx="8" fill="#fff" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="852" y="150" text-anchor="start" font-size="12" font-weight="bold" fill="#222">backup</text>
+<text x="852" y="168" text-anchor="start" font-size="10" font-weight="normal" fill="#222">• restauración</text>
+<rect x="932" y="130" width="84" height="100" rx="8" fill="#fff" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="942" y="150" text-anchor="start" font-size="12" font-weight="bold" fill="#222">proxy</text>
+<text x="942" y="168" text-anchor="start" font-size="10" font-weight="normal" fill="#222">• TLS y</text>
+<text x="942" y="181" text-anchor="start" font-size="10" font-weight="normal" fill="#222">  cabeceras</text>
+<rect x="1070" y="90" width="190" height="150" rx="8" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<text x="1080" y="110" text-anchor="start" font-size="13" font-weight="bold" fill="#222">4. Revisión cruzada</text>
+<text x="1080" y="129" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• 1 aprobación del otro</text>
+<text x="1080" y="144" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  integrante</text>
+<text x="1080" y="161" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Conversaciones resueltas</text>
+<text x="1080" y="178" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Checks obligatorios en</text>
+<text x="1080" y="193" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  develop: lint y test</text>
+<rect x="1290" y="90" width="190" height="150" rx="8" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<text x="1300" y="110" text-anchor="start" font-size="13" font-weight="bold" fill="#222">5. Squash and merge</text>
+<text x="1300" y="129" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• A develop, un commit por</text>
+<text x="1300" y="144" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  HU</text>
+<text x="1300" y="161" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• El CI corre otra vez en</text>
+<text x="1300" y="176" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  el push</text>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="250,165 290,165"/>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="520,165 560,165"/>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="1030,165 1070,165"/>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="1260,165 1290,165"/>
+<rect x="20" y="330" width="230" height="150" rx="8" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<text x="30" y="350" text-anchor="start" font-size="13" font-weight="bold" fill="#222">6. PR develop → main</text>
+<text x="30" y="369" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Merge commit (no squash)</text>
+<text x="30" y="386" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Conserva la trazabilidad de</text>
+<text x="30" y="401" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  cada HU</text>
+<text x="30" y="418" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• CI en verde y 1 aprobación</text>
+<rect x="290" y="330" width="230" height="150" rx="8" fill="#fff" stroke="#555" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="300" y="350" text-anchor="start" font-size="13" font-weight="bold" fill="#222">7. Tag vX.Y.Z</text>
+<text x="300" y="369" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• git tag -a desde main</text>
+<text x="300" y="386" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• v0.x = preliminar; v1.0.0 =</text>
+<text x="300" y="401" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  núcleo de la Fase 1</text>
+<text x="300" y="418" text-anchor="start" font-size="12" font-weight="normal" fill="#222">• Al 23/11/2026 no se publicó</text>
+<text x="300" y="433" text-anchor="start" font-size="12" font-weight="normal" fill="#222">  ninguno</text>
+<rect x="560" y="330" width="470" height="150" rx="8" fill="#e8f9ee" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="570" y="350" text-anchor="start" font-size="13" font-weight="bold" fill="#222">8. release.yml (tag v*; en PR y manual es un ensayo)</text>
+<text x="570" y="369" text-anchor="start" font-size="11" font-weight="normal" fill="#222">• Construye la imagen con --build-context addons=./addons y la prueba</text>
+<text x="570" y="383" text-anchor="start" font-size="11" font-weight="normal" fill="#222">  (scripts/probar_imagen.sh)</text>
+<text x="570" y="399" text-anchor="start" font-size="11" font-weight="normal" fill="#222">• Empaqueta erp-donofrio-vX.Y.Z.zip (scripts/empaquetar_release.sh)</text>
+<text x="570" y="415" text-anchor="start" font-size="11" font-weight="normal" fill="#222">• Solo con tag: publica en GHCR (:vX.Y.Z y :latest) y crea la GitHub</text>
+<text x="570" y="429" text-anchor="start" font-size="11" font-weight="normal" fill="#222">  Release con el zip</text>
+<rect x="1070" y="330" width="410" height="150" rx="8" fill="#fff" stroke="#555" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="1080" y="350" text-anchor="start" font-size="13" font-weight="bold" fill="#222">9. Despliegue en el nodo (manual, un solo nodo)</text>
+<text x="1080" y="369" text-anchor="start" font-size="11" font-weight="normal" fill="#222">• scripts/backup.sh antes de cambiar nada</text>
+<text x="1080" y="385" text-anchor="start" font-size="11" font-weight="normal" fill="#222">• git checkout vX.Y.Z y scripts/levantar_prod.sh (Nginx + TLS,</text>
+<text x="1080" y="399" text-anchor="start" font-size="11" font-weight="normal" fill="#222">  workers = 2)</text>
+<text x="1080" y="415" text-anchor="start" font-size="11" font-weight="normal" fill="#222">• scripts/verificar_despliegue.sh como prueba de humo</text>
+<text x="1080" y="431" text-anchor="start" font-size="11" font-weight="normal" fill="#222">• Rollback: volver al tag anterior (y restore.sh si cambiaron los</text>
+<text x="1080" y="445" text-anchor="start" font-size="11" font-weight="normal" fill="#222">  datos)</text>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="1385,240 1385,285 135,285 135,330"/>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="250,405 290,405"/>
+<polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="520,405 560,405"/>
+<polyline fill="none" stroke="#333" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#flecha)" points="1030,405 1070,405"/>
+<rect x="20" y="530" width="700" height="140" rx="8" fill="#f4f7fb" stroke="#999" stroke-width="1.5"/>
+<text x="30" y="550" text-anchor="start" font-size="13" font-weight="bold" fill="#222">Otros disparadores y controles</text>
+<text x="30" y="569" text-anchor="start" font-size="11" font-weight="normal" fill="#222">• perf.yml (solo workflow_dispatch): k6 (carga) y ZAP baseline sobre el despliegue protegido; reportes como</text>
+<text x="30" y="583" text-anchor="start" font-size="11" font-weight="normal" fill="#222">  artefactos</text>
+<text x="30" y="599" text-anchor="start" font-size="11" font-weight="normal" fill="#222">• ci.yml también corre cada lunes 11:00 UTC: regresión de mantenimiento</text>
+<text x="30" y="615" text-anchor="start" font-size="11" font-weight="normal" fill="#222">• Secretos: solo GITHUB_TOKEN en Actions; las contraseñas del compose salen de .env (no versionado)</text>
+<rect x="760" y="530" width="720" height="140" rx="8" fill="#f4f7fb" stroke="#999" stroke-width="1.5"/>
+<text x="770" y="550" text-anchor="start" font-size="13" font-weight="bold" fill="#222">Dónde queda cada entregable</text>
+<text x="770" y="569" text-anchor="start" font-size="11" font-weight="normal" fill="#222">• Código y PR: github.com/orlando572/erp-donofrio (ramas main y develop protegidas)</text>
+<text x="770" y="585" text-anchor="start" font-size="11" font-weight="normal" fill="#222">• Imagen: ghcr.io/orlando572/erp-donofrio:vX.Y.Z (aparece con el primer tag)</text>
+<text x="770" y="601" text-anchor="start" font-size="11" font-weight="normal" fill="#222">• Zip del código: adjunto de la GitHub Release</text>
+<text x="770" y="617" text-anchor="start" font-size="11" font-weight="normal" fill="#222">• Evidencias de cada job: pestaña Actions del repositorio</text>
+</svg>

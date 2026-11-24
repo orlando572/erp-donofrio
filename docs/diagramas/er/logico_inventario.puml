@@ -1,0 +1,171 @@
+@startuml logico_inventario
+' Generado por scripts/diagrama_er.py desde la BD real; no se edita a mano (ver docs/diagramas/README.md).
+title Diseño lógico: Inventario: movimientos, lotes y existencias
+hide circle
+hide empty methods
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 12
+skinparam roundCorner 6
+skinparam ArrowColor #555555
+skinparam entity {
+  BorderColor #444444
+  BackgroundColor #FFFFFF
+}
+skinparam package {
+  BorderColor #888888
+  FontStyle bold
+}
+skinparam nodesep 30
+skinparam ranksep 90
+
+entity "stock_warehouse" as stock_warehouse #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  partner_id : integer <<FK>>
+  * view_location_id : integer <<FK>>
+  * lot_stock_id : integer <<FK>>
+  pick_type_id : integer <<FK>>
+  pack_type_id : integer <<FK>>
+  <i>+ FK a stock_location ×6, stock_picking_type ×10</i>
+  * name : varchar
+  * code : varchar(5)
+}
+entity "stock_location" as stock_location #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  warehouse_id : integer <<FK>>
+  <i>+ FK a stock_location</i>
+  removal_strategy_id : integer
+  * name : varchar
+  complete_name : varchar
+  * usage : varchar
+}
+entity "stock_picking_type" as stock_picking_type #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  * default_location_src_id : integer <<FK>>
+  * default_location_dest_id : integer <<FK>>
+  warehouse_id : integer <<FK>>
+  <i>+ FK a stock_picking_type</i>
+  * sequence_code : varchar
+  * code : varchar
+  * name : jsonb
+}
+entity "stock_picking" as stock_picking #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  * location_id : integer <<FK>>
+  * location_dest_id : integer <<FK>>
+  * picking_type_id : integer <<FK>>
+  partner_id : integer <<FK>>
+  owner_id : integer <<FK>>
+  <i>+ FK a stock_picking ×2</i>
+  name : varchar
+  origin : varchar
+  state : varchar
+  scheduled_date : timestamp
+  date_done : timestamp
+}
+entity "stock_move" as stock_move #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  * product_id : integer <<FK>>
+  * location_id : integer <<FK>>
+  * location_dest_id : integer <<FK>>
+  partner_id : integer <<FK>>
+  picking_id : integer <<FK>>
+  picking_type_id : integer <<FK>>
+  restrict_partner_id : integer <<FK>>
+  warehouse_id : integer <<FK>>
+  <i>+ FK a stock_location, stock_move</i>
+  state : varchar
+  origin : varchar
+  * product_uom_qty : numeric
+  quantity : numeric
+  * date : timestamp
+}
+entity "stock_move_line" as stock_move_line #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  picking_id : integer <<FK>>
+  move_id : integer <<FK>>
+  product_id : integer <<FK>>
+  lot_id : integer <<FK>>
+  owner_id : integer <<FK>>
+  * location_id : integer <<FK>>
+  * location_dest_id : integer <<FK>>
+  state : varchar
+  quantity : numeric
+  * date : timestamp
+}
+entity "stock_lot" as stock_lot #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  * product_id : integer <<FK>>
+  location_id : integer <<FK>>
+  * name : varchar
+  expiration_date : timestamp
+  use_date : timestamp
+  removal_date : timestamp
+  alert_date : timestamp
+}
+entity "stock_quant" as stock_quant #FFF1D6 {
+  * id : integer <<PK>>
+  --
+  * product_id : integer <<FK>>
+  * location_id : integer <<FK>>
+  lot_id : integer <<FK>>
+  owner_id : integer <<FK>>
+  quantity : numeric
+  * reserved_quantity : numeric
+  * in_date : timestamp
+}
+entity "product_product" as product_product #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  default_code : varchar
+  barcode : varchar
+  active : boolean
+}
+entity "res_partner" as res_partner #EAF5E4 {
+  * id : integer <<PK>>
+  --
+  <i>+ FK a res_partner ×2</i>
+  name : varchar
+  vat : varchar
+  active : boolean
+}
+stock_warehouse }o--o| res_partner : partner_id
+stock_warehouse }o--|| stock_location : view_location_id, lot_stock_id (+6)
+stock_warehouse }o--o| stock_picking_type : pick_type_id, pack_type_id (+10)
+stock_location }o--o| stock_warehouse : warehouse_id
+stock_picking_type }o--|| stock_location : default_location_src_id, default_location_dest_id
+stock_picking_type }o--o| stock_warehouse : warehouse_id
+stock_picking }o--|| stock_location : location_id, location_dest_id
+stock_picking }o--|| stock_picking_type : picking_type_id
+stock_picking }o--o| res_partner : partner_id, owner_id
+stock_move }o--|| product_product : product_id
+stock_move }o--|| stock_location : location_id, location_dest_id (+1)
+stock_move }o--o| res_partner : partner_id, restrict_partner_id
+stock_move }o--o| stock_picking : picking_id
+stock_move }o--o| stock_picking_type : picking_type_id
+stock_move }o--o| stock_warehouse : warehouse_id
+stock_move_line }o--o| stock_picking : picking_id
+stock_move_line }o--o| stock_move : move_id
+stock_move_line }o--o| product_product : product_id
+stock_move_line }o--o| stock_lot : lot_id
+stock_move_line }o--o| res_partner : owner_id
+stock_move_line }o--|| stock_location : location_id, location_dest_id
+stock_lot }o--|| product_product : product_id
+stock_lot }o--o| stock_location : location_id
+stock_quant }o--|| product_product : product_id
+stock_quant }o--|| stock_location : location_id
+stock_quant }o--o| stock_lot : lot_id
+stock_quant }o--o| res_partner : owner_id
+legend bottom
+  * = no admite nulo · <<PK>> clave primaria · <<FK>> clave foránea · solo columnas clave
+  Pata de gallo: ||  uno exacto · o|  cero o uno · }o  cero o muchos
+endlegend
+@enduml

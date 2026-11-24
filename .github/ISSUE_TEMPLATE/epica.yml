@@ -1,0 +1,55 @@
+name: Épica
+description: Issue de épica por área y dueño, con la checklist de sus HU (plan v1.4, docs/plan/04 §4.11)
+title: "[HU-xx, HU-yy] Nombre de la épica"
+labels: ["tipo:epica"]
+body:
+  - type: input
+    id: sprint
+    attributes:
+      label: Sprint y dueño
+      placeholder: S2 · Evelyn
+    validations:
+      required: true
+  - type: textarea
+    id: historias
+    attributes:
+      label: Historias de usuario (checklist)
+      description: Una línea por HU, con su como/quiero/para, criterios de aceptación, puntos y RF/RNF.
+      placeholder: |
+        - [ ] **HU-08**: Como ___, quiero ___, para ___ *(2 pts · RF001)*
+          Criterios de aceptación:
+            - [ ] ...
+    validations:
+      required: true
+  - type: textarea
+    id: tareas
+    attributes:
+      label: Tareas de documentación e infraestructura del sprint
+      description: Las tareas DOC/infra de docs/plan/05 §5.2 que le corresponden a esta épica.
+  - type: dropdown
+    id: fase
+    attributes:
+      label: Fase
+      options: ["F1 – Núcleo", "F2 – Extensión"]
+    validations:
+      required: true
+  - type: input
+    id: puntos
+    attributes:
+      label: Puntos (suma de las HU)
+      placeholder: "8"
+    validations:
+      required: true
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of Done de cada HU
+      options:
+        - label: PR aprobado por el otro integrante
+        - label: CI en verde
+        - label: Tests y ACL de lo nuevo
+        - label: Actualización del módulo (-u) sin errores
+        - label: Textos en español y criterios verificados en la UI
+        - label: Capturas en docs/capturas/sprint-N/
+        - label: El elemento del Project está en "Hecho" con enlace al PR
+        - label: Borrador de la sección del informe

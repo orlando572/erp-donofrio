@@ -1,0 +1,309 @@
+@startuml clases_nucleo
+' 4.2.5. Clases del dominio de D'Onofrio sobre los modelos de Odoo 19 Community (nombres y campos verificados
+' contra ir_model_fields de una BD con donofrio_base instalado) y lo que agrega donofrio_base.
+title Diagrama de clases del núcleo (Fase 1): modelos de Odoo usados y extensiones de donofrio_base
+hide empty members
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 12
+skinparam classAttributeIconSize 0
+skinparam ArrowColor #555555
+skinparam class {
+  BorderColor #555555
+  BackgroundColor #FFFFFF
+  BackgroundColor<<extendido por donofrio_base>> #FFE8B3
+  BorderColor<<extendido por donofrio_base>> #C27A00
+  BackgroundColor<<donofrio_base>> #D8F0D2
+  BorderColor<<donofrio_base>> #2E7D32
+}
+skinparam stereotypeCBackgroundColor #FFFFFF
+skinparam nodesep 25
+skinparam ranksep 70
+
+package "Ventas y CRM" #F2F7FD {
+  class "crm.lead" as crm_lead {
+    name : char
+    type : selection
+    stage_id : many2one
+    expected_revenue : monetary
+  }
+  class "sale.order" as sale_order <<extendido por donofrio_base>> {
+    name : char
+    state : selection
+    date_order : datetime
+    amount_total : monetary
+    invoice_status : selection
+    journal_id : many2one
+    --
+    _compute_journal_id()
+    _diario_segun_cliente()
+  }
+  class "sale.order.line" as sale_order_line {
+    product_uom_qty : float
+    price_unit : float
+    discount : float
+    qty_delivered : float
+    qty_invoiced : float
+  }
+  class "pos.order" as pos_order {
+    name : char
+    state : selection
+    date_order : datetime
+    amount_total : monetary
+  }
+}
+
+package "Maestros" #F3FAF0 {
+  class "res.partner" as res_partner {
+    name : char
+    vat : char
+    customer_rank : integer
+    supplier_rank : integer
+    parent_id : many2one
+  }
+  class "product.template" as product_template {
+    name : char
+    type : selection
+    is_storable : boolean
+    tracking : selection
+    use_expiration_date : boolean
+    list_price : float
+    categ_id : many2one
+  }
+  class "product.product" as product_product {
+    default_code : char
+    barcode : char
+  }
+  class "product.pricelist" as product_pricelist {
+    name : char
+    active : boolean
+  }
+  class "product.pricelist.item" as product_pricelist_item {
+    applied_on : selection
+    compute_price : selection
+    fixed_price : float
+    min_quantity : float
+  }
+  class "product.supplierinfo" as product_supplierinfo {
+    price : float
+    min_qty : float
+    delay : integer
+  }
+  class "hr.employee" as hr_employee {
+    name : char
+    job_id : many2one
+    department_id : many2one
+    parent_id : many2one
+  }
+}
+
+package "Inventario" #FFF8E8 {
+  class "stock.warehouse" as stock_warehouse {
+    name : char
+    code : char
+  }
+  class "stock.location" as stock_location {
+    name : char
+    usage : selection
+    removal_strategy_id : many2one
+  }
+  class "stock.picking" as stock_picking {
+    name : char
+    state : selection
+    scheduled_date : datetime
+    origin : char
+  }
+  class "stock.move" as stock_move {
+    state : selection
+    product_uom_qty : float
+    quantity : float
+    date : datetime
+  }
+  class "stock.move.line" as stock_move_line {
+    quantity : float
+    date : datetime
+  }
+  class "stock.lot" as stock_lot {
+    name : char
+    expiration_date : datetime
+    use_date : datetime
+    removal_date : datetime
+    alert_date : datetime
+  }
+  class "stock.quant" as stock_quant {
+    quantity : float
+    reserved_quantity : float
+    in_date : datetime
+  }
+  class "stock.warehouse.orderpoint" as stock_orderpoint {
+    product_min_qty : float
+    product_max_qty : float
+    trigger : selection
+  }
+}
+
+package "Producción" #FBF1FA {
+  class "mrp.bom" as mrp_bom {
+    code : char
+    type : selection
+    product_qty : float
+  }
+  class "mrp.bom.line" as mrp_bom_line {
+    product_qty : float
+  }
+  class "mrp.production" as mrp_production {
+    name : char
+    state : selection
+    product_qty : float
+    date_start : datetime
+    date_finished : datetime
+  }
+  class "mrp.workorder" as mrp_workorder {
+    name : char
+    state : selection
+    duration_expected : float
+  }
+  class "mrp.workcenter" as mrp_workcenter {
+    name : char
+    costs_hour : float
+  }
+}
+
+package "Compras y facturación" #FEF3EE {
+  class "purchase.order" as purchase_order {
+    name : char
+    state : selection
+    date_order : datetime
+    amount_total : monetary
+  }
+  class "purchase.order.line" as purchase_order_line {
+    product_qty : float
+    price_unit : float
+    qty_received : float
+  }
+  class "account.move" as account_move {
+    name : char
+    move_type : selection
+    state : selection
+    invoice_date : date
+    amount_total : monetary
+    payment_state : selection
+  }
+}
+
+package "Seguridad y mesa de servicios (donofrio_base)" #F4F4F4 {
+  class "res.users" as res_users <<extendido por donofrio_base>> {
+    login : char
+    totp_enabled : boolean
+    --
+    _exige_2fa() : bool
+    _mfa_type() : str
+  }
+  class "res.groups" as res_groups {
+    name : char
+    implied_ids : many2many
+  }
+  class "grupos de donofrio_base" as grupos_donofrio <<donofrio_base>> {
+    group_cd_arequipa
+    group_2fa_obligatorio
+  }
+  class "reglas de registro (ir.rule)" as ir_rule <<donofrio_base>> {
+    Transferencias del CD Arequipa
+    Movimientos del CD Arequipa
+    Detalle de movimientos del CD Arequipa
+    Existencias del CD Arequipa
+    (filtran stock.picking, stock.move,
+    stock.move.line y stock.quant)
+  }
+  class "auditlog.rule" as auditlog_rule <<extendido por donofrio_base>> {
+    name : char
+    log_type : selection
+    state : selection
+    audita : pricelist, pricelist.item,
+    sale.order, purchase.order
+    --
+    _confirmar_reglas_donofrio()
+  }
+  class "project.task" as project_task <<extendido por donofrio_base>> {
+    name : char
+    priority : selection
+    date_deadline : datetime
+    sla_estado : selection
+    --
+    _fecha_limite_del_sla()
+    _es_de_la_mesa()
+  }
+}
+
+' --- Ventas
+sale_order "1" *-- "*" sale_order_line : order_line
+sale_order "*" --> "1" res_partner : partner_id
+sale_order "*" --> "0..1" product_pricelist : pricelist_id
+sale_order "*" --> "0..1" crm_lead : opportunity_id
+sale_order "1" o-- "*" stock_picking : picking_ids
+sale_order "*" o-- "*" account_move : invoice_ids
+sale_order "*" o-- "*" mrp_production : mrp_production_ids
+sale_order_line "*" --> "0..1" product_product : product_id
+crm_lead "*" --> "0..1" res_partner : partner_id
+pos_order "*" --> "0..1" res_partner : partner_id
+pos_order "*" --> "0..1" account_move : account_move
+pos_order "*" --> "0..1" hr_employee : employee_id
+pos_order "1" o-- "*" stock_picking : picking_ids
+
+' --- Maestros
+product_template "1" *-- "1..*" product_product : product_variant_ids
+product_template "1" *-- "*" product_supplierinfo : seller_ids
+product_supplierinfo "*" --> "1" res_partner : partner_id
+product_pricelist "1" *-- "*" product_pricelist_item : item_ids
+hr_employee "0..1" --> "0..1" res_users : user_id
+res_users "1" --> "1" res_partner : partner_id
+
+' --- Inventario
+stock_picking "1" *-- "*" stock_move : move_ids
+stock_move "1" *-- "*" stock_move_line : move_line_ids
+stock_move "*" --> "1" product_product : product_id
+stock_move_line "*" --> "0..1" stock_lot : lot_id
+stock_lot "*" --> "1" product_product : product_id
+stock_quant "*" --> "1" stock_location : location_id
+stock_quant "*" --> "0..1" stock_lot : lot_id
+stock_quant "*" --> "1" product_product : product_id
+stock_location "*" --> "0..1" stock_warehouse : warehouse_id
+stock_picking "*" --> "1" stock_location : location_id
+stock_orderpoint "*" --> "1" product_product : product_id
+stock_orderpoint "*" --> "0..1" mrp_bom : bom_id
+stock_orderpoint "*" --> "0..1" product_supplierinfo : supplier_id
+stock_orderpoint "*" --> "1" stock_warehouse : warehouse_id
+
+' --- Producción
+mrp_bom "*" --> "1" product_template : product_tmpl_id
+mrp_bom "1" *-- "*" mrp_bom_line : bom_line_ids
+mrp_bom_line "*" --> "1" product_product : product_id
+mrp_production "*" --> "0..1" mrp_bom : bom_id
+mrp_production "*" --> "1" product_product : product_id
+mrp_production "1" *-- "*" stock_move : move_raw_ids\nmove_finished_ids
+mrp_production "*" o-- "*" stock_lot : lot_producing_ids
+mrp_production "1" *-- "*" mrp_workorder : workorder_ids
+mrp_workorder "*" --> "1" mrp_workcenter : workcenter_id
+
+' --- Compras y facturación
+purchase_order "1" *-- "*" purchase_order_line : order_line
+purchase_order "*" --> "1" res_partner : partner_id
+purchase_order "*" o-- "*" stock_picking : picking_ids
+purchase_order "*" o-- "*" account_move : invoice_ids
+purchase_order_line "*" --> "0..1" product_product : product_id
+account_move "*" --> "0..1" res_partner : partner_id
+
+' --- Seguridad
+res_users "*" o-- "*" res_groups : group_ids
+grupos_donofrio ..|> res_groups : instancias
+ir_rule "*" -- "1" grupos_donofrio : group_cd_arequipa
+project_task "*" --> "0..1" res_partner : partner_id
+
+legend bottom
+  Nombres de clase = modelos de Odoo 19 (_name). Naranja: modelo estándar que donofrio_base extiende (_inherit).
+  Verde: datos de donofrio_base que no son modelos nuevos. Blanco: modelo estándar usado sin cambios.
+  Solo se muestran los campos relevantes para el negocio; los campos y métodos de la lista salen del código de donofrio_base.
+  donofrio_base no define modelos nuevos (_name) ni tablas nuevas en la Fase 1.
+endlegend
+@enduml

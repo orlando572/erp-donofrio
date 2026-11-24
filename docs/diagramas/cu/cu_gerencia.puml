@@ -1,0 +1,42 @@
+@startuml cu_gerencia
+' Casos de uso de Gerencia (CU009 y CU010). Fase 1: dashboards estándar y vistas pivote.
+' El tablero OWL propio (F2 · M4) sería una mejora de CU009.
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam actorStyle awesome
+skinparam usecase {
+  BackgroundColor #F4F7FB
+  BorderColor #222222
+}
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #222222
+}
+title Casos de uso: Gerencia
+
+actor "Gerente General" as GER
+actor "Jefe de Ventas" as JEF
+actor "Contador" as CON
+
+rectangle "ERP D'Onofrio (Odoo 19 Community)" {
+  usecase "CU009\nConsultar el tablero\ngerencial de KPIs" as CU009
+  usecase "Ver dashboards estándar\n(ventas, inventario valorizado)" as DASH
+  usecase "Ver stock por vencer\na 30 días" as VEN
+  usecase "CU010\nAnalizar ventas por línea,\ncanal y temporada" as CU010
+  usecase "Aplicar vista pivote o gráfico\nguardado (ir.filters)" as PIV
+  usecase "Exportar a Excel" as EXP
+  usecase "Tablero OWL propio\n(propuesto, Fase 2 · M4)" as OWL #FFF3CD
+}
+
+GER --> CU009
+GER --> CU010
+JEF --> CU010
+CON --> CU009
+
+CU009 ..> DASH : <<include>>
+CU009 ..> VEN : <<include>>
+CU010 ..> PIV : <<include>>
+EXP ..> CU010 : <<extend>>
+OWL ..> CU009 : <<extend>>
+@enduml

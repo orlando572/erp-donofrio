@@ -1,0 +1,15 @@
+# 1. Resumen
+
+> **Estado:** borrador del Sprint 3 · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md) (fila «1. Resumen»: organización, problemas, solución y módulos principales)
+>
+> Este texto es el origen del [Abstract](02_abstract.md) (sección 2, de Orlando): el Abstract debe ser su traducción. Las cifras salen de las evidencias del repositorio indicadas en cada sección; los datos de la empresa son **ficticios**.
+
+## Resumen
+
+Este trabajo describe un sistema de planificación de recursos empresariales (ERP) académico para **D'Onofrio**, una unidad ficticia de helados, chocolates y panetón con un negocio estacional, una red de distribución muy extendida de heladeros ambulantes y productos perecibles que dependen de la cadena de frío. Todos los datos de la empresa son inventados. El caso parte de cuatro problemas: la liquidación diaria de los heladeros se hace en papel o Excel, los lotes vencen sin que nadie los vea a tiempo, la calidad y el frío no dejan rastro ligado al lote, y la gerencia decide tarde y sin datos consolidados.
+
+La solución es un ERP web sobre **Odoo 19 Community y PostgreSQL 16**, en contenedores Docker, sin depender de licencias Enterprise. Se desarrolló con **Scrum** y prácticas del PMBOK, en dos fases separadas por un punto de control (Gate 0): un **núcleo garantizado** y unos **módulos propios opcionales**. El núcleo cubre las áreas del caso con Odoo estándar configurado por completo mediante código en un único módulo, `donofrio_base`: marketing y ventas (embudo CRM, listas de precios por canal y temporada, punto de venta con boleta), logística (lotes con vencimiento y salida por el que vence primero, recepción y despacho en dos pasos, reposición a Arequipa), producción (órdenes con lote y costo), gerencia (dashboards y vistas guardadas) y los extras de compras, facturación con IGV, recursos humanos y una mesa de servicios de TI. Además ofrece una réplica de PostgreSQL, respaldos con restauración probada y un despliegue protegido con Nginx, TLS, verificación en dos pasos y auditoría.
+
+Los resultados se pueden verificar en el repositorio. Se completaron **24 de las 25 historias de usuario del núcleo** y las **136 pruebas automáticas** pasan en la integración continua. Una restauración de respaldo tardó 31 segundos frente a una meta de 2 horas; con 20 usuarios virtuales, el percentil 95 del tiempo de respuesta fue de 11.6 ms en listas y 9.1 ms en formularios, frente a un límite de 2 s; un análisis de seguridad no encontró alertas altas; y el rendimiento web del panel de ventas subió de 45 a 80 puntos con Nginx, mientras que las pantallas de trabajo (59) quedaron por debajo de la meta de 80. Las pruebas de usabilidad con usuarios están pendientes. Los **módulos propios de la Fase 2** (liquidación de heladeros, calidad, cadena de frío y tablero) están **diseñados pero no construidos**, y quedan como trabajo futuro. Las mediciones provienen de una sola máquina con datos de demostración.
+
+**Palabras clave:** Odoo 19; ERP; PostgreSQL; Scrum; Docker.

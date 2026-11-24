@@ -26,6 +26,11 @@ ORM / PYTHON
 ✓ Controladores JSON: type='jsonrpc' (no 'json')                     (18.1)
   create: @api.model_create_multi
 ✓ ir.cron: sin numbercall (interval_number + interval_type)
+✓ procurement.group ya no existe: el agrupador de movimientos es stock.reference (reference_ids); NO values['group_id']   (19.0)
+✓ Reservas y FEFO usan la fecha real de la corrida: un lote con retiro vencido tiene stock.quant.available_quantity = 0   (product_expiry)
+✓ OP: lot_producing_ids (many2many, uno solo con tracking='lot'), NO lot_producing_id; action_generate_serial()   (18.x)
+✓ Asientos de stock: solo se crean si la ubicación virtual (proveedor, producción, ajuste, cliente) tiene stock.location.valuation_account_id; l10n_pe no lo trae (ver hooks.py)
+✓ Costeo de OP: finished_move.price_unit solo se calcula con categoría FIFO/AVCO (property_cost_method); mrp_account suma insumos + horas de centro de trabajo
 
 MODELOS QUE CAMBIARON (datos de donofrio_base)
 ✓ res.users.group_ids (NO groups_id); res.groups.privilege_id → res.groups.privilege
