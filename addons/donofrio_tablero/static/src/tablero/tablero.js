@@ -54,6 +54,10 @@ export class Tablero extends Component {
         return valor === null ? "Sin datos" : `${this.formatoNumero(valor, 1)} %`;
     }
 
+    get sinPermiso() {
+        return Boolean(this.state.kpis && this.state.kpis.sin_permiso);
+    }
+
     /** Las tarjetas del tablero; las de módulos no instalados no vienen de `get_kpis`. */
     get tarjetas() {
         const k = this.state.kpis;
@@ -117,7 +121,7 @@ export class Tablero extends Component {
     }
 
     dibujarGrafico() {
-        if (!this.graficoRef.el || !this.state.kpis) {
+        if (!this.graficoRef.el || !this.state.kpis || this.sinPermiso) {
             return;
         }
         this.destruirGrafico();

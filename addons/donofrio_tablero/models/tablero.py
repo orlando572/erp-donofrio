@@ -8,6 +8,14 @@ MESES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', '
 MESES_DEL_GRAFICO = 6
 DIAS_POR_VENCER = 30
 DIAS_ALERTAS_TEMPERATURA = 7
+# Modelos que lee el tablero sí o sí (las tarjetas de los módulos opcionales se ocultan por su cuenta)
+MODELOS_BASE = {
+    'sale.order': 'Ventas',
+    'stock.warehouse': 'Inventario',
+    'stock.quant': 'Inventario',
+    'stock.lot': 'Inventario',
+    'mrp.production': 'Fabricación',
+}
 
 
 class Tablero(models.AbstractModel):
@@ -25,6 +33,12 @@ class Tablero(models.AbstractModel):
         return modelo in self.env and self.env[modelo].has_access('read')
 
     @api.model
+    def _areas_sin_permiso(self):
+        """Áreas (Ventas, Inventario, Fabricación) cuyos datos base el usuario no puede leer."""
+        faltan = {area for modelo, area in MODELOS_BASE.items() if not self.env[modelo].has_access('read')}
+        return sorted(faltan)
+
+    @api.model
     def _inicio_de_mes(self, ahora, desplazamiento=0):
         """Primer instante del mes de ``ahora`` (más ``desplazamiento`` meses), como datetime ingenuo en UTC."""
         primero = ahora.date().replace(day=1) + relativedelta(months=desplazamiento)
@@ -32,7 +46,20 @@ class Tablero(models.AbstractModel):
 
     @api.model
     def get_kpis(self, warehouse_id=False):
-        """Devuelve los KPI del tablero, opcionalmente de un solo almacén."""
+        """Devuelve los KPI del tablero, opcionalmente de un solo almacén.
+
+        Si el usuario no puede leer los datos base (por ejemplo, entró por la dirección sin permiso de ventas),
+        no lanza un error de acceso: devuelve ``sin_permiso`` y un mensaje que el componente muestra en pantalla.
+        """
+        areas = self._areas_sin_permiso()
+        if areas:
+            return {
+                'sin_permiso': True,
+                'areas': areas,
+                'mensaje': self.env._(
+                    'No tienes permiso para ver el tablero gerencial: falta acceso a %s. '
+                    'Pide a un administrador que te dé acceso a esas áreas.', ', '.join(areas)),
+            }
         warehouse_id = int(warehouse_id) if warehouse_id else False
         ahora = fields.Datetime.now()
         moneda = self.env.company.currency_id

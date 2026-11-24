@@ -8,3 +8,23 @@ $o-navbar-border-bottom: 1px solid #D4A900;
 $o-navbar-entry-color: rgba(#2B2B2B, .9);
 $o-navbar-entry-color--hover: #2B2B2B;
 $o-navbar-entry-bg--hover: rgba(#000000, .08);
+
+// HU-24: páginas públicas (inicio de sesión, portal). El frontend no usa $o-brand-primary: su color primario
+// sale de la paleta del editor (html_editor): 'o-color-1' de la paleta 'base-1' alimenta $primary y los enlaces.
+// Esta lista va antes que la de Odoo (que es !default). Solo cambia 'o-color-1'; el resto repite los valores de Odoo.
+$o-color-palettes: (
+    'base-1': (
+        'o-color-1': #9A6B00,
+        'o-color-2': #F0CDA8,
+        'o-color-3': #F6F5F4,
+        'o-color-4': #FFFFFF,
+        'o-color-5': #1B1319,
+    ),
+    'base-2': (
+        'o-color-1': #337ab7,
+        'o-color-2': #e9ecef,
+        'o-color-3': #F8F9FA,
+        'o-color-4': #FFFFFF,
+        'o-color-5': #343a40,
+    ),
+);

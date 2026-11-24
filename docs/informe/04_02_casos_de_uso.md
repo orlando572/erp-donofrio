@@ -197,7 +197,7 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Flujos alternos** | A1. Si falta un dashboard en Community, usa la vista pivote guardada equivalente (CU010).<br>A2. **Con la Fase 2 (implementado):** el tablero OWL propio (Tablero › Gerencia) muestra hasta 6 tarjetas de KPI y un gráfico de ventas de los últimos 6 meses, con filtro por almacén; las tarjetas de calidad, heladeros y cadena de frío salen solo si su módulo está instalado y el usuario puede leerlo |
 | **Postcondiciones** | El gerente conoce el estado de ventas, stock y vencimientos sin pedir reportes |
 | **Reglas de negocio** | Solo lectura en Community; la carga debe ser menor de 3 s (RNF008) |
-| **Evidencia / prueba** | Capturas de los dashboards (Sprint 3); Lighthouse (HU-28); 17 pruebas de `donofrio_tablero` y capturas `HU-22_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
+| **Evidencia / prueba** | Capturas de los dashboards (Sprint 3); Lighthouse (HU-28); 21 pruebas de `donofrio_tablero` y capturas `HU-22_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
 
 ### CU010: Analizar ventas por línea, canal y temporada
 

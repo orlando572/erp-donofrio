@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="donofrio_tablero.Tablero">
-        <div class="o_donofrio_tablero o_action overflow-auto p-3">
+        <div t-if="sinPermiso" class="o_donofrio_tablero o_donofrio_sin_permiso o_action overflow-auto p-3">
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">Sin permiso</h4>
+                <p class="mb-0" t-out="state.kpis.mensaje"/>
+            </div>
+        </div>
+        <div t-else="" class="o_donofrio_tablero o_action overflow-auto p-3">
             <div class="d-flex flex-wrap align-items-center justify-content-between mb-3 gap-2">
                 <h2 class="m-0">Tablero gerencial de KPIs</h2>
                 <div class="d-flex align-items-center gap-2">
