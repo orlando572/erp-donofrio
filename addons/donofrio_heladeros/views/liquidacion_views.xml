@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_liquidacion_list" model="ir.ui.view">
+        <field name="name">donofrio.liquidacion.list</field>
+        <field name="model">donofrio.liquidacion</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'liquidado'">
+                <field name="name"/>
+                <field name="fecha"/>
+                <field name="partner_id"/>
+                <field name="total_vendido"/>
+                <field name="total_importe" sum="Total"/>
+                <field name="total_comision" sum="Total"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_liquidacion_form" model="ir.ui.view">
+        <field name="name">donofrio.liquidacion.form</field>
+        <field name="model">donofrio.liquidacion</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_despachar" string="Marcar despachado" type="object" class="btn-primary"
+                            invisible="state != 'borrador'"/>
+                    <button name="action_confirmar" string="Confirmar liquidación" type="object" class="btn-primary"
+                            invisible="state != 'despachado'"/>
+                    <button name="action_volver_borrador" string="Volver a borrador" type="object"
+                            invisible="state != 'despachado'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="borrador,despachado,liquidado"/>
+                </header>
+                <sheet>
+                    <h1><field name="name"/></h1>
+                    <group>
+                        <group>
+                            <field name="partner_id" readonly="state != 'borrador'" options="{'no_create': True}"/>
+                            <field name="pricelist_id" readonly="state != 'borrador'"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="fecha" readonly="state != 'borrador'"/>
+                            <field name="porcentaje_comision" readonly="state == 'liquidado'"/>
+                            <field name="efectivo_entregado" readonly="state == 'liquidado'"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <field name="linea_ids" readonly="state != 'borrador'">
+                        <list editable="bottom">
+                            <field name="product_id"/>
+                            <field name="despachado"/>
+                            <field name="devuelto"/>
+                            <field name="merma"/>
+                            <field name="vendido"/>
+                            <field name="precio_unitario"/>
+                            <field name="importe"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                    <group class="oe_subtotal_footer">
+                        <field name="total_vendido"/>
+                        <field name="total_importe"/>
+                        <field name="total_comision"/>
+                        <field name="diferencia_efectivo"/>
+                    </group>
+                    <group invisible="not order_id">
+                        <field name="order_id"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_liquidacion_search" model="ir.ui.view">
+        <field name="name">donofrio.liquidacion.search</field>
+        <field name="model">donofrio.liquidacion</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <filter name="abiertas" string="Sin liquidar" domain="[('state', '!=', 'liquidado')]"/>
+                <group>
+                    <filter name="por_heladero" string="Heladero" context="{'group_by': 'partner_id'}"/>
+                    <filter name="por_estado" string="Estado" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_liquidacion" model="ir.actions.act_window">
+        <field name="name">Liquidaciones</field>
+        <field name="res_model">donofrio.liquidacion</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_heladeros_root" name="Heladeros" sequence="46"
+              groups="group_heladeros_liquidador,sales_team.group_sale_manager"/>
+    <menuitem id="menu_heladeros_liquidaciones" name="Liquidaciones" parent="menu_heladeros_root"
+              action="action_liquidacion" sequence="10"/>
+</odoo>

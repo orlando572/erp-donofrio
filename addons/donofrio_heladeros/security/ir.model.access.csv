@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_liquidacion_ventas,liquidacion ventas,model_donofrio_liquidacion,sales_team.group_sale_salesman,1,0,0,0
+access_liquidacion_liquidador,liquidacion liquidador,model_donofrio_liquidacion,group_heladeros_liquidador,1,1,1,0
+access_liquidacion_jefe,liquidacion jefe,model_donofrio_liquidacion,group_heladeros_jefe,1,1,1,1
+access_liquidacion_linea_ventas,liquidacion.linea ventas,model_donofrio_liquidacion_linea,sales_team.group_sale_salesman,1,0,0,0
+access_liquidacion_linea_liquidador,liquidacion.linea liquidador,model_donofrio_liquidacion_linea,group_heladeros_liquidador,1,1,1,1

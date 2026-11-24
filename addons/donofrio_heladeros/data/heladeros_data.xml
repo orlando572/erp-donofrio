@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_liquidacion" model="ir.sequence">
+        <field name="name">Liquidación del heladero</field>
+        <field name="code">donofrio.liquidacion</field>
+        <field name="prefix">LIQ/%(year)s/</field>
+        <field name="padding">5</field>
+    </record>
+
+    <!-- El liquidador que ya cargó donofrio_base recibe el grupo del módulo -->
+    <record id="donofrio_base.user_liquidador" model="res.users">
+        <field name="group_ids" eval="[Command.link(ref('group_heladeros_liquidador'))]"/>
+    </record>
+</odoo>
