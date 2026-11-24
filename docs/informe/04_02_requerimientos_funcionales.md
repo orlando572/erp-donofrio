@@ -26,7 +26,7 @@ Necesidad del negocio → RF / RNF → Historia de usuario (HU) → Épica (issu
 | **Marketing y Ventas** | RF001 | Registrar oportunidades por canal en un embudo CRM | F1 | HU-08 (HU-31 opcional) | Implementado (S2) | Must |
 | | RF002 | Cotizar y confirmar pedidos con listas de precios por canal y temporada | F1 | HU-09 | Implementado (S2) | Must |
 | | RF003 | Vender en el punto de venta de la tienda de planta con boleta | F1 | HU-10 | Implementado (S2) | Must |
-| | RF004 | Liquidar diariamente a los heladeros ambulantes | **F2** (`donofrio_heladeros`). Sin la F2 se cubre en parte: pedido de venta al heladero con la lista «Heladero» + devolución estándar | HU-20, HU-21 | Diseñado – trabajo futuro | Must (en F2) |
+| | RF004 | Liquidar diariamente a los heladeros ambulantes | **F2** (`donofrio_heladeros`). Sin la F2 se cubre en parte: pedido de venta al heladero con la lista «Heladero» + devolución estándar | HU-20, HU-21 | Implementado (M2, [5.5c](05_05_modulo_donofrio_heladeros.md)) | Must (en F2) |
 | **Logística y Almacén** | RF005 | Gestionar almacenes y ubicaciones con cámaras de frío | F1 | HU-06 | Implementado (HU-06) | Must |
 | | RF006 | Controlar lotes con fecha de vencimiento y salida FEFO | F1 | HU-11 | Planificado (S2) | Must |
 | | RF007 | Recibir insumos y despachar pedidos | F1 | HU-12 | Planificado (S2) | Must |

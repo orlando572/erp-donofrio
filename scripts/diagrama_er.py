@@ -70,6 +70,8 @@ COLUMNAS_CLAVE = {
     'donofrio_calidad_punto': ['name', 'tipo', 'valor_min', 'valor_max', 'unidad', 'active'],
     'donofrio_calidad_inspeccion': ['name', 'state'],
     'donofrio_calidad_linea': ['medicion', 'medido', 'cumple_manual', 'resultado'],
+    'donofrio_liquidacion': ['name', 'fecha', 'state', 'porcentaje_comision', 'total_importe', 'total_comision'],
+    'donofrio_liquidacion_linea': ['despachado', 'devuelto', 'merma', 'vendido', 'precio_unitario', 'importe'],
 }
 
 # Diseño lógico (4.2.7): figuras por flujo del negocio. Las tablas de contexto salen solo con sus claves y columnas clave.
@@ -92,7 +94,7 @@ FIGURAS_LOGICAS = OrderedDict([
 COLORES = {
     'Ventas y CRM': '#DCEBFA', 'Maestros': '#EAF5E4', 'Inventario': '#FFF1D6', 'Producción': '#F6E3F4',
     'Compras': '#FBE5DC', 'Facturación': '#E3F0F0', 'Seguridad y mesa de servicios': '#ECECEC',
-    'Calidad (M1)': '#E6E3F7',
+    'Calidad (M1)': '#E6E3F7', 'Heladeros (M2)': '#E3F7EA',
 }
 AREA_DE_ORDEN = list(TABLAS_NUCLEO)
 AREA_DE = {t: area for area, tablas in TABLAS_NUCLEO.items() for t in tablas}
@@ -205,7 +207,7 @@ skinparam ranksep 90
 
 def puml_er_general(esquema):
     tablas = list(NUCLEO)
-    lineas = [CABECERA.format(nombre='er_nucleo', titulo=f'Modelo ER general ({len(tablas)} tablas centrales: núcleo de la Fase 1 y M1 calidad)')]
+    lineas = [CABECERA.format(nombre='er_nucleo', titulo=f'Modelo ER general ({len(tablas)} tablas centrales: núcleo de la Fase 1, M1 calidad y M2 heladeros)')]
     for t in tablas:
         lineas += entidad(esquema, t, tablas, solo_claves=True, omitir_a=SIN_LINEA_A, color=COLORES[AREA_DE[t]])
     lineas += relaciones(esquema, tablas, SIN_LINEA_A)

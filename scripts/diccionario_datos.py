@@ -5,7 +5,7 @@ Lee el esquema de una BD de Odoo que corre en el contenedor ``db`` (solo lectura
 modo ``default_transaction_read_only``) y escribe:
 
 * el diccionario del núcleo, en formato «Tabla 5» de la plantilla (clave, campo, tipo, tamaño, nulo, descripción)
-  por cada una de las tablas centrales (núcleo de la Fase 1 y M1) (``TABLAS_NUCLEO``): ``docs/informe/04_02_diccionario_datos.md``;
+  por cada una de las tablas centrales (núcleo de la Fase 1, M1 y M2) (``TABLAS_NUCLEO``): ``docs/informe/04_02_diccionario_datos.md``;
 * el anexo con el resto del esquema, agrupado por el módulo de Odoo que define cada tabla:
   ``docs/informe/anexo_diccionario_datos.md``;
 * opcionalmente (``--csv``) todo el diccionario en CSV, que Excel abre sin instalar nada.
@@ -18,7 +18,7 @@ Uso (desde la raíz del repo, con ``.env`` y el contenedor ``db`` arriba):
     python3 scripts/diccionario_datos.py --bd donofrio_base_limpia --bd-tamanos donofrio_perf
 
 ``--bd`` es la BD de donde sale el esquema. Para que el diccionario refleje exactamente ``develop``, conviene una
-BD recién instalada con ``donofrio_base`` y ``donofrio_calidad`` (la de desarrollo puede estar desactualizada). ``--bd-tamanos`` es
+BD recién instalada con ``donofrio_base``, ``donofrio_calidad`` y ``donofrio_heladeros`` (la de desarrollo puede estar desactualizada). ``--bd-tamanos`` es
 opcional: una BD con datos (por ejemplo ``donofrio_perf``) para contar las filas de las tablas centrales.
 """
 import argparse
@@ -63,9 +63,13 @@ TABLAS_NUCLEO = OrderedDict([
     ('Calidad (M1)', [
         'donofrio_calidad_punto', 'donofrio_calidad_inspeccion', 'donofrio_calidad_linea',
     ]),
+    # Fase 2, M2 (donofrio_heladeros): liquidación diaria del heladero.
+    ('Heladeros (M2)', [
+        'donofrio_liquidacion', 'donofrio_liquidacion_linea',
+    ]),
 ])
 # Módulos propios del proyecto: sus columnas agregadas a tablas de otros módulos se marcan en el diccionario
-MODULOS_PROPIOS = ('donofrio_base', 'donofrio_calidad')
+MODULOS_PROPIOS = ('donofrio_base', 'donofrio_calidad', 'donofrio_heladeros')
 NUCLEO = [t for tablas in TABLAS_NUCLEO.values() for t in tablas]
 
 # Columnas de auditoría que Odoo agrega a casi todos los modelos
@@ -148,7 +152,7 @@ SELECT cl.relname AS tabla, a.attname AS columna,
  ORDER BY cl.relname, a.attname, co.contype;
 """
 
-# Etiqueta y ayuda de cada campo (es_PE con respaldo en en_US) y qué módulo propio lo agregó (donofrio_base o donofrio_calidad)
+# Etiqueta y ayuda de cada campo (es_PE con respaldo en en_US) y qué módulo propio lo agregó (donofrio_base, donofrio_calidad o donofrio_heladeros)
 SQL_CAMPOS = """
 SELECT f.model AS modelo, f.name AS campo,
        COALESCE(NULLIF(f.field_description->>'es_PE', ''), f.field_description->>'en_US') AS etiqueta,
@@ -156,7 +160,7 @@ SELECT f.model AS modelo, f.name AS campo,
        f.ttype AS ttype, f.store AS almacenado, COALESCE(f.relation_table, '') AS tabla_m2m,
        COALESCE(f.relation, '') AS relacion,
        COALESCE((SELECT d.module FROM ir_model_data d WHERE d.model = 'ir.model.fields' AND d.res_id = f.id
-                  AND d.module IN ('donofrio_base', 'donofrio_calidad') LIMIT 1), '') AS de_donofrio
+                  AND d.module IN ('donofrio_base', 'donofrio_calidad', 'donofrio_heladeros') LIMIT 1), '') AS de_donofrio
   FROM ir_model_fields f
  ORDER BY f.model, f.name;
 """
@@ -330,7 +334,7 @@ def informe_nucleo(esquema, origen, filas=None, bd_filas=''):
         'si admite nulo y descripción. **Tipo y tamaño** salen de `information_schema`; la **descripción**, de la '
         'etiqueta y la ayuda del campo en `ir_model_fields` (es_PE). Tamaño: caracteres en `varchar`, `precisión,escala` '
         'en `numeric`, bytes en los tipos fijos y «variable» en `text` y `jsonb`. Las columnas que agregó '
-        'un módulo propio a una tabla de otro módulo van marcadas con **[donofrio_base]** o **[donofrio_calidad]**.', '',
+        'un módulo propio a una tabla de otro módulo van marcadas con **[donofrio_base]**, **[donofrio_calidad]** o **[donofrio_heladeros]**.', '',
     ]
     lineas += ['## Resumen de las tablas centrales', '']
     cab = '| Área | Tabla | Modelo de Odoo | Módulo | Columnas |'
@@ -378,6 +382,11 @@ def informe_nucleo(esquema, origen, filas=None, bd_filas=''):
     else:
         lineas.append('No agrega columnas a las tablas de otros módulos: sus extensiones de modelos ajenos '
                       '(por ejemplo `stock.lot`) no almacenan columnas nuevas en esta BD.')
+    lineas.append('')
+    tablas_heladeros = [n for n, t in esquema.items() if t.modulo == 'donofrio_heladeros']
+    lineas.append('`donofrio_heladeros` (M2, Fase 2) **sí crea tablas propias**: '
+                  + ', '.join(f'`{n}`' for n in sorted(tablas_heladeros))
+                  + '. No agrega columnas a las tablas de otros módulos.')
     lineas.append('')
     for area, nombres in TABLAS_NUCLEO.items():
         lineas += [f'## {area}', '']
@@ -429,7 +438,7 @@ def main():
     p.add_argument('--bd', default=os.environ.get('ODOO_DB', 'donofrio'), help='BD de donde sale el esquema')
     p.add_argument('--bd-tamanos', default='', help='BD con datos para contar las filas de las tablas centrales')
     p.add_argument('--contenedor', default='erp-donofrio-db-1', help='contenedor de PostgreSQL')
-    p.add_argument('--origen', default='BD limpia con `donofrio_base` y `donofrio_calidad` instalados desde `develop` (Odoo 19.0, PostgreSQL 16)',
+    p.add_argument('--origen', default='BD limpia con `donofrio_base`, `donofrio_calidad` y `donofrio_heladeros` instalados desde `develop` (Odoo 19.0, PostgreSQL 16)',
                    help='texto que describe el origen, para la cabecera de los archivos')
     p.add_argument('--salida-nucleo', type=Path, default=RAIZ / 'docs/informe/04_02_diccionario_datos.md')
     p.add_argument('--salida-anexo', type=Path, default=RAIZ / 'docs/informe/anexo_diccionario_datos.md')
