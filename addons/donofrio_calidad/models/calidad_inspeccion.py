@@ -20,7 +20,7 @@ class CalidadInspeccion(models.Model):
     inspector_id = fields.Many2one('res.users', 'Inspector', tracking=True)
     state = fields.Selection(
         [('borrador', 'Pendiente'), ('en_curso', 'En medición'), ('aprobada', 'Aprobado'), ('rechazada', 'Rechazado')],
-        default='borrador', required=True, tracking=True, copy=False)
+        'Estado', default='borrador', required=True, tracking=True, copy=False)
     linea_ids = fields.One2many('donofrio.calidad.linea', 'inspeccion_id', 'Mediciones')
     motivo_rechazo = fields.Text('Motivo del rechazo')
     todos_cumplen = fields.Boolean(compute='_compute_todos_cumplen')

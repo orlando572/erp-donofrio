@@ -15,7 +15,7 @@
 | CU005 | Recibir, almacenar y despachar con lotes y FEFO | Logística | RF005, RF006, RF007 | HU-06, HU-11, HU-12 | F1 | Planificado | Orlando |
 | CU006 | Registrar temperaturas y alertar (cadena de frío) | Logística | RF008 | HU-19 | **F2** (M3) | **Propuesto** | Orlando |
 | CU007 | Planificar y ejecutar una orden de producción con lote | Producción | RF009, RF010 | HU-07, HU-14 | F1 | Planificado | Orlando |
-| CU008 | Inspeccionar la calidad y liberar el lote | Producción | RF011, RF012 | HU-17, HU-18 | **F2** (M1) | **Propuesto** | Orlando |
+| CU008 | Inspeccionar la calidad y liberar el lote | Producción | RF011, RF012 | HU-17, HU-18 | **F2** (M1) | **Implementado** (24/11/2026) | Orlando |
 | CU009 | Consultar el tablero gerencial de KPIs | Gerencia | RF013 | HU-23 (F1), HU-22 (F2) | F1 (estándar) | Implementado | Evelyn |
 | CU010 | Analizar ventas por línea, canal y temporada | Gerencia | RF014 | HU-23 | F1 | Implementado | Evelyn |
 | CU011 | Comprar insumos con reabastecimiento mín./máx. | Compras | RF015 | HU-13 | F1 | Implementado | Evelyn |
@@ -181,8 +181,8 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Flujos alternos** | A1. Si algún punto no cumple, el inspector rechaza el lote: el sistema **bloquea su despacho** y avisa al jefe de producción, que decide reproceso o descarte con el motivo.<br>A2. **Sin la Fase 2:** el control es documental, con las instrucciones de cada operación y la nota en la orden |
 | **Postcondiciones** | Lote liberado con certificado, o rechazado y bloqueado, con su historial de mediciones |
 | **Reglas de negocio** | Un lote rechazado no se despacha (RNF005); un lote liberado conserva su trazabilidad a la orden y a los insumos |
-| **Estado** | **Propuesto.** Es el primer módulo de la Fase 2 (M1), pero no se construye sin la confirmación explícita de Evelyn u Orlando tras el Gate 0. Si no se hace, queda como «Diseñado – trabajo futuro» con este caso de uso, su wireframe y su mockup |
-| **Evidencia / prueba** | Wireframe y mockup de la inspección (Sprint 2); si se construye, tests de `donofrio_calidad` |
+| **Estado** | **Implementado** en `donofrio_calidad` (M1) el 24/11/2026, con la confirmación de Evelyn tras el Gate 0 (PR #219 y #220). El flujo A1 avisa con un mensaje y una actividad al responsable de la orden |
+| **Evidencia / prueba** | Wireframe y mockup de la inspección (Sprint 2); 12 pruebas de `donofrio_calidad`; capturas `HU-17_*` y `HU-18_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
 
 ### CU009: Consultar el tablero gerencial de KPIs
 
