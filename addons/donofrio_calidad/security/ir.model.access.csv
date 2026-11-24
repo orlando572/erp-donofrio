@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_punto_inspector,calidad.punto inspector,model_donofrio_calidad_punto,group_calidad_inspector,1,0,0,0
+access_punto_jefe,calidad.punto jefe,model_donofrio_calidad_punto,group_calidad_jefe,1,1,1,1
+access_inspeccion_stock,calidad.inspeccion stock,model_donofrio_calidad_inspeccion,stock.group_stock_user,1,0,0,0
+access_inspeccion_inspector,calidad.inspeccion inspector,model_donofrio_calidad_inspeccion,group_calidad_inspector,1,1,1,0
+access_inspeccion_jefe,calidad.inspeccion jefe,model_donofrio_calidad_inspeccion,group_calidad_jefe,1,1,1,1
+access_linea_stock,calidad.linea stock,model_donofrio_calidad_linea,stock.group_stock_user,1,0,0,0
+access_linea_inspector,calidad.linea inspector,model_donofrio_calidad_linea,group_calidad_inspector,1,1,1,1
