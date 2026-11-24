@@ -24,7 +24,7 @@
 | Capturas | **Cumple** | [`docs/capturas/sprint-4/`](../../capturas/sprint-4/): lista, inspección aprobada, inspección rechazada y certificado PDF (en JPG, a baja resolución) |
 | Checklist de la épica #144 | **Hecho** el 24/11/2026 | Casillas de HU-17 y HU-18 con su PR; la épica sigue abierta hasta que se decida el cierre |
 | Sección del informe | **Cumple** | [5.5b](../../informe/05_05_modulo_donofrio_calidad.md), RF011 y RF012 en 4.2.2 y 10.1, CU008, 4.4 y 4.2.5 |
-| **Tag de release de M1** | **Falta** | Lo crea Orlando desde `main`, tras el merge `develop` → `main` |
+| **Tag de release de M1** | **Falta** (`v1.0.0` de la Fase 1 ya existe desde el 24/11/2026) | `v1.1.0` lo crea Orlando desde `main`, tras el PR `develop` → `main` que lleve M1 |
 | **ER y diccionario extraídos de nuevo** | **Parcial** | Diccionario de las tres tablas extraído de la base real y puesto en 5.5b. **No** se regeneraron el ER general ni `04_02_diccionario_datos.md` con `scripts/diagrama_er.py` y `scripts/diccionario_datos.py` |
 | Mini gate escrito | **Cumple** | Este archivo |
 
@@ -32,7 +32,7 @@
 
 | Pendiente | Quién | Nota |
 |---|---|---|
-| Tag de release de M1 (y de `v1.0.0`) | Orlando | `main` seguía sin el merge de `develop` al revisar el 24/11/2026 |
+| Tag `v1.1.0` de M1 | Orlando | `v1.0.0` ya está hecho (PR #222, 24/11/2026). `v1.1.0` queda pendiente hasta el PR `develop` → `main` con M1 |
 | Regenerar el ER y el diccionario general con M1 | Orlando o Evelyn | Necesita una base limpia con `donofrio_calidad` instalado y PlantUML |
 | Bloqueo del despacho en el punto de venta | Equipo | Sin prueba; hoy solo se cubre la salida a cliente por transferencia |
 | Inspecciones de las órdenes históricas | — | No existen: solo se crean al terminar una orden nueva |

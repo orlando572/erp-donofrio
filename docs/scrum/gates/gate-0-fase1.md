@@ -6,11 +6,13 @@
 >
 > **Qué no es.** **No inicia ningún módulo de la Fase 2.** M1 empieza solo cuando Evelyn u Orlando lo confirman de forma explícita en el chat; este archivo, un issue o un mensaje de otra sesión no lo reemplazan ([`CLAUDE.md`](../../../CLAUDE.md)).
 
+> **Actualización del 24/11/2026.** Después de redactar este informe, el PR #222 fusionó la Fase 1 en `main` (*merge commit* `4d0d94d`); el CI de `main` pasó en verde (`lint`, `test`, `replica`, `backup`, `proxy`). El tag `v1.0.0` está en `main` y la GitHub Release «ERP D'Onofrio v1.0.0» está publicada (24/11/2026, 05:43 UTC). **Pendiente de verificar:** el zip adjunto, la imagen en GHCR (el paquete daba 404) y su visibilidad pública. `lint` y `test` aún no son checks obligatorios en `main`. Las dos primeras filas de la tabla de abajo y el criterio 1 de la sección 1 reflejan el estado del 23/11/2026; M1 está en [`gate-m1-calidad.md`](gate-m1-calidad.md).
+
 ## 1. Qué está listo
 
 | # | Criterio de salida (04 §4.3) | Estado | Evidencia |
 |---|---|---|---|
-| 1 | HU de la Fase 1 en «Hecho», CI en verde y tag `v1.0.0` | **Parcial.** 24 de 25 HU (81 de 83 puntos) en `develop` con el CI en verde. Falta HU-30 (desviación aceptada) y falta fusionar en `main` y crear el tag | [Verificación, criterio 1](gate-0-verificacion.md) |
+| 1 | HU de la Fase 1 en «Hecho», CI en verde y tag `v1.0.0` | **Parcial.** 24 de 25 HU (81 de 83 puntos) en `develop` con el CI en verde. Falta HU-30 (desviación aceptada) y falta fusionar en `main` y crear el tag *(24/11: `main` fusionado, CI verde y tag `v1.0.0` creado; ver la actualización)* | [Verificación, criterio 1](gate-0-verificacion.md) |
 | 2 | Video de la demo de punta a punta | **No cumplido: desviación aceptada** | [Verificación, criterio 2](gate-0-verificacion.md) |
 | 3 | Evidencias de réplica, respaldos, seguridad, pruebas y despliegue | **Cumple**, con el SUS diferido y el despliegue sin publicar | [Verificación, criterio 3](gate-0-verificacion.md) y `docs/capturas/sprint-3/` |
 | 4 | Informe 1 a 10 en borrador y los dos manuales | **Cumple como borrador**, salvo portada, historial, índices y PDF, que son del Cierre | [Verificación, criterio 4](gate-0-verificacion.md) |
@@ -28,8 +30,8 @@
 
 | Pendiente | Por qué importa | Quién | Cómo se cierra |
 |---|---|---|---|
-| **`main` sin fusionar** (`develop` va por delante y `main` solo tiene el commit inicial) y **CI de `main` nunca corrido** | El criterio 1 pide CI en verde en `main` | Orlando | PR `develop` → `main` con *merge commit*, y revisar los cinco jobs |
-| **Sin tag `v1.0.0`, sin Release y sin imagen en GHCR** | El núcleo no es «entregable» hasta que exista el tag | Orlando | Tag desde `main` actualizado y revisar la corrida Release (pasos 3 a 7 de la verificación) |
+| **`main` sin fusionar** (`develop` va por delante y `main` solo tiene el commit inicial) y **CI de `main` nunca corrido** | El criterio 1 pide CI en verde en `main` | Orlando | PR `develop` → `main` con *merge commit*, y revisar los cinco jobs *(24/11: hecho, PR #222 y CI verde)* |
+| **Sin tag `v1.0.0`, sin Release y sin imagen en GHCR** | El núcleo no es «entregable» hasta que exista el tag | Orlando | Tag desde `main` actualizado y revisar la corrida Release (pasos 3 a 7 de la verificación) *(24/11: tag y Release hechos; falta verificar el zip, la imagen en GHCR y su visibilidad pública)* |
 | **Project desfasado** | Criterio 5 | Orlando o Evelyn con permiso | Mover tarjetas de #141, #142 y #143 y corregir las iteraciones |
 | **Backend de Lighthouse en 59 de 80** (RNF008) | Limitación declarada, no un error oculto | Equipo | Se informa como limitación; se mide en el servidor real |
 | **RNF001 (tres navegadores y móvil) y RNF011 (disponibilidad en el tiempo) sin medir** | No hay evidencia, solo diseño | Equipo | Se declaran pendientes |
@@ -37,6 +39,8 @@
 | **Review y retro del S3 sin la decisión del PO** | Falta cerrar el sprint | Evelyn | Decisión escrita en `docs/scrum/sprint-3/review.md` |
 
 **Hasta que se fusione `main` y exista el tag, el criterio 1 no está cumplido del todo.** Orlando lo hace en paralelo a este informe; el equipo decide con ese conocimiento (ver la recomendación).
+
+*Actualización del 24/11/2026:* `main` ya está fusionado con CI en verde y el tag y la Release `v1.0.0` existen; el criterio 1 queda cumplido salvo HU-30 (desviación aceptada) y lo que sigue por verificar (zip, GHCR y su visibilidad).
 
 ## 3. Desviaciones aceptadas por el equipo (no cumplidas)
 
