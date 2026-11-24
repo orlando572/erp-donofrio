@@ -1,0 +1,16 @@
+Evidencia del tablero gerencial (HU-22 y HU-24), 24/11/2026
+Entorno: PC de desarrollo, Odoo 19.0 en Docker, base `donofrio` con las transacciones de demostración (agosto a noviembre de 2026).
+Usuario: Gerente General (gerente@donofrio.example.com). Medido desde el navegador con fetch + performance.now().
+
+get_kpis (llamada RPC al servidor), una sola medición por caso:
+  todos los almacenes : 57 ms   ventas del mes S/ 2,844,525.83
+  Lima (WH-LIM)       : 41 ms   ventas del mes S/ 2,525,180.71
+  Arequipa (WH-AQP)   : 30 ms   ventas del mes S/ 319,345.12
+  Lima + Arequipa = 2,844,525.83 (cuadra con "todos")
+Carga de la página (loadEventEnd de la navegación): 177 ms. Meta RNF008 para el tablero: menos de 3 s.
+Cifra de control en la base: ventas confirmadas de noviembre = 2,844,526 (consulta SQL a sale_order).
+
+Favicon: el HTML de /odoo trae <link type="image/png" rel="shortcut icon" href="/donofrio_tablero/static/img/favicon.png"/>
+y el archivo responde 200 image/png. (La pestaña de las capturas muestra otro icono porque la extensión del navegador
+de pruebas lo reemplaza en las pestañas que controla.)
+Barra superior en amarillo de marca: se ve en las dos capturas HU-22_*.

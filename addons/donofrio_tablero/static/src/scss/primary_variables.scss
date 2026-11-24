@@ -1,0 +1,10 @@
+// HU-24: color de marca del backend. Va antes de las variables de Odoo (que usan !default).
+// Amarillo de marca #F7C60A solo como fondo de la barra, con texto oscuro (contraste 8.79);
+// el color primario de botones y enlaces es el amarillo oscuro #9A6B00 (contraste 4.69 con texto blanco).
+$o-brand-primary: #9A6B00;
+
+$o-navbar-background: #F7C60A;
+$o-navbar-border-bottom: 1px solid #D4A900;
+$o-navbar-entry-color: rgba(#2B2B2B, .9);
+$o-navbar-entry-color--hover: #2B2B2B;
+$o-navbar-entry-bg--hover: rgba(#000000, .08);

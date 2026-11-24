@@ -1,0 +1,13 @@
+.o_donofrio_tablero {
+    background: #F4F5F7;
+    height: 100%;
+
+    .o_donofrio_tarjeta {
+        border: 1px solid #E1E3E8;
+        border-left: 6px solid #F7C60A;
+
+        .o_donofrio_valor {
+            color: #2B2B2B;
+        }
+    }
+}

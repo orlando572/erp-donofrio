@@ -16,7 +16,7 @@
 | CU006 | Registrar temperaturas y alertar (cadena de frío) | Logística | RF008 | HU-19 | **F2** (M3) | **Implementado** (24/11/2026) | Orlando |
 | CU007 | Planificar y ejecutar una orden de producción con lote | Producción | RF009, RF010 | HU-07, HU-14 | F1 | Planificado | Orlando |
 | CU008 | Inspeccionar la calidad y liberar el lote | Producción | RF011, RF012 | HU-17, HU-18 | **F2** (M1) | **Implementado** (24/11/2026) | Orlando |
-| CU009 | Consultar el tablero gerencial de KPIs | Gerencia | RF013 | HU-23 (F1), HU-22 (F2) | F1 (estándar) | Implementado | Evelyn |
+| CU009 | Consultar el tablero gerencial de KPIs | Gerencia | RF013 | HU-23 (F1), HU-22 (F2) | F1 (estándar) y F2 (M4) | Implementado (el tablero OWL, 24/11/2026) | Evelyn |
 | CU010 | Analizar ventas por línea, canal y temporada | Gerencia | RF014 | HU-23 | F1 | Implementado | Evelyn |
 | CU011 | Comprar insumos con reabastecimiento mín./máx. | Compras | RF015 | HU-13 | F1 | Implementado | Evelyn |
 | CU012 | Facturar con IGV (factura 01 o boleta 03) | Facturación | RF016 | HU-15 | F1 | Implementado | Evelyn |
@@ -194,10 +194,10 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Descripción** | El gerente revisa los indicadores clave de la unidad en los dashboards estándar de Odoo Community, que son de solo lectura |
 | **Precondiciones** | Módulos de dashboards instalados (`spreadsheet_dashboard`, `_sale`, `_stock_account`); datos del script de transacciones |
 | **Flujo principal** | 1. Abre el menú de Panel de control.<br>2. Elige el dashboard de ventas o el de inventario valorizado.<br>3. Revisa los indicadores y gráficos.<br>4. Abre el reporte de stock por vencer a 30 días |
-| **Flujos alternos** | A1. Si falta un dashboard en Community, usa la vista pivote guardada equivalente (CU010).<br>A2. **Con la Fase 2:** el tablero OWL propio muestra 6 tarjetas de KPI y un gráfico mensual, con filtro por almacén |
+| **Flujos alternos** | A1. Si falta un dashboard en Community, usa la vista pivote guardada equivalente (CU010).<br>A2. **Con la Fase 2 (implementado):** el tablero OWL propio (Tablero › Gerencia) muestra hasta 6 tarjetas de KPI y un gráfico de ventas de los últimos 6 meses, con filtro por almacén; las tarjetas de calidad, heladeros y cadena de frío salen solo si su módulo está instalado y el usuario puede leerlo |
 | **Postcondiciones** | El gerente conoce el estado de ventas, stock y vencimientos sin pedir reportes |
 | **Reglas de negocio** | Solo lectura en Community; la carga debe ser menor de 3 s (RNF008) |
-| **Evidencia / prueba** | Capturas de los dashboards (Sprint 3); Lighthouse (HU-28) |
+| **Evidencia / prueba** | Capturas de los dashboards (Sprint 3); Lighthouse (HU-28); 17 pruebas de `donofrio_tablero` y capturas `HU-22_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
 
 ### CU010: Analizar ventas por línea, canal y temporada
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_tablero" model="ir.actions.client">
+        <field name="name">Tablero gerencial</field>
+        <field name="tag">donofrio_tablero.tablero</field>
+    </record>
+
+    <menuitem id="menu_tablero_root" name="Tablero" sequence="5"
+              groups="sales_team.group_sale_salesman_all_leads,sales_team.group_sale_manager"/>
+    <menuitem id="menu_tablero_gerencia" name="Gerencia" parent="menu_tablero_root"
+              action="action_tablero" sequence="10"/>
+</odoo>

@@ -33,7 +33,7 @@ El PNG sale del SVG con el mismo comando de Docker de [`docs/diagramas/README.md
 | CU006 | Registro de temperaturas de las cámaras | Cadena de frío (M3) | HU-19 | Implementada |
 | CU007 | Orden de producción con lote | Fabricación | HU-14 | Implementada (Fabricación estándar, HU-14) |
 | CU008 | Inspección de calidad del lote | Calidad (M1) | HU-17, HU-18 | Diseño: trabajo futuro si no se construye el módulo |
-| CU009 | Tablero gerencial de KPIs | Tablero (M4) | HU-22, HU-23 | Diseño: trabajo futuro si no se construye el módulo |
+| CU009 | Tablero gerencial de KPIs | Tablero (M4) | HU-22, HU-23 | Implementada |
 | CU010 | Análisis de ventas por línea, canal y temporada | Ventas | HU-23 | Estándar; capturas en el Sprint 3 (HU-23) |
 | CU011 | Solicitud de cotización generada por la regla mín./máx. | Compras | HU-13 | Implementada (Compras estándar, HU-13) |
 | CU012 | Factura (01) o boleta (03) con IGV | Facturación | HU-15 | Implementada (Facturación estándar, HU-15) |
@@ -114,7 +114,7 @@ El PNG sale del SVG con el mismo comando de Docker de [`docs/diagramas/README.md
 
 ### CU009 · Tablero gerencial de KPIs
 
-**Estado de la pantalla:** Diseño: trabajo futuro si no se construye el módulo. **Ruta:** Tablero › Gerencia.
+**Estado de la pantalla:** Implementada (`donofrio_tablero`, HU-22); capturas reales en `docs/capturas/sprint-4/HU-22_*`. **Ruta:** Tablero › Gerencia.
 
 | Wireframe (4.4.1) | Mockup (4.4.2) |
 |---|---|
