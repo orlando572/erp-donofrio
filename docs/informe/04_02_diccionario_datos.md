@@ -1,8 +1,8 @@
 # 4.2.8 Diccionario de datos del núcleo (tablas centrales)
 
-> **Archivo generado** por [`scripts/diccionario_datos.py`](../../scripts/diccionario_datos.py); no se edita a mano. Origen: BD limpia con `donofrio_base` instalado desde `develop` (Odoo 19.0, PostgreSQL 16).
+> **Archivo generado** por [`scripts/diccionario_datos.py`](../../scripts/diccionario_datos.py); no se edita a mano. Origen: BD limpia con `donofrio_base` y `donofrio_calidad` instalados desde `develop` (Odoo 19.0, PostgreSQL 16).
 >
-> Formato de la «Tabla 5» de la plantilla: una tabla por entidad con su clave (PK/FK), campo, tipo, tamaño, si admite nulo y descripción. **Tipo y tamaño** salen de `information_schema`; la **descripción**, de la etiqueta y la ayuda del campo en `ir_model_fields` (es_PE). Tamaño: caracteres en `varchar`, `precisión,escala` en `numeric`, bytes en los tipos fijos y «variable» en `text` y `jsonb`. Las columnas que agregó `donofrio_base` van marcadas con **[donofrio_base]**.
+> Formato de la «Tabla 5» de la plantilla: una tabla por entidad con su clave (PK/FK), campo, tipo, tamaño, si admite nulo y descripción. **Tipo y tamaño** salen de `information_schema`; la **descripción**, de la etiqueta y la ayuda del campo en `ir_model_fields` (es_PE). Tamaño: caracteres en `varchar`, `precisión,escala` en `numeric`, bytes en los tipos fijos y «variable» en `text` y `jsonb`. Las columnas que agregó un módulo propio a una tabla de otro módulo van marcadas con **[donofrio_base]** o **[donofrio_calidad]**.
 
 ## Resumen de las tablas centrales
 
@@ -44,12 +44,19 @@
 | Seguridad y mesa de servicios | `res_groups` | `res.groups` | `base` | 11 | 76 |
 | Seguridad y mesa de servicios | `auditlog_rule` | `auditlog.rule` | `auditlog` | 18 | 4 |
 | Seguridad y mesa de servicios | `project_task` | `project.task` | `project` | 41 | n/d |
+| Calidad (M1) | `donofrio_calidad_punto` | `donofrio.calidad.punto` | `donofrio_calidad` | 13 | n/d |
+| Calidad (M1) | `donofrio_calidad_inspeccion` | `donofrio.calidad.inspeccion` | `donofrio_calidad` | 13 | n/d |
+| Calidad (M1) | `donofrio_calidad_linea` | `donofrio.calidad.linea` | `donofrio_calidad` | 12 | n/d |
 
-## Lo que agrega `donofrio_base` al esquema
+## Lo que agregan los módulos propios al esquema
 
 `donofrio_base` **no crea tablas propias** en la Fase 1: sus registros (compañía, almacenes, productos, clientes, listas de precios, listas de materiales, empleados, usuarios, grupos y reglas) se cargan por XML/CSV en las tablas de Odoo de arriba. En el esquema solo agrega:
 
 * `project_task.sla_estado` (varchar, calculada y almacenada): Cumplimiento del SLA.
+
+`donofrio_calidad` (M1, Fase 2) **sí crea tablas propias**: `donofrio_calidad_inspeccion`, `donofrio_calidad_linea`, `donofrio_calidad_punto`.
+
+No agrega columnas a las tablas de otros módulos: sus extensiones de modelos ajenos (por ejemplo `stock.lot`) no almacenan columnas nuevas en esta BD.
 
 ## Ventas y CRM
 
@@ -1588,3 +1595,64 @@
 |  | `working_days_open` | double precision | 8 B | Sí | Días laborables por asignar |
 |  | `working_days_close` | double precision | 8 B | Sí | Días laborables por cerrar |
 |  | `sla_estado` | varchar | variable | Sí | **[donofrio_base]** Cumplimiento del SLA — Cumplido si el ticket se cerró antes de su fecha límite; incumplido si se cerró después. Solo se calcula en los tickets con fecha límite. |
+
+## Calidad (M1)
+
+### Tabla 4.2.8-37. `donofrio_calidad_punto`
+
+**Punto de control de calidad** · modelo `donofrio.calidad.punto` · módulo `donofrio_calidad` · 13 columnas
+
+| Clave | Campo | Tipo | Tamaño | Nulo | Descripción |
+|---|---|---|---|---|---|
+| PK | `id` | integer | 4 B | No | ID |
+|  | `sequence` | integer | 4 B | Sí | Sequence |
+| FK | `categ_id` | integer | 4 B | Sí | Categoría de producto → `product_category` — Si se deja vacío, el punto se mide en todos los productos. |
+| FK | `create_uid` | integer | 4 B | Sí | Created by → `res_users` |
+| FK | `write_uid` | integer | 4 B | Sí | Last Updated by → `res_users` |
+|  | `tipo` | varchar | variable | No | Tipo |
+|  | `unidad` | varchar | variable | Sí | Unidad — Por ejemplo: °C, g, %. |
+|  | `name` | jsonb | variable | No | Punto de control |
+|  | `active` | boolean | 1 B | Sí | Active |
+|  | `create_date` | timestamp | 8 B | Sí | Created on |
+|  | `write_date` | timestamp | 8 B | Sí | Last Updated on |
+|  | `valor_min` | double precision | 8 B | Sí | Mínimo |
+|  | `valor_max` | double precision | 8 B | Sí | Máximo |
+
+### Tabla 4.2.8-38. `donofrio_calidad_inspeccion`
+
+**Inspección de calidad del lote** · modelo `donofrio.calidad.inspeccion` · módulo `donofrio_calidad` · 13 columnas
+
+| Clave | Campo | Tipo | Tamaño | Nulo | Descripción |
+|---|---|---|---|---|---|
+| PK | `id` | integer | 4 B | No | ID |
+| FK | `production_id` | integer | 4 B | No | Orden de producción → `mrp_production` |
+| FK | `lot_id` | integer | 4 B | No | Lote → `stock_lot` |
+| FK | `product_id` | integer | 4 B | Sí | Producto → `product_product` |
+| FK | `company_id` | integer | 4 B | No | Company → `res_company` |
+| FK | `inspector_id` | integer | 4 B | Sí | Inspector → `res_users` |
+| FK | `create_uid` | integer | 4 B | Sí | Created by → `res_users` |
+| FK | `write_uid` | integer | 4 B | Sí | Last Updated by → `res_users` |
+|  | `name` | varchar | variable | Sí | Número |
+|  | `state` | varchar | variable | No | Estado |
+|  | `motivo_rechazo` | text | variable | Sí | Motivo del rechazo |
+|  | `create_date` | timestamp | 8 B | Sí | Created on |
+|  | `write_date` | timestamp | 8 B | Sí | Last Updated on |
+
+### Tabla 4.2.8-39. `donofrio_calidad_linea`
+
+**Medición de la inspección de calidad** · modelo `donofrio.calidad.linea` · módulo `donofrio_calidad` · 12 columnas
+
+| Clave | Campo | Tipo | Tamaño | Nulo | Descripción |
+|---|---|---|---|---|---|
+| PK | `id` | integer | 4 B | No | ID |
+| FK | `inspeccion_id` | integer | 4 B | No | Inspeccion → `donofrio_calidad_inspeccion` |
+| FK | `punto_id` | integer | 4 B | No | Punto de control → `donofrio_calidad_punto` |
+|  | `sequence` | integer | 4 B | Sí | Sequence |
+| FK | `create_uid` | integer | 4 B | Sí | Created by → `res_users` |
+| FK | `write_uid` | integer | 4 B | Sí | Last Updated by → `res_users` |
+|  | `resultado` | varchar | variable | Sí | Resultado |
+|  | `medido` | boolean | 1 B | Sí | Medido |
+|  | `cumple_manual` | boolean | 1 B | Sí | Cumple |
+|  | `create_date` | timestamp | 8 B | Sí | Created on |
+|  | `write_date` | timestamp | 8 B | Sí | Last Updated on |
+|  | `medicion` | double precision | 8 B | Sí | Medición |

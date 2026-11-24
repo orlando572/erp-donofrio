@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# Crea (o borra) una BD temporal con donofrio_base recién instalado desde el código de este checkout.
+# Crea (o borra) una BD temporal con donofrio_base (y, si se pide, más módulos) recién instalado desde el código de este checkout.
 # Sirve para extraer el esquema real de `develop` (ER y diccionario de datos, informe 4.2.6 a 4.2.8) sin tocar
 # la BD de desarrollo, que puede ir por detrás del código.
 #
 # Uso: scripts/esquema_limpio.sh crear [nombre]    (por defecto: esquema_tmp_informe; tarda 1-2 minutos)
+#      MODULOS=donofrio_base,donofrio_calidad scripts/esquema_limpio.sh crear esquema_tmp_m1   (por defecto: donofrio_base)
 #      scripts/esquema_limpio.sh borrar [nombre]
 #
 # Usa `docker run` con la imagen y la red del compose, sin `docker compose up/run`, para no recrear el contenedor `db`
@@ -18,6 +19,7 @@ bd="${2:-esquema_tmp_informe}"
 set -a; . ./.env; set +a
 contenedor_db="${DB_CONTENEDOR:-erp-donofrio-db-1}"
 red="${COMPOSE_RED:-erp-donofrio_default}"
+modulos="${MODULOS:-donofrio_base}"
 
 case "$accion" in
   crear)
@@ -25,7 +27,7 @@ case "$accion" in
       -e HOST=db -e USER="${ODOO_DB_USER:-odoo}" -e PASSWORD="$ODOO_DB_PASSWORD" \
       -e ODOO_DB="$bd" -e ODOO_ADMIN_PASSWD="$ODOO_ADMIN_PASSWD" -e DONOFRIO_USER_PASSWORD="${DONOFRIO_USER_PASSWORD:-}" \
       -v "$PWD/addons":/mnt/extra-addons:ro \
-      erp-donofrio/odoo:19.0 odoo -d "$bd" --db-filter "^${bd}\$" -i donofrio_base --load-language es_PE --stop-after-init
+      erp-donofrio/odoo:19.0 odoo -d "$bd" --db-filter "^${bd}\$" -i "$modulos" --load-language es_PE --stop-after-init
     echo "Listo: BD '${bd}'. Ahora: python3 scripts/diccionario_datos.py --bd ${bd} y python3 scripts/diagrama_er.py --bd ${bd}"
     ;;
   borrar)
