@@ -8,6 +8,8 @@
 
 **Resumen.** 18 RF y 13 RNF. Los requisitos de la Fase 2 sin implementar (4 filas: RF004, RF008, RF011 y RF012) están como «Diseñado – trabajo futuro»; la parte propia de RF013 (tablero OWL) también. Las pruebas de `donofrio_base`: **136** (ver [6.10](06_09_a_06_13_pruebas.md)).
 
+> **Nota posterior al 23/11/2026.** La matriz es la foto de la Fase 1: las filas de RF004, RF008, RF011 y RF012 siguen como «Diseñado – trabajo futuro» porque se escribieron antes de construir los módulos propios. Hoy están **Implementados**: RF011 y RF012 en M1 ([5.5b](05_05_modulo_donofrio_calidad.md)), RF004 en M2 ([5.5c](05_05_modulo_donofrio_heladeros.md)) y RF008 en M3 ([5.5d](05_05_modulo_donofrio_frio.md), HU-19, 29 pruebas en `addons/donofrio_calidad/tests/test_frio.py`). El estado vigente está en [4.2.2](04_02_requerimientos_funcionales.md) y en el [anexo 10.1](anexo_10_01_fichas_rf.md); aquí no hay PR de esos módulos porque la matriz lee los PR fusionados al 23/11/2026.
+
 ## Tabla A. Requisitos funcionales (RF)
 
 | Requisito | Fase | HU → PR | Módulo o archivo | Prueba (n.º de pruebas) | Evidencia | Estado |

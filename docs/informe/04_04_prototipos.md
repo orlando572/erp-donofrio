@@ -30,7 +30,7 @@ El PNG sale del SVG con el mismo comando de Docker de [`docs/diagramas/README.md
 | CU004 | Liquidación diaria del heladero | Heladeros (M2) | HU-20, HU-21 | Implementada |
 | CU004 | Liquidación (vista móvil) | Heladeros (M2) | HU-21 | Implementada (sin probar en celular real) |
 | CU005 | Recepción de insumos con lote y vencimiento | Inventario | HU-11, HU-12 | Implementada (Inventario estándar, HU-11, HU-12) |
-| CU006 | Registro de temperaturas de las cámaras | Cadena de frío (M3) | HU-19 | Diseño: trabajo futuro si no se construye el módulo |
+| CU006 | Registro de temperaturas de las cámaras | Cadena de frío (M3) | HU-19 | Implementada |
 | CU007 | Orden de producción con lote | Fabricación | HU-14 | Implementada (Fabricación estándar, HU-14) |
 | CU008 | Inspección de calidad del lote | Calidad (M1) | HU-17, HU-18 | Diseño: trabajo futuro si no se construye el módulo |
 | CU009 | Tablero gerencial de KPIs | Tablero (M4) | HU-22, HU-23 | Diseño: trabajo futuro si no se construye el módulo |
@@ -90,7 +90,7 @@ El PNG sale del SVG con el mismo comando de Docker de [`docs/diagramas/README.md
 
 ### CU006 · Registro de temperaturas de las cámaras
 
-**Estado de la pantalla:** Diseño: trabajo futuro si no se construye el módulo. **Ruta:** Inventario › Cadena de frío › Lecturas.
+**Estado de la pantalla:** Implementada (`donofrio_calidad`, HU-19); capturas reales en `docs/capturas/sprint-4/HU-19_*`. **Ruta:** Calidad › Cadena de frío › Lecturas de temperatura (el wireframe decía Inventario › Cadena de frío).
 
 | Wireframe (4.4.1) | Mockup (4.4.2) |
 |---|---|
