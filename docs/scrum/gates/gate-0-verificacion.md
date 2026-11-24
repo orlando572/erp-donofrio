@@ -10,7 +10,7 @@
 >
 > - **`main`:** el PR #222 fusionó la Fase 1 con *merge commit* (`4d0d94d`). El CI de `main` pasó en verde (`lint`, `test`, `replica`, `backup` y `proxy`).
 > - **Tag y Release:** el tag `v1.0.0` está en `main` y existe la GitHub Release «ERP D'Onofrio v1.0.0» (publicada el 24/11/2026, 05:43 UTC).
-> - **Verificado el 24/11/2026:** la Release lleva adjunto `erp-donofrio-v1.0.0.zip` (24,7 MB); las imágenes `v1.0.0` y `latest` en GHCR se descargan sin iniciar sesión (paquete público); `lint` y `test` son checks obligatorios en `main`. **Pendiente:** las capturas de 6.4.
+> - **Verificado el 24/11/2026:** la Release lleva adjunto `erp-donofrio-v1.0.0.zip` (24,7 MB); las imágenes `v1.0.0` y `latest` en GHCR se descargan sin iniciar sesión (paquete público); `lint` y `test` son checks obligatorios en `main`. Capturas de la Release, del paquete y de la corrida en [`docs/capturas/sprint-4/`](../../capturas/sprint-4/) y en 6.4 (sin iniciar sesión). **Pendientes** solo las de la página principal, las reglas de protección e *Insights*.
 > - **Sin cambio:** `lint` y `test` todavía **no** son checks obligatorios en `main`. HU-30 sigue diferida.
 > - **M1** (HU-17 y HU-18, #219, #220 y #221) ya está en `develop`; su tag `v1.1.0` aún no existe (ver [`gate-m1-calidad.md`](gate-m1-calidad.md)).
 

@@ -2,7 +2,7 @@
 
 > **Estado:** borrador del Sprint 3 · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [06 §6.2 a §6.6](../plan/06_github_ci_infra.md), [docs/dev/release.md](../dev/release.md), [4.3.1](04_03_infraestructura.md)
 >
-> Mide el **estado real del repositorio al 23/11/2026** (`develop` en `1e303ed`). Los datos salen de `gh` y `git` en modo de solo lectura y están guardados con fecha en [`S3-informe6_evidencia_github.txt`](../capturas/sprint-3/S3-informe6_evidencia_github.txt) y en la tabla de los 49 PR [`S3-informe6_prs_fusionados.tsv`](../capturas/sprint-3/S3-informe6_prs_fusionados.tsv). *Actualización del 24/11/2026:* el PR #222 fusionó la Fase 1 en `main` (*merge commit* `4d0d94d`, CI en verde), el tag `v1.0.0` está en `main` y la GitHub Release está publicada; los datos de las tablas de abajo son los del 23/11. Sigue **pendiente de verificar** el paquete en GHCR (daba 404) y su visibilidad pública, y las capturas de esta sección ([`docs/dev/release.md`](../dev/release.md)). De Evelyn son 6.1, 6.2, 6.3, 6.7, 6.8 y 6.12; aquí solo se enlazan.
+> Mide el **estado real del repositorio al 23/11/2026** (`develop` en `1e303ed`). Los datos salen de `gh` y `git` en modo de solo lectura y están guardados con fecha en [`S3-informe6_evidencia_github.txt`](../capturas/sprint-3/S3-informe6_evidencia_github.txt) y en la tabla de los 49 PR [`S3-informe6_prs_fusionados.tsv`](../capturas/sprint-3/S3-informe6_prs_fusionados.tsv). *Actualización del 24/11/2026:* el PR #222 fusionó la Fase 1 en `main` (*merge commit* `4d0d94d`, CI en verde), el tag `v1.0.0` está en `main` y la GitHub Release está publicada; los datos de las tablas de abajo son los del 23/11. El paquete de GHCR quedó público con las etiquetas `v1.0.0` y `latest`, y la evidencia visual de la Release está en las capturas de 6.4 ([`docs/dev/release.md`](../dev/release.md)). De Evelyn son 6.1, 6.2, 6.3, 6.7, 6.8 y 6.12; aquí solo se enlazan.
 
 ## 6.4 Resumen del GitHub
 
@@ -58,7 +58,21 @@ Los **jobs de `ci.yml`** y su resultado acumulado:
 
 Los jobs `replica`, `backup` y `proxy` se agregaron en el Sprint 3, por eso tienen menos ejecuciones. Las **2 ejecuciones en rojo** son del PR #189 (HU-27): el paso de verificación del despliegue falló, en la segunda con «no acepta tls1_3» y «ningún intento se bloqueó» (el script de verificación usaba `openssl` y contaba mal el bloqueo por *worker*); se corrigió en el mismo PR y se fusionó con el CI en verde. Es la evidencia de que el control funciona. Las **10 canceladas** las reemplazó una corrida más reciente del mismo grupo de concurrencia; no son fallos. De la corrida programada hay **una** ejecución (éxito, id `45279340817`).
 
-**Capturas pendientes.** Las del plan ([06 §6.6](../plan/06_github_ci_infra.md): página principal, Releases con el zip, paquete GHCR, reglas de protección, Insights) se toman en el Gate 0, cuando existan la release y el paquete. Hoy la evidencia es el texto fechado de arriba.
+**Capturas de la Release (24/11/2026).** Se tomaron en el navegador integrado **sin iniciar sesión**, lo que prueba que son públicas: la GitHub Release `v1.0.0` con el zip adjunto, el paquete de GHCR con sus etiquetas y la corrida del flujo Release en verde.
+
+![Ilustración 6.4-a. GitHub Release v1.0.0 con erp-donofrio-v1.0.0.zip adjunto (el zip pesa 23,5 MiB, unos 24,7 MB)](../capturas/sprint-4/S4-release_v1.0.0.png)
+
+*Ilustración 6.4-a. Release «ERP D'Onofrio v1.0.0» (marcada *Latest*) con `erp-donofrio-v1.0.0.zip` entre los *assets*. Captura: [`S4-release_v1.0.0.png`](../capturas/sprint-4/S4-release_v1.0.0.png).*
+
+![Ilustración 6.4-b. Paquete erp-donofrio en GHCR, público, con las etiquetas latest y v1.0.0](../capturas/sprint-4/S4-paquete_ghcr.png)
+
+*Ilustración 6.4-b. Paquete `erp-donofrio` en GHCR: visibilidad **Public**, etiquetas `latest` y `v1.0.0`, instalación con `docker pull ghcr.io/orlando572/erp-donofrio:latest`. Captura: [`S4-paquete_ghcr.png`](../capturas/sprint-4/S4-paquete_ghcr.png).*
+
+![Ilustración 6.4-c. Corrida del flujo Release #3 en verde, disparada por el tag v1.0.0](../capturas/sprint-4/S4-release_corrida.png)
+
+*Ilustración 6.4-c. Corrida del flujo `release.yml` (id `45335041382`) sobre `4d0d94d` y el tag `v1.0.0`: éxito en 2 min 59 s y 3 artefactos. Captura: [`S4-release_corrida.png`](../capturas/sprint-4/S4-release_corrida.png).*
+
+**Capturas que siguen sin tomarse.** De las del plan ([06 §6.6](../plan/06_github_ci_infra.md)) faltan la página principal del repositorio, las reglas de protección de ramas y *Insights*; para ellas la evidencia es el texto fechado de arriba.
 
 ## 6.5 Ramificación
 
