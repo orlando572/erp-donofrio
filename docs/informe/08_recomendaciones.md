@@ -6,15 +6,7 @@
 
 ## 8.1 Recomendaciones de negocio y gestión
 
-<!-- ============================================================================================
-     RESERVADO PARA EVELYN (PO). Orlando no redacta esta sección.
-     Temas que el plan de la plantilla prevé aquí (docs/plan/02_mapeo_plantilla.md, fila 8) y que
-     no son técnicos: plan para la transición a Froneri (migración de compañía), app móvil para
-     heladeros, uso del tablero y de la mesa de servicios, capacitación y pruebas de usabilidad.
-     Cuando Evelyn la escriba, borra este comentario y el aviso de abajo.
-     ============================================================================================ -->
-
-> **Pendiente (Evelyn).** Esta sección todavía no está redactada. Los puntos que el plan le asigna al informe en general están en el comentario de este archivo; los técnicos de la lista siguiente (8.2) no los repite.
+Las redactó Evelyn en [`08_01_recomendaciones_negocio.md`](08_01_recomendaciones_negocio.md) (8 recomendaciones con plazo y esfuerzo). Esta sección 8.2 no las repite; las dos se ensamblan en un solo capítulo 8 al maquetar el informe.
 
 ## 8.2 Recomendaciones técnicas
 
