@@ -195,3 +195,38 @@ class TestTablero(DonofrioStockCase):
             'location_id': ubicacion.id, 'temperatura': -5.0, 'fecha': fields.Datetime.now() - timedelta(days=30)})
         self.assertTrue(vieja.fuera_de_rango)
         self.assertEqual(self._kpis()['alertas_temperatura']['cantidad'], antes + 1)
+
+    # --- Acceso sin permiso de ventas (HU-22) ------------------------------------------------------------
+
+    def _usuario_sin_ventas(self):
+        return self.env['res.users'].create({
+            'name': 'Sin ventas', 'login': 'sin.ventas@example.com',
+            'group_ids': [Command.set([self.env.ref('base.group_user').id])]})
+
+    def test_sin_permiso_de_ventas_devuelve_un_aviso_y_no_un_error(self):
+        kpis = self.Tablero.with_user(self._usuario_sin_ventas()).get_kpis()
+        self.assertTrue(kpis['sin_permiso'])
+        self.assertIn('Ventas', kpis['areas'])
+        self.assertIn('Ventas', kpis['mensaje'])
+        self.assertIn('permiso', kpis['mensaje'])
+        for clave in ('ventas_mes', 'ventas_por_mes', 'produccion', 'almacenes'):
+            self.assertNotIn(clave, kpis, 'no debe filtrar datos a quien no puede leerlos')
+
+    def test_el_vendedor_recibe_un_aviso_en_vez_del_error_de_lotes(self):
+        """El Vendedor ve el menú, pero no puede leer lotes: antes el tablero fallaba con «Error de acceso»."""
+        vendedor = self.env.ref('donofrio_base.user_vendedor')
+        kpis = self.Tablero.with_user(vendedor).get_kpis(warehouse_id=self.lim.id)
+        self.assertTrue(kpis['sin_permiso'])
+        self.assertIn('Inventario', kpis['areas'])
+
+    def test_el_gerente_no_recibe_el_aviso(self):
+        gerente = self.env.ref('donofrio_base.user_gerente')
+        self.assertEqual(self.Tablero.with_user(gerente)._areas_sin_permiso(), [])
+        self.assertNotIn('sin_permiso', self.Tablero.with_user(gerente).get_kpis())
+
+    def test_el_menu_del_tablero_no_se_muestra_sin_permiso_de_ventas(self):
+        raiz = self.env.ref('donofrio_tablero.menu_tablero_root')
+        gerente = self.env.ref('donofrio_base.user_gerente')
+        sin_ventas = self._usuario_sin_ventas()
+        self.assertIn(raiz.id, self.env['ir.ui.menu'].with_user(gerente)._visible_menu_ids())
+        self.assertNotIn(raiz.id, self.env['ir.ui.menu'].with_user(sin_ventas)._visible_menu_ids())
