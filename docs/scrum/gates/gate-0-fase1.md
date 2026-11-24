@@ -31,7 +31,7 @@
 | Pendiente | Por qué importa | Quién | Cómo se cierra |
 |---|---|---|---|
 | **`main` sin fusionar** (`develop` va por delante y `main` solo tiene el commit inicial) y **CI de `main` nunca corrido** | El criterio 1 pide CI en verde en `main` | Orlando | PR `develop` → `main` con *merge commit*, y revisar los cinco jobs *(24/11: hecho, PR #222 y CI verde)* |
-| **Sin tag `v1.0.0`, sin Release y sin imagen en GHCR** | El núcleo no es «entregable» hasta que exista el tag | Orlando | Tag desde `main` actualizado y revisar la corrida Release (pasos 3 a 7 de la verificación) *(24/11: tag y Release hechos; falta verificar el zip, la imagen en GHCR y su visibilidad pública)* |
+| **Sin tag `v1.0.0`, sin Release y sin imagen en GHCR** | El núcleo no es «entregable» hasta que exista el tag | Orlando | Tag desde `main` actualizado y revisar la corrida Release (pasos 3 a 7 de la verificación) *(24/11: tag, Release, zip e imagen pública en GHCR hechos y verificados)* |
 | **Project desfasado** | Criterio 5 | Orlando o Evelyn con permiso | Mover tarjetas de #141, #142 y #143 y corregir las iteraciones |
 | **Backend de Lighthouse en 59 de 80** (RNF008) | Limitación declarada, no un error oculto | Equipo | Se informa como limitación; se mide en el servidor real |
 | **RNF001 (tres navegadores y móvil) y RNF011 (disponibilidad en el tiempo) sin medir** | No hay evidencia, solo diseño | Equipo | Se declaran pendientes |
@@ -40,7 +40,7 @@
 
 **Hasta que se fusione `main` y exista el tag, el criterio 1 no está cumplido del todo.** Orlando lo hace en paralelo a este informe; el equipo decide con ese conocimiento (ver la recomendación).
 
-*Actualización del 24/11/2026:* `main` ya está fusionado con CI en verde y el tag y la Release `v1.0.0` existen; el criterio 1 queda cumplido salvo HU-30 (desviación aceptada) y lo que sigue por verificar (zip, GHCR y su visibilidad).
+*Actualización del 24/11/2026:* `main` ya está fusionado con CI en verde y el tag y la Release `v1.0.0` existen; el criterio 1 queda cumplido salvo HU-30 (desviación aceptada); el zip y la imagen pública en GHCR se verificaron el 24/11/2026.
 
 ## 3. Desviaciones aceptadas por el equipo (no cumplidas)
 

@@ -150,4 +150,4 @@ No hay un servidor público: el sistema se ejecuta en la PC de quien lo levanta.
 
 ### Resumen de lo que no existe
 
-Despliegue automático a una VM (`cd.yml`, `deploy.sh`), paquete en GHCR sin verificar (la release ya existe), Uptime Kuma, Dependabot, plantilla de RFC, BPMN de control de cambios y de solicitud de acceso, proyección de usuarios y *cron* de respaldo instalado.
+Despliegue automático a una VM (`cd.yml`, `deploy.sh`), Uptime Kuma, Dependabot, plantilla de RFC, BPMN de control de cambios y de solicitud de acceso, proyección de usuarios y *cron* de respaldo instalado.
