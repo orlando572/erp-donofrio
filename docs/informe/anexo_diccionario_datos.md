@@ -2,7 +2,7 @@
 
 > **Archivo generado** por [`scripts/diccionario_datos.py`](../../scripts/diccionario_datos.py); no se edita a mano. Origen: BD limpia con `donofrio_base`, `donofrio_calidad` y `donofrio_heladeros` instalados desde `develop` (Odoo 19.0, PostgreSQL 16).
 >
-> Complementa el [diccionario del núcleo](04_02_diccionario_datos.md) (4.2.8) con las otras 661 tablas del esquema, agrupadas por el módulo de Odoo que define cada modelo. El esquema completo tiene 702 tablas (41 en el núcleo). Mismo formato y mismas fuentes que el diccionario del núcleo.
+> Complementa el [diccionario del núcleo](04_02_diccionario_datos.md) (4.2.8) con las otras 661 tablas del esquema, agrupadas por el módulo de Odoo que define cada modelo. El esquema completo tiene 703 tablas (42 en el núcleo). Mismo formato y mismas fuentes que el diccionario del núcleo.
 
 ## Índice por módulo
 

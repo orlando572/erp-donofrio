@@ -30,7 +30,7 @@ Necesidad del negocio → RF / RNF → Historia de usuario (HU) → Épica (issu
 | **Logística y Almacén** | RF005 | Gestionar almacenes y ubicaciones con cámaras de frío | F1 | HU-06 | Implementado (HU-06) | Must |
 | | RF006 | Controlar lotes con fecha de vencimiento y salida FEFO | F1 | HU-11 | Planificado (S2) | Must |
 | | RF007 | Recibir insumos y despachar pedidos | F1 | HU-12 | Planificado (S2) | Must |
-| | RF008 | Registrar temperaturas y alertar cuando están fuera de rango | **F2** (cadena de frío) | HU-19 | Diseñado – trabajo futuro | Must (en F2) |
+| | RF008 | Registrar temperaturas y alertar cuando están fuera de rango | **F2** (cadena de frío) | HU-19 | Implementado (M3, [5.5d](05_05_modulo_donofrio_frio.md)) | Must (en F2) |
 | **Producción y Operaciones** | RF009 | Mantener listas de materiales (recetas) y centros de trabajo | F1 | HU-07 | Implementado (HU-07) | Must |
 | | RF010 | Planificar y ejecutar órdenes de producción con lote | F1 | HU-14 | Planificado (S2) | Must |
 | | RF011 | Inspeccionar la calidad por puntos de control ligados a la OP y al lote | **F2** (`donofrio_calidad`) | HU-17 | Implementado (M1, [5.5b](05_05_modulo_donofrio_calidad.md)) | Must (en F2) |

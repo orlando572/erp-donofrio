@@ -44,7 +44,7 @@ COLUMNAS_CLAVE = {
     'product_supplierinfo': ['price', 'min_qty', 'delay'],
     'hr_employee': ['name', 'active'],
     'stock_warehouse': ['name', 'code'],
-    'stock_location': ['name', 'complete_name', 'usage', 'removal_strategy_id'],
+    'stock_location': ['name', 'complete_name', 'usage', 'removal_strategy_id', 'control_temperatura', 'temp_min', 'temp_max'],
     'stock_picking_type': ['name', 'code', 'sequence_code'],
     'stock_picking': ['name', 'state', 'scheduled_date', 'date_done', 'origin'],
     'stock_move': ['state', 'product_uom_qty', 'quantity', 'date', 'origin'],
@@ -72,6 +72,7 @@ COLUMNAS_CLAVE = {
     'donofrio_calidad_linea': ['medicion', 'medido', 'cumple_manual', 'resultado'],
     'donofrio_liquidacion': ['name', 'fecha', 'state', 'porcentaje_comision', 'total_importe', 'total_comision'],
     'donofrio_liquidacion_linea': ['despachado', 'devuelto', 'merma', 'vendido', 'precio_unitario', 'importe'],
+    'donofrio_temperatura': ['fecha', 'temperatura', 'fuera_de_rango'],
 }
 
 # Diseño lógico (4.2.7): figuras por flujo del negocio. Las tablas de contexto salen solo con sus claves y columnas clave.
@@ -94,7 +95,7 @@ FIGURAS_LOGICAS = OrderedDict([
 COLORES = {
     'Ventas y CRM': '#DCEBFA', 'Maestros': '#EAF5E4', 'Inventario': '#FFF1D6', 'Producción': '#F6E3F4',
     'Compras': '#FBE5DC', 'Facturación': '#E3F0F0', 'Seguridad y mesa de servicios': '#ECECEC',
-    'Calidad (M1)': '#E6E3F7', 'Heladeros (M2)': '#E3F7EA',
+    'Calidad (M1)': '#E6E3F7', 'Heladeros (M2)': '#E3F7EA', 'Cadena de frío (M3)': '#E0F3FA',
 }
 AREA_DE_ORDEN = list(TABLAS_NUCLEO)
 AREA_DE = {t: area for area, tablas in TABLAS_NUCLEO.items() for t in tablas}
@@ -207,7 +208,7 @@ skinparam ranksep 90
 
 def puml_er_general(esquema):
     tablas = list(NUCLEO)
-    lineas = [CABECERA.format(nombre='er_nucleo', titulo=f'Modelo ER general ({len(tablas)} tablas centrales: núcleo de la Fase 1, M1 calidad y M2 heladeros)')]
+    lineas = [CABECERA.format(nombre='er_nucleo', titulo=f'Modelo ER general ({len(tablas)} tablas centrales: núcleo de la Fase 1, M1 calidad, M2 heladeros y M3 cadena de frío)')]
     for t in tablas:
         lineas += entidad(esquema, t, tablas, solo_claves=True, omitir_a=SIN_LINEA_A, color=COLORES[AREA_DE[t]])
     lineas += relaciones(esquema, tablas, SIN_LINEA_A)

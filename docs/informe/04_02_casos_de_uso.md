@@ -13,7 +13,7 @@
 | CU003 | Vender en el punto de venta con boleta | Ventas | RF003 | HU-10 | F1 | Implementado | Evelyn |
 | CU004 | Liquidar al heladero del día | Heladeros | RF004 | HU-20, HU-21 | **F2** (M2) | **Implementado** (24/11/2026) | Evelyn |
 | CU005 | Recibir, almacenar y despachar con lotes y FEFO | Logística | RF005, RF006, RF007 | HU-06, HU-11, HU-12 | F1 | Planificado | Orlando |
-| CU006 | Registrar temperaturas y alertar (cadena de frío) | Logística | RF008 | HU-19 | **F2** (M3) | **Propuesto** | Orlando |
+| CU006 | Registrar temperaturas y alertar (cadena de frío) | Logística | RF008 | HU-19 | **F2** (M3) | **Implementado** (24/11/2026) | Orlando |
 | CU007 | Planificar y ejecutar una orden de producción con lote | Producción | RF009, RF010 | HU-07, HU-14 | F1 | Planificado | Orlando |
 | CU008 | Inspeccionar la calidad y liberar el lote | Producción | RF011, RF012 | HU-17, HU-18 | **F2** (M1) | **Implementado** (24/11/2026) | Orlando |
 | CU009 | Consultar el tablero gerencial de KPIs | Gerencia | RF013 | HU-23 (F1), HU-22 (F2) | F1 (estándar) | Implementado | Evelyn |
@@ -136,7 +136,7 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Datos de apoyo** | Existencias iniciales con lotes por vencer y 16 semanas de recepciones y reposiciones generadas por `cargar_transacciones.py` |
 | **Evidencia / prueba** | `test_fefo.py` y `test_recepcion_despacho.py` en `donofrio_base/tests`; capturas en `docs/capturas/sprint-2/` |
 
-### CU006: Registrar temperaturas y alertar (propuesto, Fase 2)
+### CU006: Registrar temperaturas y alertar (implementado, Fase 2)
 
 | Campo | Contenido |
 |---|---|
@@ -144,13 +144,13 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Requerimiento / HU** | RF008 · HU-19 (cadena de frío, M3) |
 | **Actores** | Jefe de Almacén (principal), Operario de cámara |
 | **Descripción** | El operario registra la temperatura de cada cámara en cada lectura; si sale del rango de la ubicación, el sistema avisa y deja historial |
-| **Precondiciones** | Ubicaciones de frío con su rango (`temp_min` y `temp_max`, que en la Fase 1 solo van en el nombre de la ubicación); módulo de la Fase 2 instalado |
-| **Flujo principal** | 1. El operario abre la cámara y registra la lectura (valor y hora).<br>2. El sistema compara con el rango de la ubicación.<br>3. Si está dentro del rango, la lectura queda en el historial.<br>4. Si está fuera, crea una alerta para el jefe de almacén y marca la ubicación |
+| **Precondiciones** | Ubicaciones de frío con su rango (`temp_min` y `temp_max`, que en la Fase 1 solo van en el nombre de la ubicación) y «Controlar temperatura» marcado; `donofrio_calidad` instalado |
+| **Flujo principal** | 1. El operario abre la cámara y registra la lectura (valor y hora).<br>2. El sistema compara con el rango de la ubicación.<br>3. Si está dentro del rango, la lectura queda en el historial.<br>4. Si está fuera, marca la lectura como «Fuera de rango» y crea una actividad para el jefe de almacén (no marca la ubicación) |
 | **Flujos alternos** | A1. Si hay lotes en la cámara afectada, el jefe de almacén los revisa y decide su destino.<br>A2. **Sin la Fase 2:** la temperatura se anota en planilla de papel y el rango queda solo como texto en el nombre de la ubicación |
 | **Postcondiciones** | Historial de temperaturas por ubicación y alerta registrada |
-| **Reglas de negocio** | Congelación: −25 °C (se exige −18 °C o menos en el producto terminado); refrigerado: 2-6 °C |
-| **Estado** | **Propuesto.** No se construye sin la confirmación explícita de Evelyn u Orlando tras el Gate 0 y el mini gate de M1. Si no se hace, queda como «Diseñado – trabajo futuro» con este caso de uso y su wireframe |
-| **Evidencia / prueba** | Wireframe y mockup de la pantalla de lecturas (Sprint 2); si se construye, tests de su módulo |
+| **Reglas de negocio** | Congelación: −25 °C (se exige −18 °C o menos en el producto terminado); refrigerado: 2-6 °C. Rangos cargados: −30 a −18 °C y 2 a 6 °C |
+| **Estado** | **Implementado** en `donofrio_calidad` (M3) el 24/11/2026, con la confirmación de Orlando: lecturas, alerta fuera de rango y cron diario de lotes por vencer ([5.5d](05_05_modulo_donofrio_frio.md)). Lo que hace el código y difiere del diseño: la alerta es una actividad al jefe de almacén y **marca la lectura**, no la ubicación; el menú es Calidad › Cadena de frío |
+| **Evidencia / prueba** | [Wireframe y mockup](04_04_prototipos.md) (Sprint 2); 29 pruebas en `tests/test_frio.py` (44 en `donofrio_calidad`); capturas `HU-19_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
 
 ### CU007: Planificar y ejecutar una orden de producción con lote
 

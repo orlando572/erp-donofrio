@@ -6,28 +6,28 @@
 
 ## Resumen de las tablas centrales
 
-| Área | Tabla | Modelo de Odoo | Módulo | Columnas | Filas (`donofrio`) |
+| Área | Tabla | Modelo de Odoo | Módulo | Columnas | Filas (`donofrio_perf`) |
 |---|---|---|---|---|---|
-| Ventas y CRM | `sale_order` | `sale.order` | `sale` | 49 | 438 |
-| Ventas y CRM | `sale_order_line` | `sale.order.line` | `sale` | 44 | 1.455 |
-| Ventas y CRM | `crm_lead` | `crm.lead` | `crm` | 63 | 21 |
+| Ventas y CRM | `sale_order` | `sale.order` | `sale` | 49 | 437 |
+| Ventas y CRM | `sale_order_line` | `sale.order.line` | `sale` | 44 | 1.454 |
+| Ventas y CRM | `crm_lead` | `crm.lead` | `crm` | 63 | 20 |
 | Ventas y CRM | `pos_order` | `pos.order` | `point_of_sale` | 48 | 939 |
-| Maestros | `res_partner` | `res.partner` | `base` | 87 | 64 |
-| Maestros | `product_template` | `product.template` | `product` | 57 | 49 |
-| Maestros | `product_product` | `product.product` | `product` | 17 | 49 |
+| Maestros | `res_partner` | `res.partner` | `base` | 87 | 63 |
+| Maestros | `product_template` | `product.template` | `product` | 57 | 48 |
+| Maestros | `product_product` | `product.product` | `product` | 17 | 48 |
 | Maestros | `product_category` | `product.category` | `product` | 20 | 13 |
 | Maestros | `product_pricelist` | `product.pricelist` | `product` | 10 | 6 |
 | Maestros | `product_pricelist_item` | `product.pricelist.item` | `product` | 27 | 7 |
 | Maestros | `product_supplierinfo` | `product.supplierinfo` | `product` | 20 | 22 |
 | Maestros | `hr_employee` | `hr.employee` | `hr` | 50 | 22 |
 | Inventario | `stock_warehouse` | `stock.warehouse` | `stock` | 43 | 2 |
-| Inventario | `stock_location` | `stock.location` | `stock` | 21 | 30 |
+| Inventario | `stock_location` | `stock.location` | `stock` | 24 | 30 |
 | Inventario | `stock_picking_type` | `stock.picking.type` | `stock` | 53 | 24 |
-| Inventario | `stock_picking` | `stock.picking` | `stock` | 32 | 1.648 |
-| Inventario | `stock_move` | `stock.move` | `stock` | 65 | 6.064 |
-| Inventario | `stock_move_line` | `stock.move.line` | `stock` | 28 | 6.536 |
-| Inventario | `stock_lot` | `stock.lot` | `stock` | 18 | 488 |
-| Inventario | `stock_quant` | `stock.quant` | `stock` | 22 | 1.952 |
+| Inventario | `stock_picking` | `stock.picking` | `stock` | 32 | 1.647 |
+| Inventario | `stock_move` | `stock.move` | `stock` | 65 | 6.063 |
+| Inventario | `stock_move_line` | `stock.move.line` | `stock` | 28 | 6.535 |
+| Inventario | `stock_lot` | `stock.lot` | `stock` | 19 | 488 |
+| Inventario | `stock_quant` | `stock.quant` | `stock` | 22 | 1.737 |
 | Inventario | `stock_warehouse_orderpoint` | `stock.warehouse.orderpoint` | `stock` | 22 | 22 |
 | Producción | `mrp_bom` | `mrp.bom` | `mrp` | 23 | 12 |
 | Producción | `mrp_bom_line` | `mrp.bom.line` | `mrp` | 14 | 71 |
@@ -41,14 +41,15 @@
 | Facturación | `account_move_line` | `account.move.line` | `account` | 61 | 17.852 |
 | Facturación | `account_journal` | `account.journal` | `account` | 34 | 11 |
 | Seguridad y mesa de servicios | `res_users` | `res.users` | `base` | 25 | 14 |
-| Seguridad y mesa de servicios | `res_groups` | `res.groups` | `base` | 11 | 87 |
+| Seguridad y mesa de servicios | `res_groups` | `res.groups` | `base` | 11 | 76 |
 | Seguridad y mesa de servicios | `auditlog_rule` | `auditlog.rule` | `auditlog` | 18 | 4 |
-| Seguridad y mesa de servicios | `project_task` | `project.task` | `project` | 41 | 16 |
-| Calidad (M1) | `donofrio_calidad_punto` | `donofrio.calidad.punto` | `donofrio_calidad` | 13 | 5 |
-| Calidad (M1) | `donofrio_calidad_inspeccion` | `donofrio.calidad.inspeccion` | `donofrio_calidad` | 13 | 3 |
-| Calidad (M1) | `donofrio_calidad_linea` | `donofrio.calidad.linea` | `donofrio_calidad` | 12 | 12 |
-| Heladeros (M2) | `donofrio_liquidacion` | `donofrio.liquidacion` | `donofrio_heladeros` | 19 | 1 |
-| Heladeros (M2) | `donofrio_liquidacion_linea` | `donofrio.liquidacion.linea` | `donofrio_heladeros` | 13 | 1 |
+| Seguridad y mesa de servicios | `project_task` | `project.task` | `project` | 41 | n/d |
+| Calidad (M1) | `donofrio_calidad_punto` | `donofrio.calidad.punto` | `donofrio_calidad` | 13 | n/d |
+| Calidad (M1) | `donofrio_calidad_inspeccion` | `donofrio.calidad.inspeccion` | `donofrio_calidad` | 13 | n/d |
+| Calidad (M1) | `donofrio_calidad_linea` | `donofrio.calidad.linea` | `donofrio_calidad` | 12 | n/d |
+| Heladeros (M2) | `donofrio_liquidacion` | `donofrio.liquidacion` | `donofrio_heladeros` | 19 | n/d |
+| Heladeros (M2) | `donofrio_liquidacion_linea` | `donofrio.liquidacion.linea` | `donofrio_heladeros` | 13 | n/d |
+| Cadena de frío (M3) | `donofrio_temperatura` | `donofrio.temperatura` | `donofrio_calidad` | 12 | n/d |
 
 ## Lo que agregan los módulos propios al esquema
 
@@ -56,9 +57,14 @@
 
 * `project_task.sla_estado` (varchar, calculada y almacenada): Cumplimiento del SLA.
 
-`donofrio_calidad` (M1, Fase 2) **sí crea tablas propias**: `donofrio_calidad_inspeccion`, `donofrio_calidad_linea`, `donofrio_calidad_punto`.
+`donofrio_calidad` (M1 y el incremento M3 de cadena de frío, Fase 2) **sí crea tablas propias**: `donofrio_calidad_inspeccion`, `donofrio_calidad_linea`, `donofrio_calidad_punto`, `donofrio_temperatura`.
 
-No agrega columnas a las tablas de otros módulos: sus extensiones de modelos ajenos (por ejemplo `stock.lot`) no almacenan columnas nuevas en esta BD.
+Además agrega estas columnas a tablas de otros módulos:
+
+* `stock_location.control_temperatura` (boolean): Controlar temperatura.
+* `stock_location.temp_min` (double precision): Temperatura mínima (°C).
+* `stock_location.temp_max` (double precision): Temperatura máxima (°C).
+* `stock_lot.alerta_vencimiento_fecha` (timestamp): Alerta de vencimiento enviada.
 
 `donofrio_heladeros` (M2, Fase 2) **sí crea tablas propias**: `donofrio_liquidacion`, `donofrio_liquidacion_linea`. No agrega columnas a las tablas de otros módulos.
 
@@ -696,7 +702,7 @@ No agrega columnas a las tablas de otros módulos: sus extensiones de modelos aj
 
 ### Tabla 4.2.8-14. `stock_location`
 
-**Ubicaciones de inventario** · modelo `stock.location` · módulo `stock` · 21 columnas
+**Ubicaciones de inventario** · modelo `stock.location` · módulo `stock` · 24 columnas
 
 | Clave | Campo | Tipo | Tamaño | Nulo | Descripción |
 |---|---|---|---|---|---|
@@ -721,6 +727,9 @@ No agrega columnas a las tablas de otros módulos: sus extensiones de modelos aj
 |  | `create_date` | timestamp | 8 B | Sí | Creado el |
 |  | `write_date` | timestamp | 8 B | Sí | Última actualización el |
 | FK | `valuation_account_id` | integer | 4 B | Sí | Cuenta de valoración de existencias → `account_account` — Cuenta de gastos usada para reclasificar productos retirados del inventario y enviados a esta ubicación |
+|  | `control_temperatura` | boolean | 1 B | Sí | **[donofrio_calidad]** Controlar temperatura — Si está marcado, las lecturas de temperatura de esta ubicación se comparan con su rango. |
+|  | `temp_min` | double precision | 8 B | Sí | **[donofrio_calidad]** Temperatura mínima (°C) |
+|  | `temp_max` | double precision | 8 B | Sí | **[donofrio_calidad]** Temperatura máxima (°C) |
 
 ### Tabla 4.2.8-15. `stock_picking_type`
 
@@ -930,7 +939,7 @@ No agrega columnas a las tablas de otros módulos: sus extensiones de modelos aj
 
 ### Tabla 4.2.8-19. `stock_lot`
 
-**Número de serie/lote** · modelo `stock.lot` · módulo `stock` · 18 columnas
+**Número de serie/lote** · modelo `stock.lot` · módulo `stock` · 19 columnas
 
 | Clave | Campo | Tipo | Tamaño | Nulo | Descripción |
 |---|---|---|---|---|---|
@@ -952,6 +961,7 @@ No agrega columnas a las tablas de otros módulos: sus extensiones de modelos aj
 |  | `removal_date` | timestamp | 8 B | Sí | Fecha de remoción — Esta es la fecha en que los productos con este número de serie deben retirarse del inventario y dejar de contarse como existencias a la m… |
 |  | `alert_date` | timestamp | 8 B | Sí | Fecha de alerta — Fecha que determina la caducidad de los números de lote y serie con el filtro "Alertas de caducidad". |
 |  | `standard_price` | jsonb | variable | Sí | Costo — El valor del lote (calculado de forma automática con AVCO) Se utiliza para valorar el producto cuando se desconoce el costo de compra (po… |
+|  | `alerta_vencimiento_fecha` | timestamp | 8 B | Sí | **[donofrio_calidad]** Alerta de vencimiento enviada — Cuándo se avisó que el lote estaba por vencer; evita repetir la alerta del cron diario. |
 
 ### Tabla 4.2.8-20. `stock_quant`
 
@@ -1609,16 +1619,16 @@ No agrega columnas a las tablas de otros módulos: sus extensiones de modelos aj
 | Clave | Campo | Tipo | Tamaño | Nulo | Descripción |
 |---|---|---|---|---|---|
 | PK | `id` | integer | 4 B | No | ID |
-|  | `sequence` | integer | 4 B | Sí | Sequence |
+|  | `sequence` | integer | 4 B | Sí | Secuencia |
 | FK | `categ_id` | integer | 4 B | Sí | Categoría de producto → `product_category` — Si se deja vacío, el punto se mide en todos los productos. |
-| FK | `create_uid` | integer | 4 B | Sí | Created by → `res_users` |
-| FK | `write_uid` | integer | 4 B | Sí | Last Updated by → `res_users` |
+| FK | `create_uid` | integer | 4 B | Sí | Creado por → `res_users` |
+| FK | `write_uid` | integer | 4 B | Sí | Última actualización por → `res_users` |
 |  | `tipo` | varchar | variable | No | Tipo |
 |  | `unidad` | varchar | variable | Sí | Unidad — Por ejemplo: °C, g, %. |
 |  | `name` | jsonb | variable | No | Punto de control |
-|  | `active` | boolean | 1 B | Sí | Active |
-|  | `create_date` | timestamp | 8 B | Sí | Created on |
-|  | `write_date` | timestamp | 8 B | Sí | Last Updated on |
+|  | `active` | boolean | 1 B | Sí | Activo |
+|  | `create_date` | timestamp | 8 B | Sí | Creado el |
+|  | `write_date` | timestamp | 8 B | Sí | Última actualización el |
 |  | `valor_min` | double precision | 8 B | Sí | Mínimo |
 |  | `valor_max` | double precision | 8 B | Sí | Máximo |
 
@@ -1632,15 +1642,15 @@ No agrega columnas a las tablas de otros módulos: sus extensiones de modelos aj
 | FK | `production_id` | integer | 4 B | No | Orden de producción → `mrp_production` |
 | FK | `lot_id` | integer | 4 B | No | Lote → `stock_lot` |
 | FK | `product_id` | integer | 4 B | Sí | Producto → `product_product` |
-| FK | `company_id` | integer | 4 B | No | Company → `res_company` |
+| FK | `company_id` | integer | 4 B | No | Compañía → `res_company` |
 | FK | `inspector_id` | integer | 4 B | Sí | Inspector → `res_users` |
-| FK | `create_uid` | integer | 4 B | Sí | Created by → `res_users` |
-| FK | `write_uid` | integer | 4 B | Sí | Last Updated by → `res_users` |
+| FK | `create_uid` | integer | 4 B | Sí | Creado por → `res_users` |
+| FK | `write_uid` | integer | 4 B | Sí | Última actualización por → `res_users` |
 |  | `name` | varchar | variable | Sí | Número |
 |  | `state` | varchar | variable | No | Estado |
 |  | `motivo_rechazo` | text | variable | Sí | Motivo del rechazo |
-|  | `create_date` | timestamp | 8 B | Sí | Created on |
-|  | `write_date` | timestamp | 8 B | Sí | Last Updated on |
+|  | `create_date` | timestamp | 8 B | Sí | Creado el |
+|  | `write_date` | timestamp | 8 B | Sí | Última actualización el |
 
 ### Tabla 4.2.8-39. `donofrio_calidad_linea`
 
@@ -1651,14 +1661,14 @@ No agrega columnas a las tablas de otros módulos: sus extensiones de modelos aj
 | PK | `id` | integer | 4 B | No | ID |
 | FK | `inspeccion_id` | integer | 4 B | No | Inspeccion → `donofrio_calidad_inspeccion` |
 | FK | `punto_id` | integer | 4 B | No | Punto de control → `donofrio_calidad_punto` |
-|  | `sequence` | integer | 4 B | Sí | Sequence |
-| FK | `create_uid` | integer | 4 B | Sí | Created by → `res_users` |
-| FK | `write_uid` | integer | 4 B | Sí | Last Updated by → `res_users` |
+|  | `sequence` | integer | 4 B | Sí | Secuencia |
+| FK | `create_uid` | integer | 4 B | Sí | Creado por → `res_users` |
+| FK | `write_uid` | integer | 4 B | Sí | Última actualización por → `res_users` |
 |  | `resultado` | varchar | variable | Sí | Resultado |
 |  | `medido` | boolean | 1 B | Sí | Medido |
 |  | `cumple_manual` | boolean | 1 B | Sí | Cumple |
-|  | `create_date` | timestamp | 8 B | Sí | Created on |
-|  | `write_date` | timestamp | 8 B | Sí | Last Updated on |
+|  | `create_date` | timestamp | 8 B | Sí | Creado el |
+|  | `write_date` | timestamp | 8 B | Sí | Última actualización el |
 |  | `medicion` | double precision | 8 B | Sí | Medición |
 
 ## Heladeros (M2)
@@ -1708,3 +1718,24 @@ No agrega columnas a las tablas de otros módulos: sus extensiones de modelos aj
 |  | `devuelto` | double precision | 8 B | Sí | Devuelto |
 |  | `merma` | double precision | 8 B | Sí | Merma |
 |  | `vendido` | double precision | 8 B | Sí | Vendido |
+
+## Cadena de frío (M3)
+
+### Tabla 4.2.8-42. `donofrio_temperatura`
+
+**Lectura de temperatura** · modelo `donofrio.temperatura` · módulo `donofrio_calidad` · 12 columnas
+
+| Clave | Campo | Tipo | Tamaño | Nulo | Descripción |
+|---|---|---|---|---|---|
+| PK | `id` | integer | 4 B | No | ID |
+| FK | `location_id` | integer | 4 B | No | Ubicación → `stock_location` |
+| FK | `user_id` | integer | 4 B | No | Registrado por → `res_users` |
+| FK | `company_id` | integer | 4 B | Sí | Compañía → `res_company` — Deje vacío este campo si la ubicación se compartirá entre las empresas |
+| FK | `create_uid` | integer | 4 B | Sí | Creado por → `res_users` |
+| FK | `write_uid` | integer | 4 B | Sí | Última actualización por → `res_users` |
+|  | `observaciones` | text | variable | Sí | Observaciones |
+|  | `fuera_de_rango` | boolean | 1 B | Sí | Fuera de rango |
+|  | `fecha` | timestamp | 8 B | No | Fecha y hora |
+|  | `create_date` | timestamp | 8 B | Sí | Creado el |
+|  | `write_date` | timestamp | 8 B | Sí | Última actualización el |
+|  | `temperatura` | double precision | 8 B | No | Temperatura (°C) |

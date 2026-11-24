@@ -2,7 +2,7 @@
 
 > **Estado:** borrador del Sprint 3 · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [4.2.2](04_02_requerimientos_funcionales.md) (tabla 2), [casos de uso](04_02_casos_de_uso.md), [matriz de trazabilidad](trazabilidad.md), [04 §4.4 del plan](../plan/04_scrum_pmbok.md) (criterios de aceptación) y las pruebas de `addons/donofrio_base/tests/`
 >
-> Una ficha por RF, con el mismo formato. Los 14 RF de la **Fase 1** los 2 de **M1** (RF011 y RF012) y el de **M2** (RF004), desde el 24/11/2026, están *Implementados*; el de la **Fase 2** que falta (RF008) y la parte propia de RF013 están *Diseñado – trabajo futuro*: tienen caso de uso, wireframe, mockup y BPMN TO-BE, pero ningún código ni prueba. El estado es el real al 23/11/2026 y cambia si el Gate 0 aprueba algún módulo.
+> Una ficha por RF, con el mismo formato. Los 14 RF de la **Fase 1**, los 2 de **M1** (RF011 y RF012), el de **M2** (RF004) y el de **M3** (RF008), desde el 24/11/2026, están *Implementados*; solo la parte propia de RF013 (tablero OWL, M4) está *Diseñado – trabajo futuro*: tiene caso de uso, wireframe, mockup y BPMN TO-BE, pero ningún código ni prueba. El estado es el real al 23/11/2026 y cambia si el Gate 0 aprueba algún módulo.
 
 ## Resumen
 
@@ -15,7 +15,7 @@
 | [RF005](#rf005) | Gestionar almacenes y ubicaciones con cámaras de frío | F1 | HU-06 | Implementado |
 | [RF006](#rf006) | Controlar lotes con fecha de vencimiento y salida FEFO | F1 | HU-11 | Implementado |
 | [RF007](#rf007) | Recibir insumos y despachar pedidos | F1 | HU-12 | Implementado |
-| [RF008](#rf008) | Registrar temperaturas y alertar cuando están fuera de rango | F2 | HU-19 | Diseñado – trabajo futuro |
+| [RF008](#rf008) | Registrar temperaturas y alertar cuando están fuera de rango | F2 | HU-19 | Implementado (M3) |
 | [RF009](#rf009) | Mantener listas de materiales (recetas) y centros de trabajo | F1 | HU-07 | Implementado |
 | [RF010](#rf010) | Planificar y ejecutar órdenes de producción con lote | F1 | HU-14 | Implementado |
 | [RF011](#rf011) | Inspeccionar la calidad por puntos de control ligados a la OP y al lote | F2 | HU-17 | Implementado (M1) |
@@ -203,10 +203,11 @@
 | **Actores** | Jefe de Almacén (principal), Operario de cámara |
 | **Descripción** | Registrar la temperatura de cada cámara y avisar cuando sale del rango de su ubicación. |
 | **Criterios de aceptación** | Rango por ubicación; registro de temperaturas; si está fuera de rango se marca y se crea una actividad; *cron* de lotes por vencer; pruebas. |
-| **Reglas de negocio y limitaciones** | Congelación: −25 °C (producto terminado a −18 °C o menos); refrigerado: 2 a 6 °C (supuesto S5). En la Fase 1 las temperaturas se anotan fuera del sistema. |
+| **Reglas de negocio y limitaciones** | Congelación: −25 °C (producto terminado a −18 °C o menos); refrigerado: 2 a 6 °C (supuesto S5). Los rangos cargados son de −30 a −18 °C (congelación) y de 2 a 6 °C (refrigerados). Las lecturas se registran a mano y la alerta es una actividad para el jefe de almacén; no se bloquean lotes. |
 | **Diseño disponible** | `docs/diagramas/pantallas/mk_cu006_temperaturas.png` |
-| **Lo que falta** | Sin código ni pruebas propias. |
-| **Estado** | **Diseñado – trabajo futuro** |
+| **Implementación y evidencia** | `addons/donofrio_calidad` ([5.5d](05_05_modulo_donofrio_frio.md)); `tests/test_frio.py` (29 pruebas); `docs/capturas/sprint-4/HU-19_*` |
+| **Lo que falta** | Nada de lo diseñado para M3. Límites: sin sensores, sin alerta por lecturas que faltan, y el cron de lotes por vencer convive con la alerta estándar de `product_expiry`. |
+| **Estado** | **Implementado** (M3, 24/11/2026) |
 
 ## RF009
 

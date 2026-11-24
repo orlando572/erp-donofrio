@@ -6,3 +6,6 @@ access_inspeccion_inspector,calidad.inspeccion inspector,model_donofrio_calidad_
 access_inspeccion_jefe,calidad.inspeccion jefe,model_donofrio_calidad_inspeccion,group_calidad_jefe,1,1,1,1
 access_linea_stock,calidad.linea stock,model_donofrio_calidad_linea,stock.group_stock_user,1,0,0,0
 access_linea_inspector,calidad.linea inspector,model_donofrio_calidad_linea,group_calidad_inspector,1,1,1,1
+access_temperatura_stock,temperatura stock,model_donofrio_temperatura,stock.group_stock_user,1,1,1,0
+access_temperatura_jefe_almacen,temperatura jefe de almacen,model_donofrio_temperatura,stock.group_stock_manager,1,1,1,1
+access_temperatura_lectura,temperatura lectura,model_donofrio_temperatura,base.group_user,1,0,0,0

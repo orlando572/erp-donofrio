@@ -111,10 +111,101 @@
         <field name="view_mode">list</field>
     </record>
 
+    <!-- HU-19: cadena de frío (RF008, CU006) -->
+    <record id="view_stock_location_form_temperatura" model="ir.ui.view">
+        <field name="name">stock.location.form.temperatura</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='removal_strategy_id']/parent::group" position="after">
+                <group string="Cadena de frío" name="cadena_frio" invisible="usage != 'internal'">
+                    <field name="control_temperatura"/>
+                    <field name="temp_min" invisible="not control_temperatura"/>
+                    <field name="temp_max" invisible="not control_temperatura"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_temperatura_list" model="ir.ui.view">
+        <field name="name">donofrio.temperatura.list</field>
+        <field name="model">donofrio.temperatura</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="fuera_de_rango">
+                <field name="fecha"/>
+                <field name="location_id"/>
+                <field name="temperatura"/>
+                <field name="rango"/>
+                <field name="fuera_de_rango" widget="boolean"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_temperatura_form" model="ir.ui.view">
+        <field name="name">donofrio.temperatura.form</field>
+        <field name="model">donofrio.temperatura</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget name="web_ribbon" title="Fuera de rango" bg_color="text-bg-danger" invisible="not fuera_de_rango"/>
+                    <group>
+                        <group>
+                            <field name="location_id" options="{'no_create': True}"/>
+                            <field name="temperatura"/>
+                            <field name="rango"/>
+                            <field name="fuera_de_rango"/>
+                        </group>
+                        <group>
+                            <field name="fecha"/>
+                            <field name="user_id" readonly="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <field name="observaciones" placeholder="Observaciones (opcional)"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_temperatura_search" model="ir.ui.view">
+        <field name="name">donofrio.temperatura.search</field>
+        <field name="model">donofrio.temperatura</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="location_id"/>
+                <field name="user_id"/>
+                <filter name="fuera_de_rango" string="Fuera de rango" domain="[('fuera_de_rango', '=', True)]"/>
+                <filter name="en_rango" string="En rango" domain="[('fuera_de_rango', '=', False)]"/>
+                <separator/>
+                <filter name="hoy" string="Hoy" domain="[('fecha', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:00'))]"/>
+                <filter name="fecha" string="Fecha" date="fecha"/>
+                <group>
+                    <filter name="por_ubicacion" string="Ubicación" context="{'group_by': 'location_id'}"/>
+                    <filter name="por_dia" string="Día" context="{'group_by': 'fecha:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_temperatura" model="ir.actions.act_window">
+        <field name="name">Lecturas de temperatura</field>
+        <field name="res_model">donofrio.temperatura</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Registre la primera lectura de temperatura</p>
+            <p>Si la lectura sale del rango de la ubicación, se marca y el jefe de almacén recibe una actividad.</p>
+        </field>
+    </record>
+
     <menuitem id="menu_calidad_root" name="Calidad" sequence="45"
               groups="group_calidad_inspector,stock.group_stock_user"/>
     <menuitem id="menu_calidad_inspecciones" name="Inspecciones" parent="menu_calidad_root"
               action="action_calidad_inspeccion" sequence="10"/>
     <menuitem id="menu_calidad_puntos" name="Puntos de control" parent="menu_calidad_root"
               action="action_calidad_punto" sequence="20" groups="group_calidad_jefe"/>
+    <menuitem id="menu_calidad_frio" name="Cadena de frío" parent="menu_calidad_root" sequence="30"/>
+    <menuitem id="menu_calidad_temperaturas" name="Lecturas de temperatura" parent="menu_calidad_frio"
+              action="action_temperatura" sequence="10"/>
 </odoo>
