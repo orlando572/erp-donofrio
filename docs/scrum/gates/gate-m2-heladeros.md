@@ -22,7 +22,7 @@
 | Actualización (`-u`) sin errores sobre una base con datos | **Cumple** | Instalado y actualizado varias veces sobre la base `donofrio`, sin errores ni avisos |
 | Criterios verificados en la pantalla | **Cumple, salvo la vista móvil** | Crear, despachar, confirmar con pedido, error de cantidades, precio con tres decimales, botón «Imprimir» y PDF. **La vista móvil no se pudo probar** (ver sección 3) |
 | Capturas | **Cumple** | [`docs/capturas/sprint-4/`](../../capturas/sprint-4/): 5 de HU-20 y 2 de HU-21 (JPG, resolución reducida) |
-| Checklist de la épica #145 | **Pendiente** | Se marca al fusionar el PR de cierre, que lo cierra con `Closes #145` |
+| Checklist de la épica #145 | **Parcial** | HU-20 y HU-21 enlazadas a su PR; queda sin marcar el criterio «vista móvil usable» de HU-21, así que la épica sigue abierta |
 | Sección del informe | **Cumple** | [5.5c](../../informe/05_05_modulo_donofrio_heladeros.md); RF004 en 4.2.2 y 10.1; CU004; 4.4; 4.2.5 |
 | ER y diccionario extraídos de nuevo | **Cumple** | `diagrama_er.py` y `diccionario_datos.py` con el área «Heladeros (M2)»: 41 tablas, 96 relaciones, Tablas 4.2.8-40 y 4.2.8-41 |
 | **Tag de release de M2** | **Falta** | Lo crea Orlando desde `main`, con M1 |
