@@ -40,7 +40,7 @@
 | Vista en celular | Equipo | No se probó |
 | Pruebas de JavaScript | Equipo | No existen; el componente OWL se verificó a mano |
 | Un usuario sin permiso de ventas ve un error si abre el tablero por su dirección | Equipo | El menú no se le muestra; es el comportamiento de los permisos de Odoo |
-| Marca en las demás pantallas | Evelyn | Se vio la barra y los botones; no se recorrió todo Odoo con el nuevo color |
+| Marca: inicio de sesión y otras pantallas | Equipo | Se revisaron Ventas, Inventario, Fabricación y el tablero (bien). **El inicio de sesión sigue en morado de Odoo** (es frontend) y las ilustraciones de «sin datos» también; no se revisaron los PDF, el punto de venta ni las demás aplicaciones (5.5e.4 y 5.5e.8) |
 | Capturas en PNG y a mayor resolución | Evelyn | Las actuales son JPG a escala reducida |
 | Otros textos que aún dicen «M4 futuro» | Informe final | Resumen (01), conclusiones (07), recomendaciones (08) y el diagrama de clases de la Fase 2, como con M1 a M3 ([acuerdo del 23/11](decisiones-2026-11-23.md)) |
 

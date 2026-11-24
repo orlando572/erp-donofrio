@@ -46,6 +46,8 @@ El gráfico y la tabla por canal siguen el mismo filtro. Los datos salen de `don
 
 Las variables van antes de las de Odoo (que usan `!default`).
 
+**Revisión en pantalla (24/11/2026, Gerente General):** se recorrieron Ventas (lista y formulario de un pedido), Inventario (traslados), Fabricación (órdenes) y el tablero. En todas, la barra superior es amarilla con texto oscuro legible, los botones primarios y los enlaces son marrón con texto blanco, y no hay texto ilegible. Capturas `HU-24_marca_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/). **No se revisaron** los informes PDF (usan el color de la compañía, `#C77D00`, de `donofrio_base`), el punto de venta ni el resto de aplicaciones de Odoo.
+
 ## 5.5e.5 Permisos
 
 El tablero **no tiene ACL propios**: es un modelo abstracto sin tabla y lee con los permisos de quien lo abre. El menú se muestra a quien tiene el grupo de ventas con todos los leads o el de gerencia de ventas (el Gerente General de prueba entra por el primero). Si un usuario sin permiso de ventas abre la acción por su dirección, Odoo le da «Error de acceso» por los pedidos de venta (se vio con el Inspector de Calidad). Las tarjetas de los módulos opcionales se ocultan cuando el usuario no puede leer su modelo.
@@ -74,6 +76,6 @@ La primera vez, el tablero se abrió con el Inspector de Calidad y falló con «
 - **El filtro de almacén no aplica a las liquidaciones pendientes** (la liquidación no tiene almacén); las demás tarjetas sí. En Lotes aprobados el almacén es el de la orden de producción.
 - **Valor del stock por vencer:** cantidad × costo estándar del producto; no usa la valoración FIFO de contabilidad.
 - **Los títulos del gráfico y los meses** están en español en el código (sin traducciones `.po`).
-- **Marca:** se verificó la barra superior y los botones (por ejemplo el del diálogo); no se revisaron todas las pantallas de Odoo con el nuevo color. En la pestaña de pruebas el icono lo reemplaza la extensión del navegador, así que el favicon se verificó en el HTML de la página y en la respuesta del archivo.
+- **Marca:** el color nuevo se aplica al backend (barra, botones y enlaces); se revisaron 4 aplicaciones, no todas (ver 5.5e.4). **La pantalla de inicio de sesión sigue en morado de Odoo:** es una página pública (`web.assets_frontend`) con su propio color primario y el cambio de variables del backend no la alcanza ([`HU-24_limite_login_morado.jpg`](../capturas/sprint-4/HU-24_limite_login_morado.jpg)); tampoco cambian las ilustraciones de «sin datos» de Odoo, que son imágenes con su color. Se probó definir `$o-community-color` y no cambió el inicio de sesión, así que se descartó. En la pestaña de pruebas el icono lo reemplaza la extensión del navegador, así que el favicon se verificó en el HTML de la página y en la respuesta del archivo.
 - **Un usuario sin permiso de ventas** que abra la acción por su dirección recibe un error de acceso, no un tablero reducido.
 - **Datos de prueba:** las cifras de las capturas salen de la base de desarrollo, con las transacciones de demostración (supuesto S2) y las inspecciones que se crearon a mano para M1.
