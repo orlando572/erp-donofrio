@@ -37,6 +37,11 @@ class CalidadInspeccion(models.Model):
                 vals['name'] = self.env['ir.sequence'].next_by_code('donofrio.calidad.inspeccion') or '/'
         return super().create(vals_list)
 
+    def _creation_message(self):
+        """Mensaje de creación del historial; el estándar sale en inglés si la inspección la crea un script sin idioma."""
+        self.ensure_one()
+        return self.env._('Inspección %s creada', self.name)
+
     def _generar_lineas(self):
         """Crea una línea por cada punto de control que aplica al producto del lote."""
         Punto = self.env['donofrio.calidad.punto']
