@@ -4,7 +4,7 @@
 >
 > **Qué es y qué no es.** Este archivo **solo verifica** cada criterio con su estado real y un enlace a su evidencia. **No es** el informe del Gate 0, **no recomienda** módulos de la Fase 2 y **no empieza ninguno**: esa decisión es del equipo, con confirmación explícita de Evelyn u Orlando en el chat ([`CLAUDE.md`](../../../CLAUDE.md)). Tampoco crea el tag `v1.0.0` ni fusiona `develop` en `main`: se hacen con confirmación aparte.
 >
-> **Corte de los datos:** 23/11/2026, `develop` en `5e1fcb2` (PR #206). Salen de `gh` y `git` en solo lectura y de los archivos del repositorio; cada número se puede volver a medir con el comando que se indica. Los PR de informe que Evelyn y Orlando tienen **abiertos** al cortar (#207 a #215) se cuentan como «borrador en un PR abierto», no como parte de `develop`.
+> **Corte de los datos:** 23/11/2026, `develop` en `6bca5c7` (PR #212; actualizado después de fusionar los PR de informe de Evelyn #207, #208, #210, #211, #212, #214 y #215). Salen de `gh` y `git` en solo lectura y de los archivos del repositorio; cada número se puede volver a medir con el comando que se indica. Los PR de Orlando que siguen **abiertos** (#209, #213 y este) se cuentan como «borrador en un PR abierto», no como parte de `develop`.
 
 ## Resumen: los cinco criterios
 
@@ -13,7 +13,7 @@
 | 1 | Todas las HU de la F1 en «Hecho»; CI en verde en `main`; tag `v1.0.0` | **Parcial** | 24 de 25 HU (81 de 83 puntos) en `develop` con CI en verde; **HU-30 diferida**. **`main` no tiene ninguna HU** (84 commits detrás), **nunca corrió el CI** y **no hay tag ni release** |
 | 2 | Video corto de la demo de punta a punta | **No cumplido: diferido** | Diferido por decisión del equipo (23/11/2026) al final, después del S4. Hay evidencia alternativa por flujo (pruebas y capturas) |
 | 3 | Evidencias de réplica, respaldos, seguridad, pruebas y despliegue | **Cumple, con el SUS diferido** | Todas existen y están fechadas en `docs/capturas/sprint-3/`; faltan las pruebas de usabilidad (HU-30) y el despliegue **publicado** (release, GHCR) |
-| 4 | Informe con las secciones 1 a 10 en borrador completo (F1) y los dos manuales | **Parcial** | De 49 filas de la Tabla 3: 13 completas, 34 en borrador (12 de ellas en un PR abierto) y 2 que faltan (portada, historial e índices, y el PDF final: del Cierre). Manuales en borrador |
+| 4 | Informe con las secciones 1 a 10 en borrador completo (F1) y los dos manuales | **Parcial** | De 49 filas de la Tabla 3: 13 completas, 34 en borrador (5 de ellas en el PR #209, abierto) y 2 que faltan (portada, historial e índices, y el PDF final: del Cierre). Manuales en borrador |
 | 5 | GitHub Project al día | **Parcial** | Checklists de #133 a #140 y #142 marcadas; #141 abierta por HU-30; tarjetas de #141, #142 y #143 en «Backlog»; iteraciones en fechas planificadas |
 
 > Nota: el reparto del criterio 4 sale de la Tabla 3 de este archivo; si Evelyn reclasifica una sección, hay que cambiar solo esa fila.
@@ -66,7 +66,7 @@ La Fase 1 son 25 HU y **83 puntos** (S1: 24, S2: 30, S3: 29). «Hecho» según l
 | Historial de `develop` por *push* | 53 corridas: **44 correctas, 9 canceladas** (las reemplazó una corrida más nueva del mismo grupo de concurrencia) y **0 en rojo** | `gh run list --limit 400` |
 | Todo el CI del repositorio | 137 corridas: 117 correctas, 13 canceladas, 2 en rojo (los dos intentos del PR #189, corregidos en el mismo PR) y 4 en curso al cortar. La corrida programada semanal: 1, correcta (`45279340817`) | ídem |
 | Pruebas | 136 pruebas de `donofrio_base` sin errores (`scripts/test.sh`); `scripts/check_legacy.sh`: «sin patrones legacy» (corrido hoy) | [`S3-informe6_evidencia_tests.txt`](../../capturas/sprint-3/S3-informe6_evidencia_tests.txt) |
-| Los 9 PR abiertos al cortar | #207 a #215: sus checks `lint`, `backup`, `proxy` y `replica` pasan; `test` pasa en los que ya terminaron | `gh pr checks <n>` |
+| Los 7 PR de Evelyn (#207, #208, #210, #211, #212, #214 y #215) | **Fusionados** en `develop` el 23/11/2026 con *squash* y aprobación de Orlando; antes de fusionar: sus checks `lint`, `backup`, `proxy` y `replica` pasan; `test` pasa en los que ya terminaron | `gh pr checks <n>` |
 
 ### 1.3 `main` y el tag `v1.0.0`
 
@@ -83,7 +83,7 @@ La Fase 1 son 25 HU y **83 puntos** (S1: 24, S2: 30, S3: 29). «Hecho» según l
 
 **Qué falta para crear `v1.0.0`** (según [`docs/dev/release.md`](../../dev/release.md) y la protección de `main`). **Nada de esto se hizo aquí** y se ejecuta **con confirmación aparte** de Evelyn u Orlando en el chat:
 
-1. Fusionar en `develop` los PR de documentación que quedan abiertos (#207 a #215), o decidir cuáles entran en la release; así el zip lleva el informe al día.
+1. Fusionar en `develop` los PR de Orlando que quedan abiertos (#209, #213 y #216, que necesitan la aprobación de Evelyn); así el zip lleva el informe al día.
 2. Que Evelyn termine `gate-0-fase1.md` y el equipo tome la decisión del gate (comentario en #143).
 3. Abrir el PR **`develop` → `main`** con la plantilla de PR, la aprobación del otro integrante y las conversaciones resueltas, y fusionarlo con **merge commit** (no *squash*). El repositorio lo permite (`allow_merge_commit = true`).
 4. Esperar el CI de `main` (se dispara con el *push*) y comprobar que los cinco jobs pasen. Después, poner `lint` y `test` como checks obligatorios en `main` (6.4 lo deja anotado).
@@ -140,31 +140,31 @@ Resumen de los 13 RNF al cierre del S3 (de [4.2.3](../../informe/04_02_requerimi
 - **Borrador:** hay contenido real de la F1, pero con pendientes propios (marcas, capturas, partes del otro integrante o de la F2) **o** está en un PR abierto.
 - **Falta:** no hay archivo en `develop` ni en un PR abierto.
 
-**Tabla 3. Estado de cada sección** (según `develop` en `5e1fcb2` y los PR abiertos #207 a #215)
+**Tabla 3. Estado de cada sección** (según `develop` en `6bca5c7` y el PR abierto #209)
 
 | Sección | Archivo | Dueño | Estado | Observación |
 |---|---|---|---|---|
 | Portada, historial de revisiones e índices | Word (no hay archivo) | E | **Falta** | Se hacen en Word en el Cierre |
 | 1. Resumen | `01_resumen.md` | E | Borrador | PR #205 fusionado |
 | 2. Abstract | `02_abstract.md` | O | Borrador | Revisar contra el Resumen de Evelyn |
-| 3.1 a 3.7 Aspectos generales | `03_aspectos_generales.md` | E | Borrador | 17 marcas «[cita]»; el PR #212 las resuelve (abierto) |
+| 3.1 a 3.7 Aspectos generales | `03_aspectos_generales.md` | E | Borrador | Marcas «[cita]» resueltas en #212 (fusionado) |
 | 4.1.1 Análisis de sistemas | `04_01_analisis_sistemas.md` | E | Borrador | Los puntos de la F2 «Pendiente: M1/M2/M3» dependen del Gate 0 |
 | 4.1.2 BPMN AS-IS y TO-BE | `04_01_analisis_sistemas.md`, `docs/diagramas/bpmn/` | E+O | Borrador | 5 AS-IS y 7 TO-BE hechos |
-| 4.1.3 Arquitectura empresarial | `04_01_arquitectura_empresarial.md` | O | Borrador | 1 marca «[cita]» (#212 abierto) |
-| 4.1.4 Oportunidades de innovación | `04_01_04_oportunidades_innovacion.md` | E | Borrador (PR [#207](https://github.com/orlando572/erp-donofrio/pull/207) abierto) | |
+| 4.1.3 Arquitectura empresarial | `04_01_arquitectura_empresarial.md` | O | Borrador | Marca «[cita]» resuelta en #212 (fusionado) |
+| 4.1.4 Oportunidades de innovación | `04_01_04_oportunidades_innovacion.md` | E | Borrador (fusionado en [#207](https://github.com/orlando572/erp-donofrio/pull/207)) | |
 | 4.2.1 y 4.2.2 Gestión de RF | `04_02_requerimientos_funcionales.md` | E | Borrador | Estados de RF del cierre del S1 |
-| 4.2.3 RNF | `04_02_requerimientos_no_funcionales.md` | O | Borrador (PR [#209](https://github.com/orlando572/erp-donofrio/pull/209) abierto) | En `develop` sigue el estado del S1; #209 lo pone al día. El #212 también toca este archivo: posible conflicto |
+| 4.2.3 RNF | `04_02_requerimientos_no_funcionales.md` | O | Borrador (PR [#209](https://github.com/orlando572/erp-donofrio/pull/209) abierto) | En `develop` sigue el estado del S1; #209 lo pone al día (el conflicto con #212 ya está resuelto en la rama de #209) |
 | 4.2.4 Casos de uso | `04_02_casos_de_uso.md` | E+O | Borrador | |
 | 4.2.5 a 4.2.8 Clases, ER, lógico y diccionario | `04_02_modelo_de_datos.md`, `04_02_diccionario_datos.md` | O | **Completa** | PR #197 |
 | 4.2.9 Calendarización | `04_02_calendarizacion.md` | E | Borrador | Falta la captura del Roadmap como ilustración 6 |
-| 4.2.10 a 4.2.12 Roles, artefactos y eventos | `04_02_10_a_12_scrum.md` | E | Borrador (PR [#208](https://github.com/orlando572/erp-donofrio/pull/208) abierto) | |
+| 4.2.10 a 4.2.12 Roles, artefactos y eventos | `04_02_10_a_12_scrum.md` | E | Borrador (fusionado en [#208](https://github.com/orlando572/erp-donofrio/pull/208)) | |
 | 4.3.1 a 4.3.3 y 4.3.7 | `04_03_infraestructura.md` | O | **Completa** | PR #198 y anteriores |
-| 4.3.4 IDEs y lenguajes; 4.3.9 gestión de proyectos | `04_03_04_ides_y_gestion_proyectos.md` | E | Borrador (PR [#210](https://github.com/orlando572/erp-donofrio/pull/210) abierto) | |
+| 4.3.4 IDEs y lenguajes; 4.3.9 gestión de proyectos | `04_03_04_ides_y_gestion_proyectos.md` | E | Borrador (fusionado en [#210](https://github.com/orlando572/erp-donofrio/pull/210)) | |
 | 4.3.5 Librerías y dependencias | `05_01_a_05_06_backend.md` (5.2 a 5.4) | O | **Completa** | |
 | 4.3.6 Controles de versionamiento y 4.3.8 Plataformas cloud | `04_03_infraestructura.md` | O | Borrador (PR #209 abierto) | |
 | 4.4.1 y 4.4.2 Wireframes y mockups | `04_04_prototipos.md` | E | Borrador | Pendiente: reemplazar mockups por pantallas reales |
 | 4.5.1 Plan de gestión de riesgos | `docs/pm/plan_riesgos.md` | E | Borrador | Redactado por Orlando en el S0; Evelyn debe revisarlo |
-| 4.5.2 Riesgos de desarrollo | `04_05_02_riesgos_desarrollo.md` | E | Borrador (PR [#211](https://github.com/orlando572/erp-donofrio/pull/211) abierto) | |
+| 4.5.2 Riesgos de desarrollo | `04_05_02_riesgos_desarrollo.md` | E | Borrador (fusionado en [#211](https://github.com/orlando572/erp-donofrio/pull/211)) | |
 | 4.5.3 y 4.5.4 Riesgos de despliegue y mantenimiento | `04_05_riesgos_despliegue_y_mantenimiento.md` | O | Borrador (PR #209 abierto) | Con niveles propuestos para validar |
 | 4.6.1 a 4.6.3 Buenas prácticas, prototipos web y reportes | `04_06_prototipos_web_y_reportes.md` | E | Borrador | Pendiente: tres navegadores y móvil (RNF001) |
 | 4.6.4 WPO | `04_06_wpo.md` | E | **Completa** | Backend en 59 declarado como limitación |
@@ -183,10 +183,10 @@ Resumen de los 13 RNF al cierre del S3 (de [4.2.3](../../informe/04_02_requerimi
 | 6.12 Pruebas de usabilidad | `06_12_usabilidad.md` | E | Borrador | Sin las 5 personas: diferido |
 | 6.13 Pruebas de seguridad | `06_09_a_06_13_pruebas.md` | O | **Completa** | |
 | 7. Conclusiones | `07_conclusiones.md` | E+O | Borrador | Provisional: se reescribe tras el Gate 0 y HU-30 |
-| 8.1 Recomendaciones de negocio | `08_01_recomendaciones_negocio.md` | E | Borrador (PR [#215](https://github.com/orlando572/erp-donofrio/pull/215) abierto) | Va en un archivo aparte del de 8.2 |
-| 8.2 Recomendaciones técnicas | `08_recomendaciones.md` | O | Borrador (PR #209 abierto) | Con la 8.1 reservada en el mismo archivo |
-| 9. Referencias (APA 7) | `09_referencias.md` | E | Borrador (PR [#212](https://github.com/orlando572/erp-donofrio/pull/212) abierto) | No existe en `develop` |
-| 10.1 Fichas de RF | `anexo_10_01_fichas_rf.md` | E | Borrador (PR [#214](https://github.com/orlando572/erp-donofrio/pull/214) abierto) | |
+| 8.1 Recomendaciones de negocio | `08_01_recomendaciones_negocio.md` | E | Borrador (fusionado en [#215](https://github.com/orlando572/erp-donofrio/pull/215)) | Va en un archivo aparte del de 8.2 |
+| 8.2 Recomendaciones técnicas | `08_recomendaciones.md` | O | Borrador (PR #209 abierto) | La 8.1 de Evelyn está aparte, en `08_01_recomendaciones_negocio.md` (#215, fusionado) |
+| 9. Referencias (APA 7) | `09_referencias.md` | E | Borrador (fusionado en [#212](https://github.com/orlando572/erp-donofrio/pull/212)) | No existe en `develop` |
+| 10.1 Fichas de RF | `anexo_10_01_fichas_rf.md` | E | Borrador (fusionado en [#214](https://github.com/orlando572/erp-donofrio/pull/214)) | |
 | 10.2 Fichas de RNF | `anexo_10_02_fichas_rnf.md` | O | Borrador (PR #209 abierto) | |
 | 10.3 Solicitud de servicio y 10.5 Incidente | `anexo_10_03_solicitud_servicio.md`, `anexo_10_05_incidente.md` | E | Borrador | PR #203 |
 | 10.4 RFC | `anexo_10_04_rfc.md` | O | **Completa** | PR #200 |
@@ -196,7 +196,7 @@ Resumen de los 13 RNF al cierre del S3 (de [4.2.3](../../informe/04_02_requerimi
 
 **Los dos manuales** (entregables b y c del lineamiento): [`manual_instalacion.md`](../../manuales/manual_instalacion.md) y [`manual_herramientas.md`](../../manuales/manual_herramientas.md), ambos de Orlando, en **borrador** (PR #202, fusionado); se completan con capturas y se exportan a PDF en el Cierre. El criterio pide «en borrador»: **cumple**.
 
-**Resultado:** el informe tiene **contenido de la Fase 1 en todas las secciones 1 a 10 si se cuentan los PR abiertos**; en `develop` hoy **faltan** los archivos de 4.1.4, 4.2.10 a 4.2.12, 4.3.4 y 4.3.9, 4.5.2 a 4.5.4, 8 completo, 9 y 10.1 y 10.2 (todos tienen PR abierto: #207 a #215). Sin los PR abiertos, el criterio **no** se cumple; con ellos fusionados, **sí** (como borrador), salvo portada, historial, índices y el PDF, que son del Cierre.
+**Resultado:** el informe tiene **contenido de la Fase 1 en todas las secciones 1 a 10** en `develop`, salvo las de Orlando que están en el PR #209 (4.2.3 actualizada, 4.3.6 y 4.3.8, 4.5.3 y 4.5.4, 8.2 y 10.2), que **siguen abiertas**. Con #209 fusionado, el criterio **se cumple como borrador**, salvo portada, historial, índices y el PDF, que son del Cierre.
 
 ---
 
@@ -247,7 +247,7 @@ Además, **límites que no son desviaciones sino limitaciones declaradas** y que
 
 **Orlando**
 
-- Pedir la aprobación de Evelyn a #209 (informe) y #213 (Retro, Daily y Review) y revisar los PR de Evelyn #207, #208, #210, #211, #212, #214 y #215.
+- Pedir la aprobación de Evelyn a #209 (informe) y #213 (Retro, Daily y Review) y (los PR de Evelyn #207, #208, #210, #211, #212, #214 y #215 ya están revisados y fusionados).
 - Cerrar #132 cuando #213 esté fusionado.
 - Mantener el seguimiento de los riesgos de despliegue y mantenimiento en #131 una vez que Evelyn valide los niveles propuestos.
 - **Con confirmación aparte:** PR `develop` → `main`, tag `v1.0.0`, comprobar la Release y el paquete (puntos 3 a 7 del Criterio 1.3).
