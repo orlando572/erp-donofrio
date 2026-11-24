@@ -62,4 +62,4 @@ Alternativa: iniciar la landing HU-31 (3 pts, Evelyn) si el equipo quiere el opc
 
 La decisión se registra con un comentario en el issue #147 y con el mensaje explícito de Evelyn u Orlando en el chat de Claude, **que es lo que activa el trabajo**. Ningún archivo lo reemplaza.
 
-**Estado de la decisión:** pendiente. No se ha iniciado ningún opcional.
+**Decisión de Evelyn en el chat (24/11/2026):** no iniciar ningún opcional, conforme a la recomendación de este mini gate. HU-31, Uptime Kuma, la VM en la nube y el modo oscuro quedan como trabajo futuro. **Falta** el comentario con esta decisión en #147 y la respuesta de Orlando; no se ha iniciado ningún opcional.
