@@ -108,7 +108,7 @@ class LiquidacionLinea(models.Model):
     devuelto = fields.Float('Devuelto', default=0.0)
     merma = fields.Float('Merma', default=0.0)
     vendido = fields.Float('Vendido', compute='_compute_vendido', store=True)
-    precio_unitario = fields.Float('Precio', compute='_compute_precio', store=True)
+    precio_unitario = fields.Float('Precio', compute='_compute_precio', store=True, digits=(16, 3))
     importe = fields.Monetary('Importe', compute='_compute_importe', store=True)
     currency_id = fields.Many2one(related='liquidacion_id.currency_id')
 
