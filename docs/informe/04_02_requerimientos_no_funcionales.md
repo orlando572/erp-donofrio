@@ -6,7 +6,7 @@
 
 ## Cómo se clasifican y se verifican
 
-- **Clasificación:** cada RNF se asigna a una característica del modelo de calidad **ISO/IEC 25010:2023 [cita]**, que tiene nueve: adecuación funcional, eficiencia de desempeño, compatibilidad, capacidad de interacción, fiabilidad, seguridad, mantenibilidad, flexibilidad (antes portabilidad) y protección (*safety*). Ninguno de los RNF de este proyecto cae en *compatibilidad* ni en *protección*.
+- **Clasificación:** cada RNF se asigna a una característica del modelo de calidad **ISO/IEC 25010:2023** (ISO/IEC, 2023), que tiene nueve: adecuación funcional, eficiencia de desempeño, compatibilidad, capacidad de interacción, fiabilidad, seguridad, mantenibilidad, flexibilidad (antes portabilidad) y protección (*safety*). Ninguno de los RNF de este proyecto cae en *compatibilidad* ni en *protección*.
 - **Verificación:** cada RNF tiene una métrica y una prueba concreta. Las pruebas automáticas viven en `addons/donofrio_base/tests/` y corren en el CI en cada PR; las no funcionales (k6, ZAP, Lighthouse, SUS, restauración cronometrada) se ejecutan en el Sprint 3 y sus resultados van a la sección 5.14.
 - **Trazabilidad:** RNF → HU → épica (issue) → prueba, como en [4.2.1](04_02_requerimientos_funcionales.md).
 
@@ -14,7 +14,7 @@
 
 **Estado** al cierre del Sprint 1: *Implementado* (hecho y probado), *Parcial* (una parte ya está en `develop`) o *Planificado* (con su sprint).
 
-| Área | ID | Requerimiento no funcional | Característica 25010:2023 **[cita]** | Métrica o prueba | HU · sprint | Estado |
+| Área | ID | Requerimiento no funcional | Característica 25010:2023 (ISO/IEC, 2023) | Métrica o prueba | HU · sprint | Estado |
 |---|---|---|---|---|---|---|
 | **Marketing y Ventas** | RNF001 | Portabilidad: navegadores Chrome, Firefox y Edge; responsive en móvil (pedidos y PdV; liquidación si hay F2) | Flexibilidad (adaptabilidad) | Prueba manual en 3 navegadores y en vista móvil | HU-09, HU-10 · S2-S3 | Planificado |
 | | RNF002 | Rendimiento: p95 < 2 s en listas y formularios con 20 usuarios concurrentes | Eficiencia de desempeño (comportamiento temporal) | k6 con 20 usuarios virtuales | HU-28 · S3 | Planificado |

@@ -2,7 +2,7 @@
 
 > **Estado:** borrador del Sprint 1 · **Autora:** Evelyn (PO) · **Fuentes:** [01_alcance_escenario.md](../plan/01_alcance_escenario.md), [03_modulos_odoo.md](../plan/03_modulos_odoo.md) · **Revisa:** Orlando
 >
-> Leyenda de evidencia, igual que en el plan: **[V]** verificado con fuente · **[P]** reportado por una sola fuente o sin fecha clara · **[S]** supuesto académico. Todo lo marcado **[cita]** necesita su referencia APA 7 en la sección 9 antes del informe final (ver la lista al final de este archivo).
+> Leyenda de evidencia, igual que en el plan: **[V]** verificado con fuente · **[P]** reportado por una sola fuente o sin fecha clara · **[S]** supuesto académico. Las fuentes se citan en formato APA 7 y se listan en la [sección 9](09_referencias.md).
 >
 > Aviso: proyecto académico, no afiliado a Nestlé ni a D'Onofrio. Los datos de personas, clientes, precios y cifras operativas son ficticios (supuesto S2).
 
@@ -31,16 +31,16 @@
 
 | Dato | Estado | Fuente |
 |---|---|---|
-| Fundada en 1897 por Pedro (Pietro) D'Onofrio, inmigrante italiano; empezó vendiendo helados en carretilla | [V] | Wikipedia «D'Onofrio (brand)»; Infomercado (2023); Mercado Negro (2026) **[cita]** |
-| En 1919 los carritos se pintan de amarillo, color que se mantiene | [V] | Wikipedia **[cita]** |
-| Fábrica de chocolates desde 1924 (Jr. Cotabambas) | [V] | Gestión; Peru Retail **[cita]** |
-| La fórmula del panetón llega de Italia en 1950 | [V] | Gestión; Peru Retail **[cita]** |
-| En los años 50 la planta pasa a la Av. Venezuela (unos 36 000 m²) | [V] | Gestión; Peru Retail **[cita]** |
-| Nestlé la compra en 1997 y mantiene la operación en la Av. Venezuela | [V] | Wikipedia; Peru Retail **[cita]** |
-| Según El Popular (2022), más de 6 000 heladeros y unos 400 helados por triciclo al día | [P] | El Popular (31/07/2022) **[cita]** |
-| Según el CMA citado en LinkedIn (2024), el panetón D'Onofrio tiene cerca del 30 % de un mercado de unos US$ 125 millones al año | [P] | CMA; El Comercio **[cita]** |
-| Feb-2026: Nestlé anuncia negociaciones avanzadas para vender su negocio global de helados a Froneri; transición de 12 a 18 meses | [V] | Infobae (20/02/2026); El Comercio (2026) **[cita]** |
-| Jun-2026: Froneri inicia el registro de su denominación y logotipo ante Indecopi; no confirma cambio de dueño | [V] | Peru Retail (16/06/2026); Mercado Negro (24/06/2026) **[cita]** |
+| Fundada en 1897 por Pedro (Pietro) D'Onofrio, inmigrante italiano; empezó vendiendo helados en carretilla | [V] | Wikipedia (s. f.); Infomercado (2023); Mercado Negro (s. f.) |
+| En 1919 los carritos se pintan de amarillo, color que se mantiene | [V] | Wikipedia (s. f.) |
+| Fábrica de chocolates desde 1924 (Jr. Cotabambas) | [V] | Gestión (s. f.-a); Peru Retail (s. f.) |
+| La fórmula del panetón llega de Italia en 1950 | [V] | Gestión (s. f.-a); Peru Retail (s. f.) |
+| En los años 50 la planta pasa a la Av. Venezuela (unos 36 000 m²) | [V] | Gestión (s. f.-a); Peru Retail (s. f.) |
+| Nestlé la compra en 1997 y mantiene la operación en la Av. Venezuela | [V] | Wikipedia (s. f.); Peru Retail (s. f.) |
+| Según El Popular (2022), más de 6 000 heladeros y unos 400 helados por triciclo al día | [P] | El Popular (2022) |
+| Según el CMA citado en LinkedIn (2024), el panetón D'Onofrio tiene cerca del 30 % de un mercado de unos US$ 125 millones al año | [P] | El Comercio (s. f.); el post de LinkedIn que cita al CMA no tiene enlace verificado |
+| Feb-2026: Nestlé anuncia negociaciones avanzadas para vender su negocio global de helados a Froneri; transición de 12 a 18 meses | [V] | Infobae (2026); El Comercio (2026) |
+| Jun-2026: Froneri inicia el registro de su denominación y logotipo ante Indecopi; no confirma cambio de dueño | [V] | Peru Retail (2026); Mercado Negro (2026) |
 
 **Giro.** Fabricación y comercialización de helados, chocolates y panetón, con venta por canal moderno (autoservicios), canal tradicional (bodegas y distribuidores), punto de venta propio y heladeros concesionarios.
 
@@ -149,7 +149,7 @@ Todos los problemas son **supuestos AS-IS** (S7). Su estado final depende de la 
 
 > **Propuesta académica (redacción propia).** Ser la unidad de helados y confitería que llega fresca y a tiempo a cada rincón del país, con cada lote trazable de la compra del insumo hasta el cliente y decisiones tomadas con datos del día.
 
-Se inspira en el propósito público de Nestlé de aprovechar el poder de los alimentos para mejorar la calidad de vida **[cita]**. No es la visión oficial de D'Onofrio ni de Nestlé.
+Se inspira en el propósito público de Nestlé de aprovechar el poder de los alimentos para mejorar la calidad de vida (Nestlé India, s. f.). No es la visión oficial de D'Onofrio ni de Nestlé.
 
 ## 3.4 Misión
 
@@ -166,15 +166,15 @@ Se inspira en el propósito público de Nestlé de aprovechar el poder de los al
 | **Político** | Estabilidad y política comercial del país [S]; la transición de Nestlé a Froneri en helados anunciada en feb-2026 depende de decisiones corporativas fuera de Perú [V] | Se declara como riesgo; el ERP no modela la transición |
 | **Económico** | Estacionalidad marcada (verano e invierno, campaña navideña); mercado de panetón de unos US$ 125 millones al año [P]; precios de insumos lácteos y cacao [S] | Listas de precios por temporada y análisis por línea, canal y mes |
 | **Social** | Marca de arraigo histórico [V] y heladeros como figura popular [S]; consumidores atentos a la alimentación saludable [S] | Trato diferenciado al canal heladero; datos para campañas |
-| **Tecnológico** | Comprobantes electrónicos obligatorios (SUNAT) **[cita]**; el EDI `l10n_pe_edi` es Enterprise [V] | Facturación con `l10n_pe` y limitación declarada: sin envío a SUNAT |
+| **Tecnológico** | Comprobantes electrónicos obligatorios (SUNAT) (Superintendencia Nacional de Aduanas y de Administración Tributaria [SUNAT], s. f.); el EDI `l10n_pe_edi` es Enterprise [V] | Facturación con `l10n_pe` y limitación declarada: sin envío a SUNAT |
 | **Ecológico** | Consumo de energía de las cámaras de frío y manejo de residuos de empaque [S] | Registro de temperaturas y mermas como base de mejora |
-| **Legal** | Ley 29733 de Protección de Datos Personales **[cita]**; Código de Protección y Defensa del Consumidor (Ley 29571) **[cita]**; Ley 30021 de promoción de la alimentación saludable (advertencias en alimentos) **[cita]**; vigilancia sanitaria de alimentos y HACCP (D. S. 007-98-SA) **[cita]**; IGV 18 % | Datos ficticios, trazabilidad de lotes, controles de calidad y tributación con IGV |
+| **Legal** | Ley 29733 de Protección de Datos Personales (Congreso de la República del Perú, 2011); Código de Protección y Defensa del Consumidor (Ley 29571) (Congreso de la República del Perú, 2010); Ley 30021 de promoción de la alimentación saludable (advertencias en alimentos) (Congreso de la República del Perú, 2013); vigilancia sanitaria de alimentos y HACCP (D. S. 007-98-SA) (Ministerio de Salud, 1998); IGV 18 % | Datos ficticios, trazabilidad de lotes, controles de calidad y tributación con IGV |
 
 ### 3.5.2 Cinco fuerzas de Porter
 
 | Fuerza | Nivel | Análisis |
 |---|---|---|
-| Rivalidad entre competidores | **Alta** | Helados y panetón compiten con marcas de Alicorp/Lamborgini y Gloria y con panaderías y heladerías artesanales [S][cita]; en chocolates Nestlé Perú tendría cerca de la mitad del mercado [P] |
+| Rivalidad entre competidores | **Alta** | Helados y panetón compiten con marcas de Alicorp/Lamborgini y Gloria y con panaderías y heladerías artesanales [S]; la mención de Alicorp y Lamborgini se apoya en Gestión (s. f.-a) y la de Gloria es un supuesto [S]; en chocolates Nestlé Perú tendría cerca de la mitad del mercado [P] |
 | Amenaza de nuevos entrantes | Media | Marcas artesanales y *delivery* entran con poca inversión, pero la red de distribución y las cámaras de frío son una barrera [S] |
 | Poder de negociación de los clientes | Media-alta | Los autoservicios negocian precio y condiciones; las bodegas y los heladeros tienen menos poder individual [S] |
 | Poder de negociación de los proveedores | Media | Lácteos, cacao y harina dependen de pocos proveedores y de precios internacionales [S] |
@@ -191,7 +191,7 @@ Se inspira en el propósito público de Nestlé de aprovechar el poder de los al
 | | **Positivo** | **Negativo** |
 |---|---|---|
 | **Interno** | **Fortalezas** · Marca histórica desde 1897 [V] · Red de heladeros muy extendida [P] · Planta propia en la Av. Venezuela [V] · Portafolio complementario (verano y Navidad) [V] | **Debilidades** · Procesos en Excel y papel [S7] · Sin control de vencimiento por lote [S7] · Liquidación de heladeros manual [S7] · Sistemas separados por área [S7] |
-| **Externo** | **Oportunidades** · ERP abierto sin licencias Enterprise [V] · Datos para planificar campañas · Exportaciones de chocolates [V] · Trazabilidad como diferencial de calidad | **Amenazas** · Venta de helados a Froneri [V] · Precios de insumos [S] · Competidores con mayor distribución [S] · Normativa sanitaria y de etiquetado [cita] |
+| **Externo** | **Oportunidades** · ERP abierto sin licencias Enterprise [V] · Datos para planificar campañas · Exportaciones de chocolates [V] · Trazabilidad como diferencial de calidad | **Amenazas** · Venta de helados a Froneri [V] · Precios de insumos [S] · Competidores con mayor distribución [S] · Normativa sanitaria y de etiquetado (Congreso de la República del Perú, 2013; Ministerio de Salud, 1998) |
 
 ### 3.6.2 Estrategias cruzadas
 
@@ -243,13 +243,8 @@ Los objetivos estratégicos se organizan en un **Cuadro de Mando Integral sencil
 
 ---
 
-## Pendiente de citar antes del informe final
+## Fuentes
 
-Estas afirmaciones aparecen en el texto con **[cita]** y deben tener su referencia en formato APA 7 (sección 9) y su enlace verificado:
-
-1. Fuentes de 1.4 del plan para la historia y los hechos de 2026 (Wikipedia, Gestión, Peru Retail, Infomercado, Mercado Negro, El Popular, Infobae, El Comercio, La República, America Retail): ya tienen enlaces en [01 §1.4](../plan/01_alcance_escenario.md).
-2. Propósito corporativo de Nestlé (visión): página institucional de Nestlé, a localizar.
-3. Normas: Ley 29733, Ley 29571, Ley 30021 y D. S. 007-98-SA (El Peruano o SPIJ), y obligación de comprobantes electrónicos (SUNAT), a localizar.
-4. Competidores de la tabla de Porter (Alicorp/Lamborgini y Gloria): el artículo de Gestión del plan los menciona; confirmar en la fuente antes de citarlos como hechos.
+Las referencias completas de esta sección están en la [sección 9](09_referencias.md); lo que aún falta verificar (un dato con una sola fuente y los competidores de Porter) está en su apartado 9.4.
 
 > Las metas de la sección 3.7, las clasificaciones de nivel de las cinco fuerzas y los efectos ecológicos y sociales son **juicios del equipo** (supuestos), no datos de la empresa.

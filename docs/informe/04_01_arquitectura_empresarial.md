@@ -6,7 +6,7 @@
 
 ## Marco y alcance
 
-Se ordena la arquitectura con las **cuatro capas de TOGAF** **[cita]** (negocio, datos, aplicación y tecnología), usadas de forma simplificada: no se aplica el método completo de TOGAF, solo su clasificación de capas, para comparar la situación actual con la propuesta. Los objetivos de gestión de **COBIT 2019 [cita]** que el ERP ayuda a cumplir se enlazan al final de la sección.
+Se ordena la arquitectura con las **cuatro capas de TOGAF** (The Open Group, 2022) (negocio, datos, aplicación y tecnología), usadas de forma simplificada: no se aplica el método completo de TOGAF, solo su clasificación de capas, para comparar la situación actual con la propuesta. Los objetivos de gestión de **COBIT 2019** (ISACA, 2018) que el ERP ayuda a cumplir se enlazan al final de la sección.
 
 ![Arquitectura empresarial AS-IS y TO-BE](../diagramas/arquitectura/arquitectura_empresarial.png)
 
