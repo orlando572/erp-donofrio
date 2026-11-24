@@ -5,7 +5,7 @@ Lee el esquema de una BD de Odoo que corre en el contenedor ``db`` (solo lectura
 modo ``default_transaction_read_only``) y escribe:
 
 * el diccionario del núcleo, en formato «Tabla 5» de la plantilla (clave, campo, tipo, tamaño, nulo, descripción)
-  por cada una de las tablas centrales (núcleo de la Fase 1, M1 y M2) (``TABLAS_NUCLEO``): ``docs/informe/04_02_diccionario_datos.md``;
+  por cada una de las tablas centrales (núcleo de la Fase 1, M1, M2 y M3) (``TABLAS_NUCLEO``): ``docs/informe/04_02_diccionario_datos.md``;
 * el anexo con el resto del esquema, agrupado por el módulo de Odoo que define cada tabla:
   ``docs/informe/anexo_diccionario_datos.md``;
 * opcionalmente (``--csv``) todo el diccionario en CSV, que Excel abre sin instalar nada.
@@ -66,6 +66,10 @@ TABLAS_NUCLEO = OrderedDict([
     # Fase 2, M2 (donofrio_heladeros): liquidación diaria del heladero.
     ('Heladeros (M2)', [
         'donofrio_liquidacion', 'donofrio_liquidacion_linea',
+    ]),
+    # Fase 2, M3 (cadena de frío, incremento de donofrio_calidad): lecturas de temperatura por ubicación.
+    ('Cadena de frío (M3)', [
+        'donofrio_temperatura',
     ]),
 ])
 # Módulos propios del proyecto: sus columnas agregadas a tablas de otros módulos se marcan en el diccionario
@@ -371,7 +375,7 @@ def informe_nucleo(esquema, origen, filas=None, bd_filas=''):
         lineas.append('* (ninguna columna en esta BD)')
     lineas.append('')
     tablas_calidad = [n for n, t in esquema.items() if t.modulo == 'donofrio_calidad']
-    lineas.append('`donofrio_calidad` (M1, Fase 2) **sí crea tablas propias**: '
+    lineas.append('`donofrio_calidad` (M1 y el incremento M3 de cadena de frío, Fase 2) **sí crea tablas propias**: '
                   + ', '.join(f'`{n}`' for n in sorted(tablas_calidad))
                   + '.')
     lineas.append('')

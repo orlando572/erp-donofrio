@@ -1,6 +1,6 @@
 @startuml er_nucleo
 ' Generado por scripts/diagrama_er.py desde la BD real; no se edita a mano (ver docs/diagramas/README.md).
-title Modelo ER general (41 tablas centrales: núcleo de la Fase 1, M1 calidad y M2 heladeros)
+title Modelo ER general (42 tablas centrales: núcleo de la Fase 1, M1 calidad, M2 heladeros y M3 cadena de frío)
 hide circle
 hide empty methods
 left to right direction
@@ -307,6 +307,11 @@ entity "donofrio_liquidacion_linea" as donofrio_liquidacion_linea #E3F7EA {
   * liquidacion_id : integer <<FK>>
   * product_id : integer <<FK>>
 }
+entity "donofrio_temperatura" as donofrio_temperatura #E0F3FA {
+  * id : integer <<PK>>
+  --
+  <i>+ FK a stock_location, res_users</i>
+}
 sale_order }o--|| res_partner : partner_id, partner_invoice_id (+1)
 sale_order }o--o| product_pricelist : pricelist_id
 sale_order }o--o| crm_lead : opportunity_id
@@ -407,6 +412,6 @@ legend bottom
   * = no admite nulo · <<PK>> clave primaria · <<FK>> clave foránea · color = área del negocio
   Pata de gallo: ||  uno exacto · o|  cero o uno · }o  cero o muchos
   Las FK a res_users, stock_location, stock_picking_type y account_journal y las autorreferencias se anotan
-  en la caja («+ FK a …») sin línea. Áreas: Ventas y CRM, Maestros, Inventario, Producción, Compras, Facturación, Seguridad y mesa de servicios, Calidad (M1), Heladeros (M2)
+  en la caja («+ FK a …») sin línea. Áreas: Ventas y CRM, Maestros, Inventario, Producción, Compras, Facturación, Seguridad y mesa de servicios, Calidad (M1), Heladeros (M2), Cadena de frío (M3)
 endlegend
 @enduml
