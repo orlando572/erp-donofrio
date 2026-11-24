@@ -36,8 +36,10 @@ class Liquidacion(models.Model):
     total_importe = fields.Monetary('Importe vendido', compute='_compute_totales', store=True)
     total_comision = fields.Monetary('Comisión', compute='_compute_totales', store=True)
     diferencia_efectivo = fields.Monetary('Diferencia de efectivo', compute='_compute_totales', store=True,
-                                          help="Efectivo entregado menos el importe vendido. Positivo: a favor de la empresa.")
+                                          help="Efectivo entregado menos el importe vendido. Positivo: el heladero entregó de más (a su favor). Negativo: entregó de menos y debe la diferencia.")
     order_id = fields.Many2one('sale.order', 'Pedido de venta', readonly=True, copy=False)
+    liquidador_id = fields.Many2one(
+        'res.users', 'Liquidador', default=lambda self: self.env.user, required=True, tracking=True)
 
     @api.depends('linea_ids.vendido', 'linea_ids.importe', 'porcentaje_comision', 'efectivo_entregado')
     def _compute_totales(self):
@@ -67,6 +69,10 @@ class Liquidacion(models.Model):
             if liq.state != 'despachado':
                 raise UserError(self.env._('Solo se puede volver a borrador una liquidación despachada.'))
             liq.state = 'borrador'
+
+    def action_imprimir(self):
+        self.ensure_one()
+        return self.env.ref('donofrio_heladeros.action_report_liquidacion').report_action(self)
 
     def action_confirmar(self):
         """Confirma la liquidación: crea y confirma el pedido de venta con lo vendido."""

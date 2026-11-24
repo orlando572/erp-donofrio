@@ -120,3 +120,40 @@ class TestLiquidacionHeladero(TransactionCase):
         compras = self.env.ref('donofrio_base.user_compras')
         with self.assertRaises(AccessError):
             self.Liquidacion.with_user(compras).create({'partner_id': self.heladero.id})
+
+
+@tagged('post_install', '-at_install')
+class TestPdfLiquidacion(TestLiquidacionHeladero):
+    """HU-21 (RF004): PDF de liquidación con el detalle y las firmas; no se imprime en borrador."""
+
+    def _html(self, liq):
+        reporte = self.env.ref('donofrio_heladeros.action_report_liquidacion')
+        html, _tipo = reporte._render_qweb_html(reporte.report_name, liq.ids)
+        return html.decode()
+
+    def test_el_liquidador_por_defecto_es_quien_crea(self):
+        liq = self._liquidacion()
+        self.assertEqual(liq.liquidador_id, self.env.user)
+
+    def test_pdf_de_una_liquidacion_despachada(self):
+        liq = self._liquidacion([(self.fresa, 120, 18, 2)], efectivo_entregado=125.25)
+        liq.action_despachar()
+        texto = self._html(liq)
+        self.assertIn(liq.name, texto)
+        self.assertIn(self.heladero.name, texto)
+        self.assertIn(self.fresa.display_name, texto)
+        self.assertIn('Firma del heladero', texto)
+        self.assertIn('Firma del liquidador', texto)
+        self.assertIn('a favor del heladero', texto)
+        self.assertEqual(liq.action_imprimir()['type'], 'ir.actions.report')
+
+    def test_pdf_cuando_el_heladero_debe(self):
+        liq = self._liquidacion([(self.fresa, 10, 0, 0)], efectivo_entregado=1)
+        liq.action_despachar()
+        self.assertIn('el heladero debe', self._html(liq))
+
+    def test_no_se_imprime_en_borrador(self):
+        liq = self._liquidacion()
+        reporte = self.env.ref('donofrio_heladeros.action_report_liquidacion')
+        with self.assertRaises(UserError):
+            reporte._render_qweb_html(reporte.report_name, liq.ids)

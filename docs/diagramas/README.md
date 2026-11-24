@@ -8,7 +8,7 @@
 | `dependencias/` | Grafo de dependencias entre módulos (5.4): `dependencias_directas` y `dependencias_completo` (`.dot`, `.svg`, `.png`) y `dependencias.csv` | `scripts/grafo_dependencias.py` + Graphviz | Orlando |
 | `pantallas/` | Wireframes (`wf_*`) y mockups (`mk_*`) de las 12 pantallas de los casos de uso, incluidas las de la Fase 2 (`.svg`, `.png`) | `generar_pantallas.py` | Evelyn |
 | `clases/` | Diagrama de clases del núcleo (modelos de Odoo y extensiones de `donofrio_base`) y clases **propuestas** de la Fase 2 (4.2.5) (`.puml`, `.png`, `.svg`) | PlantUML | Orlando |
-| `er/` | Modelo ER general (39 tablas: núcleo de la Fase 1 y M1 calidad) y diseño lógico (ventas, inventario, producción y compras) (4.2.6 y 4.2.7), extraídos de la BD real (`.puml`, `.png`, `.svg`) | `scripts/diagrama_er.py` + PlantUML | Orlando |
+| `er/` | Modelo ER general (41 tablas: núcleo de la Fase 1, M1 calidad y M2 heladeros) y diseño lógico (ventas, inventario, producción y compras) (4.2.6 y 4.2.7), extraídos de la BD real (`.puml`, `.png`, `.svg`) | `scripts/diagrama_er.py` + PlantUML | Orlando |
 | `cu/` | Casos de uso de ventas, heladeros y gerencia (Evelyn) y de logística y producción (Orlando) (`.puml` y `.png`) | PlantUML | Evelyn y Orlando |
 
 `cu/` también incluye Compras y Facturación (CU011 y CU012). Los datos de procesos son ficticios y verosímiles (supuesto S7 del plan).

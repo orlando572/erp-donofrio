@@ -2,7 +2,7 @@
 
 > **Estado:** borrador del Sprint 3 · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [4.2.2](04_02_requerimientos_funcionales.md) (tabla 2), [casos de uso](04_02_casos_de_uso.md), [matriz de trazabilidad](trazabilidad.md), [04 §4.4 del plan](../plan/04_scrum_pmbok.md) (criterios de aceptación) y las pruebas de `addons/donofrio_base/tests/`
 >
-> Una ficha por RF, con el mismo formato. Los 14 RF de la **Fase 1** y los 2 de **M1** (RF011 y RF012, desde el 24/11/2026) están *Implementados*; los de la **Fase 2** que faltan (RF004 y RF008) y la parte propia de RF013 están *Diseñado – trabajo futuro*: tienen caso de uso, wireframe, mockup y BPMN TO-BE, pero ningún código ni prueba. El estado es el real al 23/11/2026 y cambia si el Gate 0 aprueba algún módulo.
+> Una ficha por RF, con el mismo formato. Los 14 RF de la **Fase 1** los 2 de **M1** (RF011 y RF012) y el de **M2** (RF004), desde el 24/11/2026, están *Implementados*; el de la **Fase 2** que falta (RF008) y la parte propia de RF013 están *Diseñado – trabajo futuro*: tienen caso de uso, wireframe, mockup y BPMN TO-BE, pero ningún código ni prueba. El estado es el real al 23/11/2026 y cambia si el Gate 0 aprueba algún módulo.
 
 ## Resumen
 
@@ -11,7 +11,7 @@
 | [RF001](#rf001) | Registrar oportunidades por canal en un embudo CRM | F1 | HU-08 | Implementado |
 | [RF002](#rf002) | Cotizar y confirmar pedidos con listas de precios por canal y temporada | F1 | HU-09 | Implementado |
 | [RF003](#rf003) | Vender en el punto de venta de la tienda de planta con boleta | F1 | HU-10 | Implementado |
-| [RF004](#rf004) | Liquidar diariamente a los heladeros ambulantes | F2 | HU-20 | Diseñado – trabajo futuro |
+| [RF004](#rf004) | Liquidar diariamente a los heladeros ambulantes | F2 | HU-20 | Implementado (M2) |
 | [RF005](#rf005) | Gestionar almacenes y ubicaciones con cámaras de frío | F1 | HU-06 | Implementado |
 | [RF006](#rf006) | Controlar lotes con fecha de vencimiento y salida FEFO | F1 | HU-11 | Implementado |
 | [RF007](#rf007) | Recibir insumos y despachar pedidos | F1 | HU-12 | Implementado |
@@ -114,9 +114,10 @@
 | **Descripción** | Liquidar al heladero al volver de la ruta: despachado, devuelto, merma, vendido, importe y comisión, con el PDF para firmar. |
 | **Criterios de aceptación** | Líneas con despachado, devuelto y merma; vendido = despachado − devuelto − merma (≥ 0); importe y comisión; al liquidar se crea y confirma el pedido de venta; PDF con las firmas y vista móvil usable. |
 | **Reglas de negocio y limitaciones** | El heladero es concesionario (supuesto S4) y no empleado. Sin el módulo se cubre en parte con un pedido de venta con la lista «Heladero» y la devolución estándar (BPMN TO-BE 11). |
+| **Implementación y evidencia** | `addons/donofrio_heladeros` ([5.5c](05_05_modulo_donofrio_heladeros.md)); `tests/test_liquidacion.py`; `docs/capturas/sprint-4/HU-20_*` y `HU-21_*` |
 | **Diseño disponible** | `docs/diagramas/pantallas/mk_cu004_liquidacion.png`<br>`docs/diagramas/pantallas/mk_rp_liquidacion_heladero.png`<br>`docs/diagramas/bpmn/to-be_heladero_m2.png` |
-| **Lo que falta** | Sin código ni pruebas propias: el módulo no se construyó. |
-| **Estado** | **Diseñado – trabajo futuro** |
+| **Lo que falta** | Nada de lo diseñado para M2. Límites: el pedido solo mueve stock por lo vendido y la vista móvil no se probó en un celular real. |
+| **Estado** | **Implementado** (M2, 24/11/2026) |
 
 ## RF005
 

@@ -11,7 +11,7 @@
 | CU001 | Registrar oportunidad en el embudo CRM | Ventas | RF001 | HU-08 | F1 | Implementado | Evelyn |
 | CU002 | Cotizar y confirmar pedido con lista de precios | Ventas | RF002 | HU-09 | F1 | Implementado | Evelyn |
 | CU003 | Vender en el punto de venta con boleta | Ventas | RF003 | HU-10 | F1 | Implementado | Evelyn |
-| CU004 | Liquidar al heladero del día | Heladeros | RF004 | HU-20, HU-21 | **F2** (M2) | **Propuesto** | Evelyn |
+| CU004 | Liquidar al heladero del día | Heladeros | RF004 | HU-20, HU-21 | **F2** (M2) | **Implementado** (24/11/2026) | Evelyn |
 | CU005 | Recibir, almacenar y despachar con lotes y FEFO | Logística | RF005, RF006, RF007 | HU-06, HU-11, HU-12 | F1 | Planificado | Orlando |
 | CU006 | Registrar temperaturas y alertar (cadena de frío) | Logística | RF008 | HU-19 | **F2** (M3) | **Propuesto** | Orlando |
 | CU007 | Planificar y ejecutar una orden de producción con lote | Producción | RF009, RF010 | HU-07, HU-14 | F1 | Planificado | Orlando |
@@ -103,7 +103,7 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Reglas de negocio** | Boleta (tipo 03) para consumidor final; IGV 18 %; sin envío a SUNAT: el EDI `l10n_pe_edi` es Enterprise y se declara como limitación |
 | **Evidencia / prueba** | `tests/test_pdv.py`; capturas `HU-10_*` y `HU-16_pdv_sesiones_cerradas` |
 
-### CU004: Liquidar al heladero del día (propuesto, Fase 2)
+### CU004: Liquidar al heladero del día (implementado, Fase 2)
 
 | Campo | Contenido |
 |---|---|
@@ -116,8 +116,8 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Flujos alternos** | A1. Si lo devuelto más la merma supera lo despachado, el sistema rechaza la línea.<br>A2. Si el efectivo no cuadra con el importe, la diferencia queda registrada en la liquidación.<br>A3. **Sin la Fase 2:** se usa la variante estándar (CU004-F1): pedido de venta con la lista «Heladero» y devolución de lo no vendido |
 | **Postcondiciones** | Liquidación confirmada, pedido creado y devolución al almacén registrada |
 | **Reglas de negocio** | El heladero es concesionario (supuesto S4): compra a precio de heladero y liquida cada día; no es empleado |
-| **Estado** | **Propuesto.** No se construye sin la confirmación explícita de Evelyn u Orlando tras el Gate 0. Si no se hace, queda como «Diseñado – trabajo futuro» con este caso de uso, su wireframe y su mockup |
-| **Evidencia / prueba** | [Wireframe y mockup](04_04_prototipos.md) de la pantalla de liquidación y de su vista móvil (Sprint 2); si se construye, tests de `donofrio_heladeros` |
+| **Estado** | **Implementado** en `donofrio_heladeros` (M2) el 24/11/2026, con la confirmación de Evelyn: modelo y flujo en HU-20 (PR #223) y PDF en HU-21. La diferencia de efectivo es positiva cuando el heladero entregó de más (a su favor) y negativa cuando debe |
+| **Evidencia / prueba** | [Wireframe y mockup](04_04_prototipos.md) (Sprint 2); 14 pruebas de `donofrio_heladeros`; capturas `HU-20_*` y `HU-21_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
 
 ### CU005: Recibir, almacenar y despachar con lotes y FEFO
 

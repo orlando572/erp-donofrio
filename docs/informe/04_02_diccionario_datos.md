@@ -1,20 +1,20 @@
 # 4.2.8 Diccionario de datos del núcleo (tablas centrales)
 
-> **Archivo generado** por [`scripts/diccionario_datos.py`](../../scripts/diccionario_datos.py); no se edita a mano. Origen: BD limpia con `donofrio_base` y `donofrio_calidad` instalados desde `develop` (Odoo 19.0, PostgreSQL 16).
+> **Archivo generado** por [`scripts/diccionario_datos.py`](../../scripts/diccionario_datos.py); no se edita a mano. Origen: BD limpia con `donofrio_base`, `donofrio_calidad` y `donofrio_heladeros` instalados desde `develop` (Odoo 19.0, PostgreSQL 16).
 >
-> Formato de la «Tabla 5» de la plantilla: una tabla por entidad con su clave (PK/FK), campo, tipo, tamaño, si admite nulo y descripción. **Tipo y tamaño** salen de `information_schema`; la **descripción**, de la etiqueta y la ayuda del campo en `ir_model_fields` (es_PE). Tamaño: caracteres en `varchar`, `precisión,escala` en `numeric`, bytes en los tipos fijos y «variable» en `text` y `jsonb`. Las columnas que agregó un módulo propio a una tabla de otro módulo van marcadas con **[donofrio_base]** o **[donofrio_calidad]**.
+> Formato de la «Tabla 5» de la plantilla: una tabla por entidad con su clave (PK/FK), campo, tipo, tamaño, si admite nulo y descripción. **Tipo y tamaño** salen de `information_schema`; la **descripción**, de la etiqueta y la ayuda del campo en `ir_model_fields` (es_PE). Tamaño: caracteres en `varchar`, `precisión,escala` en `numeric`, bytes en los tipos fijos y «variable» en `text` y `jsonb`. Las columnas que agregó un módulo propio a una tabla de otro módulo van marcadas con **[donofrio_base]**, **[donofrio_calidad]** o **[donofrio_heladeros]**.
 
 ## Resumen de las tablas centrales
 
-| Área | Tabla | Modelo de Odoo | Módulo | Columnas | Filas (`donofrio_perf`) |
+| Área | Tabla | Modelo de Odoo | Módulo | Columnas | Filas (`donofrio`) |
 |---|---|---|---|---|---|
-| Ventas y CRM | `sale_order` | `sale.order` | `sale` | 49 | 437 |
-| Ventas y CRM | `sale_order_line` | `sale.order.line` | `sale` | 44 | 1.454 |
-| Ventas y CRM | `crm_lead` | `crm.lead` | `crm` | 63 | 20 |
+| Ventas y CRM | `sale_order` | `sale.order` | `sale` | 49 | 438 |
+| Ventas y CRM | `sale_order_line` | `sale.order.line` | `sale` | 44 | 1.455 |
+| Ventas y CRM | `crm_lead` | `crm.lead` | `crm` | 63 | 21 |
 | Ventas y CRM | `pos_order` | `pos.order` | `point_of_sale` | 48 | 939 |
-| Maestros | `res_partner` | `res.partner` | `base` | 87 | 63 |
-| Maestros | `product_template` | `product.template` | `product` | 57 | 48 |
-| Maestros | `product_product` | `product.product` | `product` | 17 | 48 |
+| Maestros | `res_partner` | `res.partner` | `base` | 87 | 64 |
+| Maestros | `product_template` | `product.template` | `product` | 57 | 49 |
+| Maestros | `product_product` | `product.product` | `product` | 17 | 49 |
 | Maestros | `product_category` | `product.category` | `product` | 20 | 13 |
 | Maestros | `product_pricelist` | `product.pricelist` | `product` | 10 | 6 |
 | Maestros | `product_pricelist_item` | `product.pricelist.item` | `product` | 27 | 7 |
@@ -23,11 +23,11 @@
 | Inventario | `stock_warehouse` | `stock.warehouse` | `stock` | 43 | 2 |
 | Inventario | `stock_location` | `stock.location` | `stock` | 21 | 30 |
 | Inventario | `stock_picking_type` | `stock.picking.type` | `stock` | 53 | 24 |
-| Inventario | `stock_picking` | `stock.picking` | `stock` | 32 | 1.647 |
-| Inventario | `stock_move` | `stock.move` | `stock` | 65 | 6.063 |
-| Inventario | `stock_move_line` | `stock.move.line` | `stock` | 28 | 6.535 |
+| Inventario | `stock_picking` | `stock.picking` | `stock` | 32 | 1.648 |
+| Inventario | `stock_move` | `stock.move` | `stock` | 65 | 6.064 |
+| Inventario | `stock_move_line` | `stock.move.line` | `stock` | 28 | 6.536 |
 | Inventario | `stock_lot` | `stock.lot` | `stock` | 18 | 488 |
-| Inventario | `stock_quant` | `stock.quant` | `stock` | 22 | 1.737 |
+| Inventario | `stock_quant` | `stock.quant` | `stock` | 22 | 1.952 |
 | Inventario | `stock_warehouse_orderpoint` | `stock.warehouse.orderpoint` | `stock` | 22 | 22 |
 | Producción | `mrp_bom` | `mrp.bom` | `mrp` | 23 | 12 |
 | Producción | `mrp_bom_line` | `mrp.bom.line` | `mrp` | 14 | 71 |
@@ -41,12 +41,14 @@
 | Facturación | `account_move_line` | `account.move.line` | `account` | 61 | 17.852 |
 | Facturación | `account_journal` | `account.journal` | `account` | 34 | 11 |
 | Seguridad y mesa de servicios | `res_users` | `res.users` | `base` | 25 | 14 |
-| Seguridad y mesa de servicios | `res_groups` | `res.groups` | `base` | 11 | 76 |
+| Seguridad y mesa de servicios | `res_groups` | `res.groups` | `base` | 11 | 87 |
 | Seguridad y mesa de servicios | `auditlog_rule` | `auditlog.rule` | `auditlog` | 18 | 4 |
-| Seguridad y mesa de servicios | `project_task` | `project.task` | `project` | 41 | n/d |
-| Calidad (M1) | `donofrio_calidad_punto` | `donofrio.calidad.punto` | `donofrio_calidad` | 13 | n/d |
-| Calidad (M1) | `donofrio_calidad_inspeccion` | `donofrio.calidad.inspeccion` | `donofrio_calidad` | 13 | n/d |
-| Calidad (M1) | `donofrio_calidad_linea` | `donofrio.calidad.linea` | `donofrio_calidad` | 12 | n/d |
+| Seguridad y mesa de servicios | `project_task` | `project.task` | `project` | 41 | 16 |
+| Calidad (M1) | `donofrio_calidad_punto` | `donofrio.calidad.punto` | `donofrio_calidad` | 13 | 5 |
+| Calidad (M1) | `donofrio_calidad_inspeccion` | `donofrio.calidad.inspeccion` | `donofrio_calidad` | 13 | 3 |
+| Calidad (M1) | `donofrio_calidad_linea` | `donofrio.calidad.linea` | `donofrio_calidad` | 12 | 12 |
+| Heladeros (M2) | `donofrio_liquidacion` | `donofrio.liquidacion` | `donofrio_heladeros` | 19 | 1 |
+| Heladeros (M2) | `donofrio_liquidacion_linea` | `donofrio.liquidacion.linea` | `donofrio_heladeros` | 13 | 1 |
 
 ## Lo que agregan los módulos propios al esquema
 
@@ -57,6 +59,8 @@
 `donofrio_calidad` (M1, Fase 2) **sí crea tablas propias**: `donofrio_calidad_inspeccion`, `donofrio_calidad_linea`, `donofrio_calidad_punto`.
 
 No agrega columnas a las tablas de otros módulos: sus extensiones de modelos ajenos (por ejemplo `stock.lot`) no almacenan columnas nuevas en esta BD.
+
+`donofrio_heladeros` (M2, Fase 2) **sí crea tablas propias**: `donofrio_liquidacion`, `donofrio_liquidacion_linea`. No agrega columnas a las tablas de otros módulos.
 
 ## Ventas y CRM
 
@@ -1656,3 +1660,51 @@ No agrega columnas a las tablas de otros módulos: sus extensiones de modelos aj
 |  | `create_date` | timestamp | 8 B | Sí | Created on |
 |  | `write_date` | timestamp | 8 B | Sí | Last Updated on |
 |  | `medicion` | double precision | 8 B | Sí | Medición |
+
+## Heladeros (M2)
+
+### Tabla 4.2.8-40. `donofrio_liquidacion`
+
+**Liquidación diaria del heladero** · modelo `donofrio.liquidacion` · módulo `donofrio_heladeros` · 19 columnas
+
+| Clave | Campo | Tipo | Tamaño | Nulo | Descripción |
+|---|---|---|---|---|---|
+| PK | `id` | integer | 4 B | No | ID |
+| FK | `partner_id` | integer | 4 B | No | Heladero → `res_partner` |
+| FK | `pricelist_id` | integer | 4 B | No | Lista de precios → `product_pricelist` |
+| FK | `company_id` | integer | 4 B | No | Company → `res_company` |
+| FK | `order_id` | integer | 4 B | Sí | Pedido de venta → `sale_order` |
+| FK | `liquidador_id` | integer | 4 B | No | Liquidador → `res_users` |
+| FK | `create_uid` | integer | 4 B | Sí | Created by → `res_users` |
+| FK | `write_uid` | integer | 4 B | Sí | Last Updated by → `res_users` |
+|  | `name` | varchar | variable | Sí | Número |
+|  | `state` | varchar | variable | No | Estado |
+|  | `fecha` | date | 4 B | No | Fecha |
+|  | `total_importe` | numeric | variable | Sí | Importe vendido |
+|  | `total_comision` | numeric | variable | Sí | Comisión |
+|  | `diferencia_efectivo` | numeric | variable | Sí | Diferencia de efectivo — Efectivo entregado menos el importe vendido. Positivo: el heladero entregó de más (a su favor). Negativo: entregó de menos y debe la dife… |
+|  | `create_date` | timestamp | 8 B | Sí | Created on |
+|  | `write_date` | timestamp | 8 B | Sí | Last Updated on |
+|  | `porcentaje_comision` | double precision | 8 B | Sí | Comisión (%) — Porcentaje del importe vendido que se queda el heladero. Valor supuesto del caso. |
+|  | `efectivo_entregado` | double precision | 8 B | Sí | Efectivo entregado |
+|  | `total_vendido` | double precision | 8 B | Sí | Unidades vendidas |
+
+### Tabla 4.2.8-41. `donofrio_liquidacion_linea`
+
+**Línea de la liquidación del heladero** · modelo `donofrio.liquidacion.linea` · módulo `donofrio_heladeros` · 13 columnas
+
+| Clave | Campo | Tipo | Tamaño | Nulo | Descripción |
+|---|---|---|---|---|---|
+| PK | `id` | integer | 4 B | No | ID |
+| FK | `liquidacion_id` | integer | 4 B | No | Liquidacion → `donofrio_liquidacion` |
+| FK | `product_id` | integer | 4 B | No | Producto → `product_product` |
+| FK | `create_uid` | integer | 4 B | Sí | Created by → `res_users` |
+| FK | `write_uid` | integer | 4 B | Sí | Last Updated by → `res_users` |
+|  | `precio_unitario` | numeric | variable | Sí | Precio |
+|  | `importe` | numeric | variable | Sí | Importe |
+|  | `create_date` | timestamp | 8 B | Sí | Created on |
+|  | `write_date` | timestamp | 8 B | Sí | Last Updated on |
+|  | `despachado` | double precision | 8 B | Sí | Despachado |
+|  | `devuelto` | double precision | 8 B | Sí | Devuelto |
+|  | `merma` | double precision | 8 B | Sí | Merma |
+|  | `vendido` | double precision | 8 B | Sí | Vendido |

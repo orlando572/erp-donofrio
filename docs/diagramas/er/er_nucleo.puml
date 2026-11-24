@@ -1,6 +1,6 @@
 @startuml er_nucleo
 ' Generado por scripts/diagrama_er.py desde la BD real; no se edita a mano (ver docs/diagramas/README.md).
-title Modelo ER general (39 tablas centrales: núcleo de la Fase 1 y M1 calidad)
+title Modelo ER general (41 tablas centrales: núcleo de la Fase 1, M1 calidad y M2 heladeros)
 hide circle
 hide empty methods
 left to right direction
@@ -293,6 +293,20 @@ entity "donofrio_calidad_linea" as donofrio_calidad_linea #E6E3F7 {
   * inspeccion_id : integer <<FK>>
   * punto_id : integer <<FK>>
 }
+entity "donofrio_liquidacion" as donofrio_liquidacion #E3F7EA {
+  * id : integer <<PK>>
+  --
+  * partner_id : integer <<FK>>
+  * pricelist_id : integer <<FK>>
+  order_id : integer <<FK>>
+  <i>+ FK a res_users</i>
+}
+entity "donofrio_liquidacion_linea" as donofrio_liquidacion_linea #E3F7EA {
+  * id : integer <<PK>>
+  --
+  * liquidacion_id : integer <<FK>>
+  * product_id : integer <<FK>>
+}
 sale_order }o--|| res_partner : partner_id, partner_invoice_id (+1)
 sale_order }o--o| product_pricelist : pricelist_id
 sale_order }o--o| crm_lead : opportunity_id
@@ -384,10 +398,15 @@ donofrio_calidad_inspeccion }o--|| stock_lot : lot_id
 donofrio_calidad_inspeccion }o--o| product_product : product_id
 donofrio_calidad_linea }o--|| donofrio_calidad_inspeccion : inspeccion_id
 donofrio_calidad_linea }o--|| donofrio_calidad_punto : punto_id
+donofrio_liquidacion }o--|| res_partner : partner_id
+donofrio_liquidacion }o--|| product_pricelist : pricelist_id
+donofrio_liquidacion }o--o| sale_order : order_id
+donofrio_liquidacion_linea }o--|| donofrio_liquidacion : liquidacion_id
+donofrio_liquidacion_linea }o--|| product_product : product_id
 legend bottom
   * = no admite nulo · <<PK>> clave primaria · <<FK>> clave foránea · color = área del negocio
   Pata de gallo: ||  uno exacto · o|  cero o uno · }o  cero o muchos
   Las FK a res_users, stock_location, stock_picking_type y account_journal y las autorreferencias se anotan
-  en la caja («+ FK a …») sin línea. Áreas: Ventas y CRM, Maestros, Inventario, Producción, Compras, Facturación, Seguridad y mesa de servicios, Calidad (M1)
+  en la caja («+ FK a …») sin línea. Áreas: Ventas y CRM, Maestros, Inventario, Producción, Compras, Facturación, Seguridad y mesa de servicios, Calidad (M1), Heladeros (M2)
 endlegend
 @enduml

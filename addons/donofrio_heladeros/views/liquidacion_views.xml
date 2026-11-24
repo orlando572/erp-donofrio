@@ -29,6 +29,8 @@
                             invisible="state != 'despachado'"/>
                     <button name="action_volver_borrador" string="Volver a borrador" type="object"
                             invisible="state != 'despachado'"/>
+                    <button name="action_imprimir" string="Imprimir" type="object"
+                            invisible="state == 'borrador'"/>
                     <field name="state" widget="statusbar" statusbar_visible="borrador,despachado,liquidado"/>
                 </header>
                 <sheet>
@@ -41,6 +43,7 @@
                         </group>
                         <group>
                             <field name="fecha" readonly="state != 'borrador'"/>
+                            <field name="liquidador_id" readonly="state == 'liquidado'"/>
                             <field name="porcentaje_comision" readonly="state == 'liquidado'"/>
                             <field name="efectivo_entregado" readonly="state == 'liquidado'"/>
                             <field name="company_id" groups="base.group_multi_company"/>
@@ -53,8 +56,8 @@
                             <field name="devuelto"/>
                             <field name="merma"/>
                             <field name="vendido"/>
-                            <field name="precio_unitario"/>
-                            <field name="importe"/>
+                            <field name="precio_unitario" optional="show"/>
+                            <field name="importe" optional="show"/>
                             <field name="currency_id" column_invisible="1"/>
                         </list>
                     </field>

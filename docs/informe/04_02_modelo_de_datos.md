@@ -53,7 +53,7 @@ Las clases de los módulos de la Fase 2 se diseñan a partir del plan ([03 §3.3
 |---|---|---|---|
 | `donofrio.calidad.punto`, `donofrio.calidad.inspeccion` y su línea de medición | M1 `donofrio_calidad` | **Implementado** (24/11/2026) | La inspección se liga a `mrp.production` y `stock.lot`; un lote rechazado no se despacha. Tablas y diccionario en [5.5b](05_05_modulo_donofrio_calidad.md) |
 | `donofrio.temperatura` y `temp_min`/`temp_max` en `stock.location` | M3 cadena de frío (requiere M1) | **Propuesto** | Registra temperaturas por ubicación y alerta si salen de rango |
-| `donofrio.liquidacion` y su línea | M2 `donofrio_heladeros` | **Propuesto** | Al liquidar crea y confirma un `sale.order` |
+| `donofrio.liquidacion` y su línea | M2 `donofrio_heladeros` | **Implementado** (24/11/2026) | Al liquidar crea y confirma un `sale.order`. Tablas y diccionario en [5.5c](05_05_modulo_donofrio_heladeros.md) |
 | Servicio de KPIs (`get_kpis()`) | M4 `donofrio_tablero` | **Propuesto** | Lee ventas y, si están instalados, los módulos anteriores |
 
 ## 4.2.6 Diseño de base de datos: modelo ER
@@ -62,7 +62,7 @@ El modelo ER se **extrae de la base de datos real**, no se dibuja. Se instalaron
 
 ![Modelo ER del núcleo](../diagramas/er/er_nucleo.png)
 
-*Figura 4.2.6-a. Modelo ER de las 39 tablas centrales (núcleo de la Fase 1 y M1 calidad), con 91 líneas de relación (pata de gallo). Color por área. Versión vectorial para ampliar: [`er_nucleo.svg`](../diagramas/er/er_nucleo.svg). Se genera con [`scripts/diagrama_er.py`](../../scripts/diagrama_er.py).*
+*Figura 4.2.6-a. Modelo ER de las 41 tablas centrales (núcleo de la Fase 1, M1 calidad y M2 heladeros), con 96 líneas de relación (pata de gallo). Color por área. Versión vectorial para ampliar: [`er_nucleo.svg`](../diagramas/er/er_nucleo.svg). Se genera con [`scripts/diagrama_er.py`](../../scripts/diagrama_er.py).*
 
 Cómo leer la figura:
 
@@ -104,7 +104,7 @@ El diccionario se **genera con un script reproducible**, [`scripts/diccionario_d
 
 | Archivo | Contenido | Tamaño |
 |---|---|---|
-| [`04_02_diccionario_datos.md`](04_02_diccionario_datos.md) | **Diccionario del núcleo (cuerpo del informe):** resumen de las 39 tablas centrales con su número de columnas y filas, lo que agregan `donofrio_base` y `donofrio_calidad` y la Tabla 5 de cada una (Tablas 4.2.8-1 a 4.2.8-39) | 39 tablas, 1.310 filas de columnas |
+| [`04_02_diccionario_datos.md`](04_02_diccionario_datos.md) | **Diccionario del núcleo (cuerpo del informe):** resumen de las 41 tablas centrales con su número de columnas y filas, lo que agregan `donofrio_base` y `donofrio_calidad` y la Tabla 5 de cada una (Tablas 4.2.8-1 a 4.2.8-39) | 39 tablas, 1.310 filas de columnas |
 | [`anexo_diccionario_datos.md`](anexo_diccionario_datos.md) | **Anexo:** las otras 661 tablas del esquema, agrupadas por el módulo de Odoo que define cada una | Archivo generado, grande |
 
 **Tablas propias del núcleo: ninguna.** `donofrio_base` **no crea tablas** en la Fase 1 (ni modelos nuevos). Lo que agrega al esquema es, en estricto sentido:
@@ -147,4 +147,4 @@ El diccionario completo y el anexo se regeneran con un comando (ver [README de d
 * **Origen de los datos de esta sección:** BD limpia con `donofrio_base` instalado desde `develop` (commit `9a05891`) y las traducciones es_PE; la cantidad de filas, de `donofrio_perf`.
 * **Base de desarrollo desactualizada:** la BD de desarrollo `donofrio` y la de carga `donofrio_perf` se crearon antes de HU-32 y no tienen los módulos `project*` ni `project_task.sla_estado`; por eso el esquema no se extrajo de ellas. Para el diccionario, `project_task` no tiene filas en `donofrio_perf` («n/d»).
 * **SchemaSpy:** el plan preveía SchemaSpy y DBeaver; se usó un extractor propio (`diagrama_er.py`, PlantUML en Docker) porque permite filtrar a las tablas del núcleo, controlar las columnas y regenerar el diagrama con un comando sin descargar otra imagen. El resultado es equivalente: sale de la BD real.
-* **Cantidad de tablas:** el plan decía «unas 30»; son 36 en el núcleo de la Fase 1 (más 3 de M1 calidad, 39 en total; se añadieron `stock_picking_type`, `stock_warehouse`, `account_journal`, `res_groups`, `auditlog_rule` y `project_task`, que intervienen en el núcleo).
+* **Cantidad de tablas:** el plan decía «unas 30»; son 36 en el núcleo de la Fase 1 (más 3 de M1 calidad y 2 de M2 heladeros, 41 en total; se añadieron `stock_picking_type`, `stock_warehouse`, `account_journal`, `res_groups`, `auditlog_rule` y `project_task`, que intervienen en el núcleo).
