@@ -27,6 +27,8 @@
                             invisible="state != 'en_curso'"/>
                     <button name="action_rechazar" string="Rechazar lote" type="object"
                             invisible="state != 'en_curso'"/>
+ <button name="action_imprimir_certificado" string="Certificado PDF" type="object"
+                            invisible="state != 'aprobada'"/>
                     <field name="state" widget="statusbar" statusbar_visible="borrador,en_curso,aprobada"/>
                 </header>
                 <sheet>
