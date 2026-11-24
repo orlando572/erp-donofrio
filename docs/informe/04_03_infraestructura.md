@@ -2,7 +2,7 @@
 
 > **Estado:** borrador del Sprint 3 (estados actualizados el 23/11/2026 con lo que ya está en `develop`: HU-25, HU-26, HU-27, HU-28 y HU-29) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [06 §6.5](../plan/06_github_ci_infra.md), [02 §2.2](../plan/02_mapeo_plantilla.md)
 >
-> Aquí van 4.3.1 y 4.3.7 (Sprint 1) y 4.3.2 y 4.3.3 (Sprint 2). La sección 4.3.4 es de Evelyn. La 4.3.5 (paquetes, librerías y dependencias) está en [5.2 a 5.4](05_01_a_05_06_backend.md); la 4.3.6 y la 4.3.8 (versionamiento y nube) siguen pendientes y las ramas y el pipeline están en [5.15](05_15_despliegue.md).
+> Aquí van 4.3.1 y 4.3.7 (Sprint 1), 4.3.2 y 4.3.3 (Sprint 2) y 4.3.6 y 4.3.8 (Sprint 3). La sección 4.3.4 es de Evelyn. La 4.3.5 (paquetes, librerías y dependencias) está en [5.2 a 5.4](05_01_a_05_06_backend.md). Las ramas, la estrategia de fusión y el pipeline están en [6.4 a 6.6](06_04_a_06_06_repositorio.md) y [5.15](05_15_despliegue.md).
 
 ## 4.3.1 Infraestructura tecnológica
 
@@ -22,7 +22,7 @@ El ERP corre sobre contenedores en la PC de cada integrante (Ubuntu o Ubuntu den
 | **GitHub** | Repositorio público, Projects e Issues; ramas `main`, `develop` y `feature/HU-xx` con protección | En uso |
 | **GitHub Actions** | *Runner* `ubuntu-24.04` efímero; `ci.yml` con los jobs `lint` (`check_legacy.sh` y `ruff`), `test` (`scripts/test.sh`), `replica`, `backup` y `proxy` en cada PR; `perf.yml` (k6 y ZAP, solo manual) y `release.yml` | En uso (HU-02, HU-25 a HU-29); detalle en [5.15](05_15_despliegue.md) |
 | **GHCR** | Registro de imágenes (`ghcr.io/orlando572/erp-donofrio`); una imagen y un zip del código por cada tag `v*` | Flujo `release.yml` listo y probado en ensayo (HU-29, [evidencia](../capturas/sprint-3/HU-29_evidencia_release.txt)); **sin imagen publicada**, porque todavía no hay ningún tag |
-| **VM en la nube** | Oracle Free u otra, con Compose, Nginx y Let's Encrypt; despliegue por SSH desde Actions | Opcional (decisión abierta) |
+| **VM en la nube** | Oracle Free u otra, con Compose, Nginx y Let's Encrypt; despliegue por SSH desde Actions | **No implementada** (era opcional; ver [4.3.8](#438-plataformas-cloud)) |
 
 **Protección de la rama `develop`** (verificada en la configuración del repositorio el 23/11/2026):
 
@@ -90,6 +90,37 @@ Lineamientos breves; el detalle de cada comando está en el README del repositor
 | **Mantenimiento** | Actualización de módulos con `-u` sobre una BD con datos; datos de configuración con `noupdate` (para cambiarlos hay que recrear la BD); ficha `odoo19_cambios.md` que se amplía con cada diferencia encontrada; ejecución semanal del CI (regresión) | Cada cambio pasa por PR y por pruebas; un dato con `noupdate` que cambia exige avisar al equipo y recrear la BD |
 | **Monitoreo** | `healthcheck` de PostgreSQL (`pg_isready`) y de Odoo (`/web/health`); `docker compose ps` y `docker compose logs -f odoo`; reinicio automático (`restart: unless-stopped`) | Respaldos con `backup.sh` y restauración con `restore.sh` (HU-26, RTO medido de 31 s; el *cron* diario está documentado, no instalado). **Uptime Kuma no se implementó**: no hay medición continua de disponibilidad |
 
+## 4.3.6 Controles de versionamiento
+
+Todo el trabajo del proyecto (código, datos, scripts, documentación e informe) está en **un solo repositorio de Git** alojado en GitHub (<https://github.com/orlando572/erp-donofrio>, público, licencia LGPL-3.0). Esta sección resume **qué controles hay y qué hacen**; el estado medido del repositorio (PR, ejecuciones, ramas), el flujograma de ramas y la estrategia de fusión están en [6.4, 6.5 y 6.6](06_04_a_06_06_repositorio.md) y no se repiten aquí. Las cifras de esta sección son del **23/11/2026** y salen de `git` y `gh` en solo lectura.
+
+### Tabla 4.3.6-a. Controles de versionamiento, qué previene cada uno y su estado
+
+| Control | Cómo está implementado | Qué previene | Estado | Dónde se ve |
+|---|---|---|---|---|
+| **Ramas con un propósito** | `main` (entregado, con un tag por entrega) y `develop` (integración); `feature/HU-xx-*` para cada historia, `docs/*` para el informe y Scrum, `fix/*` y `chore/*`. Ninguna rama vive más de unas horas | Trabajo mezclado, cambios sin historia asociada | **Implementado** | 6.5 |
+| **Convención de commits** | *Conventional Commits* en español con la HU entre corchetes: `tipo(alcance): descripción [HU-xx]` (en la documentación del sprint, `[S3]`). De los 68 commits sin fusión de `develop`: 37 `docs`, 23 `feat`, 3 `test`, 2 `chore`, 1 `perf`, 1 `fix` y 1 `ci`; **67 de 68 llevan la etiqueta** `[HU-xx]` o `[Sn]` | Historial ilegible y cambios que no se pueden rastrear hasta su HU | **Implementado por convención** (no hay *hook* `commit-msg` que la haga cumplir) | `git log origin/develop --no-merges` |
+| **PR con plantilla y DoD** | `.github/pull_request_template.md`: HU y «Parte de #n» (el último PR de la épica cierra con `Closes #n`), qué cambia, cómo probar, capturas y la lista del revisor (otro integrante, CI en verde, sin patrones legacy, ACL y pruebas, `-u` sin errores, textos en español, capturas, Project y borrador de la sección del informe) | PR sin criterios de aceptación ni evidencia | **Implementado** | Plantilla del repositorio; [5.15.6](05_15_despliegue.md) |
+| **Revisión cruzada** | Cada PR lo revisa el **otro** integrante (Evelyn revisa los de Orlando y viceversa) y GitHub exige 1 aprobación; la aprobación se descarta si el código cambia (`dismiss_stale_reviews`) | Código sin segundo par de ojos; cambios posteriores a la aprobación | **Implementado** con una limitación (`enforce_admins`) | 6.6: 46 de 49 PR con aprobación vigente; los otros 3 se explican allí |
+| **Protección de ramas** | `develop`: 1 aprobación, checks obligatorios **`lint` y `test`**, conversaciones resueltas, sin *force push* ni borrado. `main`: 1 aprobación, conversaciones resueltas, sin *force push* ni borrado, **sin checks obligatorios** | Fusionar sin revisión o sin CI; reescribir la historia | **Implementado** en las dos ramas | `gh api repos/orlando572/erp-donofrio/branches/{rama}/protection` (6.4, Tabla 27) |
+| **Aplicar las reglas a los administradores (`enforce_admins`)** | **Desactivado** en `develop` y en `main` (verificado con la API el 23/11/2026). Orlando es el único administrador; Evelyn tiene rol *write* y sí queda sujeta a las reglas | Que el administrador se salte la revisión | **No implementado, decisión del PO** | Retro del Sprint 2: Evelyn decidió el 23/11/2026 dejarlo desactivado como salida de emergencia y compensarlo cumpliendo siempre la revisión cruzada. Se vuelve a evaluar en la Retro del Sprint 3 |
+| **Método de fusión** | El repositorio permite *squash* y *merge commit* (el *rebase* está desactivado). Los PR a `develop` se fusionan con *squash* (el del Sprint 3 es el plan); `develop` → `main` con *merge commit* y tag | Historial con commits intermedios; pérdida de las ramas en la entrega | **Implementado**; el paso a `main` está pendiente (Gate 0) | 6.6 |
+| **Ramas fusionadas se borran** | `delete_branch_on_merge = true` en el repositorio | Acumulación de ramas muertas | **Implementado** | 6.5 |
+| **Normalización de saltos de línea** | `.gitattributes`: `* text=auto eol=lf` (todo el repositorio en LF, también en Windows) y los binarios (`png`, `jpg`, `jpeg`, `gif`, `ico`, `pdf`, `docx`, `xlsx`, `pptx`, `zip`) marcados como `binary` | Scripts de `bash` y archivos de Docker con CRLF que fallan en el contenedor o en el CI cuando alguien trabaja desde Windows | **Implementado** | `.gitattributes` |
+| **Archivos que no se versionan** | `.gitignore`: `.env`, `*.pem`, `*.key`, `secrets/`, `.claude/settings.local.json`, `backups/`, `*.dump`, `filestore/`, `docker/nginx/certs/`, resultados de pruebas y el material del docente (`docs/*.pdf`, `docs/*.docx`) | Secretos, respaldos y material con derechos de otro en un repositorio público | **Implementado** | `.gitignore`; riesgo RS-02 en [4.5.3](04_05_riesgos_despliegue_y_mantenimiento.md) |
+| **Análisis de secretos** | *Secret scanning* y *push protection* **activos** (`gh api repos/orlando572/erp-donofrio`, `security_and_analysis`); *Dependabot security updates* **desactivado** | Subir una llave o una contraseña | **Implementado** (Dependabot, no) | 6.4, Tabla 26 |
+| **Freno al código obsoleto de Odoo** | `.claude/hooks/bloquear_legacy.py`: *hook* `PreToolUse` de Claude Code (`.claude/settings.json`, para `Edit`, `Write` y `MultiEdit`) que **bloquea** la edición si el texto nuevo contiene alguno de los **17 patrones** de Odoo 16 o anterior (`attrs`, `<tree>`, `_sql_constraints`, `name_get`, `read_group(`, `odoo.define`…). El mismo listado lo usa `scripts/check_legacy.sh`, que es el paso `lint` del CI | Que el asistente de IA o un tutorial viejo introduzcan API que no existe en 19.0 (riesgo R2) | **Implementado** (el *hook* actúa en el equipo de quien usa el asistente; el CI actúa sobre cada PR) | `docs/dev/odoo19_cambios.md`; 4.3.3 |
+| **CI obligatorio** | `lint` (`check_legacy.sh` y `ruff` 0.8.4) y `test` (instalación y 136 pruebas) en cada PR y en cada *push* a `develop` y `main`; más `replica`, `backup` y `proxy` | Que un PR rompa la instalación o las pruebas | **Implementado** (`lint` y `test` son obligatorios en `develop`; en `main` no) | 6.4, Tabla 28 |
+| **Release por tag** | `release.yml` publica la imagen en GHCR y el zip en GitHub Releases con cada tag `vX.Y.Z`; el tag va sobre `main` | Entregar algo distinto de lo probado | **Flujo listo y probado en ensayo; sin tag publicado** (se crea en el Gate 0, con confirmación aparte) | [`docs/dev/release.md`](../dev/release.md) |
+
+**Qué no hay (plan frente a realidad).**
+
+- **No hay un *hook* de Git local** (`pre-commit`, `commit-msg`): `.git/hooks` solo trae los ejemplos de Git y no existe `.pre-commit-config.yaml`. El encabezado de `scripts/check_legacy.sh` habla de «pre-commit y CI», pero el control efectivo es el CI y, para quien usa el asistente, el *hook* de Claude Code. La convención de commits se cumple por revisión, no por una herramienta.
+- **No hay `CODEOWNERS`, ni `dependabot.yml`, ni commits firmados ni historial lineal obligatorio.** La revisión la exige la protección de ramas, no un propietario por carpeta.
+- **No se usan *rulesets*** de GitHub; solo la protección clásica de ramas.
+
+**Lo que más importa para defender el control.** (1) El paso `develop` → `main` **todavía no ocurrió**: `main` tiene solo el commit inicial del Sprint 0 y va **84 commits detrás de `develop`**; por eso `main` no tiene checks obligatorios (no habría qué probar) y el CI «en verde en `main`» del criterio de salida de la Fase 1 depende de ese PR. (2) `enforce_admins` desactivado es una **decisión documentada**, con la revisión cruzada como compensación y la excepción usada solo en el Sprint 1 (PR #152 a #156). (3) Los controles técnicos (`lint`, `test`, protección de ramas, análisis de secretos) son **verificables con la API de GitHub**, no solo declarados.
+
 ## 4.3.7 Máquinas virtuales y contenedores
 
 La plataforma de contenedores es **Docker Compose** (un archivo `docker-compose.yml` en la raíz del repositorio). No se usan máquinas virtuales en desarrollo; la VM en la nube es opcional (4.3.8).
@@ -133,3 +164,32 @@ erp-donofrio-odoo-1   erp-donofrio/odoo:19.0   odoo      Up 2 hours (healthy)   
 ```
 
 > La captura y la salida son del Sprint 1 (solo `db` y `odoo`); la salida de `docker compose --profile replica ps` y la del perfil `proxy` están en [`HU-25_evidencia_replica.txt`](../capturas/sprint-3/HU-25_evidencia_replica.txt) y [`HU-27_evidencia_seguridad.txt`](../capturas/sprint-3/HU-27_evidencia_seguridad.txt). El tamaño de las imágenes y el tiempo de arranque dependen de la PC; la primera vez se descargan unos 900 MB.
+
+## 4.3.8 Plataformas cloud
+
+**El proyecto no usa ninguna máquina virtual en la nube.** El ERP se ejecuta en la PC de cada integrante y la demostración «en producción» se hace en la PC de la exposición con el perfil `proxy` de Compose (Nginx con TLS en `https://localhost:8443`, ver [5.15.1](05_15_despliegue.md)). Las únicas plataformas cloud que se usan son las de **GitHub**, que es lo que el plan ([06 §6.4 a §6.6](../plan/06_github_ci_infra.md)) consideraba obligatorio; la VM, Let's Encrypt y el despliegue por SSH eran **opcionales** en el plan y **no se hicieron**.
+
+### Tabla 4.3.8-a. Plataformas cloud: lo previsto y lo real (23/11/2026)
+
+| Plataforma o servicio | Qué se previó | Qué hay realmente | Estado |
+|---|---|---|---|
+| **GitHub** (repositorio, Issues, Projects) | Repositorio público con ramas protegidas, issues y un Project | Repositorio público `orlando572/erp-donofrio`; ramas `main` y `develop` protegidas; GitHub Project «Scrum ERP D'Onofrio» (de Evelyn, 3.9 y 6.3); secret scanning y push protection activos | **En uso** |
+| **GitHub Actions** | `ci.yml`, `release.yml` y, si hubiera VM, `cd.yml` | **3 flujos**: `ci.yml` (5 jobs), `perf.yml` (manual) y `release.yml`; todos sobre *runners* **`ubuntu-24.04`** alojados por GitHub, con permisos de solo lectura (`release.yml` pide `contents: write` y `packages: write`) y sin más secreto que `GITHUB_TOKEN`. Hay `schedule` semanal (lunes 11:00 UTC). **No existe `cd.yml`** | **En uso** (sin despliegue automático) |
+| **GitHub Releases** | Release con el zip del código fuente por cada tag | Flujo listo y probado en ensayo (PR #190); **no hay releases ni tags todavía** (se publica en el Gate 0) | **Listo, sin publicar** |
+| **GHCR** (`ghcr.io/orlando572/erp-donofrio`) | Imagen de Odoo con los módulos dentro, por cada tag `v*` | Flujo listo y probado en ensayo (imagen de 3.25 GB, `scripts/probar_imagen.sh` correcto); el paquete **no existe todavía** (la página responde 404) | **Listo, sin publicar** |
+| **VM en la nube** (Oracle Free u otra) con Docker Compose, Nginx y **Let's Encrypt** | Opcional, «decisión abierta» | **No se hizo.** El certificado TLS es **autofirmado** (`scripts/levantar_prod.sh` lo genera) y el sitio solo existe mientras la PC lo levanta | **No implementado** |
+| **Despliegue por SSH desde Actions** (`cd.yml`, llave en GitHub Secrets) | Opcional, solo con VM | **No se hizo**; tampoco hay `scripts/deploy.sh`. El despliegue y el *rollback* son manuales (5.15.1) | **No implementado** |
+| **Monitoreo externo** (Uptime Kuma) | Medir la disponibilidad | **No se hizo**; solo *healthchecks* de Docker (RNF011 «Parcial») | **No implementado** |
+| **Kubernetes y otros servicios gestionados** | No aplica | No se usan | **No aplica** |
+
+### Por qué no se usó una VM en la nube
+
+1. **Presupuesto y alcance:** el proyecto es académico y de costo cero (S/ 0, sin proveedores; ver la estrategia «Transferir» de [4.5.1](../pm/plan_riesgos.md)). Una VM gratuita exige una cuenta con tarjeta, aprobación del proveedor y disponibilidad de capacidad, y no es un entregable de los lineamientos.
+2. **Plazo único:** todo se entrega el viernes 27/11 a las 14:30 y el Cierre está reservado (R1). El tiempo se invirtió en lo que sí pide la plantilla: réplica, respaldos, seguridad, pruebas y despliegue **reproducible** (HU-25 a HU-29).
+3. **Reproducibilidad (RNF012):** el mismo `docker-compose.yml` y la misma imagen corren en la PC de Orlando, en la de Evelyn y en el CI; la demostración local con el perfil `proxy` cubre TLS, cabeceras, gzip, *websocket* y el modo producción (`verificar_despliegue.sh`), que es lo que una VM habría agregado salvo el dominio y el certificado público.
+4. **Superficie de ataque y datos:** el sitio queda en la PC; no hay un servicio expuesto a Internet con el sitio web público de Odoo (`/web/signup`, `/contactus`) que revisar (5.14), ni un dominio que se pueda confundir con la marca (riesgo R11).
+5. **Menos piezas que fallar en la demo:** una VM agrega red, DNS y un certificado que dependen de terceros justo el día de la exposición (R14).
+
+**Consecuencia.** El criterio «URL pública» de la plantilla se cubre con las URL de [5.15.5](05_15_despliegue.md) (repositorio, Actions, Releases, imagen GHCR y `https://localhost:8443`); las del ERP **solo responden en la PC que lo levanta**. Si más adelante se quisiera publicar, el camino ya está documentado como recomendación técnica en [8.2](08_recomendaciones.md): VM con Compose y el perfil `proxy`, Let's Encrypt en lugar del certificado autofirmado, un `cd.yml` por SSH con *rollback* a la imagen del tag anterior y monitoreo con Uptime Kuma.
+
+Evidencia: [`HU-27_evidencia_seguridad.txt`](../capturas/sprint-3/HU-27_evidencia_seguridad.txt) (despliegue protegido), [`HU-29_evidencia_release.txt`](../capturas/sprint-3/HU-29_evidencia_release.txt) (ensayo de la release), [6.4](06_04_a_06_06_repositorio.md) (Actions, Releases y GHCR) y [5.15](05_15_despliegue.md).
