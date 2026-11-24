@@ -2,7 +2,7 @@
 
 > **Estado:** borrador del Sprint 3 · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [4.2.2](04_02_requerimientos_funcionales.md) (tabla 2), [casos de uso](04_02_casos_de_uso.md), [matriz de trazabilidad](trazabilidad.md), [04 §4.4 del plan](../plan/04_scrum_pmbok.md) (criterios de aceptación) y las pruebas de `addons/donofrio_base/tests/`
 >
-> Una ficha por RF, con el mismo formato. Los 14 RF de la **Fase 1** están *Implementados*; los 4 de la **Fase 2** (RF004, RF008, RF011 y RF012) y la parte propia de RF013 están *Diseñado – trabajo futuro*: tienen caso de uso, wireframe, mockup y BPMN TO-BE, pero ningún código ni prueba. El estado es el real al 23/11/2026 y cambia si el Gate 0 aprueba algún módulo.
+> Una ficha por RF, con el mismo formato. Los 14 RF de la **Fase 1** y los 2 de **M1** (RF011 y RF012, desde el 24/11/2026) están *Implementados*; los de la **Fase 2** que faltan (RF004 y RF008) y la parte propia de RF013 están *Diseñado – trabajo futuro*: tienen caso de uso, wireframe, mockup y BPMN TO-BE, pero ningún código ni prueba. El estado es el real al 23/11/2026 y cambia si el Gate 0 aprueba algún módulo.
 
 ## Resumen
 
@@ -18,8 +18,8 @@
 | [RF008](#rf008) | Registrar temperaturas y alertar cuando están fuera de rango | F2 | HU-19 | Diseñado – trabajo futuro |
 | [RF009](#rf009) | Mantener listas de materiales (recetas) y centros de trabajo | F1 | HU-07 | Implementado |
 | [RF010](#rf010) | Planificar y ejecutar órdenes de producción con lote | F1 | HU-14 | Implementado |
-| [RF011](#rf011) | Inspeccionar la calidad por puntos de control ligados a la OP y al lote | F2 | HU-17 | Diseñado – trabajo futuro |
-| [RF012](#rf012) | Emitir el certificado de calidad del lote | F2 | HU-18 | Diseñado – trabajo futuro |
+| [RF011](#rf011) | Inspeccionar la calidad por puntos de control ligados a la OP y al lote | F2 | HU-17 | Implementado (M1) |
+| [RF012](#rf012) | Emitir el certificado de calidad del lote | F2 | HU-18 | Implementado (M1) |
 | [RF013](#rf013) | Tablero gerencial de KPIs | F1 | HU-23 | Implementado con dashboards estándar; tablero OWL: Diseñado – trabajo futuro |
 | [RF014](#rf014) | Análisis por línea, canal y temporada | F1 | HU-23 | Implementado |
 | [RF015](#rf015) | Comprar insumos con reabastecimiento mín./máx. | F1 | HU-13 | Implementado |
@@ -270,8 +270,9 @@
 | **Criterios de aceptación** | Al terminar la OP se crea la inspección; aprobar o rechazar con mediciones; un lote rechazado no puede entregarse; pruebas. |
 | **Reglas de negocio y limitaciones** | Un lote rechazado no se despacha (RNF005). En Community no hay inspecciones de calidad (el módulo Calidad es Enterprise). |
 | **Diseño disponible** | `docs/diagramas/pantallas/mk_cu008_inspeccion.png`<br>`docs/diagramas/bpmn/to-be_produccion_m1.png` |
-| **Lo que falta** | Sin código ni pruebas propias. |
-| **Estado** | **Diseñado – trabajo futuro** |
+| **Implementación y evidencia** | `addons/donofrio_calidad` ([5.5b](05_05_modulo_donofrio_calidad.md)); `tests/test_inspeccion.py`; `docs/capturas/sprint-4/HU-17_*` |
+| **Lo que falta** | Nada de lo diseñado para M1. |
+| **Estado** | **Implementado** (M1, 24/11/2026) |
 
 ## RF012
 
@@ -290,8 +291,9 @@
 | **Criterios de aceptación** | Reporte QWeb con mediciones, responsable y logo; solo para inspecciones aprobadas. |
 | **Reglas de negocio y limitaciones** | Depende de RF011. |
 | **Diseño disponible** | `docs/diagramas/pantallas/mk_rp_certificado_calidad.png` |
-| **Lo que falta** | Sin código ni pruebas propias. |
-| **Estado** | **Diseñado – trabajo futuro** |
+| **Implementación y evidencia** | `report/calidad_report.xml`; `docs/capturas/sprint-4/HU-18_certificado_pdf.jpg` |
+| **Lo que falta** | Nada de lo diseñado para M1. |
+| **Estado** | **Implementado** (M1, 24/11/2026) |
 
 ## RF013
 

@@ -106,7 +106,7 @@ El PNG sale del SVG con el mismo comando de Docker de [`docs/diagramas/README.md
 
 ### CU008 · Inspección de calidad del lote
 
-**Estado de la pantalla:** Diseño: trabajo futuro si no se construye el módulo. **Ruta:** Calidad › Inspecciones › INS/00018.
+**Estado de la pantalla:** Implementada (`donofrio_calidad`, HU-17 y HU-18); capturas reales en `docs/capturas/sprint-4/`. **Ruta:** Calidad › Inspecciones › INS/00003.
 
 | Wireframe (4.4.1) | Mockup (4.4.2) |
 |---|---|

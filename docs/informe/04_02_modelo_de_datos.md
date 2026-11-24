@@ -51,7 +51,7 @@ Las clases de los módulos de la Fase 2 se diseñan a partir del plan ([03 §3.3
 
 | Clase propuesta | Módulo | Estado | Relación con el núcleo |
 |---|---|---|---|
-| `donofrio.calidad.punto`, `donofrio.calidad.inspeccion` y su línea de medición | M1 `donofrio_calidad` | **Propuesto** | La inspección se liga a `mrp.production` y `stock.lot`; un lote rechazado no se despacha |
+| `donofrio.calidad.punto`, `donofrio.calidad.inspeccion` y su línea de medición | M1 `donofrio_calidad` | **Implementado** (24/11/2026) | La inspección se liga a `mrp.production` y `stock.lot`; un lote rechazado no se despacha. Tablas y diccionario en [5.5b](05_05_modulo_donofrio_calidad.md) |
 | `donofrio.temperatura` y `temp_min`/`temp_max` en `stock.location` | M3 cadena de frío (requiere M1) | **Propuesto** | Registra temperaturas por ubicación y alerta si salen de rango |
 | `donofrio.liquidacion` y su línea | M2 `donofrio_heladeros` | **Propuesto** | Al liquidar crea y confirma un `sale.order` |
 | Servicio de KPIs (`get_kpis()`) | M4 `donofrio_tablero` | **Propuesto** | Lee ventas y, si están instalados, los módulos anteriores |
