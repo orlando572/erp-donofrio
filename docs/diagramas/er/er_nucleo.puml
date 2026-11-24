@@ -1,6 +1,6 @@
 @startuml er_nucleo
 ' Generado por scripts/diagrama_er.py desde la BD real; no se edita a mano (ver docs/diagramas/README.md).
-title Modelo ER del núcleo (36 tablas centrales de la Fase 1)
+title Modelo ER general (39 tablas centrales: núcleo de la Fase 1 y M1 calidad)
 hide circle
 hide empty methods
 left to right direction
@@ -274,6 +274,25 @@ entity "project_task" as project_task #ECECEC {
   partner_id : integer <<FK>>
   <i>+ FK a project_task</i>
 }
+entity "donofrio_calidad_punto" as donofrio_calidad_punto #E6E3F7 {
+  * id : integer <<PK>>
+  --
+  categ_id : integer <<FK>>
+}
+entity "donofrio_calidad_inspeccion" as donofrio_calidad_inspeccion #E6E3F7 {
+  * id : integer <<PK>>
+  --
+  * production_id : integer <<FK>>
+  * lot_id : integer <<FK>>
+  product_id : integer <<FK>>
+  <i>+ FK a res_users</i>
+}
+entity "donofrio_calidad_linea" as donofrio_calidad_linea #E6E3F7 {
+  * id : integer <<PK>>
+  --
+  * inspeccion_id : integer <<FK>>
+  * punto_id : integer <<FK>>
+}
 sale_order }o--|| res_partner : partner_id, partner_invoice_id (+1)
 sale_order }o--o| product_pricelist : pricelist_id
 sale_order }o--o| crm_lead : opportunity_id
@@ -359,10 +378,16 @@ account_move_line }o--o| product_product : product_id
 account_move_line }o--o| purchase_order_line : purchase_line_id
 res_users }o--|| res_partner : partner_id
 project_task }o--o| res_partner : partner_id
+donofrio_calidad_punto }o--o| product_category : categ_id
+donofrio_calidad_inspeccion }o--|| mrp_production : production_id
+donofrio_calidad_inspeccion }o--|| stock_lot : lot_id
+donofrio_calidad_inspeccion }o--o| product_product : product_id
+donofrio_calidad_linea }o--|| donofrio_calidad_inspeccion : inspeccion_id
+donofrio_calidad_linea }o--|| donofrio_calidad_punto : punto_id
 legend bottom
   * = no admite nulo · <<PK>> clave primaria · <<FK>> clave foránea · color = área del negocio
   Pata de gallo: ||  uno exacto · o|  cero o uno · }o  cero o muchos
   Las FK a res_users, stock_location, stock_picking_type y account_journal y las autorreferencias se anotan
-  en la caja («+ FK a …») sin línea. Áreas: Ventas y CRM, Maestros, Inventario, Producción, Compras, Facturación, Seguridad y mesa de servicios
+  en la caja («+ FK a …») sin línea. Áreas: Ventas y CRM, Maestros, Inventario, Producción, Compras, Facturación, Seguridad y mesa de servicios, Calidad (M1)
 endlegend
 @enduml

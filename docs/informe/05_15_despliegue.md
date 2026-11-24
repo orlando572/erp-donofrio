@@ -2,7 +2,7 @@
 
 > **Estado:** borrador del Sprint 3 · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [06 §6.4 y §6.5](../plan/06_github_ci_infra.md), [02 §2.2](../plan/02_mapeo_plantilla.md) (5.15 y 5.16), [09 §9.3](../plan/09_normas_marcos.md), [docs/dev/release.md](../dev/release.md), [manual de instalación](../manuales/manual_instalacion.md), `.github/workflows/*.yml`
 >
-> Describe lo que **existe en `develop` al 23/11/2026**. Dos cosas que el plan nombraba **no existen**: un despliegue automático a una VM (`cd.yml` y `deploy.sh` eran opcionales) y una release publicada (todavía no hay ningún tag `v*`: la imagen de GHCR y el zip son un flujo listo y probado en ensayo). Cómo regenerar el pipeline: [docs/diagramas/README.md](../diagramas/README.md).
+> Describe lo que **existe en `develop` al 23/11/2026**. Una cosa que el plan nombraba **no existe**: un despliegue automático a una VM (`cd.yml` y `deploy.sh` eran opcionales). La release **sí existe desde el 24/11/2026**: el tag `v1.0.0` está en `main` y la GitHub Release «ERP D'Onofrio v1.0.0» está publicada; **pendiente de verificar** el zip adjunto y la imagen en GHCR (el paquete respondía 404 antes del tag). Cómo regenerar el pipeline: [docs/diagramas/README.md](../diagramas/README.md).
 
 ## 5.15.1 Enfoque de despliegue
 
@@ -10,7 +10,7 @@
 |---|---|
 | **Entornos** | (1) **Desarrollo:** la PC de cada integrante, `workers = 0`, `http://localhost:8069`. (2) **CI:** el *runner* efímero `ubuntu-24.04` de GitHub Actions. (3) **Demostración «en producción»:** la PC de la exposición con el perfil `proxy` (Nginx con TLS, `workers = 2`, `proxy_mode`), `https://localhost:8443`. No hay una VM en la nube |
 | **Estrategia** | **Un solo nodo con reemplazo de contenedores** (*rolling* de un nodo): `docker compose up -d --build --wait` recrea solo lo que cambió y espera a que quede `healthy`. Hay unos segundos de corte; es aceptable para una demo y un solo equipo |
-| **Rollback** | **Por versión etiquetada:** volver al tag anterior (`git checkout vX.Y.Z` y `scripts/levantar_prod.sh`, o correr la imagen `ghcr.io/orlando572/erp-donofrio:vX.Y.Z`) y, si los datos cambiaron, restaurar con `scripts/restore.sh` en una base nueva. **No se ensayó un rollback real** porque aún no hay tags publicados |
+| **Rollback** | **Por versión etiquetada:** volver al tag anterior (`git checkout vX.Y.Z` y `scripts/levantar_prod.sh`, o correr la imagen `ghcr.io/orlando572/erp-donofrio:vX.Y.Z`) y, si los datos cambiaron, restaurar con `scripts/restore.sh` en una base nueva. **No se ensayó un rollback real**: hasta el 24/11/2026 solo existe el tag `v1.0.0`, así que no hay una versión anterior a la cual volver |
 | **Backup previo** | Obligatorio por procedimiento: `scripts/backup.sh` antes de actualizar. Está documentado en el manual; **no lo ejecuta ningún script de despliegue** |
 | **Blue-green** | Descrito como mejora (dos pilas de Compose detrás de Nginx). **No implementado** |
 | **Actualización de datos** | `odoo -u donofrio_base` sobre la base con datos; los datos `noupdate` **no** se actualizan con `-u`: hay que recrear la base o usar el hook |
@@ -107,12 +107,12 @@ Las releases salen de `main` (merge commit desde `develop`); los PR de trabajo e
 
 ## 5.15.5 URLs de publicación
 
-| Qué | URL | Estado al 23/11/2026 |
+| Qué | URL | Estado al 24/11/2026 |
 |---|---|---|
 | Repositorio | <https://github.com/orlando572/erp-donofrio> | Público |
 | Actions | <https://github.com/orlando572/erp-donofrio/actions> | Corridas en verde de `ci.yml` |
-| Releases | <https://github.com/orlando572/erp-donofrio/releases> | **Vacía** (sin tags) |
-| Imagen | `ghcr.io/orlando572/erp-donofrio:vX.Y.Z` | **Aún no publicada** (aparece con el primer tag) |
+| Releases | <https://github.com/orlando572/erp-donofrio/releases> | **Publicada:** «ERP D'Onofrio v1.0.0» (24/11/2026, 05:43 UTC), sobre el tag `v1.0.0` de `main`. **Pendiente de verificar:** el zip adjunto |
+| Imagen | `ghcr.io/orlando572/erp-donofrio:vX.Y.Z` | **Pendiente de verificar** (el paquete respondía 404 antes del tag; falta confirmar que `release.yml` lo publicó y que su visibilidad es pública) |
 | ERP, front-end y back-end (demo protegida) | `https://localhost:8443` (entrada `/odoo`; `http://localhost:8080` redirige) | Solo en la PC donde se levanta el perfil `proxy`; certificado autofirmado |
 | ERP en desarrollo | `http://localhost:8069` (*websocket* en `8072`) | Solo en la PC |
 | Persistencia (PostgreSQL primario) | `localhost:5432` | Solo en la PC |
@@ -150,4 +150,4 @@ No hay un servidor público: el sistema se ejecuta en la PC de quien lo levanta.
 
 ### Resumen de lo que no existe
 
-Despliegue automático a una VM (`cd.yml`, `deploy.sh`), release y paquete en GHCR publicados, Uptime Kuma, Dependabot, plantilla de RFC, BPMN de control de cambios y de solicitud de acceso, proyección de usuarios y *cron* de respaldo instalado.
+Despliegue automático a una VM (`cd.yml`, `deploy.sh`), Uptime Kuma, Dependabot, plantilla de RFC, BPMN de control de cambios y de solicitud de acceso, proyección de usuarios y *cron* de respaldo instalado.

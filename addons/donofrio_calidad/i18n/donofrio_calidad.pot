@@ -1,0 +1,358 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* donofrio_calidad
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-24 00:00+0000\n"
+"PO-Revision-Date: 2026-11-24 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: donofrio_calidad
+#: model:res.groups,comment:donofrio_calidad.group_calidad_jefe
+msgid ""
+"Además del inspector, define los puntos de control y borra inspecciones."
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:donofrio.calidad.punto,name:donofrio_calidad.punto_microbiologia
+msgid "Análisis microbiológico"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__donofrio_calidad_inspeccion__state__aprobada
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__stock_lot__calidad_estado__aprobada
+msgid "Aprobado"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_calidad_inspeccion_form
+msgid "Aprobar lote"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "<br/>Inspector de calidad"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid ""
+"<br/>\n"
+"                                <strong>Empresa:</strong>"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid ""
+"<br/>\n"
+"                                <strong>Lote:</strong>"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid ""
+"<br/>\n"
+"                                <strong>Responsable de calidad:</strong>"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid ""
+"<br/>\n"
+"                                <strong>Vencimiento:</strong>"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.ui.menu,name:donofrio_calidad.menu_calidad_root
+msgid "Calidad"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:res.groups,name:donofrio_calidad.group_calidad_inspector
+msgid "Calidad: inspector"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:res.groups,name:donofrio_calidad.group_calidad_jefe
+msgid "Calidad: jefatura"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.actions.report,name:donofrio_calidad.action_report_certificado
+#: model:ir.model,name:donofrio_calidad.model_report_donofrio_calidad_report_certificado
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "Certificado de calidad del lote"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.actions.report,print_report_name:donofrio_calidad.action_report_certificado
+msgid "'Certificado de calidad - %s' % (object.lot_id.name or '')"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_calidad_inspeccion_form
+msgid "Certificado PDF"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__donofrio_calidad_linea__resultado__cumple
+msgid "Cumple"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__donofrio_calidad_punto__tipo__aprobacion
+msgid "Cumple / no cumple"
+msgstr ""
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_punto.py:0
+msgid "Debe cumplir"
+msgstr ""
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid "Decidir reproceso o descarte del lote %s"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_lot__display_name
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_move_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/report_certificado.py:0
+msgid "El certificado solo se emite para inspecciones aprobadas."
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid ""
+"El lote cumplió todos los puntos de control y fue <strong>aprobado</strong> "
+"para su despacho."
+msgstr ""
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/stock_move_line.py:0
+msgid ""
+"El lote %s fue rechazado en la inspección de calidad y no se puede "
+"despachar."
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model.constraint,message:donofrio_calidad.constraint_donofrio_calidad_punto_check_rango
+msgid "El valor mínimo no puede ser mayor que el máximo."
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:donofrio.calidad.punto,name:donofrio_calidad.punto_endurecimiento
+msgid "Endurecimiento"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__donofrio_calidad_inspeccion__state__en_curso
+msgid "En medición"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_calidad_inspeccion_search
+msgid "Estado"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:donofrio.calidad.punto,name:donofrio_calidad.punto_humedad_paneton
+msgid "Humedad del panetón"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_mrp_production__id
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_lot__id
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_move_line__id
+msgid "ID"
+msgstr ""
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid "Indica el motivo del rechazo."
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_calidad_inspeccion_form
+msgid "Iniciar medición"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.actions.act_window,name:donofrio_calidad.action_calidad_inspeccion
+#: model:ir.ui.menu,name:donofrio_calidad.menu_calidad_inspecciones
+msgid "Inspecciones"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model,name:donofrio_calidad.model_donofrio_calidad_inspeccion
+msgid "Inspección de calidad del lote"
+msgstr ""
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid "Inspección %s creada"
+msgstr ""
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid ""
+"Lote %(lote)s rechazado en la inspección %(ins)s: %(motivo)s. Queda "
+"bloqueado para el despacho."
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model,name:donofrio_calidad.model_stock_lot
+msgid "Lot/Serial"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model,name:donofrio_calidad.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "Medición"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model,name:donofrio_calidad.model_donofrio_calidad_linea
+msgid "Medición de la inspección de calidad"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:res.groups,comment:donofrio_calidad.group_calidad_inspector
+msgid "Mide los puntos de control, aprueba o rechaza lotes."
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__donofrio_calidad_linea__resultado__no_cumple
+msgid "No cumple"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "Norma"
+msgstr ""
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid "No se puede aprobar: hay puntos de control sin medir o que no cumplen."
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:donofrio.calidad.punto,name:donofrio_calidad.punto_pasteurizacion
+msgid "Pasteurización"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__donofrio_calidad_inspeccion__state__borrador
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__stock_lot__calidad_estado__pendiente
+msgid "Pendiente"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:donofrio.calidad.punto,name:donofrio_calidad.punto_peso_neto
+msgid "Peso neto por unidad (±2 %)"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_calidad_inspeccion_search
+msgid "Por medir"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model,name:donofrio_calidad.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "Punto de control"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model,name:donofrio_calidad.model_donofrio_calidad_punto
+msgid "Punto de control de calidad"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.actions.act_window,name:donofrio_calidad.action_calidad_punto
+#: model:ir.ui.menu,name:donofrio_calidad.menu_calidad_puntos
+msgid "Puntos de control"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_calidad_inspeccion_search
+msgid "Rechazadas"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__stock_lot__calidad_estado__rechazada
+msgid "Rechazado"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_calidad_inspeccion_form
+msgid "Rechazar lote"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "Resultado"
+msgstr ""
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid "Solo se puede aprobar una inspección en medición."
+msgstr ""
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid "Solo se puede iniciar una inspección pendiente."
+msgstr ""
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid "Solo se puede rechazar una inspección en medición."
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "<strong>Orden de producción:</strong>"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "<strong>Producto:</strong>"
+msgstr ""
+
+#. module: donofrio_calidad
+#: model:ir.model.constraint,message:donofrio_calidad.constraint_donofrio_calidad_inspeccion_unique_orden_lote
+msgid "Ya existe una inspección para esa orden y ese lote."
+msgstr ""
+

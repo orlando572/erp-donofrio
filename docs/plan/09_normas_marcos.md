@@ -123,14 +123,20 @@ Se demuestra con dos tablas: la cascada (arriba) en 3.6-3.7 y un mapa "objetivo 
 
 ## 9.7 ISO 9001 + HACCP / ISO 22000: justificación del módulo de calidad y la cadena de frío
 
-| Requisito | Dónde se ve en el ERP |
-|---|---|
-| ISO 9001: identificación y trazabilidad | Lote por OP (`stock.lot`) con vencimiento; trazabilidad de la OP al cliente (RNF004) |
-| ISO 9001: liberación de productos | Inspección **aprobada** = lote liberado; certificado QWeb del lote (RF012) |
-| ISO 9001: control de salidas no conformes | Lote **rechazado** → no se puede despachar (RNF005) |
-| HACCP: PCC y límites críticos | **F1:** PCC documentados en las instrucciones de las operaciones de la BoM. **F2-M1/M3:** puntos de control de `donofrio_calidad`: **pasteurización 80-85 °C** y **almacenamiento ≤ −18 °C** como PCC (supuesto S5) |
-| HACCP: monitoreo, acción correctiva y registros | `donofrio.temperatura` (registro) → fuera de rango → actividad para el jefe de almacén (acción correctiva) → historial en el chatter (registro) |
-| ISO 22000: trazabilidad y retiro | FEFO + búsqueda de lotes por vencimiento; el *cron* avisa de los lotes por vencer |
+> **Estado al 24/11/2026.** M1 `donofrio_calidad` ya está en `develop` (HU-17 y HU-18, PR #219, #220 y #221): la parte de **calidad** de esta tabla existe y tiene 12 pruebas (`scripts/test.sh donofrio_calidad`). La **cadena de frío** (temperatura, alertas) es M3, que no se ha empezado: queda como trabajo futuro. Se usa ISO 9001 y HACCP como **buenas prácticas de referencia**; no hay certificación. Detalle y límites en [5.5b](../informe/05_05_modulo_donofrio_calidad.md).
+
+| Requisito | Dónde se ve en el ERP | Estado |
+|---|---|---|
+| ISO 9001: identificación y trazabilidad | Lote por OP (`stock.lot`) con vencimiento; trazabilidad de la OP al cliente (RNF004). M1 liga cada inspección a la **orden de producción y al lote** (`donofrio.calidad.inspeccion`, con `UNIQUE` por orden y lote) y muestra el estado de calidad del lote | **Implementado** (F1 y M1) |
+| ISO 9001: seguimiento y medición del producto | Al terminar la OP se crea una inspección pendiente por lote; el inspector mide los puntos de control (pasteurización 80 a 85 °C, endurecimiento, peso neto, análisis microbiológico, humedad del panetón) y aprueba solo si **todos** cumplen (RF011, HU-17) | **Implementado** (M1) |
+| ISO 9001: liberación de productos | Inspección **aprobada** = lote liberado; **certificado de calidad del lote en PDF** (QWeb) con mediciones, responsable y logo, solo para inspecciones aprobadas (RF012, HU-18) | **Implementado** (M1) |
+| ISO 9001: control de salidas no conformes | Lote **rechazado** (con motivo y actividad al responsable de la orden) → `stock.move.line` **bloquea la salida a un cliente** (RNF005). Un lote sin inspección no se bloquea, para no romper los flujos de la Fase 1 | **Implementado** (M1), con límites: el bloqueo se probó con pruebas automáticas, no en la pantalla ni en el punto de venta |
+| ISO 9001: control de registros y responsabilidades | Número `INS/`, inspector, historial de cambios (*chatter*) y grupos «Calidad: inspector» y «Calidad: jefatura» con ACL | **Implementado** (M1) |
+| HACCP: PCC y límites críticos | **F1:** PCC documentados en las instrucciones de las operaciones de la BoM. **M1:** la **pasteurización 80 a 85 °C** y el **endurecimiento −40 a −18 °C** son puntos de control medidos en la inspección del lote. Los rangos son **supuestos del caso** (S5; datos ficticios), no una norma verificada | **Implementado** (M1); el **almacenamiento ≤ −18 °C** como PCC continuo es de M3 |
+| HACCP: monitoreo, acción correctiva y registros | **M1:** la medición queda registrada por lote, y el rechazo deja motivo, mensaje y actividad para producción. **M3 (futuro):** registro de temperatura de las cámaras, alerta fuera de rango y actividad para el jefe de almacén | **Parcial** (M1: monitoreo por lote); **trabajo futuro** (M3: cadena de frío; `donofrio.temperatura` no existe) |
+| ISO 22000: trazabilidad y retiro | FEFO y el filtro «Stock por vencer (30 días)» (`donofrio_base`); con M1, un lote rechazado queda marcado. **No existe** un aviso automático (*cron*) de lotes por vencer ni un procedimiento de retiro del mercado | **Parcial** |
+
+**Qué no cubre M1:** las inspecciones de las órdenes históricas (solo se crean al terminar una orden nueva), la cadena de frío (M3) y la certificación ISO 9001, HACCP o ISO 22000.
 
 En Perú, la vigilancia sanitaria de alimentos la ejerce DIGESA y existe una norma sanitaria para aplicar HACCP (citar con la referencia exacta después de verificarla; se cree que es la R.M. 449-2006/MINSA).
 
