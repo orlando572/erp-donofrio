@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- HU-24: favicon de la marca en el backend (el de Odoo es el predeterminado de web.layout) -->
+    <template id="layout_favicon" inherit_id="web.layout">
+        <xpath expr="//link[@rel='shortcut icon']" position="attributes">
+            <attribute name="type">image/png</attribute>
+            <attribute name="t-att-href">x_icon or '/donofrio_tablero/static/img/favicon.png'</attribute>
+        </xpath>
+    </template>
+</odoo>

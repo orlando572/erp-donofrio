@@ -54,7 +54,7 @@ Las clases de los módulos de la Fase 2 se diseñan a partir del plan ([03 §3.3
 | `donofrio.calidad.punto`, `donofrio.calidad.inspeccion` y su línea de medición | M1 `donofrio_calidad` | **Implementado** (24/11/2026) | La inspección se liga a `mrp.production` y `stock.lot`; un lote rechazado no se despacha. Tablas y diccionario en [5.5b](05_05_modulo_donofrio_calidad.md) |
 | `donofrio.temperatura` y `control_temperatura`, `temp_min` y `temp_max` en `stock.location` | M3 cadena de frío (incremento de `donofrio_calidad`) | **Implementado** (24/11/2026) | Registra temperaturas por ubicación, marca la lectura fuera de rango y crea una actividad al jefe de almacén; agrega también `stock.lot.alerta_vencimiento_fecha` para el cron de lotes por vencer. Tablas y diccionario en [5.5d](05_05_modulo_donofrio_frio.md) |
 | `donofrio.liquidacion` y su línea | M2 `donofrio_heladeros` | **Implementado** (24/11/2026) | Al liquidar crea y confirma un `sale.order`. Tablas y diccionario en [5.5c](05_05_modulo_donofrio_heladeros.md) |
-| Servicio de KPIs (`get_kpis()`) | M4 `donofrio_tablero` | **Propuesto** | Lee ventas y, si están instalados, los módulos anteriores |
+| Servicio de KPIs (`get_kpis()`) | M4 `donofrio_tablero` | **Implementado** (24/11/2026) | Modelo abstracto: **no tiene tablas** (el ER no cambia: 42 tablas). Lee ventas y, si están instalados, los módulos anteriores ([5.5e](05_05_modulo_donofrio_tablero.md)) |
 
 ## 4.2.6 Diseño de base de datos: modelo ER
 

@@ -2,7 +2,7 @@
 
 > **Estado:** borrador del Sprint 3 · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [4.2.2](04_02_requerimientos_funcionales.md) (tabla 2), [casos de uso](04_02_casos_de_uso.md), [matriz de trazabilidad](trazabilidad.md), [04 §4.4 del plan](../plan/04_scrum_pmbok.md) (criterios de aceptación) y las pruebas de `addons/donofrio_base/tests/`
 >
-> Una ficha por RF, con el mismo formato. Los 14 RF de la **Fase 1**, los 2 de **M1** (RF011 y RF012), el de **M2** (RF004) y el de **M3** (RF008), desde el 24/11/2026, están *Implementados*; solo la parte propia de RF013 (tablero OWL, M4) está *Diseñado – trabajo futuro*: tiene caso de uso, wireframe, mockup y BPMN TO-BE, pero ningún código ni prueba. El estado es el real al 23/11/2026 y cambia si el Gate 0 aprueba algún módulo.
+> Una ficha por RF, con el mismo formato. Los 14 RF de la **Fase 1**, los 2 de **M1** (RF011 y RF012), el de **M2** (RF004) el de **M3** (RF008) y el tablero OWL de **M4** (parte propia de RF013), desde el 24/11/2026, están *Implementados*: ya no queda ningún RF de la Fase 2 como *Diseñado – trabajo futuro*. El estado es el real al 23/11/2026 y cambia si el Gate 0 aprueba algún módulo.
 
 ## Resumen
 
@@ -20,7 +20,7 @@
 | [RF010](#rf010) | Planificar y ejecutar órdenes de producción con lote | F1 | HU-14 | Implementado |
 | [RF011](#rf011) | Inspeccionar la calidad por puntos de control ligados a la OP y al lote | F2 | HU-17 | Implementado (M1) |
 | [RF012](#rf012) | Emitir el certificado de calidad del lote | F2 | HU-18 | Implementado (M1) |
-| [RF013](#rf013) | Tablero gerencial de KPIs | F1 | HU-23 | Implementado con dashboards estándar; tablero OWL: Diseñado – trabajo futuro |
+| [RF013](#rf013) | Tablero gerencial de KPIs | F1 y F2 | HU-23, HU-22 | Implementado (dashboards estándar y tablero OWL de M4) |
 | [RF014](#rf014) | Análisis por línea, canal y temporada | F1 | HU-23 | Implementado |
 | [RF015](#rf015) | Comprar insumos con reabastecimiento mín./máx. | F1 | HU-13 | Implementado |
 | [RF016](#rf016) | Emitir facturas y boletas con IGV (`l10n_pe`) | F1 | HU-03 | Implementado |
@@ -311,15 +311,15 @@
 | **Caso de uso** | CU009 ([4.2.4](04_02_casos_de_uso.md)) |
 | **Actores** | Gerente General (principal), Contador |
 | **Descripción** | Mostrar a la gerencia los indicadores de ventas, stock y vencimientos en un tablero. |
-| **Criterios de aceptación** | F1: dashboards de Community activos y vistas guardadas por código. F2: acción OWL con 6 tarjetas y un gráfico mensual, filtro por almacén, carga en menos de 3 s. |
+| **Criterios de aceptación** | F1: dashboards de Community activos y vistas guardadas por código. F2: acción OWL con hasta 6 tarjetas y un gráfico mensual, filtro por almacén, carga en menos de 3 s (medido: 30 a 57 ms la consulta y 177 ms la página, en una PC). |
 | **Reglas de negocio y limitaciones** | Solo lectura en Community; el panel de ventas carga en menos de 3 s (RNF008). El rendimiento del backend es 59 frente a la meta de 80 (limitación declarada). Los títulos de algunos gráficos salen en inglés. |
-| **Implementación** | `addons/donofrio_base/data/vistas_gerencia_data.xml` |
-| **Pruebas** | `addons/donofrio_base/tests/test_gerencia.py (5)` |
-| **Evidencia** | `docs/capturas/sprint-3/HU-23_* (5)` |
+| **Implementación** | `addons/donofrio_base/data/vistas_gerencia_data.xml` (F1) y `addons/donofrio_tablero` (M4, [5.5e](05_05_modulo_donofrio_tablero.md)) |
+| **Pruebas** | `addons/donofrio_base/tests/test_gerencia.py (5)` y `addons/donofrio_tablero/tests/test_tablero.py (17)` |
+| **Evidencia** | `docs/capturas/sprint-3/HU-23_* (5)` y `docs/capturas/sprint-4/HU-22_*` |
 | **PR fusionados** | [#188](https://github.com/orlando572/erp-donofrio/pull/188) |
-| **Lo que falta** | El tablero OWL propio no tiene código ni pruebas. |
+| **Lo que falta** | Nada de lo diseñado para M4. Límites: el tablero no se midió con Lighthouse, la tarjeta de cumplimiento cuenta las OP del mes que ya empezaron y el filtro de almacén no aplica a las liquidaciones ([5.5e.8](05_05_modulo_donofrio_tablero.md)). |
 | **Prototipo** | `docs/diagramas/pantallas/mk_cu009_tablero.png` |
-| **Estado** | **Implementado con dashboards estándar; tablero OWL: Diseñado – trabajo futuro** |
+| **Estado** | **Implementado** (dashboards estándar en F1; tablero OWL en M4, 24/11/2026) |
 
 ## RF014
 
