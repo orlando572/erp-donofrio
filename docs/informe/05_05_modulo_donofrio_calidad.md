@@ -2,7 +2,7 @@
 
 > **Estado:** borrador del Sprint 4 · **Autora:** Evelyn · **Revisa:** Orlando (dueño del módulo) · **Fuente:** `addons/donofrio_calidad/` en `develop` (PR #219 y #220), una base de desarrollo con el módulo instalado y las capturas de [`docs/capturas/sprint-4/`](../capturas/sprint-4/)
 >
-> Complementa la sección 5.5 (`donofrio_base`). **No** sustituye al ER general del núcleo (4.2.6): las tres tablas de este módulo se listan aquí, extraídas de la base real con `information_schema`, y **no están en los diagramas ER regenerados** del núcleo; si el equipo quiere el ER ampliado, se regenera con `scripts/diagrama_er.py` sobre una base con el módulo instalado.
+> Complementa la sección 5.5 (`donofrio_base`). **No** sustituye al ER general del núcleo (4.2.6): las tres tablas de este módulo se listan aquí, extraídas de la base real con `information_schema`, y **sí están** en el ER general (4.2.6, área «Calidad (M1)») y en el diccionario del núcleo (Tablas 4.2.8-37 a 4.2.8-39), regenerados con `scripts/diagrama_er.py` y `scripts/diccionario_datos.py` sobre una base con el módulo instalado.
 
 ## 5.5b.1 Qué hace
 
