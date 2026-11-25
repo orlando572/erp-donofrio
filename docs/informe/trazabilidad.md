@@ -1,6 +1,6 @@
 # Matriz de trazabilidad: requisito → HU → prueba
 
-Los 18 requisitos funcionales y los 13 no funcionales se relacionan con la historia de usuario que los implementa y con las pruebas automáticas que los verifican (entre paréntesis, la cantidad de pruebas del archivo). Todos los RF están implementados, los de la Fase 2 con los módulos M1 a M4 (releases `v1.1.0` a `v1.4.0`). El repositorio tiene **218** pruebas (137 de `donofrio_base`, 45 de `donofrio_calidad`, 15 de `donofrio_heladeros` y 21 de `donofrio_tablero`) y cada celda de archivo, prueba y evidencia se comprobó al generar la matriz.
+Los 18 requisitos funcionales y los 13 no funcionales se relacionan con su historia de usuario y con las pruebas que los verifican (entre paréntesis, la cantidad de pruebas del archivo). Todos los RF están implementados; el repositorio tiene **218** pruebas.
 
 ### Tabla 41. Matriz de trazabilidad
 

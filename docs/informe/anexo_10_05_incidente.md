@@ -4,8 +4,6 @@ Este anexo trae el formato del registro de incidente (ITIL 4), la matriz de prio
 
 La prioridad sale de la matriz impacto × urgencia, con los plazos de 4.7.3 (respuesta y resolución): P1, 30 min y 4 h; P2, 2 h y 8 h; P3, 8 h y 3 días; P4, 1 día y 5 días.
 
-La matriz impacto × urgencia es la de 4.7.3: P1 es impacto alto con urgencia alta; P2, impacto medio con urgencia alta o alto con urgencia media; P3 y P4, los casos restantes.
-
 ## Formato y ejemplo lleno: el tablero gerencial no carga
 
 | Campo | Contenido |

@@ -2,6 +2,8 @@
 
 Son recomendaciones para una empresa como D'Onofrio a partir de lo que el proyecto probó; los datos de la empresa son ficticios y las mediciones salen de una sola PC. Con la Fase 2 completa, varias pasan de «construir» a «adoptar, medir y ampliar» lo ya construido.
 
+**Tabla 8.1. Recomendaciones de negocio y gestión**
+
 | # | Recomendación | Problema (3.2.4) | Plazo |
 |---|---|---|---|
 | 1 | Poner en marcha el sistema con datos reales y capacitación por rol | Los 7 | Corto |

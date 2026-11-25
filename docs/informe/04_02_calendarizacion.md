@@ -30,6 +30,6 @@ gantt
     Entrega (H8)                   :crit, milestone, h8, 2026-11-27 14:30, 0d
 ```
 
-*Figura 4.15. Diagrama de Gantt con las fechas reales de ejecución y el Cierre hasta la entrega (hora de Lima).*
+*Figura 4.15. Diagrama de Gantt con las fechas reales de ejecución y el Cierre.*
 
 La Fase 2 se completó antes de la hora de corte fijada para decidir su alcance (jueves 26/11, 08:00); el Cierre y la entrega no se movieron.

@@ -8,6 +8,6 @@ La Calidad estándar de Odoo es Enterprise, así que M1 la construye como módul
 
 ![Inspección aprobada con sus cuatro mediciones dentro de la norma](../capturas/sprint-4/HU-17_inspeccion_aprobada.png)
 
-*Figura 5.5b-a. Inspección INS/00180 aprobada, con las cuatro mediciones dentro de su norma (usuario Inspector de Calidad, datos de demostración).*
+*Figura 5.5b-a. Inspección INS/00180 aprobada, con las cuatro mediciones dentro de su norma (datos de demostración).*
 
 **Pruebas y límites.** `donofrio_calidad` tiene 45 pruebas sin errores: 13 de inspección y certificado, 2 del punto de venta, 1 de idioma y 29 de la cadena de frío (5.5d). En la pantalla se verificaron la lista de inspecciones, la aprobación, el rechazo por pasteurización a 79.46 °C y el certificado PDF. El bloqueo del lote rechazado se probó con pruebas automáticas y no en la pantalla del punto de venta, y un lote sin inspección no se bloquea, para no romper los flujos de la Fase 1.

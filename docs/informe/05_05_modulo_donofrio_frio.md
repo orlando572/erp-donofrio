@@ -13,6 +13,6 @@ En la Fase 1 el rango de temperatura de una cámara iba solo en el nombre de la 
 
 ![Lectura de temperatura fuera de rango con su actividad](../capturas/sprint-4/HU-19_lectura_fuera_de_rango.png)
 
-*Figura 5.5d-a. Lectura fuera de rango: cinta «Fuera de rango» y actividad para el jefe de almacén (usuario Jefe de Almacén, datos de demostración).*
+*Figura 5.5d-a. Lectura fuera de rango: cinta «Fuera de rango» y actividad para el jefe de almacén (datos de demostración).*
 
 **Pruebas y límites.** Las 29 pruebas de la cadena de frío pasan sin errores: rangos, lecturas dentro y fuera de rango, una sola actividad por lectura, correcciones, destinatario, permisos y las nueve del *cron*. En la pantalla se verificaron la lista de lecturas, una lectura dentro y otra fuera de rango, el rango en la ubicación y la actividad del *cron* sobre un lote que vence en 4 días, junto a la alerta estándar de `product_expiry`, que puede coincidir sobre el mismo lote. Las lecturas se registran a mano, sin sensores, y el sistema no avisa si falta una lectura; solo las cuatro cámaras de `donofrio_base` traen rango.

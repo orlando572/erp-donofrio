@@ -9,11 +9,7 @@ Las mediciones salen de corridas reales (k6, Lighthouse, respaldos, réplica y p
 | Tipo | Métrica | Medición |
 |---|---|---|
 | **Técnica** | Tiempo de respuesta p95 (k6, 20 usuarios) | 9 a 18 ms en listas, formularios y tablero; 342 ms en el login |
-| | Tasa de errores | 0 de 2 765 peticiones en carga normal; 1 de 20 888 en esfuerzo |
 | | Rendimiento web (Lighthouse) | Login 100; dashboard 80; backend 59 |
-| | Réplica y restauración | Retraso de 2 ms; RTO de 31 s y 11 s |
-| | Seguridad (ZAP baseline) | 0 alertas altas, 4 medias y 3 bajas |
-| | Disponibilidad | No medida en el tiempo |
 | **De negocio** | Ventas, producción e inventario | S/ 7.7 M vendidos de agosto a noviembre; 3 405 000 unidades en 188 órdenes; inventario de S/ 4.44 M |
 | | Calidad, heladeros y frío (M1 a M3) | 94,9 % de lotes aprobados (169 de 178); merma de heladeros de 0,27 %; 7 de 896 lecturas fuera de rango |
 | **Otras** | Pruebas y entrega | 218 de 218 pruebas en verde; 24, 30, 27 y 34 puntos por sprint |
@@ -36,11 +32,9 @@ Un KPI es una métrica con fórmula, meta y fuente. En el núcleo se calculan co
 | Merma de heladeros (M2) | Merma ÷ despachado | ≤ 3 % |
 | Alertas de temperatura abiertas (M3) | Lecturas fuera de rango sin atender | 0 |
 
-En el núcleo la vista de producción muestra lo producido y no lo comparado con lo planificado, porque el plan semanal no es un campo de Odoo; el tablero de la Fase 2 sí incluye las órdenes del mes hechas entre las confirmadas.
-
 ## 4.7.3 Definición y clasificación de acuerdos de servicio (SLA)
 
-Un SLA fija lo que el equipo de TI se compromete a dar. Se clasifican en cinco grupos y se relacionan con ISO/IEC 20000-1 e ITIL 4. La prioridad de los tickets sale de impacto × urgencia, con las cuatro prioridades de Odoo, y el campo «Cumplimiento del SLA» lo marca al cerrarse.
+Un SLA fija lo que el equipo de TI se compromete a dar (ISO/IEC 20000-1 e ITIL 4). La prioridad de los tickets sale de impacto × urgencia y el campo «Cumplimiento del SLA» lo marca al cerrarse.
 
 **Tabla 4.17. Acuerdos de servicio**
 
@@ -54,6 +48,4 @@ Un SLA fija lo que el equipo de TI se compromete a dar. Se clasifican en cinco g
 
 ## 4.7.4 Prácticas de ITIL 4 que respaldan los ANS
 
-El proyecto se alinea, sin certificación, con cinco prácticas de ITIL 4: **solicitudes de servicio** e **incidentes** (tickets en la mesa de servicios con tipo, prioridad y plazo; anexos 10.3 y 10.5), **niveles de servicio** (el campo de cumplimiento y su pivote), **capacidad y desempeño** (k6 y Lighthouse contra umbrales) y **habilitación del cambio** (PR, revisión cruzada y CI; anexo 10.4). El ticket sigue el flujo *Nuevo → En análisis → En atención → Resuelto → Cerrado*; si falla el plazo, se registra como incumplido y se revisa su causa raíz.
-
-**Limitaciones.** Las mediciones vienen de una sola PC; la disponibilidad en el tiempo no se midió; Odoo Project no registra la primera atención; el plazo cuenta horas corridas; y el backend (59) y el tablero propio (76) no llegan a 80 en Lighthouse (4.6.4).
+Sin certificación, el proyecto sigue las prácticas de ITIL 4 de solicitudes e incidentes (anexos 10.3 y 10.5), niveles de servicio, capacidad y cambios (anexo 10.4).

@@ -17,6 +17,6 @@ El pedido usa solo lo vendido: la mercadería devuelta no sale del almacén y la
 
 ![Liquidación confirmada con su pedido de venta](../capturas/sprint-4/HU-20_liquidacion_confirmada_con_pedido.png)
 
-*Figura 5.5c-a. Liquidación LIQ/2026/00124 en estado Liquidado, con su pedido de venta ligado (usuario Liquidador, datos de demostración).*
+*Figura 5.5c-a. Liquidación LIQ/2026/00124 en estado Liquidado, con su pedido de venta ligado (datos de demostración).*
 
 **Pruebas y límites.** `donofrio_heladeros` tiene 15 pruebas sin errores: cálculos, rechazo de cantidades inválidas, una liquidación por día, flujo completo con su pedido, estados, permisos y PDF. En la pantalla se verificaron la liquidación despachada y la confirmada, la lista con totales y el PDF con las firmas. El PDF es un documento para firmar y no reemplaza a la factura o boleta del pedido, y la merma no se modela como ajuste de inventario.

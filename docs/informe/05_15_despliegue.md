@@ -39,6 +39,4 @@ Se publicaron cinco releases: `v1.0.0` (24/11/2026, núcleo) y, el 25/11/2026, `
 
 ## 5.15.5 Gestión de servicios (ITIL 4 / ISO 20000-1)
 
-El control de cambios sigue el flujo de GitHub: la solicitud nace como issue (épica o bug con plantilla); el otro integrante revisa el PR con la lista de la definición de terminado (sin patrones legacy, ACL y pruebas, actualización sin errores, textos en español) y lo aprueba; la implementación es un *squash* a `develop` o un *merge commit* a `main`; la verificación es el CI en verde y `verificar_despliegue.sh`; y el cierre es el tag que dispara `release.yml`. El formato de solicitud de cambio (RFC) está en el anexo 10.4 y la mesa de servicios TI, con incidentes y solicitudes, en `donofrio_base` (HU-32).
-
-En capacidad, k6 con 20 usuarios virtuales mostró que el primer recurso que se agota es la CPU de Odoo (160 % de una CPU a ritmo de esfuerzo); el proyecto necesita unos 4 GB de RAM libres para todos los perfiles.
+El control de cambios sigue el flujo de GitHub: la solicitud nace como issue; el otro integrante revisa y aprueba el PR; la implementación es un *squash* a `develop` o un *merge commit* a `main`; se verifica con el CI en verde y `verificar_despliegue.sh`; y el tag cierra el cambio (RFC en el anexo 10.4).

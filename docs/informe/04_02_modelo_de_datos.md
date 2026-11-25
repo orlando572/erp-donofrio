@@ -24,7 +24,7 @@ El ER se extrajo de una base limpia de PostgreSQL 16 con 703 tablas de Odoo: un 
 
 ![Modelo ER de las tablas centrales](../diagramas/er/er_nucleo.png)
 
-*Figura 4.13. Modelo ER de las 42 tablas centrales, con 96 líneas de relación (pata de gallo) y color por área.*
+*Figura 4.13. Modelo ER de las 42 tablas centrales (pata de gallo, color por área).*
 
 Las relaciones son 1:N desde la tabla con la FK; las N:M de Odoo pasan por tablas intermedias que no se dibujan, y las FK hacia `res_users`, `stock_location`, `stock_picking_type` y `account_journal` se anotan en cada caja sin línea. Las tablas mayores son `account_move_line` (17.852 filas), `stock_move_line` (6.535) y `stock_move` (6.063).
 

@@ -21,10 +21,8 @@ El ERP usa **Odoo 19.0 Community** (Python 3.12) con **PostgreSQL 16**. Odoo sig
 | **Modelo y ORM (DAO)** | Una clase `models.Model` por entidad con `create`, `write` y `search`; el código nunca escribe SQL | `stock.lot`, `mrp.production`; `post_init_hook` de `donofrio_base` |
 | **Vista** | XML (`list`, `form`, `kanban`, `pivot`) y plantillas OWL | Vistas de Inventario y Fabricación; tablero OWL de M4 |
 | **Controlador** | Acciones de ventana, métodos de los botones y controladores HTTP | Validar una recepción; la ruta `/web/health` |
-| **DTO** | Diccionarios (`vals`, `read()`, cuerpo JSON-RPC) | `cargar_transacciones.py` arma `vals` |
-| **Seguridad** | Permisos por modelo, reglas por registro y grupos | Regla que limita al personal de Arequipa a su almacén |
 
-**SOLID.** Cada módulo tiene una responsabilidad (`donofrio_base` solo configura y carga datos); se extiende con `_inherit` y datos XML sin tocar los módulos estándar (FEFO es solo configurar la estrategia de retiro); los métodos sobreescritos llaman a `super()`; cada módulo declara solo las dependencias que usa y los usuarios reciben los grupos mínimos de su rol; y los módulos dependen de modelos y estrategias del registro y no de SQL.
+**SOLID.** Cada módulo tiene una responsabilidad (`donofrio_base` solo configura y carga datos), se extiende con `_inherit` y datos XML sin tocar los módulos estándar, llama a `super()` y declara solo las dependencias que usa; los usuarios reciben los grupos mínimos de su rol.
 
 ## 4.3.3 Configuración de herramientas: desarrollo, despliegue, mantenimiento y monitoreo
 
@@ -42,15 +40,13 @@ Todo el trabajo (código, datos, scripts, documentación e informe) está en un 
 | Convención de commits | *Conventional Commits* en español con la HU entre corchetes; evita un historial ilegible |
 | PR y revisión cruzada | Plantilla con HU, pruebas y capturas; 1 aprobación del otro integrante, que se descarta si el código cambia |
 | Protección de ramas y CI | Checks `lint` y `test` obligatorios, conversaciones resueltas, sin *force push*; evita fusionar sin revisión |
-| Archivos que no se versionan | `.gitignore` con `.env`, llaves y respaldos; *secret scanning* y *push protection* activos |
 | Freno al código obsoleto | *Hook* del asistente y `check_legacy.sh` en el CI con 17 patrones de Odoo 16 o anteriores |
-| Release por tag | Cada tag `vX.Y.Z` publica la imagen en GHCR y el zip en GitHub Releases |
 
 Las reglas no se aplican a administradores (`enforce_admins` desactivado), decisión del equipo compensada con la revisión cruzada. El paso de `develop` a `main` ocurrió dos veces (núcleo `v1.0.0` y Fase 2 completa `v1.4.0`).
 
 ## 4.3.7 Máquinas virtuales y contenedores
 
-La plataforma de contenedores es Docker Compose; en desarrollo no se usan máquinas virtuales. Los servicios son `db` y `odoo` (siempre activos, con *healthcheck* y reinicio automático), `db-replica` (perfil `replica`, 127.0.0.1:5433) y `nginx` (perfil `proxy`, puertos 8080 y 8443). Los volúmenes son `pgdata`, `pgdata-replica` y `odoo-data` (el *filestore*), con una red interna `bridge`. El arranque inicial crea la base `donofrio` e instala `donofrio_base`.
+La plataforma de contenedores es Docker Compose, sin máquinas virtuales. Los servicios son `db` y `odoo` (con *healthcheck* y reinicio automático), `db-replica` (perfil `replica`) y `nginx` (perfil `proxy`, puertos 8080 y 8443); los volúmenes son `pgdata`, `pgdata-replica` y `odoo-data` (el *filestore*), con una red interna `bridge`.
 
 ## 4.3.8 Plataformas cloud
 

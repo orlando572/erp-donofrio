@@ -29,7 +29,7 @@ El esquema usa ramas de corta vida que parten de `develop` y vuelven a ella por 
 | `main` | Lo entregado, un tag por release | Recibió 2 PR de release: el núcleo (24/11, `v1.0.0`) y la Fase 2 completa (25/11, `v1.4.0`) |
 | `develop` | Integración continua | Base de los 80 PR de trabajo |
 | `feature/HU-xx-*` | Una HU | 43 ramas |
-| `docs/*` | Avance del informe y de Scrum | 34 ramas |
+| `docs` (prefijo) | Avance del informe y de Scrum | 34 ramas |
 | `fix/*`, `chore/*`, `release/*` | Corrección, mantenimiento y paso a `main` | 1, 2 y 2 ramas |
 
 Ninguna rama vive más de unas horas: el proyecto, de la creación del repositorio al cierre de la Fase 2, ocurrió entre el 22 y el 25/11/2026. Las ramas se borran al fusionar.

@@ -1,8 +1,6 @@
 # 9. Referencias y bibliografía
 
-Las referencias siguen el formato APA 7.ª edición. En el texto se citan por autor y año entre paréntesis, por ejemplo (Gestión, s. f.-a) o (ISACA, 2018). Las normas y marcos se citan como buenas prácticas de referencia: el proyecto se alinea con ellos y no es una implementación certificada ni auditada. Los datos de D'Onofrio son un escenario académico; las fuentes de prensa sustentan la historia y el contexto, no los datos internos.
-
-America Retail. (s. f.). *Nestlé impulsa icónicas marcas peruanas hacia Estados Unidos*. https://americaretail-malls.com/paises/peru/nestle-impulsa-iconicas-marcas-peruanas-hacia-estados-unidos/
+Las referencias siguen el formato APA 7.ª edición. America Retail. (s. f.). *Nestlé impulsa icónicas marcas peruanas hacia Estados Unidos*. https://americaretail-malls.com/paises/peru/nestle-impulsa-iconicas-marcas-peruanas-hacia-estados-unidos/
 
 AXELOS. (2019). *ITIL® Foundation: ITIL 4 edition*. TSO (The Stationery Office).
 

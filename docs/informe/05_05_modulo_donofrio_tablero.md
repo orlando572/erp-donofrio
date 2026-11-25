@@ -15,6 +15,6 @@ Las tres últimas tarjetas solo salen si el módulo está instalado y el usuario
 
 ![Tablero gerencial con las seis tarjetas, el gráfico y la barra amarilla de la marca](../capturas/sprint-4/HU-22_tablero_todos_los_almacenes.png)
 
-*Figura 5.5e-a. Tablero del Gerente General con datos de demostración: ventas de noviembre de S/ 2,844,413.33, que coinciden con la suma de los pedidos confirmados (Lima S/ 2,525,068.21 y Arequipa S/ 319,345.12).*
+*Figura 5.5e-a. Tablero del Gerente General: ventas de noviembre de S/ 2,844,413.33, igual a la suma de los pedidos confirmados.*
 
 **Pruebas y límites.** `donofrio_tablero` tiene 21 pruebas sin errores: estructura de `get_kpis`, ventas contra un pedido real, filtro de almacén, producciones, stock por vencer, tarjetas opcionales con y sin su módulo, aviso de «sin permiso» y carga en menos de 3 s (`get_kpis` tardó entre 30 y 57 ms). En la pantalla se verificaron el tablero completo, el filtro, el aviso para el vendedor, una ventana de 375 × 812 sin desplazamiento horizontal y el inicio de sesión con la marca. Lighthouse da 76 al tablero en escritorio (meta 80), un límite conocido del JavaScript del cliente web de Odoo, con un LCP de 2.11 s que sí cumple la carga en menos de 3 s. El componente OWL no tiene pruebas de JavaScript y el filtro de almacén no aplica a las liquidaciones, que no tienen almacén.
