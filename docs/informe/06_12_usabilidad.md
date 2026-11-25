@@ -1,6 +1,6 @@
 # 6.12 Pruebas de usabilidad
 
-> **Estado:** método e instrumentos en borrador; **se harán la revisión por Orlando y Evelyn, el piloto y la iteración del plan, y después las mediciones con las 5 personas** · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [04 §4.4](../plan/04_scrum_pmbok.md) (HU-30) · **Requisito:** RNF003
+> **Estado al 25/11/2026:** método e instrumentos listos; **[PENDIENTE: resultados de HU-30]**: faltan la revisión por Orlando y Evelyn, el piloto y la iteración del plan, y después las mediciones con las 5 personas, que el equipo hace en el Cierre · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [04 §4.4](../plan/04_scrum_pmbok.md) (HU-30) · **Requisito:** RNF003
 
 ## Método
 
@@ -25,7 +25,7 @@ Antes de llamar a las 5 personas, el plan pasa por una revisión cruzada (Orland
 
 ## Resultados
 
-**Pendientes.** Se llenan cuando se hagan las pruebas con las 5 personas:
+**[PENDIENTE: resultados de HU-30]** Se llenan cuando se hagan las pruebas con las 5 personas; no hay ningún dato inventado en esta tabla:
 
 | Participante | T1 | T2 | T3 | T4 | SUS |
 |---|---|---|---|---|---|
@@ -42,4 +42,4 @@ RNF003 se cumple si el SUS promedio es **≥ 70**. Con los resultados se agregan
 
 - Cinco personas dan una idea y no una estadística firme.
 - Son voluntarios y no los usuarios reales de D'Onofrio (distribuidores, heladeros, cajeros).
-- Solo se prueban las pantallas del núcleo (Fase 1); las de la Fase 2 quedan como diseño.
+- Las cuatro tareas son de las pantallas del núcleo (Fase 1). Las pantallas de los módulos de la Fase 2 (liquidación, inspección, temperaturas y tablero) están implementadas, pero **no entran en las tareas cronometradas**, así que el SUS no las mide.
