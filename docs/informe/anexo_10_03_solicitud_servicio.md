@@ -16,4 +16,4 @@ Este anexo trae el formato de la solicitud de servicio o de acceso (ITIL 4) y un
 | Cierre | 21/11/2026, 09:00: SLA incumplido por 47 h |
 | Observaciones | La aprobación del Gerente General llegó el 20/11. Mejora: pedirla al abrir la solicitud y, para campañas conocidas, abrir el ticket con una semana de anticipación |
 
-El estado «SLA incumplido» sale del campo calculado del ticket y aparece en el pivote «Cumplimiento del SLA por tipo de ticket». La mesa mide la resolución y no la primera respuesta, y la aprobación del Gerente General es un paso manual que queda en el historial del ticket.
+El estado «SLA incumplido» sale del campo calculado del ticket; la aprobación del Gerente General es un paso manual que queda en el historial.

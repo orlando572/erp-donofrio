@@ -13,7 +13,5 @@ Este anexo trae el formato de la solicitud de cambio y un ejemplo lleno con un c
 | Riesgo | Bloquear a todos los usuarios por el 2FA (2 × 3 = 6, Alta). Se materializó en la primera versión (`_mfa_type` devolvía 403 durante el login), se detectó al probar en el despliegue real y se corrigió con una prueba de regresión; el parámetro `donofrio.2fa_privilegiados` permite apagarlo sin tocar el código |
 | Plan de implementación y pruebas | Fusionar `develop` en la rama, construir la imagen, `-u donofrio_base`, `levantar_prod.sh` y `verificar_despliegue.sh`. Pruebas: 12 nuevas de endurecimiento, el job `proxy` y la verificación manual de la redirección a `/web/login/totp` |
 | Plan de reversa | Revertir el commit de fusión con un PR (sin *force push*); `docker compose --profile proxy down` y `up -d` vuelven al modo de desarrollo; respaldo previo con `backup.sh` y restauración en una base nueva (31 s). No fue necesario |
-| Aprobación | Evelyn aprobó con el CI en verde tras dos revisiones descartadas por nuevos *push* |
 | Resultado | **Exitoso, con observaciones.** El job `proxy` falló 2 veces antes de la fusión (el chequeo de TLS y del bloqueo contaba mal) y se corrigió en el mismo PR. Después, ZAP dio 0 alertas altas y k6 un p95 de 12 ms. Lección: probar la autenticación contra el despliegue real y no solo con el ORM |
 
-El ejemplo evidencia el control 8.32 de la SoA (anexo 10.6, parcial por `enforce_admins`) y COBIT BAI06.

@@ -4,11 +4,7 @@ Este anexo trae el formato del registro de incidente (ITIL 4), la matriz de prio
 
 La prioridad sale de la matriz impacto × urgencia, con los plazos de 4.7.3 (respuesta y resolución): P1, 30 min y 4 h; P2, 2 h y 8 h; P3, 8 h y 3 días; P4, 1 día y 5 días.
 
-| Impacto \ Urgencia | Alta (no se puede trabajar) | Media (hay alternativa) | Baja (puede esperar) |
-|---|---|---|---|
-| Alto (varias áreas o ventas) | P1 Crítica | P2 Alta | P3 Media |
-| Medio (un área) | P2 Alta | P3 Media | P4 Baja |
-| Bajo (una persona) | P3 Media | P4 Baja | P4 Baja |
+La matriz impacto × urgencia es la de 4.7.3: P1 es impacto alto con urgencia alta; P2, impacto medio con urgencia alta o alto con urgencia media; P3 y P4, los casos restantes.
 
 ## Formato y ejemplo lleno: el tablero gerencial no carga
 
@@ -22,4 +18,4 @@ La prioridad sale de la matriz impacto × urgencia, con los plazos de 4.7.3 (res
 | Tiempo frente al SLA | Cerrado el 20/11/2026 a las 12:30: 5 h 30 min, dentro de las 8 h. **SLA cumplido** |
 | Causa raíz y prevención | Caché con archivos antiguos tras una actualización; no es un defecto del sistema. Se avisa a los usuarios de dirección que, tras una actualización, recarguen con Ctrl + F5; no se abre un problema porque no hay un defecto que corregir |
 
-Odoo Project no registra la primera respuesta, así que solo se mide la resolución; el estado «SLA cumplido» aparece en el pivote de cumplimiento de la mesa de servicios. La matriz es una propuesta del proyecto que no firmó ningún cliente.
+Odoo Project no registra la primera respuesta, así que solo se mide la resolución.
