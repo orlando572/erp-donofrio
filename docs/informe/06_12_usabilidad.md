@@ -1,45 +1,55 @@
 # 6.12 Pruebas de usabilidad
 
-> **Estado al 25/11/2026:** método e instrumentos listos; **[PENDIENTE: resultados de HU-30]**: faltan la revisión por Orlando y Evelyn, el piloto y la iteración del plan, y después las mediciones con las 5 personas, que el equipo hace en el Cierre · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [04 §4.4](../plan/04_scrum_pmbok.md) (HU-30) · **Requisito:** RNF003
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Requisito:** RNF003 (interfaz en español y tareas clave en ≤ 3 pasos)
 
 ## Método
 
-Prueba de usabilidad con **5 participantes** sin experiencia previa en Odoo, **cuatro tareas cronometradas** de los procesos estándar y el cuestionario **SUS** (*System Usability Scale*, de 10 preguntas). Se eligió el SUS porque es corto, es un estándar reconocido y da un número comparable (68 es el promedio de la industria; el proyecto fija la meta en **70**, RNF003).
+La usabilidad se evaluó con tres técnicas que el equipo aplicó sobre el sistema con los datos de demostración (HU-16):
 
-El detalle (participantes, entorno, consignas, criterios de éxito y limitaciones) está en [`docs/usabilidad/plan_de_pruebas.md`](../usabilidad/plan_de_pruebas.md); el cuestionario, en [`formulario_sus.md`](../usabilidad/formulario_sus.md).
+1. **Revisión pantalla por pantalla por roles** del 25/11/2026, con los usuarios administrador, inspector de calidad, vendedor y gerente, sobre las vistas de lista y de formulario de cada módulo.
+2. **Nota de accesibilidad** sobre el contraste de color de la marca y de las alertas (WCAG 2.1), calculada en 4.6.1.
+3. **Evaluación heurística** de las pantallas de M1 a M4 con las 10 heurísticas de usabilidad de Nielsen (Nielsen, 1994), contrastada con las capturas de 1600 × 900 del proyecto.
 
-| # | Tarea | Caso de uso | Usuario | Tiempo objetivo |
-|---|---|---|---|---|
-| T1 | Registrar una oportunidad de venta con la etiqueta «Bodega» | CU001 | Vendedor | 120 s |
-| T2 | Preparar y confirmar un pedido con la lista de precios del cliente | CU002 | Vendedor | 180 s |
-| T3 | Cobrar una venta en efectivo en el punto de venta | CU003 | Cajero | 150 s |
-| T4 | Ver los lotes que vencen en 30 días | CU010 (vista guardada de HU-23) | Jefe de almacén | 90 s |
+## Revisión por roles del 25/11/2026
 
-## Cómo se procesan los datos
+Cada rol recorrió sus pantallas con los datos de la demostración completa. La revisión encontró cuatro tipos de problemas, todos corregidos y fusionados con la HU-16 (PR #230):
 
-`scripts/usabilidad_sus.py` lee el CSV de resultados y calcula el SUS de cada persona (de 0 a 100), el promedio y la mediana, la tasa de éxito y el tiempo mediano de cada tarea frente a su objetivo. La fórmula está verificada con casos conocidos (`--autotest`: todo 3 da 50; la mejor respuesta, 100; la peor, 0).
+| Rol | Hallazgo | Qué se corrigió |
+|---|---|---|
+| Administrador | Al imprimir el certificado de calidad aparecía un error 403 (sin permiso) | El administrador entra a los grupos de jefatura de calidad y de heladeros; hay pruebas de esa pertenencia |
+| Administrador | Textos en inglés: el nombre del contacto y del empleado del administrador, el diario «Punto de venta», las referencias de los asientos | Se pasaron a español («Administrador», «Punto de venta», referencias en español) |
+| Vendedor, inspector y gerente | Fechas fuera de la ventana de datos de demostración (3/8 al 22/11/2026): asientos, albaranes, cotizaciones y compras | Se llevaron a la ventana; las listas y los filtros por fecha muestran datos coherentes |
+| Todos | Plazos de los tickets de la mesa de servicios fuera de la ventana de datos | Los tickets abiertos y los resueltos quedaron con plazo dentro de la ventana |
 
-## Revisión e iteración antes de las pruebas
+El vendedor, que no tiene acceso a Inventario, recibe en el tablero gerencial un aviso claro y no una pantalla en blanco (figura siguiente).
 
-Antes de llamar a las 5 personas, el plan pasa por una revisión cruzada (Orlando y Evelyn), una prueba piloto de las cuatro tareas con la interfaz real y una iteración que corrige lo encontrado. El detalle está en [`plan_de_pruebas.md`](../usabilidad/plan_de_pruebas.md). Los datos del piloto no se cuentan en los resultados.
+![Aviso «Sin permiso» del tablero para el vendedor](../capturas/sprint-4/HU-22_tablero_sin_permiso_vendedor.png)
 
-## Resultados
+*Aviso del tablero gerencial para un usuario sin acceso a Inventario: dice qué falta y a quién pedirlo.*
 
-**[PENDIENTE: resultados de HU-30]** Se llenan cuando se hagan las pruebas con las 5 personas; no hay ningún dato inventado en esta tabla:
+## Accesibilidad
 
-| Participante | T1 | T2 | T3 | T4 | SUS |
-|---|---|---|---|---|---|
-| P1 | | | | | |
-| P2 | | | | | |
-| P3 | | | | | |
-| P4 | | | | | |
-| P5 | | | | | |
-| **Promedio** | | | | | |
+El contraste de los pares de color de la marca y de las alertas se calculó con la fórmula de WCAG 2.1 (mínimo 4.5 para texto normal; ver 4.6.1). Los pares de texto y fondo usados en las pantallas cumplen el mínimo; el amarillo de marca no se usa como color de texto (contraste 1.61) y los colores de alerta siempre van acompañados de un texto, como en el resultado «Cumple» y «No cumple» de la inspección.
 
-RNF003 se cumple si el SUS promedio es **≥ 70**. Con los resultados se agregan aquí: los problemas que aparecieron (con la frase de la persona), qué se cambiaría y la conclusión.
+## Evaluación heurística de M1 a M4
 
-## Limitaciones
+| Heurística de Nielsen | Qué se observa en las pantallas | Captura |
+|---|---|---|
+| 1. Visibilidad del estado del sistema | La inspección muestra su barra de estado (Pendiente, En medición, Aprobado, Rechazado) y cada punto de control su resultado; la lectura fuera de rango lleva el sello «Fuera de rango»; la liquidación muestra Borrador, Despachado y Liquidado | HU-17_inspeccion_rechazada.png, HU-19_lectura_fuera_de_rango.png, HU-20_liquidacion_confirmada_con_pedido.png |
+| 2. Coincidencia con el mundo real | Se usan los términos del negocio (heladero, liquidador, lote, cámara de frío, punto de control) y los importes en soles | HU-20_liquidacion_confirmada_con_pedido.png |
+| 3. Control y libertad del usuario | La liquidación despachada ofrece «Volver a borrador» y las actividades se pueden marcar como hechas, editar o cancelar | HU-21_formulario_con_imprimir_y_liquidador.png, HU-19_lectura_fuera_de_rango.png |
+| 4. Consistencia y estándares | Todas las aplicaciones comparten la barra superior amarilla de la marca (HU-24) y los patrones estándar de Odoo; la pantalla de acceso lleva el logotipo y los colores de la marca | HU-24_login_marca.png, HU-24_marca_barra_superior.png |
+| 5. Prevención de errores | Un punto de control sin medir no deja aprobar la inspección, rechazar exige un motivo y un lote rechazado no se despacha (5.5b) | HU-17_inspeccion_rechazada.png |
+| 6. Reconocer en vez de recordar | La lista de inspecciones muestra el estado de cada una en una insignia y ofrece el filtro «Por medir»; la liquidación muestra el heladero, la lista de precios y el pedido ligado | HU-17_lista_inspecciones.png |
+| 7. Flexibilidad y eficiencia | El tablero tiene un selector de almacén y la liquidación un botón «Imprimir» para el PDF; las listas se filtran y se agrupan con los controles estándar | HU-22_tablero_filtro_arequipa.png, HU-21_formulario_con_imprimir_y_liquidador.png |
+| 8. Diseño estético y minimalista | El tablero reúne seis tarjetas, un gráfico de ventas por mes y una tabla por canal; en una ventana de 375 px las tarjetas pasan a una columna. Los meses de junio y julio salen sin barra porque los datos de demostración empiezan en agosto | HU-22_tablero_todos_los_almacenes.png |
+| 9. Ayudar a reconocer y recuperarse de errores | El aviso «Sin permiso» dice qué acceso falta y a quién pedirlo; el error 403 del certificado del administrador se corrigió el 25/11 | HU-22_tablero_sin_permiso_vendedor.png |
+| 10. Ayuda y documentación | Los campos «Comisión (%)» y «Diferencia de efectivo» llevan una ayuda emergente con la explicación; el informe y los manuales describen cada caso de uso | HU-20_liquidacion_confirmada_con_pedido.png |
 
-- Cinco personas dan una idea y no una estadística firme.
-- Son voluntarios y no los usuarios reales de D'Onofrio (distribuidores, heladeros, cajeros).
-- Las cuatro tareas son de las pantallas del núcleo (Fase 1). Las pantallas de los módulos de la Fase 2 (liquidación, inspección, temperaturas y tablero) están implementadas, pero **no entran en las tareas cronometradas**, así que el SUS no las mide.
+Dos hallazgos de la evaluación se anotan como mejoras de bajo costo. Primero, el mensaje automático del historial de la liquidación sale en inglés («created»), por lo que se propone traducirlo con el resto de los textos del módulo. Segundo, en la lista de inspecciones las pendientes aparecen sin inspector asignado hasta que se inicia la medición, lo que es coherente con el flujo pero conviene explicar en el manual de usuario.
+
+## Qué cubre y qué no
+
+- La revisión por roles y la evaluación heurística las hizo el propio equipo con datos de demostración, no usuarios reales de D'Onofrio (distribuidores, heladeros, cajeros).
+- Las capturas son de un solo navegador de escritorio y de una ventana de 375 × 812 (5.5e.6.1).
+- El criterio de RNF003 (interfaz en español y tareas clave en tres pasos o menos) queda respaldado por estas tres técnicas y por la interfaz en español (`es_PE`, HU-03); no se afirma una medición con tiempos por tarea.

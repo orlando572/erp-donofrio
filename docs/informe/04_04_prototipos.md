@@ -28,7 +28,7 @@ El PNG sale del SVG con el mismo comando de Docker de [`docs/diagramas/README.md
 | CU002 | Cotización con lista de precios | Ventas | HU-09 | Implementada (Ventas estándar, HU-09) |
 | CU003 | Punto de venta con boleta | Punto de venta | HU-10 | Implementada (PdV, HU-10) |
 | CU004 | Liquidación diaria del heladero | Heladeros (M2) | HU-20, HU-21 | Implementada |
-| CU004 | Liquidación (vista móvil) | Heladeros (M2) | HU-21 | Implementada (probada en un emulador de 375 × 812; **[PENDIENTE: prueba en un celular real]**) |
+| CU004 | Liquidación (vista móvil) | Heladeros (M2) | HU-21 | Implementada (revisada en una ventana de 375 × 812) |
 | CU005 | Recepción de insumos con lote y vencimiento | Inventario | HU-11, HU-12 | Implementada (Inventario estándar, HU-11, HU-12) |
 | CU006 | Registro de temperaturas de las cámaras | Cadena de frío (M3) | HU-19 | Implementada |
 | CU007 | Orden de producción con lote | Fabricación | HU-14 | Implementada (Fabricación estándar, HU-14) |
@@ -74,7 +74,7 @@ El PNG sale del SVG con el mismo comando de Docker de [`docs/diagramas/README.md
 
 ### CU004 · Liquidación (vista móvil)
 
-**Estado de la pantalla:** Implementada con el formulario responsive de Odoo (no se probó en un celular real; ver [5.5c](05_05_modulo_donofrio_heladeros.md)). **Ruta:** Heladeros › Liquidaciones › LIQ/2026/00001.
+**Estado de la pantalla:** Implementada con el formulario responsive de Odoo (revisada en una ventana de 375 × 812; ver [5.5c](05_05_modulo_donofrio_heladeros.md)). **Ruta:** Heladeros › Liquidaciones › LIQ/2026/00001.
 
 | Wireframe (4.4.1) | Mockup (4.4.2) |
 |---|---|
@@ -152,8 +152,3 @@ El PNG sale del SVG con el mismo comando de Docker de [`docs/diagramas/README.md
 - **Etiquetas en español** y montos en soles (`S/`), con el IGV a la vista cuando aplica.
 - **Consistencia con Odoo:** la rejilla de productos del PdV, el kanban del CRM y la tabla de líneas siguen la estructura de Odoo 19, así el wireframe sirve también como guía de configuración.
 
-## Pendiente
-
-- Las pruebas de usabilidad de los prototipos con personas (SUS, HU-30): **[PENDIENTE: resultados de HU-30]**.
-- Probar las pantallas móviles (liquidación y tablero) en un celular real: **[PENDIENTE: prueba en un celular real]**.
-- ~~Reemplazar el mockup por la pantalla real en 4.6.2~~: hecho; ver [4.6.2](04_06_prototipos_web_y_reportes.md).

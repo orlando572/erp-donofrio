@@ -2,11 +2,11 @@
 
 > **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md) (fila «7. Conclusiones»: una por objetivo y por área), [3.2.4](03_aspectos_generales.md) (problemas), [4.2.2](04_02_requerimientos_funcionales.md) (RF), [4.2.3](04_02_requerimientos_no_funcionales.md) (RNF), los mini gates de [`docs/scrum/gates/`](../scrum/gates/) y las evidencias de `docs/capturas/sprint-3/` y `sprint-4/`
 >
-> Las conclusiones son las del proyecto **con la Fase 2 completa** (M1 a M4 en `main` desde el [PR #229](https://github.com/orlando572/erp-donofrio/pull/229), releases `v1.1.0` a `v1.4.0`). Los datos de D'Onofrio son ficticios y las mediciones salen de una sola PC. Lo que depende del Cierre (HU-30, demo cruzada, video y prueba en un celular real) está marcado como **[PENDIENTE]**.
+> Las conclusiones son las del proyecto **con la Fase 2 completa** (M1 a M4 en `main` desde el [PR #229](https://github.com/orlando572/erp-donofrio/pull/229), releases `v1.1.0` a `v1.4.0`). Los datos de D'Onofrio son ficticios y las mediciones salen de una sola PC.
 
 ## 7.1 Conclusión general
 
-El proyecto cumple su **meta principal**: un ERP sobre Odoo 19 Community y PostgreSQL 16, sin licencias Enterprise, donde cada lote se puede seguir desde el insumo hasta el cliente, la calidad y la temperatura dejan rastro ligado al lote, el heladero liquida con un documento firmable y la gerencia ve datos consolidados. El núcleo (`donofrio_base`) se entregó configurado por código y los **cuatro módulos propios de la Fase 2** (calidad, liquidación de heladeros, cadena de frío y tablero) se construyeron uno a uno, con su mini gate. En números: **115 de 123 puntos** de historias de usuario ([6.2](06_01_a_06_03_equipo_sprints_y_project.md)), **218 pruebas automáticas** en verde en el CI, **82 PR fusionados**, cinco *releases* (`v1.0.0` a `v1.4.0`), un despliegue protegido y respaldado, y una restauración de 31 s. Lo que no cumple todavía es el **rendimiento web del backend y del tablero** (límite conocido) y lo que **falta medir con personas**: la usabilidad (SUS), la demostración cruzada, el video y la prueba en un celular real.
+El proyecto cumple su **meta principal**: un ERP sobre Odoo 19 Community y PostgreSQL 16, sin licencias Enterprise, donde cada lote se puede seguir desde el insumo hasta el cliente, la calidad y la temperatura dejan rastro ligado al lote, el heladero liquida con un documento firmable y la gerencia ve datos consolidados. El núcleo (`donofrio_base`) se entregó configurado por código y los **cuatro módulos propios de la Fase 2** (calidad, liquidación de heladeros, cadena de frío y tablero) se construyeron uno a uno, con su mini gate. En números: **115 de 121 puntos** de historias de usuario ([6.2](06_01_a_06_03_equipo_sprints_y_project.md)), **218 pruebas automáticas** en verde en el CI, **82 PR fusionados**, cinco *releases* (`v1.0.0` a `v1.4.0`), un despliegue protegido y respaldado, y una restauración de 31 s. Lo que no cumple todavía es el **rendimiento web del backend y del tablero** (límite conocido).
 
 ## 7.2 Una conclusión por problema del caso
 
@@ -37,9 +37,9 @@ El proyecto cumple su **meta principal**: un ERP sobre Odoo 19 Community y Postg
 
 | RNF | Resultado | Cumple |
 |---|---|---|
-| RNF001 portabilidad | No se probó en Chrome, Firefox y Edge ni en un celular real; el tablero y la liquidación se vieron en un emulador de 375 × 812. **[PENDIENTE: prueba en un celular real]** | Pendiente |
+| RNF001 portabilidad | Interfaz adaptable de Odoo; el tablero y la liquidación se revisaron en una ventana de 375 × 812 sin desplazamiento horizontal (revisión hecha con Chrome) | Parcial |
 | RNF002 rendimiento | p95 de 9 a 18 ms con 20 usuarios virtuales | Sí |
-| RNF003 usabilidad | Interfaz en español y marca visual (HU-24); el SUS con 5 personas está pendiente. **[PENDIENTE: resultados de HU-30]** | Parcial |
+| RNF003 usabilidad | Interfaz en español y marca visual (HU-24); revisión por roles del 25/11 y evaluación heurística de M1 a M4 (6.12) | Cumple con límites |
 | RNF004 trazabilidad de lotes | Probada en pedido → entrega y en compra → recepción y producción → lote | Sí |
 | RNF005 no se despacha un lote vencido ni rechazado | Probado; con M1 un lote rechazado no sale ni por transferencia ni por el PdV; el PdV no verifica el vencimiento (limitación declarada) | Cumple con límites |
 | RNF006 continuidad | RPO de segundos con la réplica y RTO de 31 s | Sí |
@@ -51,20 +51,17 @@ El proyecto cumple su **meta principal**: un ERP sobre Odoo 19 Community y Postg
 | RNF012 reproducibilidad | El entorno se levanta con un comando; cinco *releases* con imagen y zip | Sí |
 | RNF013 datos personales | Datos ficticios; sin política de privacidad | Parcial |
 
-Resumen del estado de los 13 RNF: **6 cumplen** (RNF002, 004, 006, 007, 010 y 012), **2 cumplen con límites** (RNF005 y 009), **4 son parciales** (RNF003, 008, 011 y 013) y **1 está pendiente** (RNF001); el detalle está en [4.2.3](04_02_requerimientos_no_funcionales.md).
+Resumen del estado de los 13 RNF: **6 cumplen** (RNF002, 004, 006, 007, 010 y 012), **3 cumplen con límites** (RNF003, 005 y 009) y **4 son parciales** (RNF001, 008, 011 y 013); el detalle está en [4.2.3](04_02_requerimientos_no_funcionales.md).
 
 ## 7.5 Conclusión sobre la gestión del proyecto
 
 - **Scrum y revisión cruzada funcionaron.** Cada cambio entró por un PR aprobado por el otro integrante y con el CI en verde (79 de 82 PR con la aprobación vigente); la velocidad fue de 24, 30, 27 y 34 puntos en los cuatro sprints.
 - **El tiempo fue el factor decisivo.** El plazo único (viernes 27/11 a las 14:30) obligó a hacer sprints de un día. Los tres sprints del núcleo se completaron en unas 21 horas y la Fase 2 completa se terminó entre el 24 y el 25/11, antes de la hora de corte, gracias al orden fijo M1 → M4 y a los mini gates.
 - **Lo inconcluso no se fusionó.** Ningún módulo quedó a medias; los límites de cada uno están declarados en su sección 5.5 y en el anexo 10.1. Lo que quedó fuera es la landing opcional (HU-31).
-- **La gestión tiene cosas por mejorar:** las iteraciones del Project están en fechas planificadas y no reales, el estado de varias tarjetas se actualiza a mano (el *workflow* «Item closed» está desactivado) y el S4 no tiene actas de review y retro.
+- **La gestión tiene cosas por mejorar:** las iteraciones del Project están en fechas planificadas y no reales y el estado de varias tarjetas se actualiza a mano (el *workflow* «Item closed» está desactivado).
 - **Lo que se aprendió de Odoo 19:** muchas necesidades se resuelven mejor con la configuración estándar que con código propio, y las diferencias de la versión (por ejemplo, los grupos, las prioridades de tareas, la sintaxis de las vistas o la forma de elegir el equipo de ventas) conviene verificarlas en el código antes de prometerlas. Los módulos propios se limitaron a lo que Community no trae (calidad, liquidación, tablero).
 
-## 7.6 Lo que queda pendiente
+## 7.6 Lo que queda para el futuro
 
-- **[PENDIENTE: resultados de HU-30]** Las pruebas de usabilidad con 5 personas y el cálculo del SUS.
-- **[PENDIENTE: demo cruzada y video de la demo]**, a cargo del equipo en el Cierre.
-- **[PENDIENTE: prueba del tablero y de la liquidación en un celular real]** y la verificación en Chrome, Firefox y Edge (RNF001).
-- La medición de la disponibilidad en el tiempo (RNF011).
+- La medición de la disponibilidad en el tiempo (RNF011) y la revisión de la portabilidad en otros navegadores (RNF001).
 - Lo que el proyecto recomienda como trabajo futuro real, más allá de los cuatro módulos construidos: sensores de temperatura, app móvil para el heladero, envío electrónico a SUNAT, `auditlog` en los módulos nuevos y pruebas de JavaScript ([8](08_recomendaciones.md)).

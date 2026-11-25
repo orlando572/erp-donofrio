@@ -98,7 +98,7 @@ GitHub tiene **22 issues** (9 abiertos y 13 cerrados). **Ninguno es de tipo «bu
 | producción | 2 | 1 | 1 |
 | logística | 1 | 0 | 1 |
 
-Los 9 issues abiertos son: el registro de riesgos (#131), las dailies (#132), el Gate 0 (#143), las épicas de M1 y M2 (#144 y #145, con módulos ya fusionados y una casilla sin marcar), la opcional HU-31 (#148), la épica de gerencia (#141, por HU-30) y los dos del Cierre (#149 informe final y #150 entrega). Los módulos M3 y M4 (#146 y #147) están cerrados.
+Los 9 issues abiertos son: el registro de riesgos (#131), las dailies (#132), el Gate 0 (#143), las épicas de M1 y M2 (#144 y #145, con módulos ya fusionados y una casilla sin marcar), la opcional HU-31 (#148), la épica de gerencia (#141) y los dos del Cierre (#149 informe final y #150 entrega). Los módulos M3 y M4 (#146 y #147) están cerrados.
 
 ### Etiquetas y milestones
 

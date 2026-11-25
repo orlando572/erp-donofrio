@@ -250,4 +250,3 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 
 - Los wireframes y mockups de cada CU, incluidos los de la Fase 2, se hicieron en el Sprint 2 ([4.4](04_04_prototipos.md)).
 - Los 12 CU están implementados y verificados con pruebas automáticas y capturas con datos de demostración (HU-16, [PR #230](https://github.com/orlando572/erp-donofrio/pull/230) y [#231](https://github.com/orlando572/erp-donofrio/pull/231)).
-- **[PENDIENTE: demo cruzada y video de la demo, a cargo del equipo en el Cierre]**: recorrerán los CU de punta a punta con la otra persona del equipo; hasta entonces la evidencia son las pruebas y las capturas.

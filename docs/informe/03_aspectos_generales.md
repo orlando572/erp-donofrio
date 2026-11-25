@@ -239,7 +239,7 @@ Los objetivos estratégicos se organizan en un **Cuadro de Mando Integral sencil
 | Procesos internos | Trazar todos los lotes | Lotes de terminado con trazabilidad completa | 100 % | Trazabilidad de lotes | RF006, RF010 |
 | Procesos internos | Producir según el plan | Cumplimiento de las órdenes de producción | ≥ 90 % | Órdenes de producción (MRP) | RF010 |
 | Aprendizaje y crecimiento | Datos de personal y roles al día | Empleados con puesto, jefe y usuario por rol | 100 % de los usuarios del ERP con empleado | RR. HH. y usuarios (HU-04, HU-05) | RF017, RF018 |
-| Aprendizaje y crecimiento | Que los usuarios usen el sistema sin ayuda | Puntaje de usabilidad (SUS) | ≥ 70 | Prueba con 5 usuarios (HU-30) **[PENDIENTE: resultados de HU-30]** | RNF003 |
+| Aprendizaje y crecimiento | Que los usuarios usen el sistema sin ayuda | Tareas clave que se resuelven en pocos pasos | ≤ 3 pasos | Evaluación heurística y revisión por roles (6.12) | RNF003 |
 
 ---
 

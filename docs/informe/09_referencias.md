@@ -17,8 +17,6 @@ America Retail. (s. f.). *Nestlé impulsa icónicas marcas peruanas hacia Estado
 
 AXELOS. (2019). *ITIL® Foundation: ITIL 4 edition*. TSO (The Stationery Office).
 
-Brooke, J. (1996). SUS: A «quick and dirty» usability scale. En P. W. Jordan, B. Thomas, B. A. Weerdmeester y I. L. McClelland (Eds.), *Usability evaluation in industry* (pp. 189-194). Taylor & Francis.
-
 Codex Alimentarius Commission. (2020). *Principios generales de higiene de los alimentos* (CXC 1-1969, rev. 2020; incluye el sistema HACCP). FAO y OMS.
 
 Congreso de la República del Perú. (2010). *Ley N.° 29571, Código de Protección y Defensa del Consumidor*. Diario Oficial El Peruano, 2 de septiembre de 2010. https://busquedas.elperuano.pe/dispositivo/NL/538113-1
@@ -85,6 +83,8 @@ Nestlé India. (s. f.). *Our purpose*. https://www.nestle.in/about-us/our-purpos
 
 Object Management Group. (2011). *Business Process Model and Notation (BPMN), versión 2.0*. https://www.omg.org/spec/BPMN/2.0/
 
+Nielsen, J. (1994). *10 usability heuristics for user interface design*. Nielsen Norman Group. https://www.nngroup.com/articles/ten-usability-heuristics/
+
 Odoo S. A. (s. f.-a). *Odoo 19.0 documentation*. https://www.odoo.com/documentation/19.0/
 
 Odoo S. A. (s. f.-b). *odoo/odoo, rama 19.0* [Código fuente]. GitHub. https://github.com/odoo/odoo/tree/19.0
@@ -126,7 +126,7 @@ ZAP. (s. f.). *ZAP documentation*. https://www.zaproxy.org/docs/
 | ISO 9001, ISO 22000 y HACCP (Codex) | [3.5](03_aspectos_generales.md) y trazabilidad de lotes |
 | OWASP Top 10 y ZAP | 5.12 y 6.13 |
 | Guía Scrum 2020 y PMBOK | 4.2.10 a 4.2.12 ([roles, artefactos y eventos](04_02_10_a_12_scrum.md)) |
-| SUS (Brooke) y WCAG 2.1 | [6.12](06_12_usabilidad.md) y [4.6](04_06_prototipos_web_y_reportes.md) |
+| Heurísticas de Nielsen y WCAG 2.1 | [6.12](06_12_usabilidad.md) y [4.6](04_06_prototipos_web_y_reportes.md) |
 | Documentación de Odoo 19, PostgreSQL 16, Docker, k6 y Lighthouse | 4.3, 5 y 6 |
 | Conventional Commits y GitHub Projects | 6.4 a 6.8 y [4.3.9](04_03_04_ides_y_gestion_proyectos.md) |
 

@@ -8,9 +8,9 @@
 
 | RNF | Requerimiento | Característica 25010:2023 | Estado | Evidencia principal |
 |---|---|---|---|---|
-| [RNF001](#rnf001) | Portabilidad: navegadores y vista móvil | Flexibilidad (adaptabilidad) | **Pendiente** | Sin evidencia |
+| [RNF001](#rnf001) | Portabilidad: navegador de escritorio y vista adaptable | Flexibilidad (adaptabilidad) | **Parcial** | [5.5e.6.1](05_05_modulo_donofrio_tablero.md) |
 | [RNF002](#rnf002) | Rendimiento: p95 < 2 s con 20 usuarios concurrentes | Eficiencia de desempeño (comportamiento temporal) | **Cumple** | [Tabla 22](05_13_a_05_14_pruebas.md) |
-| [RNF003](#rnf003) | Usabilidad: español, tareas en ≤ 3 pasos y SUS ≥ 70 | Capacidad de interacción | **Parcial** | [6.12](06_12_usabilidad.md) |
+| [RNF003](#rnf003) | Usabilidad: español y tareas en ≤ 3 pasos | Capacidad de interacción | **Cumple con límites** | [6.12](06_12_usabilidad.md) |
 | [RNF004](#rnf004) | Trazabilidad del 100 % de los lotes | Adecuación funcional (corrección funcional) | **Cumple** | Pruebas HU-33 |
 | [RNF005](#rnf005) | Integridad: no se despacha un lote vencido ni uno rechazado por calidad | Seguridad (integridad) | **Cumple con límites** | `test_fefo.py` y `test_inspeccion.py` |
 | [RNF006](#rnf006) | Respaldo diario, réplica en caliente y RTO ≤ 2 h | Fiabilidad (recuperabilidad) | **Cumple** | HU-25 y HU-26 |
@@ -24,24 +24,24 @@
 
 ## RNF001
 
-### Tabla 40.1. Ficha de RNF001: Portabilidad: navegadores y vista móvil
+### Tabla 40.1. Ficha de RNF001: Portabilidad: navegador de escritorio y vista adaptable
 
 | Campo | Valor |
 |---|---|
 | Identificador | RNF001 |
-| Nombre | Portabilidad: navegadores y vista móvil |
+| Nombre | Portabilidad: navegador de escritorio y vista adaptable |
 | Área | Marketing y Ventas |
-| Descripción | El ERP debe funcionar en Chrome, Firefox y Edge y ser usable en móvil en los procesos de pedidos y punto de venta (y la liquidación del heladero de M2). |
+| Descripción | El ERP debe funcionar en un navegador moderno de escritorio y ser usable en una ventana angosta en los procesos de pedidos y punto de venta (y en la liquidación del heladero de M2 y el tablero de M4). |
 | Característica ISO/IEC 25010:2023 (ISO/IEC, 2023) | Flexibilidad (adaptabilidad) |
-| Meta o criterio de aceptación | Los casos de uso de pedidos (CU002) y PdV (CU003) se completan en los tres navegadores y en vista móvil, sin errores visibles. |
-| Método de verificación | Prueba manual en 3 navegadores y en vista móvil (lista de pasos por navegador, con captura). |
+| Meta o criterio de aceptación | Los casos de uso de pedidos (CU002) y PdV (CU003) se completan sin errores visibles, y las pantallas de M2 y M4 caben sin desplazamiento horizontal en 375 × 812. |
+| Método de verificación | Revisión de las pantallas en el navegador de escritorio y en una ventana de 375 × 812, con capturas. |
 | HU, PR y sprint | HU-09 (PR #167, #171, #172) y HU-10 (PR #170, #172); S2 y S3 |
-| Resultado al cierre | No se ejecutó. Odoo 19 usa un cliente web responsive y las pantallas del núcleo son las estándar, pero el equipo no las probó en los tres navegadores ni en móvil, así que **no hay evidencia** y no se afirma que cumpla. |
-| Estado | **Pendiente** |
-| Evidencia | Ninguna. La matriz de [trazabilidad](trazabilidad.md) lo marca «Sin evidencia: la prueba manual en 3 navegadores no se registró». |
-| Límites declarados | Las capturas del informe son de un solo navegador. El PdV se probó en escritorio. |
+| Resultado al cierre | **Parcial.** Odoo 19 usa un cliente web adaptable y las pantallas del núcleo son las estándar. La liquidación (M2) y el tablero (M4) se revisaron en una ventana de 375 × 812, sin desplazamiento horizontal ([5.5e.6.1](05_05_modulo_donofrio_tablero.md)). |
+| Estado | **Parcial** |
+| Evidencia | Capturas del tablero y del acceso en 375 × 812 ([5.5e.6.1](05_05_modulo_donofrio_tablero.md)). |
+| Límites declarados | La revisión usó Chrome y las capturas del informe son de un solo navegador. El PdV se probó en escritorio. |
 | Riesgos relacionados | R1 (plazo). No tiene riesgo propio en el registro. |
-| Qué falta o siguiente paso | Hacer la prueba manual de CU002 y CU003 en Chrome, Firefox, Edge y vista móvil, y registrarla (tabla de pasos y capturas). Va en [8.2](08_recomendaciones.md). |
+| Qué falta o siguiente paso | Extender la revisión de CU002 y CU003 a otros navegadores y a la ventana angosta, y registrarla con capturas. Va en [8.2](08_recomendaciones.md). |
 
 ## RNF002
 
@@ -66,24 +66,24 @@
 
 ## RNF003
 
-### Tabla 40.3. Ficha de RNF003: Usabilidad: español, tareas en ≤ 3 pasos y SUS ≥ 70
+### Tabla 40.3. Ficha de RNF003: Usabilidad: español y tareas en ≤ 3 pasos
 
 | Campo | Valor |
 |---|---|
 | Identificador | RNF003 |
-| Nombre | Usabilidad: español, tareas en ≤ 3 pasos y SUS ≥ 70 |
+| Nombre | Usabilidad: español y tareas en ≤ 3 pasos |
 | Área | Marketing y Ventas |
-| Descripción | La interfaz está en español y las tareas clave se hacen en pocos pasos; la satisfacción se mide con el cuestionario SUS. |
+| Descripción | La interfaz está en español y las tareas clave se hacen en pocos pasos; se revisan por roles y con las heurísticas de Nielsen. |
 | Característica ISO/IEC 25010:2023 (ISO/IEC, 2023) | Capacidad de interacción |
-| Meta o criterio de aceptación | Interfaz en español; tareas clave en ≤ 3 pasos; SUS promedio ≥ 70 con 5 personas. |
-| Método de verificación | SUS con 5 participantes y 4 tareas cronometradas (T1 a T4: oportunidad, pedido, cobro en el PdV y lotes por vencer), calculado con `scripts/usabilidad_sus.py`. |
-| HU, PR y sprint | HU-03 (idioma `es_PE`, PR #155) y HU-30 (PR #195); S1 y S3 |
-| Resultado al cierre | **Interfaz en español:** cumplida (HU-03). **SUS:** el plan de pruebas, el cuestionario y el script de cálculo están hechos y probados con casos conocidos (`--autotest`); **no se midió con las 5 personas**. El equipo decidió el 23/11/2026 dejar HU-30 para el Cierre. **[PENDIENTE: resultados de HU-30, SUS con 5 personas]**. |
+| Meta o criterio de aceptación | Interfaz en español; tareas clave en ≤ 3 pasos. |
+| Método de verificación | Revisión pantalla por pantalla por roles (administrador, inspector, vendedor y gerente, 25/11/2026) y evaluación heurística de M1 a M4 con las 10 heurísticas de Nielsen ([6.12](06_12_usabilidad.md)). |
+| HU, PR y sprint | HU-03 (idioma `es_PE`, PR #155) y HU-24 (marca); S1 y S4 |
+| Resultado al cierre | **Cumple con límites.** Interfaz en español cumplida (HU-03). La revisión por roles del 25/11/2026 corrigió textos en inglés, el error 403 del certificado, fechas fuera de ventana y plazos de tickets; la evaluación heurística (6.12) no halló tareas clave de más de tres pasos en las pantallas revisadas. **Límite:** la hizo el propio equipo, con datos de demostración. |
 | Estado | **Parcial** |
-| Evidencia | [`6.12`](06_12_usabilidad.md), [`docs/usabilidad/plan_de_pruebas.md`](../usabilidad/plan_de_pruebas.md), [`formulario_sus.md`](../usabilidad/formulario_sus.md), `scripts/usabilidad_sus.py`. |
-| Límites declarados | Sin datos de personas; con 5 participantes sin experiencia en Odoo el resultado sería indicativo, no estadístico. |
-| Riesgos relacionados | R4 y R15 (carga desigual y documentación al final), por la dependencia de personas reales. |
-| Qué falta o siguiente paso | Revisión cruzada del plan, prueba piloto, iteración y las 5 personas (Evelyn), en el Cierre. |
+| Evidencia | Sección 6.12 (revisión por roles del 25/11/2026 y evaluación heurística) y las capturas de M1 a M4. |
+| Límites declarados | La revisión y la evaluación las hizo el propio equipo con datos de demostración; no hay una medición con tiempos por tarea. |
+| Riesgos relacionados | R4 y R15 (carga desigual y documentación al final). |
+| Qué falta o siguiente paso | Observar a usuarios reales con sus tareas, cuando el sistema entre en operación ([8.1](08_01_recomendaciones_negocio.md)). |
 
 ## RNF004
 
@@ -300,4 +300,4 @@
 ## Notas
 
 1. Los estados de este anexo son los de la tabla 3 de [4.2.3](04_02_requerimientos_no_funcionales.md) y los de la matriz de [trazabilidad](trazabilidad.md); si uno cambia, se cambian los tres. Las metas numéricas (p95 de 2 s, 20 usuarios, 99 %, RPO y RTO) son **supuestos académicos del equipo**.
-2. **Fuera de las fichas:** la meta del SUS (RNF003), la medición de la disponibilidad (RNF011) y la prueba en tres navegadores (RNF001) son los tres puntos sin medición; los dos primeros dependen del tiempo o de personas y el tercero no se hizo. RNF003 está **diferido por decisión del equipo (23/11/2026)** para después del Sprint 4.
+2. **Fuera de las fichas:** la medición de la disponibilidad (RNF011) y la compatibilidad con navegadores distintos de Chrome (RNF001) son los dos puntos sin medición; el primero depende del tiempo.

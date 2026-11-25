@@ -161,7 +161,7 @@ gitGraph
 |---|---|
 | `main` | Protegida; recibió los PR #222 y #229 |
 | `develop` | Protegida; rama de integración |
-| 38 ramas de trabajo (`docs/*`, `feature/*` y `release/*`) | Todas con su PR **fusionado** (82 PR en total, 0 abiertos): `docs/s2-aceptacion-po`, `docs/s3-planning`, las `docs/s3-informe-*`, `feature/HU-16-*`, `HU-17-*`, `HU-18-*`, `HU-19-*`, `HU-20-*`, `HU-22-*`, `HU-23` a `HU-30`, `HU-33`, `feature/S3-*`, `release/v1.0.0` y `release/v1.4.0` |
+| 38 ramas de trabajo (`docs/*`, `feature/*` y `release/*`) | Todas con su PR **fusionado** (82 PR en total, 0 abiertos): `docs/s2-aceptacion-po`, `docs/s3-planning`, las `docs/s3-informe-*`, `feature/HU-16-*`, `HU-17-*`, `HU-18-*`, `HU-19-*`, `HU-20-*`, `HU-22-*`, `HU-23` a `HU-29`, `HU-32`, `HU-33`, `feature/S3-*`, `release/v1.0.0` y `release/v1.4.0` |
 
 Las 38 ramas de trabajo que quedan en el remoto **ya están fusionadas**: GitHub las ve «por delante» de `develop` porque el *squash* crea otro commit; no tienen trabajo sin fusionar. Las otras **44** ramas de los 82 PR se borraron al fusionar (`delete_branch_on_merge = true`). Esta rama (`feature/cierre-informe-final`) se suma a la lista al abrir su PR.
 

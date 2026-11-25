@@ -44,13 +44,13 @@ Los **puntos** salen de las HU de cada épica (no de la tarjeta de la épica), p
 | **S0 Inicio** | Proyecto constituido y backlog inicial | — | 0 | 0 | — | 22/11 | 22/11 |
 | **S1 Fundaciones** | Odoo 19 corre igual en ambas PC, con CI y datos maestros de D'Onofrio | 7 (HU-01 a 07) | 24 | 24 | 100 % | 23/11 | 22/11 22:38 a 23:39 |
 | **S2 Procesos estándar** | El ciclo vender-comprar-producir-facturar funciona de punta a punta con datos | 9 (HU-08 a 16) | 30 | 30 | 100 % | 24/11 | 23/11 02:14 a 25/11 03:07 (la HU-16 se completó con la demostración ampliada, PR #230) |
-| **S3 Calidad del núcleo** | Núcleo v1.0.0 entregable: seguro, replicado, probado, desplegado y documentado | 9 | 29 | 27 | 93 % | 25/11 | 23/11 15:04 a 16:51 (HU-30 pendiente, diferida al Cierre) |
-| **S4 Módulos propios** (Fase 2) | Agregar M1, M2, M3 y M4, uno a uno, con mini gate | 8 | 40 | 34 | 85 % | 26/11 | 24/11 00:30 a 25/11 03:07 (HU-21 con su PR fusionado pero su casilla sin marcar; HU-31 opcional, no se hizo) |
-| **Cierre** | Informe, manuales, presentación, HU-30, demo cruzada, video y entrega | — | 0 | 0 | — | 27/11, 14:30 | En curso (este informe es la etapa 1 del Cierre) |
-| **Total** | | 33 | **123** | **115** | **93 %** | | |
+| **S3 Calidad del núcleo** | Núcleo v1.0.0 entregable: seguro, replicado, probado, desplegado y documentado | 8 | 27 | 27 | 100 % | 25/11 | 23/11 15:04 a 16:51 |
+| **S4 Módulos propios** (Fase 2) | Agregar M1, M2, M3 y M4, uno a uno, con mini gate | 8 | 40 | 34 | 85 % | 26/11 | 24/11 00:30 a 25/11 03:07 (HU-21 con su PR fusionado pero su casilla sin marcar; HU-31 es opcional) |
+| **Cierre** | Informe, manuales, presentación y entrega | — | 0 | 0 | — | 27/11, 14:30 | En curso |
+| **Total** | | 32 | **121** | **115** | **95 %** | | |
 
-- **Velocidad:** 24, 30, 27 y 34 puntos por sprint; **promedio de 29**. El S3 queda en 27 de 29 solo por la HU-30 (2 puntos), que espera las pruebas de usabilidad con personas (**[PENDIENTE: resultados de HU-30]**). El S4 queda en 34 de 40: faltan los 3 puntos de HU-21 (casilla sin marcar) y los 3 de la opcional HU-31. Los 8 puntos que faltan en total son HU-30 (2), HU-21 (3) y HU-31 (3).
-- **Incrementos y actas:** cada sprint de S0 a S3 tiene su planning, daily, review y retro en `docs/scrum/sprint-N/`. El S4 no tiene actas propias: su evidencia son los cuatro mini gates de [`docs/scrum/gates/`](../scrum/gates/). **[PENDIENTE: acta de review y retro del S4]**.
+- **Velocidad:** 24, 30, 27 y 34 puntos por sprint; **promedio de 29**. El S3 completó sus 27 puntos. El S4 queda en 34 de 40: faltan los 3 puntos de HU-21 (casilla sin marcar) y los 3 de la opcional HU-31. Los 6 puntos que faltan en total son HU-21 (3) y HU-31 (3).
+- **Incrementos y actas:** cada sprint de S0 a S3 tiene su planning, daily, review y retro; el S4 tiene su review y su retro, además de los cuatro mini gates (uno por módulo).
 - Los S1 a S3 son de **Fase 1**; el S4 es la **Fase 2**, que empezó con la confirmación del equipo tras el Gate 0 y se completó con los cuatro módulos.
 
 ### Burndown por puntos
@@ -61,8 +61,7 @@ Cada punto de la línea amarilla es una HU terminada (fecha de fusión de su úl
 
 **Lectura del gráfico.**
 - Los tres sprints bajan **en escalones** y no en pendiente suave: el trabajo de varias HU se fusionó casi a la vez (por ejemplo, tres HU del S2 entre las 02:14 y las 02:15). Es lo esperado cuando cada HU entra por un PR que se aprueba y se fusiona en tandas.
-- **S1 y S2 llegan a 0.** El S2 termina con las dos últimas HU (HU-13 y HU-16): la HU-16 sube hasta el 25/11 porque se amplió con el PR #230.
-- **S3 termina en 2:** los puntos de la HU-30.
+- **S1, S2 y S3 llegan a 0.** El S2 termina con las dos últimas HU (HU-13 y HU-16): la HU-16 sube hasta el 25/11 porque se amplió con el PR #230.
 - **S4 termina en 6:** HU-21 (3) y HU-31 (3). Las HU 17, 20 y 22 aparecen juntas el 25/11 03:07 porque el PR #231 de capturas lleva sus etiquetas: es un efecto del método (fecha del último PR), no una fusión simultánea.
 
 ### Diferencia entre las fechas del Project y las reales
@@ -105,7 +104,7 @@ El issue **«Dailies» (#132)** es el registro de las dailies; el detalle de cad
 
 ### Hallazgos de gestión (al 25/11/2026)
 
-1. **El estado de varias tarjetas está atrasado.** Las épicas #142, #146 y #147 están **cerradas** en GitHub, pero su tarjeta sigue en «Backlog»; la #144 está al revés: **abierta** en GitHub y con la tarjeta en «Hecho» (M1 está terminado, pero su checklist no se cerró), y la #145 sigue abierta porque falta marcar HU-21 (prueba de la vista móvil en un celular real). La causa es que el *workflow* «Item closed» del Project está **desactivado**, así que el estado solo cambia a mano (Evelyn solo tiene lectura en el Project y Orlando es quien lo actualiza). Por eso el *burn up* de Insights (que cuenta ítems) no coincide con el burndown por puntos de 6.2, que sale de los issues y los PR. **Mejora:** activar «Item closed» con el valor «Hecho».
+1. **El estado de varias tarjetas está atrasado.** Las épicas #142, #146 y #147 están **cerradas** en GitHub, pero su tarjeta sigue en «Backlog»; la #144 está al revés: **abierta** en GitHub y con la tarjeta en «Hecho» (M1 está terminado, pero su checklist no se cerró), y la #145 sigue abierta porque falta marcar HU-21. La causa es que el *workflow* «Item closed» del Project está **desactivado**, así que el estado solo cambia a mano (Evelyn solo tiene lectura en el Project y Orlando es quien lo actualiza). Por eso el *burn up* de Insights (que cuenta ítems) no coincide con el burndown por puntos de 6.2, que sale de los issues y los PR. **Mejora:** activar «Item closed» con el valor «Hecho».
 2. **Insights cuenta ítems, no puntos.** Para medir por puntos se usa `scripts/burndown.py`.
 3. **Las fechas de las iteraciones son las planificadas** (ver 6.2).
-4. Las capturas de Insights «al cierre de cada sprint» que pide el plan **se tomaron solo al cierre del S3**; no se repitieron al cierre del S4 ni del Cierre. **[PENDIENTE: captura de Insights al cierre, a cargo del equipo]**.
+4. Las capturas de Insights se tomaron al cierre del S3.

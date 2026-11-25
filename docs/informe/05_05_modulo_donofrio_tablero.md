@@ -66,17 +66,17 @@ El tablero **no tiene ACL propios**: es un modelo abstracto sin tabla y lee con 
 | Tablero con las seis tarjetas, el gráfico de seis meses, la tabla por canal y la barra amarilla | [`HU-22_tablero_todos_los_almacenes.png`](../capturas/sprint-4/HU-22_tablero_todos_los_almacenes.png) |
 | Filtro «Almacén: WH-AQP CD Arequipa»: las tarjetas y el gráfico cambian | [`HU-22_tablero_filtro_arequipa.png`](../capturas/sprint-4/HU-22_tablero_filtro_arequipa.png) |
 | Vendedor sin acceso a Inventario: aviso en vez de error | [`HU-22_tablero_sin_permiso_vendedor.png`](../capturas/sprint-4/HU-22_tablero_sin_permiso_vendedor.png) |
-| Tablero en el celular (375 × 812) | [`S4_movil_tablero.png`](../capturas/sprint-4/S4_movil_tablero.png), [`S4_movil_tablero_abajo.png`](../capturas/sprint-4/S4_movil_tablero_abajo.png), [`S4_movil_login.png`](../capturas/sprint-4/S4_movil_login.png) |
+| Tablero en una ventana de 375 × 812 | [`S4_movil_tablero.png`](../capturas/sprint-4/S4_movil_tablero.png), [`S4_movil_tablero_abajo.png`](../capturas/sprint-4/S4_movil_tablero_abajo.png), [`S4_movil_login.png`](../capturas/sprint-4/S4_movil_login.png) |
 | Lighthouse del tablero y del login | [`S4_lighthouse_m4_resultados.csv`](../capturas/sprint-4/S4_lighthouse_m4_resultados.csv), [`S4_evidencia_verificacion_m4.txt`](../capturas/sprint-4/S4_evidencia_verificacion_m4.txt) |
 | Tiempos de `get_kpis`, cifras de control y favicon (base del 24/11 por la mañana) | [`HU-22_evidencia_tablero.txt`](../capturas/sprint-4/HU-22_evidencia_tablero.txt) |
 
 Cifras de control: en la instancia local nueva (las capturas HU-22 del 25/11 muestran S/ 2,844,413.33, S/ 2,525,068.21 de Lima y S/ 319,345.12 de Arequipa), las ventas de noviembre del tablero (S/ 2,844,413.33) coinciden con la suma de los pedidos confirmados en la base (consulta SQL), y Lima (S/ 2,525,068.21) más Arequipa (S/ 319,345.12) dan el total. La medición anterior, sobre la base `donofrio` del equipo, dio S/ 2,844,525.83 (Arequipa igual): la diferencia de S/ 112.50 está en Lima, no se investigó y proviene de que la base nueva se cargó de nuevo. En esa base `get_kpis` tardó entre 30 y 57 ms y la página 177 ms (meta de RNF008: menos de 3 s).
 
-Las capturas son PNG de 1600 × 900 (el celular, 750 × 1624) tomadas con Chromium sin interfaz, porque el navegador integrado de la app no guarda las imágenes; las de la primera entrega eran JPG reducidos y se rehicieron en PNG el 25/11/2026 con los datos de demostración de la HU-16 (M1, M2, M3 y las dos del tablero con las tarjetas llenas). Quedan dos JPG de la primera entrega que no se pueden reproducir sin crear datos o sin la versión anterior de la pantalla: `HU-20_error_devuelto_mas_merma.jpg` y `HU-24_limite_login_morado.jpg`.
+Las capturas son PNG de 1600 × 900 (la ventana angosta, 750 × 1624) tomadas con Chromium sin interfaz, porque el navegador integrado de la app no guarda las imágenes; las de la primera entrega eran JPG reducidos y se rehicieron en PNG el 25/11/2026 con los datos de demostración de la HU-16 (M1, M2, M3 y las dos del tablero con las tarjetas llenas). Quedan dos JPG de la primera entrega que no se pueden reproducir sin crear datos o sin la versión anterior de la pantalla: `HU-20_error_devuelto_mas_merma.jpg` y `HU-24_limite_login_morado.jpg`.
 
-### 5.5e.6.1 Vista en celular
+### 5.5e.6.1 Vista en una ventana angosta
 
-Con un ancho de 375 px (en Chromium a factor 2 y en el navegador integrado con el preset móvil): **no hay desplazamiento horizontal**; las seis tarjetas pasan a una columna con 16 px de margen, el selector de almacén cabe junto a su etiqueta, el gráfico de seis meses se lee completo (309 px de ancho) y la tabla por canal cabe. **Lo que queda así:** la barra superior solo muestra el menú de hamburguesa (no el nombre de la aplicación, que es el diseño móvil de Odoo); el tablero mide unas dos pantallas y media, de modo que el gráfico queda abajo; **no se probó** en un teléfono real ni el cambio de almacén en el celular.
+Con un ancho de 375 px (en Chromium a factor 2 y en el navegador integrado con el preset móvil): **no hay desplazamiento horizontal**; las seis tarjetas pasan a una columna con 16 px de margen, el selector de almacén cabe junto a su etiqueta, el gráfico de seis meses se lee completo (309 px de ancho) y la tabla por canal cabe. **Lo que queda así:** la barra superior solo muestra el menú de hamburguesa (no el nombre de la aplicación, que es el diseño móvil de Odoo); el tablero mide unas dos pantallas y media, de modo que el gráfico queda abajo.
 
 ### 5.5e.6.2 Lighthouse (RNF008)
 
@@ -106,7 +106,7 @@ La primera vez, el tablero se abrió con el Inspector de Calidad y falló con «
 ## 5.5e.8 Límites
 
 - **Lighthouse del tablero: 76 en escritorio (meta 80, no cumple; límite conocido) y 39 en móvil** (5.5e.6.2); el LCP de 2.11 s sí cumple los 3 s. Se midió en una PC de desarrollo con Docker, no en el servidor definitivo, y el tablero «después» con el Jefe de Almacén (el Gerente pide 2FA).
-- **El celular se probó en un emulador** (Chromium y el navegador integrado con el tamaño de un teléfono), no en un teléfono real (5.5e.6.1).
+- **La vista angosta se revisó en Chromium y en el navegador integrado con el tamaño de una ventana de 375 × 812** (5.5e.6.1).
 - **No hay pruebas de JavaScript** (por ejemplo de Hoot): el componente OWL se verificó a mano en la pantalla (tarjetas, gráfico y cambio de almacén).
 - **Cumplimiento de producción:** cuenta las OP del mes que ya empezaron (no las que siguen en borrador); no es un plan contra lo ejecutado.
 - **El filtro de almacén no aplica a las liquidaciones pendientes** (la liquidación no tiene almacén); las demás tarjetas sí. En Lotes aprobados el almacén es el de la orden de producción.

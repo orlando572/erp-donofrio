@@ -19,8 +19,7 @@ Las métricas se agrupan en cuatro tipos. La columna «Fuente» dice de dónde s
 | | Retraso de la réplica | Lo que tarda la réplica en aplicar un cambio | `pg_stat_replication` (`replay_lag`) | 2 ms |
 | | Tiempo de restauración (RTO) | Lo que tarda restaurar un respaldo en una base nueva | `scripts/restore.sh` | 31 s y 11 s en dos restauraciones |
 | | Seguridad | Alertas altas de ZAP baseline | ZAP 2.17.0 sobre el despliegue protegido | 0 altas; 4 medias (3 de la política CSP) y 3 bajas |
-| **De usuario** | SUS | Percepción de usabilidad, de 0 a 100 | Cuestionario con 5 personas | **[PENDIENTE: resultados de HU-30]** |
-| | Éxito y tiempo por tarea | Tareas completadas sin ayuda y segundos | Pruebas de usabilidad | **[PENDIENTE: resultados de HU-30]** |
+| **De usuario** | Hallazgos de la revisión por roles | Problemas de usabilidad encontrados y corregidos | Revisión pantalla por pantalla (6.12) | 4 tipos de hallazgo, todos corregidos el 25/11/2026 |
 | | Cumplimiento del SLA de tickets | Tickets de la mesa de servicios cerrados dentro de su plazo | Pivote «Cumplimiento del SLA por tipo de ticket» (HU-32) | 1 cumplido, 1 incumplido y 3 abiertos (tickets de ejemplo) |
 | **De negocio** | Ventas por canal, línea y mes | Importe vendido | Vista guardada «Ventas por línea, canal y mes» y dashboard Ventas (HU-23) | S/ 7.7 M entre agosto y noviembre de 2026 (datos de demostración) |
 | | Producción por producto y mes | Unidades producidas | Vista guardada «Producción por producto y mes» (HU-23) | 3 405 000 unidades en 188 órdenes |
@@ -108,5 +107,4 @@ El proyecto toma de **ITIL 4** cinco prácticas y solo lo necesario para sostene
 - **El SLA de respuesta no se mide.** Odoo Project no registra cuándo se atendió por primera vez un ticket; solo se mide la resolución. Los tiempos de respuesta de la tabla son el acuerdo, pero hoy no tienen un campo que los compruebe.
 - **Horas corridas.** El plazo de un ticket cuenta horas seguidas, no horas de oficina, y no considera feriados.
 - **Datos ficticios.** Las cifras de negocio (ventas, producción, inventario) son de los datos de demostración; las metas son supuestos.
-- **SUS pendiente.** El cuestionario de usabilidad no se aplicó todavía; ver [6.12](06_12_usabilidad.md). **[PENDIENTE: resultados de HU-30]**.
 - **Lighthouse (límite conocido).** El backend (59) y el tablero propio (76; 39 en móvil) no llegan a 80; lo explica el JavaScript de Odoo y no el código del equipo; ver [4.6.4](04_06_wpo.md).

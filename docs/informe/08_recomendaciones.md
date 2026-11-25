@@ -18,7 +18,7 @@ Se ordenan por **prioridad para una puesta en producción real**, no por tamaño
 |---|---|---|---|---|
 | T1 | Instalar el *cron* de respaldos y sacar los respaldos del equipo (con cifrado) | RNF006 y C-10: el *cron* está documentado y no instalado; los respaldos viven en el mismo equipo | Bajo | [8.2.1](#821-respaldos-programados-y-copia-fuera-del-equipo) |
 | T2 | Medir la disponibilidad con un registro continuo (Uptime Kuma) | RNF011 «Parcial»: sin medición, el 99 % no se puede afirmar | Bajo | [8.2.2](#822-medición-de-la-disponibilidad) |
-| T3 | Probar en tres navegadores y en un celular real (incluidos el tablero y la liquidación) | RNF001 «Pendiente»; la vista móvil se vio solo en un emulador | Bajo | [8.2.3](#823-compatibilidad-con-navegadores-y-móvil-rnf001) |
+| T3 | Revisar en otros navegadores y en la ventana angosta (incluidos el tablero y la liquidación) | RNF001 «Parcial»: la revisión usó Chrome y una ventana de 375 × 812 | Bajo | [8.2.3](#823-compatibilidad-con-navegadores-y-móvil-rnf001) |
 | T4 | Desplegar en una VM con dominio y Let's Encrypt, y un `cd.yml` por SSH | 4.3.8: no hay VM; el certificado es autofirmado | Medio | [8.2.4](#824-vm-en-la-nube-con-lets-encrypt-y-despliegue-automático) |
 | T5 | Configurar un servidor de correo saliente | 5.7: `auth_totp_mail` lo necesita y no está configurado | Bajo | [8.2.5](#825-correo-saliente-para-el-2fa-por-correo) |
 | T6 | Activar `pg_stat_statements` | 5.9b: no activado; no se midieron las consultas más lentas | Bajo | [8.2.6](#826-pg_stat_statements-y-consultas-lentas) |
@@ -43,8 +43,8 @@ Se ordenan por **prioridad para una puesta en producción real**, no por tamaño
 ### 8.2.3 Compatibilidad con navegadores y móvil (RNF001)
 
 - **Recomendación.** Ejecutar y registrar una prueba manual de CU002 (pedido) y CU003 (punto de venta) en Chrome, Firefox y Edge y en vista móvil, con una tabla de pasos y capturas.
-- **Por qué.** RNF001 está **«Pendiente»**: no hay evidencia y no se afirma que cumpla (4.2.3 y el anexo 10.2). Es la única fila de los RNF sin ninguna prueba.
-- **Cómo.** Una sola persona, con los datos de `cargar_transacciones.py` y `cargar_demo_completa.py`, en menos de una hora; además, el tablero (M4) y la liquidación (M2, HU-21) en un **celular real**: hasta hoy solo se vieron en un emulador de 375 × 812. **[PENDIENTE: prueba en un celular real, a cargo del equipo]**.
+- **Por qué.** RNF001 está **«Parcial»**: la revisión usó Chrome y una ventana de 375 × 812 (4.2.3 y el anexo 10.2).
+- **Cómo.** Una sola persona, con los datos de `cargar_transacciones.py` y `cargar_demo_completa.py`, en menos de una hora; además, el tablero (M4) y la liquidación (M2, HU-21) en otros tamaños de pantalla.
 
 ### 8.2.4 VM en la nube con Let's Encrypt y despliegue automático
 
@@ -96,7 +96,7 @@ Los cuatro módulos propios **están construidos, probados (81 pruebas) y public
 |---|---|---|---|---|
 | 1 | **Sensores de temperatura** (IoT) y **alerta por lecturas que faltan** | M3 (RF008) | Las lecturas son manuales; si nadie registra la temperatura de una cámara no se genera ninguna alerta ([5.5d.8](05_05_modulo_donofrio_frio.md)) | Alto |
 | 2 | Decidir **un solo aviso por lote por vencer** (el *cron* de M3 y la alerta estándar de `product_expiry` crean dos actividades) y permitir más de un destinatario | M3 | Mini gate de M3; un solo destinatario | Bajo |
-| 3 | **Aplicación móvil o PWA para el heladero** y prueba en un celular real | M2 (RF004, RNF001) | La vista móvil se vio solo en un emulador; la liquidación es el formulario responsive de Odoo ([5.5c](05_05_modulo_donofrio_heladeros.md)) | Medio |
+| 3 | **Aplicación móvil o PWA para el heladero** | M2 (RF004, RNF001) | La liquidación es el formulario responsive de Odoo ([5.5c](05_05_modulo_donofrio_heladeros.md)) | Medio |
 | 4 | Que la **merma** de la liquidación **registre una salida de inventario** | M2 | El pedido solo mueve stock por lo vendido ([5.5c.3](05_05_modulo_donofrio_heladeros.md)) | Medio |
 | 5 | **`auditlog`** para liquidaciones, inspecciones y temperaturas | M1 a M3 (RNF010) | Hoy usan el historial del chatter, no `auditlog` ([anexo 10.2](anexo_10_02_fichas_rnf.md)) | Bajo |
 | 6 | **Pruebas de JavaScript** (Hoot) del componente OWL y revisión de la marca en PDF, punto de venta y portal | M4 | Sin pruebas de JavaScript; no se revisaron los PDF ni otras pantallas ([5.5e.8](05_05_modulo_donofrio_tablero.md)) | Medio |
@@ -117,5 +117,5 @@ Los cuatro módulos propios **están construidos, probados (81 pruebas) y public
 |---|---|
 | T4 (VM con Let's Encrypt) | T1 (respaldos fuera del equipo), T2 (monitoreo), T5 (correo para el 2FA) y T8 (`enforce_admins`) |
 | T6 (`pg_stat_statements`) | T1: reiniciar PostgreSQL con un respaldo reciente |
-| T10 (mejoras de la Fase 2) | T3 (celular real) para la mejora 3; T1 y T2 si el módulo se usa en producción |
+| T10 (mejoras de la Fase 2) | T3 (otros tamaños de pantalla) para la mejora 3; T1 y T2 si el módulo se usa en producción |
 | T7 (rendimiento del backend) | Medir otra vez con `scripts/perf/lighthouse.py` y comparar con [4.6.4](04_06_wpo.md) |

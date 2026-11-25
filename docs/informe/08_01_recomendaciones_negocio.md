@@ -29,7 +29,7 @@
 
 **Riesgo si no se hace.** Los datos ficticios no sirven para decidir, y sin capacitación los usuarios vuelven al Excel.
 
-**Limitación.** La prueba de usabilidad con 5 personas (HU-30) está pendiente: se tiene el plan y el cuestionario SUS, pero **no hay una medición** (**[PENDIENTE: resultados de HU-30]**). Antes de capacitar a todos, conviene hacerla con los usuarios reales y corregir lo que se encuentre (meta: SUS ≥ 70).
+**Limitación.** La usabilidad se evaluó con una revisión por roles y una evaluación heurística hechas por el equipo (6.12), no con usuarios reales. Antes de capacitar a todos, conviene observar a los usuarios reales con sus tareas y corregir lo que se encuentre.
 
 ### 2. Adoptar la liquidación diaria de los heladeros y llevarla a una app móvil
 
@@ -37,7 +37,7 @@
 
 **Por qué.** Es el proceso más reconocible de D'Onofrio y el que concentra el problema 1: descuadres y mermas que no se rastrean hasta un lote. Con la Fase 1 sola se cubría en parte (pedido de venta con la lista «Heladero» y devolución estándar); M2 agrega la merma y la comisión como campos y el PDF para firmar. Con los datos de demostración, 124 de 127 liquidaciones están liquidadas y la merma es de 0,27 % de lo despachado.
 
-**Cómo.** Dos pasos. Primero, capacitar a los liquidadores con CU004 y cargar los heladeros reales ([5.5c](05_05_modulo_donofrio_heladeros.md)). Después, probar el formulario en un **celular real** (hoy solo se vio en un emulador; **[PENDIENTE: prueba en un celular real]**) y evaluar una app o una PWA propia ([8.2.10](08_recomendaciones.md#8210-mejoras-de-los-módulos-de-la-fase-2-trabajo-futuro-real)).
+**Cómo.** Dos pasos. Primero, capacitar a los liquidadores con CU004 y cargar los heladeros reales ([5.5c](05_05_modulo_donofrio_heladeros.md)). Después, revisar el formulario con los heladeros en el dispositivo que usen y evaluar una app o una PWA propia ([8.2.10](08_recomendaciones.md#8210-mejoras-de-los-módulos-de-la-fase-2-trabajo-futuro-real)).
 
 **Indicador.** Descuadre por heladero menor al 2 % de lo despachado ([3.7](03_aspectos_generales.md), meta supuesta).
 
@@ -69,7 +69,7 @@
 
 **Cómo.** Adoptar los KPI de [3.7](03_aspectos_generales.md) como punto de partida y ajustar sus metas con datos reales: las actuales son supuestos (por ejemplo, +10 % de ventas, menos del 2 % de stock vencido o por vencer, 95 % de pedidos a tiempo).
 
-**Limitación.** El rendimiento queda por debajo de la meta de 80 en el backend (59) y en el tablero (76; 39 en móvil), un **límite conocido** del JavaScript de Odoo; la carga del tablero sí cumple los 3 s (LCP de 2,11 s). Se recomienda usarlo en un equipo con memoria suficiente y navegador actualizado hasta que se mida en el servidor real, y probar el tablero en un celular real (**[PENDIENTE: prueba del tablero en un celular real]**).
+**Limitación.** El rendimiento queda por debajo de la meta de 80 en el backend (59) y en el tablero (76; 39 en móvil), un **límite conocido** del JavaScript de Odoo; la carga del tablero sí cumple los 3 s (LCP de 2,11 s). Se recomienda usarlo en un equipo con memoria suficiente y navegador actualizado hasta que se mida en el servidor real, y revisar el tablero con los dispositivos de la gerencia.
 
 ### 6. Corregir el vencimiento en el despacho del punto de venta (FEFO)
 
@@ -99,7 +99,7 @@
 
 | Etapa | Qué hacer | Recomendaciones |
 |---|---|---|
-| **Corto plazo** (primeras semanas) | Cargar datos reales por áreas, capacitar y medir la usabilidad con usuarios reales; decidir cómo se envían los comprobantes a SUNAT; corregir el vencimiento en el punto de venta; probar en un celular real | 1, 4, 6 |
+| **Corto plazo** (primeras semanas) | Cargar datos reales por áreas, capacitar y medir la usabilidad con usuarios reales; decidir cómo se envían los comprobantes a SUNAT; corregir el vencimiento en el punto de venta | 1, 4, 6 |
 | **Mediano plazo** | Adoptar la liquidación, la calidad y la cadena de frío en la operación; ajustar las metas de los KPI del tablero; app móvil y sensores | 2, 3, 5 |
 | **Continuo** | Respaldos probados, seguridad y observación del escenario Froneri | 7, 8 |
 
@@ -108,4 +108,4 @@
 - **No hay costos ni retorno de la inversión.** No se estimaron costos de implantación, capacitación ni de soporte; la única cifra de costo es la licencia, que es cero porque se usa Odoo Community.
 - **No hay datos reales de D'Onofrio.** Los problemas son supuestos del caso (S7); las metas de los KPI también.
 - **Las mediciones salen de una PC.** Los resultados de carga, seguridad y rendimiento no sustituyen una prueba en el servidor definitivo.
-- **La Fase 2 se construyó, pero se probó con datos de demostración.** Las recomendaciones 2, 3 y 5 se apoyan en módulos con 81 pruebas automáticas y capturas, no en una operación real; la usabilidad con personas (HU-30) sigue pendiente.
+- **La Fase 2 se construyó, pero se probó con datos de demostración.** Las recomendaciones 2, 3 y 5 se apoyan en módulos con 81 pruebas automáticas y capturas, no en una operación real; la usabilidad se evaluó solo con el equipo.

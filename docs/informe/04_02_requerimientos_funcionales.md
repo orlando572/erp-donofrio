@@ -14,7 +14,7 @@ Necesidad del negocio → RF / RNF → Historia de usuario (HU) → Épica (issu
 
 - Las **HU** están en el Product Backlog del GitHub Project «Scrum ERP D'Onofrio» con sus criterios de aceptación.
 - Cada **épica** agrupa las HU de un área y un dueño; el PR de cada HU dice `Parte de #n`.
-- Cada **prueba** vive en `addons/donofrio_base/tests/` (unitarias e integrales) o en las pruebas no funcionales (k6, ZAP, Lighthouse, SUS).
+- Cada **prueba** vive en `addons/donofrio_base/tests/` (unitarias e integrales) o en las pruebas no funcionales (k6, ZAP y Lighthouse).
 
 ## 4.2.2 Requerimientos funcionales (tabla 2)
 
@@ -63,11 +63,11 @@ Los **18 RF están implementados**: 14 con el núcleo (F1) y 4 más la parte pro
 | #138 Inventario y producción | Logística y producción | Orlando | RF006, RF007, RF010 |
 | #139 Transacciones de demostración | Base | Orlando | Datos para todos los RF |
 | #140 Infraestructura, réplica y seguridad | Infraestructura | Orlando | RNF006, RNF009, RNF010, RNF012 |
-| #141 Gerencia, KPIs y mesa de servicios ITIL | Gerencia | Evelyn | RF013 (estándar), RF014, RNF011; HU-30 (RNF003) pendiente |
+| #141 Gerencia, KPIs y mesa de servicios ITIL | Gerencia | Evelyn | RF013 (estándar), RF014, RNF011 |
 | #142 Pruebas y calidad del software | Pruebas | Orlando | RNF002, RNF004, RNF007, RNF008 |
 | #144 M1 `donofrio_calidad` | F2 | Orlando | RF011, RF012, RNF005 |
 | #145 M2 `donofrio_heladeros` | F2 | Evelyn | RF004 |
 | #146 M3 Cadena de frío | F2 | Orlando | RF008 |
 | #147 M4 `donofrio_tablero` + branding | F2 | Evelyn | RF013 (propio), RNF003 (marca), RNF008 |
 
-Las épicas #144 y #145 siguen **abiertas** en GitHub aunque sus PR están fusionados: el equipo no marcó el último criterio de cada una (la prueba de la vista móvil de la liquidación en un teléfono real y la tarjeta del Project, que la actualiza Orlando). Esto no cambia el estado de los RF.
+Las épicas #144 y #145 siguen **abiertas** en GitHub aunque sus PR están fusionados: el equipo no marcó el último criterio de cada una (la casilla de HU-21 y la tarjeta del Project, que actualiza Orlando). Esto no cambia el estado de los RF.

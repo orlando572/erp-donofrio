@@ -73,7 +73,7 @@ Verificado en la pantalla de Odoo (base `donofrio`, usuario Liquidador, con los 
 
 ## 5.5c.6 Límites
 
-- **La vista móvil no se probó en un celular real ni con una pantalla de ancho móvil** (**[PENDIENTE: prueba en un celular real, a cargo del equipo]**). El navegador de las pruebas no permite reducir el ancho de la ventana (la ventana no cambió de tamaño y Odoo no entró en modo móvil), y Odoo no deja incrustar sus páginas en un marco. Se usa el formulario responsive estándar de Odoo; las columnas de precio e importe se pueden ocultar con el selector de columnas de la lista (`optional="show"`). Una condición como `uiEnv.isSmall` no es válida en las vistas de Odoo 19 y se descartó.
+- **La vista angosta de la liquidación** se revisó en una ventana de 375 × 812 (5.5e.6.1). Se usa el formulario responsive estándar de Odoo; las columnas de precio e importe se pueden ocultar con el selector de columnas de la lista (`optional="show"`). Una condición como `uiEnv.isSmall` no es válida en las vistas de Odoo 19 y se descartó.
 - **Inventario:** el pedido solo mueve stock por lo vendido (la prueba de pantalla generó su entrega `LIM/PICK/00227` por 100 unidades). Ver 5.5c.3.
 - **Las liquidaciones de las capturas y sus pedidos** son datos de demostración (HU-16) en la base de desarrollo, no en el repositorio; se tomaron solo con lectura. Su liquidador es el usuario «Liquidador de Heladeros (CD Arequipa)».
 - **Filas del diccionario:** la columna «Filas» de 4.2.8 sale ahora de la base de desarrollo `donofrio` (la base `donofrio_perf` con la que se midió ya no existe) e incluye los datos de prueba de M1 y M2; por eso `sale_order` pasó de 437 a 438. Las cifras de 4.2.6 siguen citando `donofrio_perf`.

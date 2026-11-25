@@ -127,7 +127,7 @@ Los cuatro módulos llegaron a `main` juntos con el [PR #229](https://github.com
 | **Reglas de negocio y limitaciones** | El heladero es concesionario (supuesto S4) y no empleado. Sin el módulo se cubre en parte con un pedido de venta con la lista «Heladero» y la devolución estándar (BPMN TO-BE 11). |
 | **Implementación y evidencia** | `addons/donofrio_heladeros` ([5.5c](05_05_modulo_donofrio_heladeros.md)); `tests/test_liquidacion.py`; `docs/capturas/sprint-4/HU-20_*` y `HU-21_*` |
 | **Diseño disponible** | `docs/diagramas/pantallas/mk_cu004_liquidacion.png`<br>`docs/diagramas/pantallas/mk_rp_liquidacion_heladero.png`<br>`docs/diagramas/bpmn/to-be_heladero_m2.png` |
-| **Lo que falta** | Nada de lo diseñado para M2. Límites: el pedido solo mueve stock por lo vendido y la vista móvil no se probó en un celular real **[PENDIENTE: prueba en un celular real]**. |
+| **Lo que falta** | Nada de lo diseñado para M2. Límites: el pedido solo mueve stock por lo vendido y la vista angosta se revisó en una ventana de 375 × 812. |
 | **Estado** | **Implementado** (M2, 24/11/2026) |
 
 ## RF005
@@ -328,7 +328,7 @@ Los cuatro módulos llegaron a `main` juntos con el [PR #229](https://github.com
 | **Pruebas** | `addons/donofrio_base/tests/test_gerencia.py (5)` y `addons/donofrio_tablero/tests/test_tablero.py (21)` |
 | **Evidencia** | `docs/capturas/sprint-3/HU-23_* (5)` y `docs/capturas/sprint-4/HU-22_*` |
 | **PR fusionados** | [#188](https://github.com/orlando572/erp-donofrio/pull/188), [#227](https://github.com/orlando572/erp-donofrio/pull/227), [#228](https://github.com/orlando572/erp-donofrio/pull/228) |
-| **Lo que falta** | Nada de lo diseñado para M4. Límites: Lighthouse del tablero da **76** en escritorio (meta 80) y 39 en móvil, declarado como **límite conocido** (LCP de 2.11 s, cumple los 3 s; [4.6.4](04_06_wpo.md)); la prueba en un celular real está **[PENDIENTE: prueba del tablero en un celular real]**; la tarjeta de cumplimiento cuenta las OP del mes que ya empezaron y el filtro de almacén no aplica a las liquidaciones ([5.5e.8](05_05_modulo_donofrio_tablero.md)). |
+| **Lo que falta** | Nada de lo diseñado para M4. Límites: Lighthouse del tablero da **76** en escritorio (meta 80) y 39 en móvil, declarado como **límite conocido** (LCP de 2.11 s, cumple los 3 s; [4.6.4](04_06_wpo.md)); la tarjeta de cumplimiento cuenta las OP del mes que ya empezaron y el filtro de almacén no aplica a las liquidaciones ([5.5e.8](05_05_modulo_donofrio_tablero.md)). |
 | **Prototipo** | `docs/diagramas/pantallas/mk_cu009_tablero.png` |
 | **Estado** | **Implementado** (dashboards estándar en F1; tablero OWL en M4, 24/11/2026) |
 

@@ -7,18 +7,18 @@
 ## Cómo se clasifican y se verifican
 
 - **Clasificación:** cada RNF se asigna a una característica del modelo de calidad **ISO/IEC 25010:2023** (ISO/IEC, 2023), que tiene nueve: adecuación funcional, eficiencia de desempeño, compatibilidad, capacidad de interacción, fiabilidad, seguridad, mantenibilidad, flexibilidad (antes portabilidad) y protección (*safety*). Ninguno de los RNF de este proyecto cae en *compatibilidad* ni en *protección*.
-- **Verificación:** cada RNF tiene una métrica y una prueba concreta. Las pruebas automáticas viven en `addons/donofrio_base/tests/` y corren en el CI en cada PR; las no funcionales (k6, ZAP, Lighthouse, restauración cronometrada y réplica) se ejecutaron en el Sprint 3, el Lighthouse del tablero de M4 el 24/11/2026, y sus resultados están en la sección [5.14](05_13_a_05_14_pruebas.md); el SUS (HU-30) quedó diferido al Cierre por decisión del equipo y **sus resultados están pendientes**.
+- **Verificación:** cada RNF tiene una métrica y una prueba concreta. Las pruebas automáticas viven en `addons/donofrio_base/tests/` y corren en el CI en cada PR; las no funcionales (k6, ZAP, Lighthouse, restauración cronometrada y réplica) se ejecutaron en el Sprint 3, el Lighthouse del tablero de M4 el 24/11/2026, y sus resultados están en la sección [5.14](05_13_a_05_14_pruebas.md).
 - **Trazabilidad:** RNF → HU → épica (issue) → prueba, como en [4.2.1](04_02_requerimientos_funcionales.md).
 
 ## Tabla 3: requerimientos no funcionales
 
-**Estado al cierre del proyecto** (25/11/2026; para los RNF del núcleo, la medición del 23/11/2026): *Cumple* (hecho, medido o probado, con evidencia en el repositorio), *Cumple con límites* (cumple la meta, con una limitación declarada que no la invalida), *Parcial* (una parte cumple y otra no) o *Pendiente* (todavía no se hizo). El detalle de cada RNF, con su evidencia y sus límites, está en las fichas del [Anexo 10.2](anexo_10_02_fichas_rnf.md).
+**Estado al cierre del proyecto** (25/11/2026; para los RNF del núcleo, la medición del 23/11/2026): *Cumple* (hecho, medido o probado, con evidencia en el repositorio), *Cumple con límites* (cumple la meta, con una limitación declarada que no la invalida) o *Parcial* (una parte cumple y otra no). El detalle de cada RNF, con su evidencia y sus límites, está en las fichas del [Anexo 10.2](anexo_10_02_fichas_rnf.md).
 
 | Área | ID | Requerimiento no funcional | Característica 25010:2023 (ISO/IEC, 2023) | Métrica o prueba | HU · sprint | Estado al cierre |
 |---|---|---|---|---|---|---|
-| **Marketing y Ventas** | RNF001 | Portabilidad: navegadores Chrome, Firefox y Edge; responsive en móvil (pedidos y PdV; liquidación si hay F2) | Flexibilidad (adaptabilidad) | Prueba manual en 3 navegadores y en vista móvil | HU-09, HU-10 · S2-S3 | **Pendiente**: la prueba manual en los tres navegadores y en vista móvil real no se hizo ni se registró. El tablero y la liquidación se vieron en un emulador de 375 × 812, sin desplazamiento horizontal ([5.5e.6.1](05_05_modulo_donofrio_tablero.md)). **[PENDIENTE: prueba del tablero y de la liquidación en un celular real, a cargo del equipo]** |
+| **Marketing y Ventas** | RNF001 | Portabilidad: interfaz adaptable que se usa en un navegador moderno de escritorio y en una ventana angosta (pedidos y PdV; liquidación y tablero si hay F2) | Flexibilidad (adaptabilidad) | Revisión de las pantallas en el navegador de escritorio y en una ventana de 375 × 812 | HU-09, HU-10 · S2-S3 | **Parcial**: el tablero y la liquidación se revisaron en una ventana de 375 × 812, sin desplazamiento horizontal ([5.5e.6.1](05_05_modulo_donofrio_tablero.md)). **Límite declarado:** la revisión usó Chrome; no hay una matriz de navegadores |
 | | RNF002 | Rendimiento: p95 < 2 s en listas y formularios con 20 usuarios concurrentes | Eficiencia de desempeño (comportamiento temporal) | k6 con 20 usuarios virtuales | HU-28 · S3 | **Cumple** (k6, 23/11/2026): p95 de **11.6 ms** en listas y **9.1 ms** en formularios con 20 usuarios y pausas; unos 100 ms sin pausas. [5.14, Tabla 22](05_13_a_05_14_pruebas.md) |
-| | RNF003 | Usabilidad: interfaz en español, tareas clave en ≤ 3 pasos, SUS ≥ 70 | Capacidad de interacción | SUS con 5 usuarios y 4 tareas cronometradas | HU-30 · S3 | **Parcial**: interfaz en español (`es_PE`, HU-03); plan, cuestionario y script del SUS hechos ([6.12](06_12_usabilidad.md)); **la prueba con 5 personas está diferida por decisión del equipo (23/11/2026) al Cierre**. **[PENDIENTE: resultados de HU-30, SUS con 5 personas]**. M4 agregó la marca visual (HU-24) y las capturas de 1600 × 900 con datos de demostración |
+| | RNF003 | Usabilidad: interfaz en español y tareas clave en ≤ 3 pasos | Capacidad de interacción | Revisión pantalla por pantalla por roles y evaluación heurística de Nielsen ([6.12](06_12_usabilidad.md)) | HU-03, HU-24 · S1, S4 | **Cumple con límites**: interfaz en español (`es_PE`, HU-03); la revisión por roles del 25/11/2026 encontró y corrigió textos en inglés, un error 403 del certificado y fechas fuera de ventana; la evaluación heurística de M1 a M4 está en 6.12. **Límite declarado:** la hizo el propio equipo, con datos de demostración |
 | **Logística** | RNF004 | Trazabilidad del 100 % de los lotes de producto terminado (de la OP al cliente) | Adecuación funcional (corrección funcional) | Test de integración OP → lote → entrega | HU-14, HU-33 · S2-S3 | **Cumple**: pruebas de integración compra → recepción → OP → lote con vencimiento (HU-33, PR #192) y pedido → entrega FEFO por lote → factura (PR #191), en el CI; TC-PRO-10 y TC-CAL-03 |
 | | RNF005 | Integridad: no se despacha un lote vencido (F1: FEFO y fecha de retiro); tampoco uno rechazado por calidad (F2) | Seguridad (integridad) | Test de la entrega con lotes vencidos | HU-11 · S2 | **Cumple con límites** (M1, 24/11/2026): FEFO y fecha de retiro probados en la entrega (`test_fefo.py`, 10 pruebas) y, con `donofrio_calidad`, un **lote rechazado no se despacha** ni por transferencia ni por el punto de venta (`test_inspeccion.py` y `test_pdv.py`, TC-CAL-07). **Límites:** el punto de venta no verifica el vencimiento (el cajero escribe el lote) y el bloqueo del PdV se probó con pruebas automáticas, no en la pantalla |
 | **Producción** | RNF006 | Respaldo diario (RPO 24 h) y réplica en caliente (RPO de segundos); RTO ≤ 2 h | Fiabilidad (recuperabilidad) | Restauración cronometrada y `pg_stat_replication` | HU-25, HU-26 · S3 | **Cumple**: **RTO medido de 31 s** (meta 2 h) con respaldo `.dump` y *filestore* verificados por SHA-256; réplica en *streaming* con retraso de 2.3 ms y escritura rechazada. **Límites:** el *cron* diario está documentado y no instalado; la promoción de la réplica no se probó. [5.14, Tabla 24 d](05_13_a_05_14_pruebas.md) |
@@ -48,12 +48,11 @@
 | Estado | RNF | Cantidad |
 |---|---|---|
 | Cumple | RNF002, RNF004, RNF006, RNF007, RNF010, RNF012 | 6 |
-| Cumple con límites | RNF005, RNF009 | 2 |
-| Parcial | RNF003, RNF008, RNF011, RNF013 | 4 |
-| Pendiente | RNF001 | 1 |
+| Cumple con límites | RNF003, RNF005, RNF009 | 3 |
+| Parcial | RNF001, RNF008, RNF011, RNF013 | 4 |
 | **Total** | | **13** |
 
-**Cambios frente al cierre del Sprint 3** (23/11/2026: 6 *Cumple*, 1 *Cumple con límites*, 5 *Parcial* y 1 *Pendiente*):
+**Cambios frente al cierre del Sprint 3** (23/11/2026: 6 *Cumple*, 1 *Cumple con límites*, 5 *Parcial* y 1 sin evidencia):
 
 | RNF | Antes (S3) | Ahora (cierre) | Qué lo cambió |
 |---|---|---|---|
@@ -61,11 +60,12 @@
 | RNF007 | Cumple | **Cumple** | De 136 a 218 pruebas con los cuatro módulos propios |
 | RNF008 | Parcial | **Parcial** | Se midió el tablero propio de M4: LCP de 2.11 s (cumple) y puntaje 76 (límite conocido) |
 | RNF010 | Cumple | **Cumple** | M1 a M3 usan el historial del chatter; no pasan por `auditlog` |
-| RNF003 | Parcial | **Parcial** | M4 sumó la marca; el SUS sigue pendiente (HU-30) |
+| RNF003 | Parcial | **Cumple con límites** | M4 sumó la marca (HU-24); la revisión por roles del 25/11 y la evaluación heurística de M1 a M4 ([6.12](06_12_usabilidad.md)) |
 | RNF012 | Cumple | **Cumple** | Publicadas `v1.1.0` a `v1.4.0` con su imagen y su zip |
-| RNF001, RNF011 y RNF013 | — | Sin cambio | No se hizo la prueba en tres navegadores y celular real; no se midió la disponibilidad |
+| RNF001 | Sin evidencia | **Parcial** | El tablero y la liquidación se revisaron en una ventana de 375 × 812 sin desplazamiento horizontal |
+| RNF011 y RNF013 | — | Sin cambio | La disponibilidad en el tiempo no se midió |
 
-> **Límites declarados.** Los valores de rendimiento (p95 < 2 s, 20 usuarios) y de disponibilidad (99 %) son metas académicas sobre una instancia local; el rendimiento se midió con datos de demostración, con k6 y el servidor en la misma PC y solo con lecturas (ver [5.14](05_13_a_05_14_pruebas.md)). **Lo que no se midió:** RNF001 (navegadores y celular real), la disponibilidad en el tiempo (RNF011) y el SUS (RNF003, **[PENDIENTE: resultados de HU-30]**). RNF012 se da por *Cumple* con la evidencia de dos PC distintas (Orlando y Evelyn) y con las releases publicadas (`v1.0.0` a `v1.4.0`).
+> **Límites declarados.** Los valores de rendimiento (p95 < 2 s, 20 usuarios) y de disponibilidad (99 %) son metas académicas sobre una instancia local; el rendimiento se midió con datos de demostración, con k6 y el servidor en la misma PC y solo con lecturas (ver [5.14](05_13_a_05_14_pruebas.md)). **Lo que no se midió:** la disponibilidad en el tiempo (RNF011) y la compatibilidad con otros navegadores distintos de Chrome (RNF001). RNF012 se da por *Cumple* con la evidencia de dos PC distintas (Orlando y Evelyn) y con las releases publicadas (`v1.0.0` a `v1.4.0`).
 
 ---
 

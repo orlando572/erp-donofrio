@@ -52,30 +52,30 @@
 <circle cx="670" cy="230" r="3.5" fill="#c28a00"/>
 <text x="670" y="244" text-anchor="middle" font-size="9">16</text>
 <text x="532.0" y="262" text-anchor="middle" fill="#555">HU terminadas, en orden (n.º de HU)</text>
-<text x="734" y="22" font-weight="bold" font-size="13">Burndown S3: 29 puntos</text>
+<text x="734" y="22" font-weight="bold" font-size="13">Burndown S3: 27 puntos</text>
 <line x1="734" y1="230" x2="1010" y2="230" stroke="#ddd"/><text x="728" y="234" text-anchor="end">0</text>
-<line x1="734" y1="184" x2="1010" y2="184" stroke="#ddd"/><text x="728" y="188" text-anchor="end">7</text>
-<line x1="734" y1="138" x2="1010" y2="138" stroke="#ddd"/><text x="728" y="142" text-anchor="end">14</text>
-<line x1="734" y1="92" x2="1010" y2="92" stroke="#ddd"/><text x="728" y="96" text-anchor="end">21</text>
-<line x1="734" y1="47" x2="1010" y2="47" stroke="#ddd"/><text x="728" y="51" text-anchor="end">28</text>
+<line x1="734" y1="188" x2="1010" y2="188" stroke="#ddd"/><text x="728" y="192" text-anchor="end">6</text>
+<line x1="734" y1="146" x2="1010" y2="146" stroke="#ddd"/><text x="728" y="150" text-anchor="end">12</text>
+<line x1="734" y1="103" x2="1010" y2="103" stroke="#ddd"/><text x="728" y="107" text-anchor="end">18</text>
+<line x1="734" y1="61" x2="1010" y2="61" stroke="#ddd"/><text x="728" y="65" text-anchor="end">24</text>
 <line x1="734" y1="40" x2="1010" y2="230" stroke="#999" stroke-dasharray="5 4"/>
-<polyline points="734,40 768,60 803,79 838,99 872,132 906,151 941,171 976,184 1010,217" fill="none" stroke="#c28a00" stroke-width="2.5"/>
+<polyline points="734,40 768,61 803,82 838,103 872,139 906,160 941,181 976,195 1010,230" fill="none" stroke="#c28a00" stroke-width="2.5"/>
 <circle cx="734" cy="40" r="3.5" fill="#c28a00"/>
-<circle cx="768" cy="60" r="3.5" fill="#c28a00"/>
+<circle cx="768" cy="61" r="3.5" fill="#c28a00"/>
 <text x="768" y="244" text-anchor="middle" font-size="9">25</text>
-<circle cx="803" cy="79" r="3.5" fill="#c28a00"/>
+<circle cx="803" cy="82" r="3.5" fill="#c28a00"/>
 <text x="803" y="244" text-anchor="middle" font-size="9">26</text>
-<circle cx="838" cy="99" r="3.5" fill="#c28a00"/>
+<circle cx="838" cy="103" r="3.5" fill="#c28a00"/>
 <text x="838" y="244" text-anchor="middle" font-size="9">23</text>
-<circle cx="872" cy="132" r="3.5" fill="#c28a00"/>
+<circle cx="872" cy="139" r="3.5" fill="#c28a00"/>
 <text x="872" y="244" text-anchor="middle" font-size="9">27</text>
-<circle cx="906" cy="151" r="3.5" fill="#c28a00"/>
+<circle cx="906" cy="160" r="3.5" fill="#c28a00"/>
 <text x="906" y="244" text-anchor="middle" font-size="9">29</text>
-<circle cx="941" cy="171" r="3.5" fill="#c28a00"/>
+<circle cx="941" cy="181" r="3.5" fill="#c28a00"/>
 <text x="941" y="244" text-anchor="middle" font-size="9">33</text>
-<circle cx="976" cy="184" r="3.5" fill="#c28a00"/>
+<circle cx="976" cy="195" r="3.5" fill="#c28a00"/>
 <text x="976" y="244" text-anchor="middle" font-size="9">32</text>
-<circle cx="1010" cy="217" r="3.5" fill="#c28a00"/>
+<circle cx="1010" cy="230" r="3.5" fill="#c28a00"/>
 <text x="1010" y="244" text-anchor="middle" font-size="9">28</text>
 <text x="872.0" y="262" text-anchor="middle" fill="#555">HU terminadas, en orden (n.º de HU)</text>
 <text x="1074" y="22" font-weight="bold" font-size="13">Burndown S4: 40 puntos</text>

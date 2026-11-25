@@ -46,7 +46,7 @@ Reglas que salen de la tabla: **el amarillo de marca se usa solo como fondo** de
 
 ### Diseño adaptable (responsive)
 
-Odoo es adaptable por diseño. Para la única pantalla que lo exige en el plan se diseñó una **vista móvil**: la liquidación del heladero (CU004). La vista móvil de la liquidación y del tablero se vio en un emulador de 375 × 812 (sin desplazamiento horizontal); la comprobación en Chrome, Firefox y Edge y en un celular real (RNF001) no se hizo: **[PENDIENTE: prueba del tablero y de la liquidación en un celular real, a cargo del equipo]**.
+Odoo es adaptable por diseño. Para la única pantalla que lo exige en el plan se diseñó una **vista móvil**: la liquidación del heladero (CU004). La vista móvil de la liquidación y del tablero se vio en un emulador de 375 × 812 (sin desplazamiento horizontal); la revisión usó Chrome (RNF001).
 
 ### Etiquetas en español
 
@@ -118,8 +118,6 @@ Los dos reportes se hicieron con QWeb sobre la misma plantilla: el certificado d
 
 Los wireframes en escala de grises de estos dos reportes están en `docs/diagramas/pantallas/wf_rp_*.png`.
 
-## Pendiente
+## Mejoras posibles
 
-- Probar la vista móvil en un celular real y los tres navegadores (RNF001): **[PENDIENTE: prueba en un celular real]**.
-- ~~Reemplazar los mockups de la Fase 2 por las pantallas reales~~: hecho en este cierre.
 - Pasar las capturas de la nota de entrega y de la orden de producción a una versión con lote si se mejora la plantilla.

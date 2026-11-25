@@ -8,7 +8,7 @@
 
 **Resumen.** 18 RF y 13 RNF. **Los 18 RF están implementados**: los de la Fase 2 (RF004, RF008, RF011, RF012 y la parte propia de RF013) con los módulos M1 a M4, publicados en las releases `v1.1.0` a `v1.4.0`. Las pruebas del repositorio: **218** (137 de `donofrio_base`, 45 de `donofrio_calidad`, 15 de `donofrio_heladeros` y 21 de `donofrio_tablero`; ver [6.10](06_09_a_06_13_pruebas.md)).
 
-> **Limitaciones de la matriz.** RNF001 sigue «Sin evidencia» (no se hizo la prueba en tres navegadores y celular real) y RNF003 depende de HU-30 (SUS con 5 personas), **[PENDIENTE: resultados de HU-30]**. RF008 y RF013 (propio) tienen sus límites en las fichas del [anexo 10.1](anexo_10_01_fichas_rf.md).
+> **Limitaciones de la matriz.** RNF001 queda «Parcial» (se revisó en una ventana de 375 × 812) y RNF003 «Cumple con límites» (revisión por roles y evaluación heurística). RF008 y RF013 (propio) tienen sus límites en las fichas del [anexo 10.1](anexo_10_01_fichas_rf.md).
 
 ## Tabla A. Requisitos funcionales (RF)
 
@@ -39,7 +39,7 @@
 |---|---|---|---|---|---|---|
 | **RNF001** Portabilidad: Chrome, Firefox y Edge; responsive | F1 | HU-09: [#167](https://github.com/orlando572/erp-donofrio/pull/167), [#171](https://github.com/orlando572/erp-donofrio/pull/171), [#172](https://github.com/orlando572/erp-donofrio/pull/172)<br>HU-10: [#170](https://github.com/orlando572/erp-donofrio/pull/170), [#172](https://github.com/orlando572/erp-donofrio/pull/172) | — | — | — | Sin evidencia: la prueba manual en 3 navegadores no se registró |
 | **RNF002** Rendimiento: p95 < 2 s con 20 usuarios (k6) | F1 | HU-28: [#194](https://github.com/orlando572/erp-donofrio/pull/194), [#196](https://github.com/orlando572/erp-donofrio/pull/196) | `scripts/perf/carga.js`<br>`scripts/perf/k6.sh` | — | `docs/capturas/sprint-3/HU-28_k6_resumen.json`<br>`docs/capturas/sprint-3/HU-28_k6_esfuerzo_resumen.json`<br>`docs/capturas/sprint-3/HU-28_evidencia_k6_zap.txt` | Cumple (p95 de 12 ms) |
-| **RNF003** Usabilidad: SUS ≥ 70 y tareas en ≤ 3 pasos | F1 | HU-30: [#195](https://github.com/orlando572/erp-donofrio/pull/195) | `scripts/usabilidad_sus.py`<br>`docs/usabilidad/plan_de_pruebas.md`<br>`docs/usabilidad/formulario_sus.md` | — | `docs/informe/06_12_usabilidad.md` | Parcial: método listo; [PENDIENTE: resultados de HU-30, SUS con 5 personas] |
+| **RNF003** Usabilidad: español y tareas en ≤ 3 pasos | F1, F2 | HU-03: [#155](https://github.com/orlando572/erp-donofrio/pull/155); HU-24 | Revisión por roles y evaluación heurística | — | 6.12 | Cumple con límites: revisión por roles del 25/11 y evaluación heurística de M1 a M4 |
 | **RNF004** Trazabilidad del 100 % de los lotes (de la OP al cliente) | F1 | HU-14: [#174](https://github.com/orlando572/erp-donofrio/pull/174), [#176](https://github.com/orlando572/erp-donofrio/pull/176)<br>HU-33: [#191](https://github.com/orlando572/erp-donofrio/pull/191), [#192](https://github.com/orlando572/erp-donofrio/pull/192) | `addons/donofrio_base/data/produccion_data.xml` | `test_flujo_compra_produccion.py::test_flujo_completo_del_planificador_al_lote_terminado`<br>`test_produccion.py::test_el_lote_producido_sale_despues_por_fefo` | `docs/capturas/sprint-3/S3-informe6_evidencia_tests.txt` | Cumple |
 | **RNF005** Integridad: no se despacha un lote vencido ni uno rechazado por calidad | F1 y F2 | HU-11: [#169](https://github.com/orlando572/erp-donofrio/pull/169), [#176](https://github.com/orlando572/erp-donofrio/pull/176)<br>HU-17: [#219](https://github.com/orlando572/erp-donofrio/pull/219), [#221](https://github.com/orlando572/erp-donofrio/pull/221), [#224](https://github.com/orlando572/erp-donofrio/pull/224), [#231](https://github.com/orlando572/erp-donofrio/pull/231) | `addons/donofrio_base/data/productos_data.xml`<br>`addons/donofrio_calidad/models/stock_move_line.py` | `test_fefo.py::test_lote_vencido_no_se_reserva`<br>`test_fefo.py::test_lote_en_fecha_de_retiro_no_se_reserva`<br>`test_flujo_venta.py::test_un_lote_vencido_no_entra_en_la_entrega_del_pedido`<br>`donofrio_calidad/tests/test_inspeccion.py::test_un_lote_rechazado_no_se_despacha`<br>`donofrio_calidad/tests/test_pdv.py::test_el_pdv_no_saca_del_stock_un_lote_rechazado` | `docs/capturas/sprint-3/S3-informe6_evidencia_tests.txt` | Cumple con límites: el PdV no verifica el vencimiento (el cajero escribe el lote) |
 | **RNF006** Respaldo diario (RPO 24 h), réplica (RPO de segundos) y RTO ≤ 2 h | F1 | HU-25: [#186](https://github.com/orlando572/erp-donofrio/pull/186)<br>HU-26: [#187](https://github.com/orlando572/erp-donofrio/pull/187) | `scripts/backup.sh`<br>`scripts/restore.sh`<br>`scripts/verificar_backup.sh`<br>`scripts/verificar_replica.sh`<br>`docker/postgres/primary`<br>`docker/postgres/replica` | — | `docs/capturas/sprint-3/HU-26_evidencia_respaldo.txt`<br>`docs/capturas/sprint-3/HU-25_evidencia_replica.txt` | Cumple (RTO medido de 31 s); la promoción de la réplica no se probó |
@@ -84,11 +84,10 @@
 | HU-27 | RNF009, RNF010 | [#189](https://github.com/orlando572/erp-donofrio/pull/189) |
 | HU-28 | RNF002, RNF008, RNF009 | [#194](https://github.com/orlando572/erp-donofrio/pull/194), [#196](https://github.com/orlando572/erp-donofrio/pull/196) |
 | HU-29 | RNF012 · Release: imagen GHCR y zip (publicadas v1.0.0 a v1.4.0) | [#190](https://github.com/orlando572/erp-donofrio/pull/190) |
-| HU-30 | RNF003 | [#195](https://github.com/orlando572/erp-donofrio/pull/195) |
 | HU-32 | Mesa de servicios TI en Project (ITIL, SLA) | [#193](https://github.com/orlando572/erp-donofrio/pull/193) |
 | HU-33 | RF010, RNF004 · Pruebas integrales (pedido → factura; compra → OP → lote) | [#191](https://github.com/orlando572/erp-donofrio/pull/191), [#192](https://github.com/orlando572/erp-donofrio/pull/192) |
 
-**HU de requisitos sin PR fusionado:** ninguna. La HU-31 (landing «Únete como heladero», opcional) no se hizo y no figura en ningún requisito de esta matriz.
+**HU de requisitos sin PR fusionado:** ninguna. La HU-31 (landing «Únete como heladero», opcional) no figura en ningún requisito de esta matriz.
 
 ## Qué no cubre esta matriz
 
