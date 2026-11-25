@@ -1,6 +1,6 @@
 # 4.4 Diseño de prototipos: wireframes y mockups
 
-> **Estado:** borrador del Sprint 2 · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md) (4.4.1 y 4.4.2), [03 §3.3](../plan/03_modulos_odoo.md), [04 §4.4](../plan/04_scrum_pmbok.md)
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md) (4.4.1 y 4.4.2), [03 §3.3](../plan/03_modulos_odoo.md), [04 §4.4](../plan/04_scrum_pmbok.md)
 >
 > Los datos que aparecen en las pantallas son ficticios y verosímiles (supuesto S7).
 
@@ -16,7 +16,7 @@ El PNG sale del SVG con el mismo comando de Docker de [`docs/diagramas/README.md
 
 - **Wireframes (4.4.1):** escala de grises, sin marca, para acordar la **estructura**: qué campos, qué tabla y qué acciones tiene cada pantalla. Uno por caso de uso.
 - **Mockups (4.4.2):** alta fidelidad con la paleta de marca: **amarillo de los carritos** (`#F7C60A`, desde 1919) como color de acción y de cabecera, tinta oscura para el texto y verde, rojo y azul solo para alertas.
-- **Pantallas de la Fase 2:** las de liquidación, inspección, temperaturas y tablero llevan la etiqueta «Módulo propio de la Fase 2 (diseño)». Se diseñan en la Fase 1 **aunque no se construyan**; si el Gate 0 no confirma su módulo, quedan como «Diseñado – trabajo futuro» con su caso de uso, su wireframe y su mockup ([02 §2.3](../plan/02_mapeo_plantilla.md)).
+- **Pantallas de la Fase 2:** las de liquidación, inspección, temperaturas y tablero se diseñaron en la Fase 1 (etiqueta «Módulo propio de la Fase 2») y **se implementaron en la Fase 2**: ahora cada una tiene su pantalla real en `docs/capturas/sprint-4/` (con los datos de demostración de la HU-16) y su estado en la tabla de abajo. Los wireframes y mockups se conservan como el diseño original ([02 §2.3](../plan/02_mapeo_plantilla.md)).
 - **Pantallas estándar de la Fase 1:** muestran lo que ya existe en Odoo configurado; el mockup es una **propuesta de cómo se vería con la marca**, no una pantalla nueva por construir. Las capturas reales de la interfaz están en `docs/capturas/sprint-2/`.
 - **Vista móvil:** solo la liquidación del heladero (CU004) la necesita, porque el liquidador la usa de pie, junto al despacho.
 
@@ -28,11 +28,11 @@ El PNG sale del SVG con el mismo comando de Docker de [`docs/diagramas/README.md
 | CU002 | Cotización con lista de precios | Ventas | HU-09 | Implementada (Ventas estándar, HU-09) |
 | CU003 | Punto de venta con boleta | Punto de venta | HU-10 | Implementada (PdV, HU-10) |
 | CU004 | Liquidación diaria del heladero | Heladeros (M2) | HU-20, HU-21 | Implementada |
-| CU004 | Liquidación (vista móvil) | Heladeros (M2) | HU-21 | Implementada (sin probar en celular real) |
+| CU004 | Liquidación (vista móvil) | Heladeros (M2) | HU-21 | Implementada (probada en un emulador de 375 × 812; **[PENDIENTE: prueba en un celular real]**) |
 | CU005 | Recepción de insumos con lote y vencimiento | Inventario | HU-11, HU-12 | Implementada (Inventario estándar, HU-11, HU-12) |
 | CU006 | Registro de temperaturas de las cámaras | Cadena de frío (M3) | HU-19 | Implementada |
 | CU007 | Orden de producción con lote | Fabricación | HU-14 | Implementada (Fabricación estándar, HU-14) |
-| CU008 | Inspección de calidad del lote | Calidad (M1) | HU-17, HU-18 | Diseño: trabajo futuro si no se construye el módulo |
+| CU008 | Inspección de calidad del lote | Calidad (M1) | HU-17, HU-18 | Implementada |
 | CU009 | Tablero gerencial de KPIs | Tablero (M4) | HU-22, HU-23 | Implementada |
 | CU010 | Análisis de ventas por línea, canal y temporada | Ventas | HU-23 | Estándar; capturas en el Sprint 3 (HU-23) |
 | CU011 | Solicitud de cotización generada por la regla mín./máx. | Compras | HU-13 | Implementada (Compras estándar, HU-13) |
@@ -154,5 +154,6 @@ El PNG sale del SVG con el mismo comando de Docker de [`docs/diagramas/README.md
 
 ## Pendiente
 
-- Probar los prototipos de la Fase 2 con el usuario (SUS) si se construyen sus módulos (Sprint 3 y 4).
-- Reemplazar el mockup por la pantalla real en 4.6.2 (Sprint 3).
+- Las pruebas de usabilidad de los prototipos con personas (SUS, HU-30): **[PENDIENTE: resultados de HU-30]**.
+- Probar las pantallas móviles (liquidación y tablero) en un celular real: **[PENDIENTE: prueba en un celular real]**.
+- ~~Reemplazar el mockup por la pantalla real en 4.6.2~~: hecho; ver [4.6.2](04_06_prototipos_web_y_reportes.md).

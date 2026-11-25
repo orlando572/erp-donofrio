@@ -1,6 +1,6 @@
 # 4.1 Planificación: análisis de sistemas y procesos AS-IS
 
-> **Estado:** borrador del Sprint 1 · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [01 §1.3 y §1.6](../plan/01_alcance_escenario.md)
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [01 §1.3 y §1.6](../plan/01_alcance_escenario.md)
 >
 > **Todo lo de esta sección es un supuesto académico (S7):** no hay acceso a los sistemas internos de D'Onofrio. La situación actual se reconstruye de forma verosímil a partir de prácticas comunes de la industria y de las fuentes públicas del plan.
 
@@ -80,12 +80,12 @@ El proveedor entrega los insumos y el almacén los recibe con la guía, sin regi
 
 ## 4.1.2 (continuación) Procesos TO-BE en Odoo: producción y almacén (Sprint 2)
 
-Son los mismos procesos de producción y de almacén, ahora **ejecutados con Odoo 19 Community**. Se dibujan con el mismo generador que los AS-IS ([`generar_bpmn.py`](../diagramas/generar_bpmn.py)). Las tareas en azul claro son de la **Fase 1** (Odoo estándar configurado por `donofrio_base`); las tareas en **amarillo** dependen de un módulo propio de la Fase 2 y, si el equipo no lo construye tras el Gate 0, quedan como diseño («trabajo futuro»).
+Son los mismos procesos de producción y de almacén, ahora **ejecutados con Odoo 19 Community**. Se dibujan con el mismo generador que los AS-IS ([`generar_bpmn.py`](../diagramas/generar_bpmn.py)). Las tareas en azul claro son de la **Fase 1** (Odoo estándar configurado por `donofrio_base`); las tareas en **amarillo** dependen de un módulo propio de la Fase 2, que **ya está implementado** (M1, M2 y M3).
 
 | # | Proceso TO-BE | Responsable | Archivo | Estado |
 |---|---|---|---|---|
 | 6 | Producción con Odoo estándar (Fase 1) | Orlando | [to-be_produccion.png](../diagramas/bpmn/to-be_produccion.png) · [.bpmn](../diagramas/bpmn/to-be_produccion.bpmn) | Borrador S2 |
-| 7 | Producción con inspección de calidad (M1, Fase 2) | Orlando | [to-be_produccion_m1.png](../diagramas/bpmn/to-be_produccion_m1.png) · [.bpmn](../diagramas/bpmn/to-be_produccion_m1.bpmn) | Borrador S2 (diseño) |
+| 7 | Producción con inspección de calidad (M1, Fase 2) | Orlando | [to-be_produccion_m1.png](../diagramas/bpmn/to-be_produccion_m1.png) · [.bpmn](../diagramas/bpmn/to-be_produccion_m1.bpmn) | Implementado (M1, `v1.1.0`) |
 | 8 | Recepción y despacho con Odoo estándar (Fase 1) | Orlando | [to-be_recepcion_despacho.png](../diagramas/bpmn/to-be_recepcion_despacho.png) · [.bpmn](../diagramas/bpmn/to-be_recepcion_despacho.bpmn) | Borrador S2 |
 
 ### 6. Producción con Odoo estándar (Fase 1)
@@ -94,13 +94,13 @@ Son los mismos procesos de producción y de almacén, ahora **ejecutados con Odo
 
 El jefe de producción crea la orden de producción desde la receta (lista de materiales) y la confirma. Odoo reserva los insumos **por FEFO**: sale primero el lote que vence antes, y un lote vencido o ya en su fecha de retiro no se reserva. El almacén entrega lo reservado a la línea. El operario ejecuta cada operación en su centro de trabajo (el sistema registra el tiempo real) y verifica los controles críticos que están escritos en el nombre de la operación (pasteurizar a 80-85 °C, endurecer a -18 °C o menos); el resultado se anota en la orden. Si no cumple, el jefe decide reproceso o descarte y lo deja escrito en la orden. Si cumple, el operario marca la orden como hecha: Odoo **crea el lote con su fecha de vencimiento** (12 meses en helados y chocolates, 4 en panetón), **calcula el costo** (insumos más horas de línea, con valoración FIFO) y el lote entra a Lima/Stock listo para salir por FEFO.
 
-Limitación declarada: en Community no hay inspecciones de calidad ligadas a la orden, así que en la Fase 1 el control es **documental** (instrucciones de la operación y nota en la orden). Eso lo cubre el módulo M1 de la Fase 2.
+Limitación declarada: en Community no hay inspecciones de calidad ligadas a la orden, así que en la Fase 1 el control es **documental** (instrucciones de la operación y nota en la orden). Eso lo cubre el módulo M1 de la Fase 2, ya implementado (proceso 7).
 
 ### 7. Producción con inspección de calidad (M1, Fase 2)
 
 ![BPMN TO-BE producción con inspección de calidad](../diagramas/bpmn/to-be_produccion_m1.png)
 
-Con el módulo `donofrio_calidad` (diseño, sin construir hasta confirmar el Gate 0), al terminar la orden se crea una **inspección ligada a la orden y al lote**. El inspector mide en cada punto de control (pasteurización, peso neto, microbiología) y aprueba o rechaza. Si aprueba, se emite el certificado de calidad y el lote queda disponible para el despacho FEFO. Si rechaza, Odoo **bloquea el despacho del lote** (RNF005) y el jefe de producción decide su destino con el motivo registrado.
+Con el módulo `donofrio_calidad` (M1, implementado en `v1.1.0`), al terminar la orden se crea una **inspección ligada a la orden y al lote**. El inspector mide en cada punto de control (pasteurización, peso neto, microbiología) y aprueba o rechaza. Si aprueba, se emite el certificado de calidad y el lote queda disponible para el despacho FEFO. Si rechaza, Odoo **bloquea el despacho del lote** (RNF005) y el jefe de producción decide su destino con el motivo registrado.
 
 ### 8. Recepción y despacho con Odoo estándar (Fase 1)
 
@@ -108,7 +108,7 @@ Con el módulo `donofrio_calidad` (diseño, sin construir hasta confirmar el Gat
 
 El comprador confirma la orden de compra y Odoo crea la recepción en Lima. Al llegar el camión, el almacén recibe contra esa recepción y **escribe el lote y la fecha de vencimiento** (sin lote no se puede validar). Odoo guarda el lote en su cámara, valoriza el stock por FIFO y **avisa al jefe de almacén 30 días antes** de que el lote venza. Cuando llega un pedido confirmado o una reposición a Arequipa, el despacho en Lima es en **dos pasos**: *pick* (Odoo reserva por FEFO y arma la lista de recolección) y *ship* (se verifica y se despacha desde la zona de salida con su guía). La entrega al cliente se cierra con su firma; la reposición pasa por la ubicación de tránsito y el CD Arequipa la recibe con su lote.
 
-Limitación declarada: la temperatura de las cámaras se sigue controlando fuera del sistema en la Fase 1; el registro con rangos y alertas es la cadena de frío (M3) de la Fase 2.
+Limitación declarada: en la Fase 1 la temperatura de las cámaras se controla fuera del sistema; el registro con rangos y alertas es la cadena de frío (M3), implementada en `v1.3.0` dentro de `donofrio_calidad`: rango por ubicación, lecturas con alerta fuera de rango y *cron* de lotes por vencer (lecturas manuales, sin sensores).
 
 ### Cómo resuelve el TO-BE los puntos débiles del AS-IS
 
@@ -121,8 +121,8 @@ Limitación declarada: la temperatura de las cámaras se sigue controlando fuera
 | Vale de papel que no descuenta insumos | La orden de producción reserva y consume insumos por FEFO | HU-14 | Probado con tests |
 | Lote con código manual y kárdex en Excel | Lote con vencimiento creado por la orden, trazable a sus insumos | HU-14 | Probado con tests |
 | Costo del lote desconocido | Costo FIFO: insumos más horas de centro de trabajo, con sus asientos | HU-14 | Probado con tests |
-| Temperaturas en papel | Se mantiene en papel en la Fase 1 | — | Pendiente: M3 (Fase 2) |
-| Inspección en papel y lotes no conformes sin registro | Inspección ligada a la orden y bloqueo del despacho | — | Pendiente: M1 (Fase 2) |
+| Temperaturas en papel | Registro de temperaturas por ubicación con rango y alerta al jefe de almacén | HU-19 | Implementado (M3) y probado con tests |
+| Inspección en papel y lotes no conformes sin registro | Inspección ligada a la orden y bloqueo del despacho | HU-17, HU-18 | Implementado (M1) y probado con tests |
 
 
 ---
@@ -135,8 +135,8 @@ Son los tres procesos de negocio que Evelyn describió como AS-IS en el Sprint 1
 |---|---|---|---|---|
 | 9 | Venta a cliente B2B con Odoo estándar (Fase 1) | Evelyn | [to-be_venta_b2b.png](../diagramas/bpmn/to-be_venta_b2b.png) · [.bpmn](../diagramas/bpmn/to-be_venta_b2b.bpmn) | Borrador S2; HU-08, 09, 15 en `develop` |
 | 10 | Compra de insumos con Odoo estándar (Fase 1) | Evelyn | [to-be_compra_insumos.png](../diagramas/bpmn/to-be_compra_insumos.png) · [.bpmn](../diagramas/bpmn/to-be_compra_insumos.bpmn) | Borrador S2; HU-13, 15 en `develop` |
-| 11 | Heladero con Odoo estándar (Fase 1, sin M2) | Evelyn | [to-be_heladero.png](../diagramas/bpmn/to-be_heladero.png) · [.bpmn](../diagramas/bpmn/to-be_heladero.bpmn) | Borrador S2 (variante mínima) |
-| 12 | Heladero con liquidación diaria (M2, Fase 2) | Evelyn | [to-be_heladero_m2.png](../diagramas/bpmn/to-be_heladero_m2.png) · [.bpmn](../diagramas/bpmn/to-be_heladero_m2.bpmn) | Borrador S2 (diseño) |
+| 11 | Heladero con Odoo estándar (Fase 1, variante sin M2) | Evelyn | [to-be_heladero.png](../diagramas/bpmn/to-be_heladero.png) · [.bpmn](../diagramas/bpmn/to-be_heladero.bpmn) | Borrador S2 (variante mínima) |
+| 12 | Heladero con liquidación diaria (M2, Fase 2) | Evelyn | [to-be_heladero_m2.png](../diagramas/bpmn/to-be_heladero_m2.png) · [.bpmn](../diagramas/bpmn/to-be_heladero_m2.bpmn) | Implementado (M2, `v1.2.0`) |
 
 ### 9. Venta a cliente B2B con Odoo estándar (Fase 1)
 
@@ -166,7 +166,7 @@ Limitación declarada: no hay merma ni comisión como campos, ni cálculo autom�
 
 ![BPMN TO-BE heladero con liquidación](../diagramas/bpmn/to-be_heladero_m2.png)
 
-Con el módulo `donofrio_heladeros` (diseño, sin construir hasta confirmar el Gate 0), el liquidador abre una **liquidación por heladero y fecha**. El almacén registra lo despachado por producto. Al volver el heladero, el liquidador registra lo **devuelto y la merma**; Odoo calcula **vendido = despachado − devuelto − merma**, el importe a precio de heladero y la comisión. Si el efectivo no cuadra, la diferencia queda registrada en la liquidación. Al confirmar, Odoo **crea y confirma el pedido de venta**, y se imprime el PDF que firman las dos partes. Cubre el problema 1 del plan (liquidación manual con cuaderno).
+Con el módulo `donofrio_heladeros` (M2, implementado en `v1.2.0`), el liquidador abre una **liquidación por heladero y fecha**. El almacén registra lo despachado por producto. Al volver el heladero, el liquidador registra lo **devuelto y la merma**; Odoo calcula **vendido = despachado − devuelto − merma**, el importe a precio de heladero y la comisión. Si el efectivo no cuadra, la diferencia queda registrada en la liquidación. Al confirmar, Odoo **crea y confirma el pedido de venta**, y se imprime el PDF que firman las dos partes. Cubre el problema 1 del plan (liquidación manual con cuaderno).
 
 ### Cómo resuelve el TO-BE los puntos débiles del AS-IS (ventas, compras y heladeros)
 
@@ -183,4 +183,4 @@ Con el módulo `donofrio_heladeros` (diseño, sin construir hasta confirmar el G
 | Recepción sin lote ni vencimiento | La recepción de la OC exige lote y fecha | HU-11 | Probado con tests |
 | Factura de proveedor digitada a mano | Factura de proveedor (01) con IGV desde la orden | HU-16 | Verificado con datos de demostración |
 | Liquidación del heladero en cuaderno y cálculo a mano | Variante estándar (pedido + devolución) | — | Documentada; sin prueba propia |
-| Descuadre de efectivo descontado al día siguiente | Diferencia registrada en la liquidación | HU-20, HU-21 | Pendiente: M2 (Fase 2) |
+| Descuadre de efectivo descontado al día siguiente | Diferencia registrada en la liquidación | HU-20, HU-21 | Implementado (M2) y probado con tests |
