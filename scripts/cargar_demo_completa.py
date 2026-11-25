@@ -1103,19 +1103,23 @@ def traducir_textos(env):
 
 
 def ajustar_plazo_de_tickets(env):
-    """Tickets abiertos de la mesa con fecha límite posterior al 22/11.
+    """Tareas con proyecto cuya fecha límite cae después del 22/11 (se compara por día, en hora de Lima).
 
-    Si ya están en análisis o más allá, se resuelven ese día (dentro de su plazo, SLA cumplido); los que siguen
-    en «Nuevo» se llevan a una fecha de creación tal que su plazo venza el 22/11 (quedan con el SLA vencido)."""
-    mesa = ref(env, 'proyecto_mesa_servicios')
+    * Abiertas en análisis o más allá: se resuelven el 22/11, dentro de su plazo (SLA cumplido).
+    * Abiertas en «Nuevo»: se llevan a una fecha de creación tal que su plazo venza el 22/11 (SLA vencido).
+    * Ya resueltas: el plazo pasa a ser dos horas después de su cierre.
+    En todos los casos la fecha de creación se corre para que el plazo siga siendo el que marca la prioridad."""
     tope = fin_de_la_ventana()
-    tickets = env['project.task'].search([('project_id', '=', mesa.id), ('date_end', '=', False),
-                                          ('date_deadline', '>=', tope)], order='id')
+    tickets = env['project.task'].search([('project_id', '!=', False), ('date_deadline', '>=', tope)], order='id')
     nuevo, resuelto = ref(env, 'etapa_ti_nuevo'), ref(env, 'etapa_ti_resuelto')
     cr = env.cr
     for indice, ticket in enumerate(tickets):
-        if ticket.stage_id != nuevo:
-            cierre = lima(FIN, 11 + indice)
+        horas = HORAS_SLA.get(ticket.priority, 72)
+        if ticket.date_end:
+            limite = min(ticket.date_end + timedelta(hours=2), lima(FIN, 18))
+        elif ticket.stage_id != nuevo:
+            limite = lima(FIN, 14 + indice)
+            cierre = limite - timedelta(hours=2)
             mid = ultimo_mensaje(env)
             ticket.write({'stage_id': resuelto.id, 'state': '1_done'})
             ticket.write({'date_end': cierre})
@@ -1126,13 +1130,16 @@ def ajustar_plazo_de_tickets(env):
             cr.execute("UPDATE project_task SET date_last_stage_update = %s WHERE id = %s", (cierre, ticket.id))
         else:
             limite = lima(FIN, 12 + indice)
-            alta = limite - timedelta(hours=HORAS_SLA[ticket.priority])
-            ticket.date_deadline = limite
-            env.flush_all()
-            cr.execute("""UPDATE project_task SET create_date = %s, write_date = %s, date_assign = %s,
-                              date_last_stage_update = %s WHERE id = %s""", (alta, alta, alta, alta, ticket.id))
-            cr.execute("UPDATE mail_message SET date = %s, create_date = %s WHERE model = 'project.task' AND res_id = %s AND date > %s",
-                       (alta, alta, ticket.id, alta))
+        alta = limite - timedelta(hours=horas)
+        ticket.date_deadline = limite
+        env.flush_all()
+        cr.execute("""UPDATE project_task SET create_date = %s, write_date = %s, date_assign = %s WHERE id = %s""",
+                   (alta, alta, alta, ticket.id))
+        if not ticket.date_end:
+            cr.execute("UPDATE project_task SET date_last_stage_update = %s WHERE id = %s", (alta, ticket.id))
+        cr.execute("""UPDATE mail_message SET date = %s, create_date = %s
+                       WHERE id = (SELECT MIN(id) FROM mail_message WHERE model = 'project.task' AND res_id = %s)""",
+                   (alta, alta, ticket.id))
     env.invalidate_all()
     return len(tickets)
 
