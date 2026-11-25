@@ -101,6 +101,17 @@ docker compose up -d odoo
 
 Tarda entre 5 y 8 minutos. Si ya hay datos de demostración, el script no carga nada; para repetir la carga hay que recrear la base (sección 7).
 
+Para que también salgan con datos las vistas de calidad, heladeros, cadena de frío, CRM, contactos, mesa de servicios y calendario, corre después `scripts/cargar_demo_completa.py` (encima de la misma base, sin recrearla; tarda unos segundos). Haz antes un respaldo y detén el servicio web:
+
+```bash
+scripts/backup.sh
+docker compose stop odoo
+docker compose run --rm -T odoo odoo shell -d donofrio --no-http < scripts/cargar_demo_completa.py
+docker compose up -d odoo
+```
+
+Cada parte deja una marca (`donofrio_demo_completa.<parte>` en los parámetros del sistema), así que repetir el comando no duplica nada. Todos los datos son ficticios: teléfonos con el bloque `555` y correos `.example.com` o `.example.pe`.
+
 ## 5. Entrar al sistema
 
 Abre <http://localhost:8069> y entra con:
