@@ -1,0 +1,11 @@
+// HU-24: las ilustraciones de «sin datos» (carita feliz y neutra) de Odoo son SVG con degradado morado.
+// Se repiten en static/img con el degradado de la marca. Mismo selector que web/views/view.scss; carga después.
+.o_view_nocontent .o_nocontent_help {
+    .o_view_nocontent_smiling_face:before {
+        background-image: url(/donofrio_tablero/static/img/smiling_face.svg);
+    }
+
+    .o_view_nocontent_neutral_face:before {
+        background-image: url(/donofrio_tablero/static/img/neutral_face.svg);
+    }
+}

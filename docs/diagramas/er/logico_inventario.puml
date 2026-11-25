@@ -41,6 +41,9 @@ entity "stock_location" as stock_location #FFF1D6 {
   * name : varchar
   complete_name : varchar
   * usage : varchar
+  control_temperatura : boolean
+  temp_min : double precision
+  temp_max : double precision
 }
 entity "stock_picking_type" as stock_picking_type #FFF1D6 {
   * id : integer <<PK>>

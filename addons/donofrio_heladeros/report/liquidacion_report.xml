@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_liquidacion" model="ir.actions.report">
+        <field name="name">Liquidación del heladero</field>
+        <field name="model">donofrio.liquidacion</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">donofrio_heladeros.report_liquidacion</field>
+        <field name="report_file">donofrio_heladeros.report_liquidacion</field>
+        <field name="print_report_name">'Liquidación - %s' % (object.name or '')</field>
+        <field name="binding_model_id" ref="model_donofrio_liquidacion"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_liquidacion">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">Liquidación del heladero</h2>
+                        <p class="text-center text-muted"><span t-field="o.name"/> · <span t-field="o.state"/></p>
+                        <div class="row mt-3 mb-3">
+                            <div class="col-6">
+                                <strong>Heladero:</strong> <span t-field="o.partner_id.name"/><br/>
+                                <strong>Lista de precios:</strong> <span t-field="o.pricelist_id.name"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Fecha:</strong> <span t-field="o.fecha"/><br/>
+                                <strong>Liquidador:</strong> <span t-field="o.liquidador_id.name"/>
+                            </div>
+                        </div>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th class="text-end">Despachado</th>
+                                    <th class="text-end">Devuelto</th>
+                                    <th class="text-end">Merma</th>
+                                    <th class="text-end">Vendido</th>
+                                    <th class="text-end">Importe</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.linea_ids" t-as="lin">
+                                    <td><span t-field="lin.product_id.display_name"/></td>
+                                    <td class="text-end"><span t-out="'%g' % lin.despachado"/></td>
+                                    <td class="text-end"><span t-out="'%g' % lin.devuelto"/></td>
+                                    <td class="text-end"><span t-out="'%g' % lin.merma"/></td>
+                                    <td class="text-end"><span t-out="'%g' % lin.vendido"/></td>
+                                    <td class="text-end"><span t-field="lin.importe"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-end">
+                            <strong>Vendido <span t-field="o.total_importe"/> · Comisión (<span t-out="'%g' % o.porcentaje_comision"/> %) <span t-field="o.total_comision"/></strong>
+                        </p>
+                        <div class="alert alert-info">
+                            Efectivo entregado <span t-field="o.efectivo_entregado" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/> ·
+                            <t t-if="o.diferencia_efectivo &gt; 0">diferencia a favor del heladero: <span t-field="o.diferencia_efectivo"/></t>
+                            <t t-elif="o.diferencia_efectivo &lt; 0">el heladero debe: <span t-out="-o.diferencia_efectivo" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></t>
+                            <t t-else="">sin diferencia</t>
+                        </div>
+                        <div class="row" style="margin-top: 80px;">
+                            <div class="col-6 text-center">
+                                <hr style="width: 70%;"/>
+                                Firma del heladero<br/><span t-field="o.partner_id.name"/>
+                            </div>
+                            <div class="col-6 text-center">
+                                <hr style="width: 70%;"/>
+                                Firma del liquidador<br/><span t-field="o.liquidador_id.name"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

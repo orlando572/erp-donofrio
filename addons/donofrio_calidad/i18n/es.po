@@ -1,0 +1,928 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* donofrio_calidad
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-24 00:00+0000\n"
+"PO-Revision-Date: 2026-11-24 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: donofrio_calidad
+#: model:ir.actions.report,print_report_name:donofrio_calidad.action_report_certificado
+msgid "'Certificado de calidad - %s' % (object.lot_id.name or '')"
+msgstr "'Certificado de calidad - %s' % (object.lot_id.name or '')"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid ""
+"<br/>\n"
+"                                <strong>Empresa:</strong>"
+msgstr ""
+"<br/>\n"
+"                                <strong>Empresa:</strong>"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid ""
+"<br/>\n"
+"                                <strong>Lote:</strong>"
+msgstr ""
+"<br/>\n"
+"                                <strong>Lote:</strong>"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid ""
+"<br/>\n"
+"                                <strong>Responsable de calidad:</strong>"
+msgstr ""
+"<br/>\n"
+"                                <strong>Responsable de calidad:</strong>"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid ""
+"<br/>\n"
+"                                <strong>Vencimiento:</strong>"
+msgstr ""
+"<br/>\n"
+"                                <strong>Vencimiento:</strong>"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "<br/>Inspector de calidad"
+msgstr "<br/>Inspector de calidad"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "<strong>Orden de producción:</strong>"
+msgstr "<strong>Orden de producción:</strong>"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "<strong>Producto:</strong>"
+msgstr "<strong>Producto:</strong>"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__message_needaction
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__message_needaction
+msgid "Action Needed"
+msgstr "Acción requerida"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_punto__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__activity_ids
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoración de Actividad de Excepción"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__activity_state
+msgid "Activity State"
+msgstr "Estado de la actividad"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Icono de tipo de actividad"
+
+#. module: donofrio_calidad
+#: model:res.groups,comment:donofrio_calidad.group_calidad_jefe
+msgid ""
+"Además del inspector, define los puntos de control y borra inspecciones."
+msgstr ""
+"Además del inspector, define los puntos de control y borra inspecciones."
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_lot__alerta_vencimiento_fecha
+msgid "Alerta de vencimiento enviada"
+msgstr "Alerta de vencimiento enviada"
+
+#. module: donofrio_calidad
+#: model:donofrio.calidad.punto,name:donofrio_calidad.punto_microbiologia
+msgid "Análisis microbiológico"
+msgstr "Análisis microbiológico"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__donofrio_calidad_inspeccion__state__aprobada
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__stock_lot__calidad_estado__aprobada
+msgid "Aprobado"
+msgstr "Aprobado"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_calidad_inspeccion_form
+msgid "Aprobar lote"
+msgstr "Aprobar lote"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__message_attachment_count
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__message_attachment_count
+msgid "Attachment Count"
+msgstr "Número de archivos adjuntos"
+
+#. module: donofrio_calidad
+#: model:ir.ui.menu,name:donofrio_calidad.menu_calidad_frio
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_stock_location_form_temperatura
+msgid "Cadena de frío"
+msgstr "Cadena de frío"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_lot__calidad_estado
+#: model:ir.ui.menu,name:donofrio_calidad.menu_calidad_root
+msgid "Calidad"
+msgstr "Calidad"
+
+#. module: donofrio_calidad
+#: model:res.groups,name:donofrio_calidad.group_calidad_inspector
+msgid "Calidad: inspector"
+msgstr "Calidad: inspector"
+
+#. module: donofrio_calidad
+#: model:res.groups,name:donofrio_calidad.group_calidad_jefe
+msgid "Calidad: jefatura"
+msgstr "Calidad: jefatura"
+
+#. module: donofrio_calidad
+#: model:ir.actions.server,name:donofrio_calidad.ir_cron_lotes_por_vencer_ir_actions_server
+msgid "Calidad: lotes por vencer"
+msgstr "Calidad: lotes por vencer"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_punto__categ_id
+msgid "Categoría de producto"
+msgstr "Categoría de producto"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_calidad_inspeccion_form
+msgid "Certificado PDF"
+msgstr "Certificado PDF"
+
+#. module: donofrio_calidad
+#: model:ir.actions.report,name:donofrio_calidad.action_report_certificado
+#: model:ir.model,name:donofrio_calidad.model_report_donofrio_calidad_report_certificado
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "Certificado de calidad del lote"
+msgstr "Certificado de calidad del lote"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__company_id
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__control_temperatura
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_location__control_temperatura
+msgid "Controlar temperatura"
+msgstr "Controlar temperatura"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__create_uid
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_linea__create_uid
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_punto__create_uid
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__create_date
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_linea__create_date
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_punto__create_date
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_linea__cumple_manual
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__donofrio_calidad_linea__resultado__cumple
+msgid "Cumple"
+msgstr "Cumple"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__donofrio_calidad_punto__tipo__aprobacion
+msgid "Cumple / no cumple"
+msgstr "Cumple / no cumple"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,help:donofrio_calidad.field_stock_lot__alerta_vencimiento_fecha
+msgid ""
+"Cuándo se avisó que el lote estaba por vencer; evita repetir la alerta del cron diario."
+msgstr ""
+"Cuándo se avisó que el lote estaba por vencer; evita repetir la alerta del cron diario."
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_punto.py:0
+msgid "Debe cumplir"
+msgstr "Debe cumplir"
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid "Decidir reproceso o descarte del lote %s"
+msgstr "Decidir reproceso o descarte del lote %s"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__display_name
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_linea__display_name
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_punto__display_name
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__display_name
+#: model:ir.model.fields,field_description:donofrio_calidad.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:donofrio_calidad.field_report_donofrio_calidad_report_certificado__display_name
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_location__display_name
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_lot__display_name
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_move_line__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_temperatura_search
+msgid "Día"
+msgstr "Día"
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/report_certificado.py:0
+msgid "El certificado solo se emite para inspecciones aprobadas."
+msgstr "El certificado solo se emite para inspecciones aprobadas."
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/stock_lot.py:0
+msgid ""
+"El lote %(lote)s de %(producto)s vence el %(fecha)s y aún tiene %(cantidad)g en stock. Priorice su salida (FEFO) o decida su destino."
+msgstr ""
+"El lote %(lote)s de %(producto)s vence el %(fecha)s y aún tiene %(cantidad)g en stock. Priorice su salida (FEFO) o decida su destino."
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/stock_move_line.py:0
+msgid ""
+"El lote %s fue rechazado en la inspección de calidad y no se puede despachar."
+msgstr ""
+"El lote %s fue rechazado en la inspección de calidad y no se puede despachar."
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid ""
+"El lote cumplió todos los puntos de control y fue <strong>aprobado</strong> para su despacho."
+msgstr ""
+"El lote cumplió todos los puntos de control y fue <strong>aprobado</strong> para su despacho."
+
+#. module: donofrio_calidad
+#: model:ir.model.constraint,message:donofrio_calidad.constraint_donofrio_calidad_punto_check_rango
+msgid "El valor mínimo no puede ser mayor que el máximo."
+msgstr "El valor mínimo no puede ser mayor que el máximo."
+
+#. module: donofrio_calidad
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__donofrio_calidad_inspeccion__state__en_curso
+msgid "En medición"
+msgstr "En medición"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_temperatura_search
+msgid "En rango"
+msgstr "En rango"
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/stock_location.py:0
+msgid ""
+"En «%(ubicacion)s» la temperatura mínima (%(minima)g °C) no puede ser mayor que la máxima (%(maxima)g °C)."
+msgstr ""
+"En «%(ubicacion)s» la temperatura mínima (%(minima)g °C) no puede ser mayor que la máxima (%(maxima)g °C)."
+
+#. module: donofrio_calidad
+#: model:donofrio.calidad.punto,name:donofrio_calidad.punto_endurecimiento
+msgid "Endurecimiento"
+msgstr "Endurecimiento"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__state
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_calidad_inspeccion_search
+msgid "Estado"
+msgstr "Estado"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_temperatura_search
+msgid "Fecha"
+msgstr "Fecha"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__fecha
+msgid "Fecha y hora"
+msgstr "Fecha y hora"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__message_follower_ids
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__message_partner_ids
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Contactos)"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_temperatura__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Icono de Font Awesome p. ej. fa-tasks"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__fuera_de_rango
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_temperatura_form
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_temperatura_search
+msgid "Fuera de rango"
+msgstr "Fuera de rango"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__has_message
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__has_message
+msgid "Has Message"
+msgstr "Tiene un mensaje"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_temperatura_search
+msgid "Hoy"
+msgstr "Hoy"
+
+#. module: donofrio_calidad
+#: model:donofrio.calidad.punto,name:donofrio_calidad.punto_humedad_paneton
+msgid "Humedad del panetón"
+msgstr "Humedad del panetón"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__id
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_linea__id
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_punto__id
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__id
+#: model:ir.model.fields,field_description:donofrio_calidad.field_mrp_production__id
+#: model:ir.model.fields,field_description:donofrio_calidad.field_report_donofrio_calidad_report_certificado__id
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_location__id
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_lot__id
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_move_line__id
+msgid "ID"
+msgstr "ID"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__activity_exception_icon
+msgid "Icon"
+msgstr "Icono"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_temperatura__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Icono para indicar una actividad de excepción."
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_calidad_inspeccion__message_needaction
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_temperatura__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcada, hay nuevos mensajes que requieren su atención."
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_calidad_inspeccion__message_has_error
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_calidad_inspeccion__message_has_sms_error
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_temperatura__message_has_error
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_temperatura__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcada, algunos mensajes tienen error de envío."
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid "Indica el motivo del rechazo."
+msgstr "Indica el motivo del rechazo."
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_calidad_inspeccion_form
+msgid "Iniciar medición"
+msgstr "Iniciar medición"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_linea__inspeccion_id
+msgid "Inspeccion"
+msgstr "Inspeccion"
+
+#. module: donofrio_calidad
+#: model:ir.actions.act_window,name:donofrio_calidad.action_calidad_inspeccion
+#: model:ir.ui.menu,name:donofrio_calidad.menu_calidad_inspecciones
+msgid "Inspecciones"
+msgstr "Inspecciones"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_lot__inspeccion_ids
+msgid "Inspecciones de calidad"
+msgstr "Inspecciones de calidad"
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid "Inspección %s creada"
+msgstr "Inspección %s creada"
+
+#. module: donofrio_calidad
+#: model:ir.model,name:donofrio_calidad.model_donofrio_calidad_inspeccion
+msgid "Inspección de calidad del lote"
+msgstr "Inspección de calidad del lote"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__inspector_id
+msgid "Inspector"
+msgstr "Inspector"
+
+#. module: donofrio_calidad
+#: model:ir.model,name:donofrio_calidad.model_stock_location
+msgid "Inventory Locations"
+msgstr "Ubicaciones de inventario"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__message_is_follower
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__message_is_follower
+msgid "Is Follower"
+msgstr "Es un seguidor"
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_temperatura.py:0
+msgid ""
+"La lectura de %(temperatura)g °C en %(ubicacion)s está fuera de su rango (%(rango)s). Revise los lotes almacenados y decida su destino."
+msgstr ""
+"La lectura de %(temperatura)g °C en %(ubicacion)s está fuera de su rango (%(rango)s). Revise los lotes almacenados y decida su destino."
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__write_uid
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_linea__write_uid
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_punto__write_uid
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__write_date
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_linea__write_date
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_punto__write_date
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: donofrio_calidad
+#: model:ir.model,name:donofrio_calidad.model_donofrio_temperatura
+msgid "Lectura de temperatura"
+msgstr "Lectura de temperatura"
+
+#. module: donofrio_calidad
+#: model:ir.actions.act_window,name:donofrio_calidad.action_temperatura
+#: model:ir.ui.menu,name:donofrio_calidad.menu_calidad_temperaturas
+msgid "Lecturas de temperatura"
+msgstr "Lecturas de temperatura"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_temperatura__company_id
+msgid "Let this field empty if this location is shared between companies"
+msgstr "Deje vacío este campo si la ubicación se compartirá entre las empresas"
+
+#. module: donofrio_calidad
+#: model:ir.model,name:donofrio_calidad.model_stock_lot
+msgid "Lot/Serial"
+msgstr "Lote/serie"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__lot_id
+msgid "Lote"
+msgstr "Lote"
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid ""
+"Lote %(lote)s rechazado en la inspección %(ins)s: %(motivo)s. Queda bloqueado para el despacho."
+msgstr ""
+"Lote %(lote)s rechazado en la inspección %(ins)s: %(motivo)s. Queda bloqueado para el despacho."
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/stock_lot.py:0
+msgid "Lote por vencer: %(lote)s"
+msgstr "Lote por vencer: %(lote)s"
+
+#. module: donofrio_calidad
+#: model:ir.model,name:donofrio_calidad.model_mrp_production
+msgid "Manufacturing Order"
+msgstr "Orden de fabricación"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__linea_ids
+msgid "Mediciones"
+msgstr "Mediciones"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_linea__medicion
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "Medición"
+msgstr "Medición"
+
+#. module: donofrio_calidad
+#: model:ir.model,name:donofrio_calidad.model_donofrio_calidad_linea
+msgid "Medición de la inspección de calidad"
+msgstr "Medición de la inspección de calidad"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__donofrio_calidad_punto__tipo__rango
+msgid "Medición dentro de un rango"
+msgstr "Medición dentro de un rango"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_linea__medido
+msgid "Medido"
+msgstr "Medido"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__message_has_error
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de envío de mensaje"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__message_ids
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: donofrio_calidad
+#: model:res.groups,comment:donofrio_calidad.group_calidad_inspector
+msgid "Mide los puntos de control, aprueba o rechaza lotes."
+msgstr "Mide los puntos de control, aprueba o rechaza lotes."
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__motivo_rechazo
+msgid "Motivo del rechazo"
+msgstr "Motivo del rechazo"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Fecha límite de mi actividad"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_punto__valor_max
+msgid "Máximo"
+msgstr "Máximo"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__temp_max
+msgid "Máximo (°C)"
+msgstr "Máximo (°C)"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_punto__valor_min
+msgid "Mínimo"
+msgstr "Mínimo"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__temp_min
+msgid "Mínimo (°C)"
+msgstr "Mínimo (°C)"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "Siguiente evento en el calendario de actividades."
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Fecha límite de la siguiente actividad"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumen de la siguiente actividad"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo de la siguiente actividad"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__donofrio_calidad_linea__resultado__no_cumple
+msgid "No cumple"
+msgstr "No cumple"
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid "No se puede aprobar: hay puntos de control sin medir o que no cumplen."
+msgstr "No se puede aprobar: hay puntos de control sin medir o que no cumplen."
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_linea__norma
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_punto__norma
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "Norma"
+msgstr "Norma"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__message_needaction_counter
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__message_has_error_counter
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de errores"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_calidad_inspeccion__message_needaction_counter
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_temperatura__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensajes que requieren una acción"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_calidad_inspeccion__message_has_error_counter
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_temperatura__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de envío"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__name
+msgid "Número"
+msgstr "Número"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__observaciones
+msgid "Observaciones"
+msgstr "Observaciones"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_temperatura_form
+msgid "Observaciones (opcional)"
+msgstr "Observaciones (opcional)"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__production_id
+msgid "Orden de producción"
+msgstr "Orden de producción"
+
+#. module: donofrio_calidad
+#: model:donofrio.calidad.punto,name:donofrio_calidad.punto_pasteurizacion
+msgid "Pasteurización"
+msgstr "Pasteurización"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__donofrio_calidad_inspeccion__state__borrador
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__donofrio_calidad_linea__resultado__pendiente
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__stock_lot__calidad_estado__pendiente
+msgid "Pendiente"
+msgstr "Pendiente"
+
+#. module: donofrio_calidad
+#: model:donofrio.calidad.punto,name:donofrio_calidad.punto_peso_neto
+msgid "Peso neto por unidad (±2 %)"
+msgstr "Peso neto por unidad (±2 %)"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_calidad_punto__unidad
+msgid "Por ejemplo: °C, g, %."
+msgstr "Por ejemplo: °C, g, %."
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_calidad_inspeccion_search
+msgid "Por medir"
+msgstr "Por medir"
+
+#. module: donofrio_calidad
+#: model:ir.model,name:donofrio_calidad.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimientos de producto (línea de movimiento de stock)"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__product_id
+msgid "Producto"
+msgstr "Producto"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_linea__punto_id
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_punto__name
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "Punto de control"
+msgstr "Punto de control"
+
+#. module: donofrio_calidad
+#: model:ir.model,name:donofrio_calidad.model_donofrio_calidad_punto
+msgid "Punto de control de calidad"
+msgstr "Punto de control de calidad"
+
+#. module: donofrio_calidad
+#: model:ir.actions.act_window,name:donofrio_calidad.action_calidad_punto
+#: model:ir.ui.menu,name:donofrio_calidad.menu_calidad_puntos
+msgid "Puntos de control"
+msgstr "Puntos de control"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__rango
+msgid "Rango de la ubicación"
+msgstr "Rango de la ubicación"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__rating_ids
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__rating_ids
+msgid "Ratings"
+msgstr "Calificaciones"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_calidad_inspeccion_search
+msgid "Rechazadas"
+msgstr "Rechazadas"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__donofrio_calidad_inspeccion__state__rechazada
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__stock_lot__calidad_estado__rechazada
+msgid "Rechazado"
+msgstr "Rechazado"
+
+#. module: donofrio_calidad
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_calidad_inspeccion_form
+msgid "Rechazar lote"
+msgstr "Rechazar lote"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__user_id
+msgid "Registrado por"
+msgstr "Registrado por"
+
+#. module: donofrio_calidad
+#: model_terms:ir.actions.act_window,help:donofrio_calidad.action_temperatura
+msgid "Registre la primera lectura de temperatura"
+msgstr "Registre la primera lectura de temperatura"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__activity_user_id
+msgid "Responsible User"
+msgstr "Usuario responsable"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_linea__resultado
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.report_certificado
+msgid "Resultado"
+msgstr "Resultado"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__message_has_sms_error
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error de envío del SMS"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_linea__sequence
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_punto__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_temperatura__control_temperatura
+#: model:ir.model.fields,help:donofrio_calidad.field_stock_location__control_temperatura
+msgid ""
+"Si está marcado, las lecturas de temperatura de esta ubicación se comparan con su rango."
+msgstr ""
+"Si está marcado, las lecturas de temperatura de esta ubicación se comparan con su rango."
+
+#. module: donofrio_calidad
+#: model_terms:ir.actions.act_window,help:donofrio_calidad.action_temperatura
+msgid ""
+"Si la lectura sale del rango de la ubicación, se marca y el jefe de almacén recibe una actividad."
+msgstr ""
+"Si la lectura sale del rango de la ubicación, se marca y el jefe de almacén recibe una actividad."
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_calidad_punto__categ_id
+msgid "Si se deja vacío, el punto se mide en todos los productos."
+msgstr "Si se deja vacío, el punto se mide en todos los productos."
+
+#. module: donofrio_calidad
+#: model:ir.model.fields.selection,name:donofrio_calidad.selection__stock_lot__calidad_estado__sin_inspeccion
+msgid "Sin inspección"
+msgstr "Sin inspección"
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_temperatura.py:0
+msgid "Sin rango definido"
+msgstr "Sin rango definido"
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid "Solo se puede aprobar una inspección en medición."
+msgstr "Solo se puede aprobar una inspección en medición."
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid "Solo se puede iniciar una inspección pendiente."
+msgstr "Solo se puede iniciar una inspección pendiente."
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_inspeccion.py:0
+msgid "Solo se puede rechazar una inspección en medición."
+msgstr "Solo se puede rechazar una inspección en medición."
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_temperatura__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Estado según las actividades\n"
+"Vencida: la fecha límite ya ha pasado\n"
+"Hoy: la fecha límite es hoy\n"
+"Planificada: actividades futuras."
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__temperatura
+msgid "Temperatura (°C)"
+msgstr "Temperatura (°C)"
+
+#. module: donofrio_calidad
+#. odoo-python
+#: code:addons/donofrio_calidad/models/calidad_temperatura.py:0
+msgid "Temperatura fuera de rango: %(ubicacion)s (%(temperatura)g °C)"
+msgstr "Temperatura fuera de rango: %(ubicacion)s (%(temperatura)g °C)"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_location__temp_max
+msgid "Temperatura máxima (°C)"
+msgstr "Temperatura máxima (°C)"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_stock_location__temp_min
+msgid "Temperatura mínima (°C)"
+msgstr "Temperatura mínima (°C)"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_linea__tipo
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_punto__tipo
+msgid "Tipo"
+msgstr "Tipo"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__todos_cumplen
+msgid "Todos Cumplen"
+msgstr "Todos Cumplen"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_temperatura__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo de actividad de excepción en el registro."
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__location_id
+#: model_terms:ir.ui.view,arch_db:donofrio_calidad.view_temperatura_search
+msgid "Ubicación"
+msgstr "Ubicación"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_punto__unidad
+msgid "Unidad"
+msgstr "Unidad"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_calidad_inspeccion__website_message_ids
+#: model:ir.model.fields,field_description:donofrio_calidad.field_donofrio_temperatura__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del sitio web"
+
+#. module: donofrio_calidad
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_calidad_inspeccion__website_message_ids
+#: model:ir.model.fields,help:donofrio_calidad.field_donofrio_temperatura__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicación del sitio web"
+
+#. module: donofrio_calidad
+#: model:ir.model.constraint,message:donofrio_calidad.constraint_donofrio_calidad_inspeccion_unique_orden_lote
+msgid "Ya existe una inspección para esa orden y ese lote."
+msgstr "Ya existe una inspección para esa orden y ese lote."

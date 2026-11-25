@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="donofrio_tablero.Tablero">
+        <div t-if="sinPermiso" class="o_donofrio_tablero o_donofrio_sin_permiso o_action overflow-auto p-3">
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">Sin permiso</h4>
+                <p class="mb-0" t-out="state.kpis.mensaje"/>
+            </div>
+        </div>
+        <div t-else="" class="o_donofrio_tablero o_action overflow-auto p-3">
+            <div class="d-flex flex-wrap align-items-center justify-content-between mb-3 gap-2">
+                <h2 class="m-0">Tablero gerencial de KPIs</h2>
+                <div class="d-flex align-items-center gap-2">
+                    <label for="donofrio_tablero_almacen" class="m-0">Almacén</label>
+                    <select id="donofrio_tablero_almacen" class="form-select w-auto" t-on-change="onCambiarAlmacen">
+                        <option value="" t-att-selected="!state.almacenId">Todos</option>
+                        <t t-foreach="state.kpis.almacenes" t-as="almacen" t-key="almacen.id">
+                            <option t-att-value="almacen.id" t-att-selected="state.almacenId === almacen.id"
+                                    t-out="almacen.nombre"/>
+                        </t>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-12 col-md-6 col-xl-4" t-foreach="tarjetas" t-as="tarjeta" t-key="tarjeta.clave">
+                    <div class="o_donofrio_tarjeta card h-100" t-att-data-tarjeta="tarjeta.clave">
+                        <div class="card-body">
+                            <div class="text-muted small" t-out="tarjeta.titulo"/>
+                            <div class="o_donofrio_valor fs-2 fw-bold" t-out="tarjeta.valor"/>
+                            <div class="text-muted small" t-out="tarjeta.detalle"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Ventas por mes (<t t-out="state.kpis.moneda"/>)</h5>
+                    <div class="o_donofrio_grafico position-relative" style="height: 280px;">
+                        <canvas t-ref="grafico"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" t-if="state.kpis.ventas_mes.por_canal.length">
+                <div class="card-body">
+                    <h5 class="card-title">Ventas del mes por canal</h5>
+                    <table class="table table-sm mb-0">
+                        <tbody>
+                            <tr t-foreach="state.kpis.ventas_mes.por_canal" t-as="fila" t-key="fila.canal">
+                                <td t-out="fila.canal"/>
+                                <td class="text-end" t-out="formatoDinero(fila.total)"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

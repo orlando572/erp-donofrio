@@ -2,7 +2,7 @@
 
 > **Estado:** borrador del Sprint 3 · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [06 §6.2 a §6.6](../plan/06_github_ci_infra.md), [docs/dev/release.md](../dev/release.md), [4.3.1](04_03_infraestructura.md)
 >
-> Mide el **estado real del repositorio al 23/11/2026** (`develop` en `1e303ed`). Los datos salen de `gh` y `git` en modo de solo lectura y están guardados con fecha en [`S3-informe6_evidencia_github.txt`](../capturas/sprint-3/S3-informe6_evidencia_github.txt) y en la tabla de los 49 PR [`S3-informe6_prs_fusionados.tsv`](../capturas/sprint-3/S3-informe6_prs_fusionados.tsv). Lo que todavía no existe (tag `v1.0.0`, Releases y paquete en GHCR) se dice como pendiente: **se publica en el Gate 0 con [`docs/dev/release.md`](../dev/release.md)**. De Evelyn son 6.1, 6.2, 6.3, 6.7, 6.8 y 6.12; aquí solo se enlazan.
+> Mide el **estado real del repositorio al 23/11/2026** (`develop` en `1e303ed`). Los datos salen de `gh` y `git` en modo de solo lectura y están guardados con fecha en [`S3-informe6_evidencia_github.txt`](../capturas/sprint-3/S3-informe6_evidencia_github.txt) y en la tabla de los 49 PR [`S3-informe6_prs_fusionados.tsv`](../capturas/sprint-3/S3-informe6_prs_fusionados.tsv). *Actualización del 24/11/2026:* el PR #222 fusionó la Fase 1 en `main` (*merge commit* `4d0d94d`, CI en verde), el tag `v1.0.0` está en `main` y la GitHub Release está publicada; los datos de las tablas de abajo son los del 23/11. El paquete de GHCR quedó público con las etiquetas `v1.0.0` y `latest`, y la evidencia visual de la Release está en las capturas de 6.4 ([`docs/dev/release.md`](../dev/release.md)). De Evelyn son 6.1, 6.2, 6.3, 6.7, 6.8 y 6.12; aquí solo se enlazan.
 
 ## 6.4 Resumen del GitHub
 
@@ -11,11 +11,11 @@
 | Elemento | URL o ubicación | Estado al 23/11/2026 |
 |---|---|---|
 | Repositorio | <https://github.com/orlando572/erp-donofrio> | **Público**, licencia LGPL-3.0, rama por defecto `develop` (para que `Closes #n` cierre las épicas al fusionar) |
-| Ramas | `develop` (integración) y `main` (entregado) | Ambas **protegidas** (ver Tabla 27). `main` conserva el commit inicial del Sprint 0 (`284e9bf`) y va 76 commits detrás de `develop`: aún no se ha hecho ningún PR `develop` → `main` |
+| Ramas | `develop` (integración) y `main` (entregado) | Ambas **protegidas** (ver Tabla 27). `main` conserva el commit inicial del Sprint 0 (`284e9bf`) y al 23/11 iba 76 commits detrás de `develop` (sin ningún PR `develop` → `main`). **24/11/2026:** el PR #222 fusionó la Fase 1 en `main` (*merge commit* `4d0d94d`, CI en verde); `lint` y `test` aún no son checks obligatorios |
 | Pull requests | <https://github.com/orlando572/erp-donofrio/pulls?q=is%3Apr> | **49** PR, todos **fusionados** y a `develop` (0 abiertos, 0 cerrados sin fusionar). 30 de Orlando y 19 de Evelyn |
 | Actions | <https://github.com/orlando572/erp-donofrio/actions> | 3 workflows: `CI` (`ci.yml`), `Release` (`release.yml`) y `Pruebas no funcionales` (`perf.yml`, solo manual). **109 ejecuciones** (Tabla 28) |
-| Releases | <https://github.com/orlando572/erp-donofrio/releases> | **No hay ninguna** (`gh release list` vacío, 0 tags). `v1.0.0` y el zip del código fuente se publican en el Gate 0 con `docs/dev/release.md` |
-| Paquete (GHCR) | `ghcr.io/orlando572/erp-donofrio` | **No existe todavía** (la página del paquete responde 404). `release.yml` solo publica cuando se empuja un tag `v*`; se publica en el Gate 0. El ensayo de la cadena (construir, probar y empaquetar sin publicar) corrió en el PR #190 con éxito |
+| Releases | <https://github.com/orlando572/erp-donofrio/releases> | Al 23/11 **no había ninguna** (0 tags). **24/11/2026:** el tag `v1.0.0` está en `main` y la Release «ERP D'Onofrio v1.0.0» está publicada (05:43 UTC). **Pendiente de verificar:** el zip adjunto |
+| Paquete (GHCR) | `ghcr.io/orlando572/erp-donofrio` | Al 23/11 **no existía** (la página del paquete respondía 404). `release.yml` publica al empujar un tag `v*`: con `v1.0.0` ya debió correr, y el 24/11/2026 se verificó que el paquete existe y es público (las etiquetas `v1.0.0` y `latest` se descargan sin iniciar sesión). El ensayo de la cadena (construir, probar y empaquetar sin publicar) corrió en el PR #190 con éxito |
 | GitHub Project | <https://github.com/users/orlando572/projects/4> | Público, «Scrum ERP D'Onofrio», 22 ítems. Vistas, Insights y *Dailies* son de Evelyn ([6.2](../plan/02_mapeo_plantilla.md), 6.3) |
 | Issues | <https://github.com/orlando572/erp-donofrio/issues> | 22 (11 abiertos y 11 cerrados); plantillas `epica.yml` y `bug.yml`. Lo explica Evelyn en 6.8 |
 | Seguridad del repositorio | Settings → Code security | `secret scanning` y `push protection` **activos**; *Dependabot security updates* **desactivado** |
@@ -58,7 +58,21 @@ Los **jobs de `ci.yml`** y su resultado acumulado:
 
 Los jobs `replica`, `backup` y `proxy` se agregaron en el Sprint 3, por eso tienen menos ejecuciones. Las **2 ejecuciones en rojo** son del PR #189 (HU-27): el paso de verificación del despliegue falló, en la segunda con «no acepta tls1_3» y «ningún intento se bloqueó» (el script de verificación usaba `openssl` y contaba mal el bloqueo por *worker*); se corrigió en el mismo PR y se fusionó con el CI en verde. Es la evidencia de que el control funciona. Las **10 canceladas** las reemplazó una corrida más reciente del mismo grupo de concurrencia; no son fallos. De la corrida programada hay **una** ejecución (éxito, id `45279340817`).
 
-**Capturas pendientes.** Las del plan ([06 §6.6](../plan/06_github_ci_infra.md): página principal, Releases con el zip, paquete GHCR, reglas de protección, Insights) se toman en el Gate 0, cuando existan la release y el paquete. Hoy la evidencia es el texto fechado de arriba.
+**Capturas de la Release (24/11/2026).** Se tomaron en el navegador integrado **sin iniciar sesión**, lo que prueba que son públicas: la GitHub Release `v1.0.0` con el zip adjunto, el paquete de GHCR con sus etiquetas y la corrida del flujo Release en verde.
+
+![Ilustración 6.4-a. GitHub Release v1.0.0 con erp-donofrio-v1.0.0.zip adjunto (el zip pesa 23,5 MiB, unos 24,7 MB)](../capturas/sprint-4/S4-release_v1.0.0.png)
+
+*Ilustración 6.4-a. Release «ERP D'Onofrio v1.0.0» (marcada *Latest*) con `erp-donofrio-v1.0.0.zip` entre los *assets*. Captura: [`S4-release_v1.0.0.png`](../capturas/sprint-4/S4-release_v1.0.0.png).*
+
+![Ilustración 6.4-b. Paquete erp-donofrio en GHCR, público, con las etiquetas latest y v1.0.0](../capturas/sprint-4/S4-paquete_ghcr.png)
+
+*Ilustración 6.4-b. Paquete `erp-donofrio` en GHCR: visibilidad **Public**, etiquetas `latest` y `v1.0.0`, instalación con `docker pull ghcr.io/orlando572/erp-donofrio:latest`. Captura: [`S4-paquete_ghcr.png`](../capturas/sprint-4/S4-paquete_ghcr.png).*
+
+![Ilustración 6.4-c. Corrida del flujo Release #3 en verde, disparada por el tag v1.0.0](../capturas/sprint-4/S4-release_corrida.png)
+
+*Ilustración 6.4-c. Corrida del flujo `release.yml` (id `45335041382`) sobre `4d0d94d` y el tag `v1.0.0`: éxito en 2 min 59 s y 3 artefactos. Captura: [`S4-release_corrida.png`](../capturas/sprint-4/S4-release_corrida.png).*
+
+**Capturas que siguen sin tomarse.** De las del plan ([06 §6.6](../plan/06_github_ci_infra.md)) faltan la página principal del repositorio, las reglas de protección de ramas y *Insights*; para ellas la evidencia es el texto fechado de arriba.
 
 ## 6.5 Ramificación
 
@@ -66,7 +80,7 @@ Los jobs `replica`, `backup` y `proxy` se agregaron en el Sprint 3, por eso tien
 
 | Rama | Propósito | Cómo se usó (de los 49 PR) |
 |---|---|---|
-| `main` | Lo entregado y aceptado; un tag por entrega (`v1.0.0` = núcleo) | Solo tiene el commit inicial. **Sin PR de release todavía** |
+| `main` | Lo entregado y aceptado; un tag por entrega (`v1.0.0` = núcleo) | Al 23/11 solo tenía el commit inicial. **24/11/2026:** el PR #222 fusionó `develop` en `main` y existe el tag `v1.0.0` |
 | `develop` | Integración continua del sprint | Base de los 49 PR; 77 commits |
 | `feature/HU-xx-*` | Una HU | **30 ramas** (tipo `feature/`); 28 son de una HU y 2 son de informe (`feature/S3-informe-4-2` y `S3-informe-5`) |
 | `docs/*` | Avance del informe y de Scrum | **16 ramas** (`docs/s1-planning`, `docs/s2-review-retro`…) |
@@ -78,7 +92,7 @@ Los jobs `replica`, `backup` y `proxy` se agregaron en el Sprint 3, por eso tien
 
 ### Figura 12. Flujograma de ramas (`gitGraph`)
 
-Resumen fiel del esquema real. `develop` sale del commit inicial de `main`; cada HU vive en su rama y vuelve por PR. Hasta el Sprint 2 los PR se fusionaron con *merge commit* (rombo resaltado) y desde el #184 con *squash* (un solo commit por PR). `develop` → `main` con *merge commit* y tag es el paso del Gate 0, **todavía no ejecutado**, y por eso no aparece en el gráfico.
+Resumen fiel del esquema real. `develop` sale del commit inicial de `main`; cada HU vive en su rama y vuelve por PR. Hasta el Sprint 2 los PR se fusionaron con *merge commit* (rombo resaltado) y desde el #184 con *squash* (un solo commit por PR). `develop` → `main` con *merge commit* y tag es el paso del Gate 0, que se ejecutó el 24/11/2026 (PR #222), después de generar este gráfico, y por eso no aparece en él.
 
 ```mermaid
 gitGraph
@@ -110,7 +124,7 @@ gitGraph
   commit id: "squash #189 HU-27"
 ```
 
-*Lectura.* Las ramas `feature/HU-26-backups` y `feature/HU-27-seguridad-despliegue` traen un commit «fusiona develop»: es la forma de resolver los conflictos (6.6). El paso final `develop` → `main` + `tag v1.0.0` se hace en el Gate 0 y aparecerá en este gráfico entonces.
+*Lectura.* Las ramas `feature/HU-26-backups` y `feature/HU-27-seguridad-despliegue` traen un commit «fusiona develop»: es la forma de resolver los conflictos (6.6). El paso final `develop` → `main` + `tag v1.0.0` se hizo el 24/11/2026 (PR #222) y aparecerá en este gráfico cuando se regenere.
 
 ### Listado real de ramas
 

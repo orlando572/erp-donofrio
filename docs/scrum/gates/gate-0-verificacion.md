@@ -5,12 +5,20 @@
 > **Qué es y qué no es.** Este archivo **solo verifica** cada criterio con su estado real y un enlace a su evidencia. **No es** el informe del Gate 0, **no recomienda** módulos de la Fase 2 y **no empieza ninguno**: esa decisión es del equipo, con confirmación explícita de Evelyn u Orlando en el chat ([`CLAUDE.md`](../../../CLAUDE.md)). Tampoco crea el tag `v1.0.0` ni fusiona `develop` en `main`: se hacen con confirmación aparte.
 >
 > **Corte de los datos:** 23/11/2026, `develop` en `6bca5c7` (PR #212; actualizado después de fusionar los PR de informe de Evelyn #207, #208, #210, #211, #212, #214 y #215). Salen de `gh` y `git` en solo lectura y de los archivos del repositorio; cada número se puede volver a medir con el comando que se indica. Los PR de Orlando que siguen **abiertos** (#209, #213 y este) se cuentan como «borrador en un PR abierto», no como parte de `develop`.
+>
+> **Actualización del 24/11/2026 (después del corte).** Lo que este archivo describe como pendiente en `main` ya se hizo; el resto del documento conserva el estado del corte del 23/11/2026. Estado al 24/11/2026:
+>
+> - **`main`:** el PR #222 fusionó la Fase 1 con *merge commit* (`4d0d94d`). El CI de `main` pasó en verde (`lint`, `test`, `replica`, `backup` y `proxy`).
+> - **Tag y Release:** el tag `v1.0.0` está en `main` y existe la GitHub Release «ERP D'Onofrio v1.0.0» (publicada el 24/11/2026, 05:43 UTC).
+> - **Verificado el 24/11/2026:** la Release lleva adjunto `erp-donofrio-v1.0.0.zip` (24,7 MB); las imágenes `v1.0.0` y `latest` en GHCR se descargan sin iniciar sesión (paquete público); `lint` y `test` son checks obligatorios en `main`. Capturas de la Release, del paquete y de la corrida en [`docs/capturas/sprint-4/`](../../capturas/sprint-4/) y en 6.4 (sin iniciar sesión). **Pendientes** solo las de la página principal, las reglas de protección e *Insights*.
+> - **Sin cambio:** `lint` y `test` todavía **no** son checks obligatorios en `main`. HU-30 sigue diferida.
+> - **M1** (HU-17 y HU-18, #219, #220 y #221) ya está en `develop`; su tag `v1.1.0` aún no existe (ver [`gate-m1-calidad.md`](gate-m1-calidad.md)).
 
 ## Resumen: los cinco criterios
 
 | # | Criterio de salida (04 §4.3) | Estado real | En una línea |
 |---|---|---|---|
-| 1 | Todas las HU de la F1 en «Hecho»; CI en verde en `main`; tag `v1.0.0` | **Parcial** | 24 de 25 HU (81 de 83 puntos) en `develop` con CI en verde; **HU-30 diferida**. **`main` no tiene ninguna HU** (84 commits detrás), **nunca corrió el CI** y **no hay tag ni release** |
+| 1 | Todas las HU de la F1 en «Hecho»; CI en verde en `main`; tag `v1.0.0` | **Parcial** | 24 de 25 HU (81 de 83 puntos) en `develop` con CI en verde; **HU-30 diferida**. **`main` no tiene ninguna HU** (84 commits detrás), **nunca corrió el CI** y **no hay tag ni release** *(24/11: `main` fusionado con el PR #222, CI verde, tag `v1.0.0` y Release publicados; ver la actualización al inicio)* |
 | 2 | Video corto de la demo de punta a punta | **No cumplido: diferido** | Diferido por decisión del equipo (23/11/2026) al final, después del S4. Hay evidencia alternativa por flujo (pruebas y capturas) |
 | 3 | Evidencias de réplica, respaldos, seguridad, pruebas y despliegue | **Cumple, con el SUS diferido** | Todas existen y están fechadas en `docs/capturas/sprint-3/`; faltan las pruebas de usabilidad (HU-30) y el despliegue **publicado** (release, GHCR) |
 | 4 | Informe con las secciones 1 a 10 en borrador completo (F1) y los dos manuales | **Parcial** | De 49 filas de la Tabla 3: 13 completas, 34 en borrador (5 de ellas en el PR #209, abierto) y 2 que faltan (portada, historial e índices, y el PDF final: del Cierre). Manuales en borrador |
@@ -80,6 +88,8 @@ La Fase 1 son 25 HU y **83 puntos** (S1: 24, S2: 30, S3: 29). «Hecho» según l
 | Tag `v1.0.0` | **No existe** (0 tags) | `gh api repos/orlando572/erp-donofrio/tags` |
 | GitHub Releases | **Ninguna** | `gh release list` |
 | Imagen en GHCR (`ghcr.io/orlando572/erp-donofrio`) | **No existe** (la página responde 404) | `gh api users/orlando572/packages/container/erp-donofrio` |
+
+> **Actualización del 24/11/2026.** La tabla de arriba es la del corte del 23/11. Hoy: `main` contiene la Fase 1 (PR #222, *merge commit* `4d0d94d`) y su CI pasó en verde; el tag `v1.0.0` existe en `main`; la GitHub Release «ERP D'Onofrio v1.0.0» está publicada (24/11/2026, 05:43 UTC). **Pendiente de verificar:** el zip adjunto, la imagen en GHCR (el paquete daba 404) y su visibilidad pública. `lint` y `test` aún no son checks obligatorios en `main`. Los pasos 3 a 6 de abajo se cumplieron; el paso 7 sigue abierto.
 
 **Qué falta para crear `v1.0.0`** (según [`docs/dev/release.md`](../../dev/release.md) y la protección de `main`). **Nada de esto se hizo aquí** y se ejecuta **con confirmación aparte** de Evelyn u Orlando en el chat:
 

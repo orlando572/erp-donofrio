@@ -1,0 +1,74 @@
+Verificación de M4 (tablero gerencial y marca): capturas, celular y Lighthouse. 24/11/2026.
+Rama: claude/m4-verificacion-ea430e (sobre develop + los dos fix de M4: login con la marca y aviso sin permiso).
+
+ENTORNO
+  PC de desarrollo con Linux, 12 procesadores lógicos y 14 GB de RAM, Docker. Odoo 19.0 en Docker, PostgreSQL 16.
+  Instancia aislada (proyecto de Compose «m4v», puertos 8169/8543) creada desde esta rama, sin tocar la base `donofrio` del equipo:
+    scripts/init_db.sh donofrio_base,donofrio_calidad,donofrio_heladeros,donofrio_tablero
+    scripts/cargar_transacciones.py (16 semanas: 3/8 al 22/11/2026)
+  Datos agregados a mano SOLO para que las seis tarjetas tengan valores (no están en el repo): 11 inspecciones aprobadas y 1 rechazada,
+  1 liquidación sin liquidar y 2 lecturas de temperatura (una fuera de rango) en LIM/Stock.
+  Usuarios y clave: los de prueba de donofrio_base (DONOFRIO_USER_PASSWORD de .env.example). Nada real.
+
+CIFRAS DE CONTROL (esta base)
+  Ventas de noviembre en el tablero (todos los almacenes): S/ 2,844,413.33
+  Misma suma en SQL (sale_order, estado sale o done, noviembre): S/ 2,844,413.33 -> cuadra.
+  Con el filtro Arequipa: S/ 319,345.12 (en la base de la captura del 24/11 por la mañana eran 2,844,525.83 y 319,345.12; la diferencia
+  de S/ 112.50 está en Lima y no se investigó: esta base se cargó de nuevo).
+
+CAPTURAS (PNG)
+  Tomadas con Chromium headless (puppeteer-core de la imagen de Lighthouse, 1600 x 900, 1x; el celular 375 x 812 a 2x), porque el
+  navegador integrado de la app solo muestra la imagen y no la guarda en disco. Inicio de sesión por la pantalla (usuario y clave de prueba).
+  Gerente General: HU-22_tablero_todos_los_almacenes, HU-22_tablero_filtro_arequipa, HU-24_marca_barra_superior,
+    HU-24_marca_ventas_lista, HU-24_marca_ventas_formulario (pedido S00437), HU-24_marca_fabricacion, HU-24_marca_traslados (Entregas),
+    HU-24_marca_sin_datos_fabricacion (ilustración de «sin datos» con el degradado de la marca)
+  Sin sesión: HU-24_login_marca (escritorio), S4_movil_login
+  Vendedor: HU-22_tablero_sin_permiso_vendedor («Sin permiso: falta acceso a Inventario»)
+  Celular: S4_movil_tablero, S4_movil_tablero_abajo
+  Dónde está Ventas: al Gerente General el menú de Ventas le sale dentro de la aplicación «CRM › Ventas» (no hay aplicación «Ventas»
+  aparte en su barra), por eso la barra de esas dos capturas dice «CRM».
+
+VISTA EN CELULAR (375 x 812, factor 2; también en el navegador integrado con resize_window mobile)
+  Bien: no hay desplazamiento horizontal (scrollWidth = clientWidth = 375); las seis tarjetas pasan a una columna con 16 px de margen;
+  el selector de almacén cabe en la misma línea que su etiqueta; el gráfico de seis meses queda legible (309 px de ancho, meses y
+  eje completos); la tabla por canal cabe; la barra superior amarilla con el menú de hamburguesa se ve bien; el login también.
+  A tener en cuenta: la barra no muestra el nombre de la aplicación ni «Gerencia» (es el diseño móvil de Odoo: todo va en el menú de
+  hamburguesa); el tablero ocupa 1358 px de alto con la barra, es decir 2 pantallas y media, así que se desplaza; las tarjetas en
+  una sola columna hacen que el gráfico quede abajo del todo.
+  No se probó en un teléfono real ni con el selector de almacén en el celular (solo el cambio por código en escritorio).
+
+LIGHTHOUSE 12.2.1 (solo Performance; mediana de 3 corridas; método de HU-28)
+  Script: S4_lighthouse_m4.py (reutiliza scripts/perf/lighthouse.py; el de HU-28 mide login, backend y dashboard con el jefe de ventas).
+  Resultados crudos: S4_lighthouse_m4_resultados.csv. Perfil de escritorio salvo donde dice móvil (el móvil emula 4G lenta y CPU 4x más lenta).
+  ANTES  = desarrollo (Odoo sin Nginx, 0 workers, ?debug=assets).
+  DESPUES = despliegue protegido (scripts/levantar_prod.sh: Nginx con TLS, gzip y caché, Odoo con 2 workers y modo proxy).
+
+  Página                           Usuario       Perfil     Puntaje  FCP    LCP     TBT    CLS    SI     KB
+  Login      ANTES                 sin sesión    escritorio  98      0.66   0.81    33     0.004  1.50   4,122
+  Login      DESPUES               sin sesión    escritorio  100     0.29   0.38    14     0.004  0.44   632
+  Login      DESPUES               sin sesión    móvil       95      1.21   1.68    238    0.023  1.53   632
+  Tablero    ANTES                 gerente       escritorio  50      10.01  12.53   183    0.000  10.01  14,611
+  Tablero    DESPUES               jefe.almacen  escritorio  76      1.65   2.11    92     0.000  2.97   2,213
+  Tablero    DESPUES               jefe.almacen  móvil       39      9.51   12.16   680    0.000  9.51   2,200
+
+  Tablero DESPUES, escritorio: corridas 76, 76 y 81 (mediana 76). Una sola de tres llegó a 80; el puntaje NO es estable por encima de 80.
+  Meta de RNF008: Lighthouse >= 80 y tablero en < 3 s. LCP del tablero 2.11 s: cumple la parte del tiempo; el puntaje (76) no llega a 80.
+  El login (100 en escritorio, 95 en móvil) cumple.
+  Por qué el tablero usa otro usuario en el despliegue protegido: el Gerente General (único con el menú y todos los datos) pide 2FA en ese
+  modo (HU-27) y un script no puede darlo; el Jefe de Ventas ve el menú pero no lee Inventario y mediría el aviso «Sin permiso».
+  Se usó el Jefe de Almacén (sin 2FA, lee todos los datos del tablero; abre la acción por su dirección). No se debilitó ningún control de
+  seguridad. Una primera tanda midió por error la pantalla de login con el Gerente; esas filas se descartaron y el script ahora se detiene
+  si la página medida termina en el login.
+  ANTES (Gerente, desarrollo) y DESPUES (Jefe de Almacén, protegido) no son el mismo usuario: comparan configuraciones, no usuarios;
+  el costo de la página es el mismo (la acción trae los mismos datos).
+  La Lighthouse de HU-28 corrió en otra PC (Docker Desktop, host.docker.internal); aquí corre con --network host en Linux. No son
+  directamente comparables: referencia de HU-28 con su método: backend 59 y dashboard de Ventas 80.
+  Qué limita el 76: el Speed Index (2.97 s, con FCP 1.65 s; en la corrida de 81 fue 1.65 s, es decir, el puntaje depende de cuándo
+  termina de pintarse el contenido y varía entre corridas). No se hizo un análisis más fino (por ejemplo, separar el costo de get_kpis, de
+  Chart.js y del JavaScript del cliente web). En móvil el puntaje es 39 por el CPU 4x más lento (TBT 680 ms, LCP 12.2 s): el JavaScript del
+  cliente web de Odoo pesa mucho en un procesador lento; no se corrigió.
+
+PRUEBAS Y REVISIÓN
+  scripts/test.sh donofrio_tablero -> OK: 21 pruebas, 0 fallos ni errores.
+  scripts/test.sh donofrio_calidad donofrio_heladeros donofrio_tablero -> OK: 79 pruebas, 0 fallos ni errores.
+  scripts/check_legacy.sh -> «check_legacy: sin patrones legacy.» (código de salida 0).

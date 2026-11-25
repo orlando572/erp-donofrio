@@ -2,7 +2,7 @@
 
 > **Estado:** borrador del Sprint 3 · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [4.2.2](04_02_requerimientos_funcionales.md) (tabla 2), [casos de uso](04_02_casos_de_uso.md), [matriz de trazabilidad](trazabilidad.md), [04 §4.4 del plan](../plan/04_scrum_pmbok.md) (criterios de aceptación) y las pruebas de `addons/donofrio_base/tests/`
 >
-> Una ficha por RF, con el mismo formato. Los 14 RF de la **Fase 1** están *Implementados*; los 4 de la **Fase 2** (RF004, RF008, RF011 y RF012) y la parte propia de RF013 están *Diseñado – trabajo futuro*: tienen caso de uso, wireframe, mockup y BPMN TO-BE, pero ningún código ni prueba. El estado es el real al 23/11/2026 y cambia si el Gate 0 aprueba algún módulo.
+> Una ficha por RF, con el mismo formato. Los 14 RF de la **Fase 1**, los 2 de **M1** (RF011 y RF012), el de **M2** (RF004) el de **M3** (RF008) y el tablero OWL de **M4** (parte propia de RF013), desde el 24/11/2026, están *Implementados*: ya no queda ningún RF de la Fase 2 como *Diseñado – trabajo futuro*. El estado es el real al 23/11/2026 y cambia si el Gate 0 aprueba algún módulo.
 
 ## Resumen
 
@@ -11,16 +11,16 @@
 | [RF001](#rf001) | Registrar oportunidades por canal en un embudo CRM | F1 | HU-08 | Implementado |
 | [RF002](#rf002) | Cotizar y confirmar pedidos con listas de precios por canal y temporada | F1 | HU-09 | Implementado |
 | [RF003](#rf003) | Vender en el punto de venta de la tienda de planta con boleta | F1 | HU-10 | Implementado |
-| [RF004](#rf004) | Liquidar diariamente a los heladeros ambulantes | F2 | HU-20 | Diseñado – trabajo futuro |
+| [RF004](#rf004) | Liquidar diariamente a los heladeros ambulantes | F2 | HU-20 | Implementado (M2) |
 | [RF005](#rf005) | Gestionar almacenes y ubicaciones con cámaras de frío | F1 | HU-06 | Implementado |
 | [RF006](#rf006) | Controlar lotes con fecha de vencimiento y salida FEFO | F1 | HU-11 | Implementado |
 | [RF007](#rf007) | Recibir insumos y despachar pedidos | F1 | HU-12 | Implementado |
-| [RF008](#rf008) | Registrar temperaturas y alertar cuando están fuera de rango | F2 | HU-19 | Diseñado – trabajo futuro |
+| [RF008](#rf008) | Registrar temperaturas y alertar cuando están fuera de rango | F2 | HU-19 | Implementado (M3) |
 | [RF009](#rf009) | Mantener listas de materiales (recetas) y centros de trabajo | F1 | HU-07 | Implementado |
 | [RF010](#rf010) | Planificar y ejecutar órdenes de producción con lote | F1 | HU-14 | Implementado |
-| [RF011](#rf011) | Inspeccionar la calidad por puntos de control ligados a la OP y al lote | F2 | HU-17 | Diseñado – trabajo futuro |
-| [RF012](#rf012) | Emitir el certificado de calidad del lote | F2 | HU-18 | Diseñado – trabajo futuro |
-| [RF013](#rf013) | Tablero gerencial de KPIs | F1 | HU-23 | Implementado con dashboards estándar; tablero OWL: Diseñado – trabajo futuro |
+| [RF011](#rf011) | Inspeccionar la calidad por puntos de control ligados a la OP y al lote | F2 | HU-17 | Implementado (M1) |
+| [RF012](#rf012) | Emitir el certificado de calidad del lote | F2 | HU-18 | Implementado (M1) |
+| [RF013](#rf013) | Tablero gerencial de KPIs | F1 y F2 | HU-23, HU-22 | Implementado (dashboards estándar y tablero OWL de M4) |
 | [RF014](#rf014) | Análisis por línea, canal y temporada | F1 | HU-23 | Implementado |
 | [RF015](#rf015) | Comprar insumos con reabastecimiento mín./máx. | F1 | HU-13 | Implementado |
 | [RF016](#rf016) | Emitir facturas y boletas con IGV (`l10n_pe`) | F1 | HU-03 | Implementado |
@@ -114,9 +114,10 @@
 | **Descripción** | Liquidar al heladero al volver de la ruta: despachado, devuelto, merma, vendido, importe y comisión, con el PDF para firmar. |
 | **Criterios de aceptación** | Líneas con despachado, devuelto y merma; vendido = despachado − devuelto − merma (≥ 0); importe y comisión; al liquidar se crea y confirma el pedido de venta; PDF con las firmas y vista móvil usable. |
 | **Reglas de negocio y limitaciones** | El heladero es concesionario (supuesto S4) y no empleado. Sin el módulo se cubre en parte con un pedido de venta con la lista «Heladero» y la devolución estándar (BPMN TO-BE 11). |
+| **Implementación y evidencia** | `addons/donofrio_heladeros` ([5.5c](05_05_modulo_donofrio_heladeros.md)); `tests/test_liquidacion.py`; `docs/capturas/sprint-4/HU-20_*` y `HU-21_*` |
 | **Diseño disponible** | `docs/diagramas/pantallas/mk_cu004_liquidacion.png`<br>`docs/diagramas/pantallas/mk_rp_liquidacion_heladero.png`<br>`docs/diagramas/bpmn/to-be_heladero_m2.png` |
-| **Lo que falta** | Sin código ni pruebas propias: el módulo no se construyó. |
-| **Estado** | **Diseñado – trabajo futuro** |
+| **Lo que falta** | Nada de lo diseñado para M2. Límites: el pedido solo mueve stock por lo vendido y la vista móvil no se probó en un celular real. |
+| **Estado** | **Implementado** (M2, 24/11/2026) |
 
 ## RF005
 
@@ -202,10 +203,11 @@
 | **Actores** | Jefe de Almacén (principal), Operario de cámara |
 | **Descripción** | Registrar la temperatura de cada cámara y avisar cuando sale del rango de su ubicación. |
 | **Criterios de aceptación** | Rango por ubicación; registro de temperaturas; si está fuera de rango se marca y se crea una actividad; *cron* de lotes por vencer; pruebas. |
-| **Reglas de negocio y limitaciones** | Congelación: −25 °C (producto terminado a −18 °C o menos); refrigerado: 2 a 6 °C (supuesto S5). En la Fase 1 las temperaturas se anotan fuera del sistema. |
+| **Reglas de negocio y limitaciones** | Congelación: −25 °C (producto terminado a −18 °C o menos); refrigerado: 2 a 6 °C (supuesto S5). Los rangos cargados son de −30 a −18 °C (congelación) y de 2 a 6 °C (refrigerados). Las lecturas se registran a mano y la alerta es una actividad para el jefe de almacén; no se bloquean lotes. |
 | **Diseño disponible** | `docs/diagramas/pantallas/mk_cu006_temperaturas.png` |
-| **Lo que falta** | Sin código ni pruebas propias. |
-| **Estado** | **Diseñado – trabajo futuro** |
+| **Implementación y evidencia** | `addons/donofrio_calidad` ([5.5d](05_05_modulo_donofrio_frio.md)); `tests/test_frio.py` (29 pruebas); `docs/capturas/sprint-4/HU-19_*` |
+| **Lo que falta** | Nada de lo diseñado para M3. Límites: sin sensores, sin alerta por lecturas que faltan, y el cron de lotes por vencer convive con la alerta estándar de `product_expiry`. |
+| **Estado** | **Implementado** (M3, 24/11/2026) |
 
 ## RF009
 
@@ -270,8 +272,9 @@
 | **Criterios de aceptación** | Al terminar la OP se crea la inspección; aprobar o rechazar con mediciones; un lote rechazado no puede entregarse; pruebas. |
 | **Reglas de negocio y limitaciones** | Un lote rechazado no se despacha (RNF005). En Community no hay inspecciones de calidad (el módulo Calidad es Enterprise). |
 | **Diseño disponible** | `docs/diagramas/pantallas/mk_cu008_inspeccion.png`<br>`docs/diagramas/bpmn/to-be_produccion_m1.png` |
-| **Lo que falta** | Sin código ni pruebas propias. |
-| **Estado** | **Diseñado – trabajo futuro** |
+| **Implementación y evidencia** | `addons/donofrio_calidad` ([5.5b](05_05_modulo_donofrio_calidad.md)); `tests/test_inspeccion.py`; `docs/capturas/sprint-4/HU-17_*` |
+| **Lo que falta** | Nada de lo diseñado para M1. |
+| **Estado** | **Implementado** (M1, 24/11/2026) |
 
 ## RF012
 
@@ -290,8 +293,9 @@
 | **Criterios de aceptación** | Reporte QWeb con mediciones, responsable y logo; solo para inspecciones aprobadas. |
 | **Reglas de negocio y limitaciones** | Depende de RF011. |
 | **Diseño disponible** | `docs/diagramas/pantallas/mk_rp_certificado_calidad.png` |
-| **Lo que falta** | Sin código ni pruebas propias. |
-| **Estado** | **Diseñado – trabajo futuro** |
+| **Implementación y evidencia** | `report/calidad_report.xml`; `docs/capturas/sprint-4/HU-18_certificado_pdf.jpg` |
+| **Lo que falta** | Nada de lo diseñado para M1. |
+| **Estado** | **Implementado** (M1, 24/11/2026) |
 
 ## RF013
 
@@ -307,15 +311,15 @@
 | **Caso de uso** | CU009 ([4.2.4](04_02_casos_de_uso.md)) |
 | **Actores** | Gerente General (principal), Contador |
 | **Descripción** | Mostrar a la gerencia los indicadores de ventas, stock y vencimientos en un tablero. |
-| **Criterios de aceptación** | F1: dashboards de Community activos y vistas guardadas por código. F2: acción OWL con 6 tarjetas y un gráfico mensual, filtro por almacén, carga en menos de 3 s. |
+| **Criterios de aceptación** | F1: dashboards de Community activos y vistas guardadas por código. F2: acción OWL con hasta 6 tarjetas y un gráfico mensual, filtro por almacén, carga en menos de 3 s (medido: 30 a 57 ms la consulta y 177 ms la página, en una PC). |
 | **Reglas de negocio y limitaciones** | Solo lectura en Community; el panel de ventas carga en menos de 3 s (RNF008). El rendimiento del backend es 59 frente a la meta de 80 (limitación declarada). Los títulos de algunos gráficos salen en inglés. |
-| **Implementación** | `addons/donofrio_base/data/vistas_gerencia_data.xml` |
-| **Pruebas** | `addons/donofrio_base/tests/test_gerencia.py (5)` |
-| **Evidencia** | `docs/capturas/sprint-3/HU-23_* (5)` |
+| **Implementación** | `addons/donofrio_base/data/vistas_gerencia_data.xml` (F1) y `addons/donofrio_tablero` (M4, [5.5e](05_05_modulo_donofrio_tablero.md)) |
+| **Pruebas** | `addons/donofrio_base/tests/test_gerencia.py (5)` y `addons/donofrio_tablero/tests/test_tablero.py (17)` |
+| **Evidencia** | `docs/capturas/sprint-3/HU-23_* (5)` y `docs/capturas/sprint-4/HU-22_*` |
 | **PR fusionados** | [#188](https://github.com/orlando572/erp-donofrio/pull/188) |
-| **Lo que falta** | El tablero OWL propio no tiene código ni pruebas. |
+| **Lo que falta** | Nada de lo diseñado para M4. Límites: el tablero no se midió con Lighthouse, la tarjeta de cumplimiento cuenta las OP del mes que ya empezaron y el filtro de almacén no aplica a las liquidaciones ([5.5e.8](05_05_modulo_donofrio_tablero.md)). |
 | **Prototipo** | `docs/diagramas/pantallas/mk_cu009_tablero.png` |
-| **Estado** | **Implementado con dashboards estándar; tablero OWL: Diseñado – trabajo futuro** |
+| **Estado** | **Implementado** (dashboards estándar en F1; tablero OWL en M4, 24/11/2026) |
 
 ## RF014
 

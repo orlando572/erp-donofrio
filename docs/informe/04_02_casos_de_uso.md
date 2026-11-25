@@ -11,12 +11,12 @@
 | CU001 | Registrar oportunidad en el embudo CRM | Ventas | RF001 | HU-08 | F1 | Implementado | Evelyn |
 | CU002 | Cotizar y confirmar pedido con lista de precios | Ventas | RF002 | HU-09 | F1 | Implementado | Evelyn |
 | CU003 | Vender en el punto de venta con boleta | Ventas | RF003 | HU-10 | F1 | Implementado | Evelyn |
-| CU004 | Liquidar al heladero del día | Heladeros | RF004 | HU-20, HU-21 | **F2** (M2) | **Propuesto** | Evelyn |
+| CU004 | Liquidar al heladero del día | Heladeros | RF004 | HU-20, HU-21 | **F2** (M2) | **Implementado** (24/11/2026) | Evelyn |
 | CU005 | Recibir, almacenar y despachar con lotes y FEFO | Logística | RF005, RF006, RF007 | HU-06, HU-11, HU-12 | F1 | Planificado | Orlando |
-| CU006 | Registrar temperaturas y alertar (cadena de frío) | Logística | RF008 | HU-19 | **F2** (M3) | **Propuesto** | Orlando |
+| CU006 | Registrar temperaturas y alertar (cadena de frío) | Logística | RF008 | HU-19 | **F2** (M3) | **Implementado** (24/11/2026) | Orlando |
 | CU007 | Planificar y ejecutar una orden de producción con lote | Producción | RF009, RF010 | HU-07, HU-14 | F1 | Planificado | Orlando |
-| CU008 | Inspeccionar la calidad y liberar el lote | Producción | RF011, RF012 | HU-17, HU-18 | **F2** (M1) | **Propuesto** | Orlando |
-| CU009 | Consultar el tablero gerencial de KPIs | Gerencia | RF013 | HU-23 (F1), HU-22 (F2) | F1 (estándar) | Implementado | Evelyn |
+| CU008 | Inspeccionar la calidad y liberar el lote | Producción | RF011, RF012 | HU-17, HU-18 | **F2** (M1) | **Implementado** (24/11/2026) | Orlando |
+| CU009 | Consultar el tablero gerencial de KPIs | Gerencia | RF013 | HU-23 (F1), HU-22 (F2) | F1 (estándar) y F2 (M4) | Implementado (el tablero OWL, 24/11/2026) | Evelyn |
 | CU010 | Analizar ventas por línea, canal y temporada | Gerencia | RF014 | HU-23 | F1 | Implementado | Evelyn |
 | CU011 | Comprar insumos con reabastecimiento mín./máx. | Compras | RF015 | HU-13 | F1 | Implementado | Evelyn |
 | CU012 | Facturar con IGV (factura 01 o boleta 03) | Facturación | RF016 | HU-15 | F1 | Implementado | Evelyn |
@@ -103,7 +103,7 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Reglas de negocio** | Boleta (tipo 03) para consumidor final; IGV 18 %; sin envío a SUNAT: el EDI `l10n_pe_edi` es Enterprise y se declara como limitación |
 | **Evidencia / prueba** | `tests/test_pdv.py`; capturas `HU-10_*` y `HU-16_pdv_sesiones_cerradas` |
 
-### CU004: Liquidar al heladero del día (propuesto, Fase 2)
+### CU004: Liquidar al heladero del día (implementado, Fase 2)
 
 | Campo | Contenido |
 |---|---|
@@ -116,8 +116,8 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Flujos alternos** | A1. Si lo devuelto más la merma supera lo despachado, el sistema rechaza la línea.<br>A2. Si el efectivo no cuadra con el importe, la diferencia queda registrada en la liquidación.<br>A3. **Sin la Fase 2:** se usa la variante estándar (CU004-F1): pedido de venta con la lista «Heladero» y devolución de lo no vendido |
 | **Postcondiciones** | Liquidación confirmada, pedido creado y devolución al almacén registrada |
 | **Reglas de negocio** | El heladero es concesionario (supuesto S4): compra a precio de heladero y liquida cada día; no es empleado |
-| **Estado** | **Propuesto.** No se construye sin la confirmación explícita de Evelyn u Orlando tras el Gate 0. Si no se hace, queda como «Diseñado – trabajo futuro» con este caso de uso, su wireframe y su mockup |
-| **Evidencia / prueba** | [Wireframe y mockup](04_04_prototipos.md) de la pantalla de liquidación y de su vista móvil (Sprint 2); si se construye, tests de `donofrio_heladeros` |
+| **Estado** | **Implementado** en `donofrio_heladeros` (M2) el 24/11/2026, con la confirmación de Evelyn: modelo y flujo en HU-20 (PR #223) y PDF en HU-21. La diferencia de efectivo es positiva cuando el heladero entregó de más (a su favor) y negativa cuando debe |
+| **Evidencia / prueba** | [Wireframe y mockup](04_04_prototipos.md) (Sprint 2); 14 pruebas de `donofrio_heladeros`; capturas `HU-20_*` y `HU-21_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
 
 ### CU005: Recibir, almacenar y despachar con lotes y FEFO
 
@@ -136,7 +136,7 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Datos de apoyo** | Existencias iniciales con lotes por vencer y 16 semanas de recepciones y reposiciones generadas por `cargar_transacciones.py` |
 | **Evidencia / prueba** | `test_fefo.py` y `test_recepcion_despacho.py` en `donofrio_base/tests`; capturas en `docs/capturas/sprint-2/` |
 
-### CU006: Registrar temperaturas y alertar (propuesto, Fase 2)
+### CU006: Registrar temperaturas y alertar (implementado, Fase 2)
 
 | Campo | Contenido |
 |---|---|
@@ -144,13 +144,13 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Requerimiento / HU** | RF008 · HU-19 (cadena de frío, M3) |
 | **Actores** | Jefe de Almacén (principal), Operario de cámara |
 | **Descripción** | El operario registra la temperatura de cada cámara en cada lectura; si sale del rango de la ubicación, el sistema avisa y deja historial |
-| **Precondiciones** | Ubicaciones de frío con su rango (`temp_min` y `temp_max`, que en la Fase 1 solo van en el nombre de la ubicación); módulo de la Fase 2 instalado |
-| **Flujo principal** | 1. El operario abre la cámara y registra la lectura (valor y hora).<br>2. El sistema compara con el rango de la ubicación.<br>3. Si está dentro del rango, la lectura queda en el historial.<br>4. Si está fuera, crea una alerta para el jefe de almacén y marca la ubicación |
+| **Precondiciones** | Ubicaciones de frío con su rango (`temp_min` y `temp_max`, que en la Fase 1 solo van en el nombre de la ubicación) y «Controlar temperatura» marcado; `donofrio_calidad` instalado |
+| **Flujo principal** | 1. El operario abre la cámara y registra la lectura (valor y hora).<br>2. El sistema compara con el rango de la ubicación.<br>3. Si está dentro del rango, la lectura queda en el historial.<br>4. Si está fuera, marca la lectura como «Fuera de rango» y crea una actividad para el jefe de almacén (no marca la ubicación) |
 | **Flujos alternos** | A1. Si hay lotes en la cámara afectada, el jefe de almacén los revisa y decide su destino.<br>A2. **Sin la Fase 2:** la temperatura se anota en planilla de papel y el rango queda solo como texto en el nombre de la ubicación |
 | **Postcondiciones** | Historial de temperaturas por ubicación y alerta registrada |
-| **Reglas de negocio** | Congelación: −25 °C (se exige −18 °C o menos en el producto terminado); refrigerado: 2-6 °C |
-| **Estado** | **Propuesto.** No se construye sin la confirmación explícita de Evelyn u Orlando tras el Gate 0 y el mini gate de M1. Si no se hace, queda como «Diseñado – trabajo futuro» con este caso de uso y su wireframe |
-| **Evidencia / prueba** | Wireframe y mockup de la pantalla de lecturas (Sprint 2); si se construye, tests de su módulo |
+| **Reglas de negocio** | Congelación: −25 °C (se exige −18 °C o menos en el producto terminado); refrigerado: 2-6 °C. Rangos cargados: −30 a −18 °C y 2 a 6 °C |
+| **Estado** | **Implementado** en `donofrio_calidad` (M3) el 24/11/2026, con la confirmación de Orlando: lecturas, alerta fuera de rango y cron diario de lotes por vencer ([5.5d](05_05_modulo_donofrio_frio.md)). Lo que hace el código y difiere del diseño: la alerta es una actividad al jefe de almacén y **marca la lectura**, no la ubicación; el menú es Calidad › Cadena de frío |
+| **Evidencia / prueba** | [Wireframe y mockup](04_04_prototipos.md) (Sprint 2); 29 pruebas en `tests/test_frio.py` (44 en `donofrio_calidad`); capturas `HU-19_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
 
 ### CU007: Planificar y ejecutar una orden de producción con lote
 
@@ -181,8 +181,8 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Flujos alternos** | A1. Si algún punto no cumple, el inspector rechaza el lote: el sistema **bloquea su despacho** y avisa al jefe de producción, que decide reproceso o descarte con el motivo.<br>A2. **Sin la Fase 2:** el control es documental, con las instrucciones de cada operación y la nota en la orden |
 | **Postcondiciones** | Lote liberado con certificado, o rechazado y bloqueado, con su historial de mediciones |
 | **Reglas de negocio** | Un lote rechazado no se despacha (RNF005); un lote liberado conserva su trazabilidad a la orden y a los insumos |
-| **Estado** | **Propuesto.** Es el primer módulo de la Fase 2 (M1), pero no se construye sin la confirmación explícita de Evelyn u Orlando tras el Gate 0. Si no se hace, queda como «Diseñado – trabajo futuro» con este caso de uso, su wireframe y su mockup |
-| **Evidencia / prueba** | Wireframe y mockup de la inspección (Sprint 2); si se construye, tests de `donofrio_calidad` |
+| **Estado** | **Implementado** en `donofrio_calidad` (M1) el 24/11/2026, con la confirmación de Evelyn tras el Gate 0 (PR #219 y #220). El flujo A1 avisa con un mensaje y una actividad al responsable de la orden |
+| **Evidencia / prueba** | Wireframe y mockup de la inspección (Sprint 2); 12 pruebas de `donofrio_calidad`; capturas `HU-17_*` y `HU-18_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
 
 ### CU009: Consultar el tablero gerencial de KPIs
 
@@ -194,10 +194,10 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Descripción** | El gerente revisa los indicadores clave de la unidad en los dashboards estándar de Odoo Community, que son de solo lectura |
 | **Precondiciones** | Módulos de dashboards instalados (`spreadsheet_dashboard`, `_sale`, `_stock_account`); datos del script de transacciones |
 | **Flujo principal** | 1. Abre el menú de Panel de control.<br>2. Elige el dashboard de ventas o el de inventario valorizado.<br>3. Revisa los indicadores y gráficos.<br>4. Abre el reporte de stock por vencer a 30 días |
-| **Flujos alternos** | A1. Si falta un dashboard en Community, usa la vista pivote guardada equivalente (CU010).<br>A2. **Con la Fase 2:** el tablero OWL propio muestra 6 tarjetas de KPI y un gráfico mensual, con filtro por almacén |
+| **Flujos alternos** | A1. Si falta un dashboard en Community, usa la vista pivote guardada equivalente (CU010).<br>A2. **Con la Fase 2 (implementado):** el tablero OWL propio (Tablero › Gerencia) muestra hasta 6 tarjetas de KPI y un gráfico de ventas de los últimos 6 meses, con filtro por almacén; las tarjetas de calidad, heladeros y cadena de frío salen solo si su módulo está instalado y el usuario puede leerlo |
 | **Postcondiciones** | El gerente conoce el estado de ventas, stock y vencimientos sin pedir reportes |
 | **Reglas de negocio** | Solo lectura en Community; la carga debe ser menor de 3 s (RNF008) |
-| **Evidencia / prueba** | Capturas de los dashboards (Sprint 3); Lighthouse (HU-28) |
+| **Evidencia / prueba** | Capturas de los dashboards (Sprint 3); Lighthouse (HU-28); 21 pruebas de `donofrio_tablero` y capturas `HU-22_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
 
 ### CU010: Analizar ventas por línea, canal y temporada
 

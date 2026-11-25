@@ -8,7 +8,7 @@
 | `dependencias/` | Grafo de dependencias entre módulos (5.4): `dependencias_directas` y `dependencias_completo` (`.dot`, `.svg`, `.png`) y `dependencias.csv` | `scripts/grafo_dependencias.py` + Graphviz | Orlando |
 | `pantallas/` | Wireframes (`wf_*`) y mockups (`mk_*`) de las 12 pantallas de los casos de uso, incluidas las de la Fase 2 (`.svg`, `.png`) | `generar_pantallas.py` | Evelyn |
 | `clases/` | Diagrama de clases del núcleo (modelos de Odoo y extensiones de `donofrio_base`) y clases **propuestas** de la Fase 2 (4.2.5) (`.puml`, `.png`, `.svg`) | PlantUML | Orlando |
-| `er/` | Modelo ER del núcleo (36 tablas) y diseño lógico (ventas, inventario, producción y compras) (4.2.6 y 4.2.7), extraídos de la BD real (`.puml`, `.png`, `.svg`) | `scripts/diagrama_er.py` + PlantUML | Orlando |
+| `er/` | Modelo ER general (42 tablas: núcleo de la Fase 1, M1 calidad, M2 heladeros y M3 cadena de frío) y diseño lógico (ventas, inventario, producción y compras) (4.2.6 y 4.2.7), extraídos de la BD real (`.puml`, `.png`, `.svg`) | `scripts/diagrama_er.py` + PlantUML | Orlando |
 | `cu/` | Casos de uso de ventas, heladeros y gerencia (Evelyn) y de logística y producción (Orlando) (`.puml` y `.png`) | PlantUML | Evelyn y Orlando |
 
 `cu/` también incluye Compras y Facturación (CU011 y CU012). Los datos de procesos son ficticios y verosímiles (supuesto S7 del plan).
@@ -86,7 +86,7 @@ for f in png svg; do docker run --rm -u $(id -u):$(id -g) -v "$PWD/docs/diagrama
 No se dibujan a mano: salen de una BD real. Para reflejar `develop` conviene una BD limpia con `donofrio_base` recién instalado (la de desarrollo puede estar desactualizada). Solo hacen lecturas (sesión de psql en modo solo lectura). Con el contenedor `db` arriba y `.env`:
 
 ```bash
-scripts/esquema_limpio.sh crear                                   # BD temporal esquema_tmp_informe (1-2 min); no toca las demás
+MODULOS=donofrio_base,donofrio_calidad scripts/esquema_limpio.sh crear   # BD temporal esquema_tmp_informe (1-2 min); no toca las demás
 python3 scripts/diagrama_er.py --bd esquema_tmp_informe           # docs/diagramas/er/*.puml, .png y .svg (PlantUML en Docker)
 python3 scripts/diccionario_datos.py --bd esquema_tmp_informe --bd-tamanos donofrio_perf   # docs/informe/04_02_diccionario_datos.md y anexo_diccionario_datos.md
 scripts/esquema_limpio.sh borrar                                  # borra la BD temporal

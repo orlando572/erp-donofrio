@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_inspeccion" model="ir.sequence">
+        <field name="name">Inspección de calidad</field>
+        <field name="code">donofrio.calidad.inspeccion</field>
+        <field name="prefix">INS/</field>
+        <field name="padding">5</field>
+    </record>
+
+    <!-- Puntos de control de 03_modulos_odoo (c): normas supuestas del caso -->
+    <record id="punto_pasteurizacion" model="donofrio.calidad.punto">
+        <field name="name">Pasteurización</field>
+        <field name="sequence">10</field>
+        <field name="categ_id" ref="donofrio_base.cat_helados"/>
+        <field name="tipo">rango</field>
+        <field name="valor_min">80</field>
+        <field name="valor_max">85</field>
+        <field name="unidad">°C</field>
+    </record>
+    <record id="punto_endurecimiento" model="donofrio.calidad.punto">
+        <field name="name">Endurecimiento</field>
+        <field name="sequence">20</field>
+        <field name="categ_id" ref="donofrio_base.cat_helados"/>
+        <field name="tipo">rango</field>
+        <field name="valor_min">-40</field>
+        <field name="valor_max">-18</field>
+        <field name="unidad">°C</field>
+    </record>
+    <record id="punto_peso_neto" model="donofrio.calidad.punto">
+        <field name="name">Peso neto por unidad (±2 %)</field>
+        <field name="sequence">30</field>
+        <field name="tipo">rango</field>
+        <field name="valor_min">0.98</field>
+        <field name="valor_max">1.02</field>
+        <field name="unidad">× peso nominal</field>
+    </record>
+    <record id="punto_microbiologia" model="donofrio.calidad.punto">
+        <field name="name">Análisis microbiológico</field>
+        <field name="sequence">40</field>
+        <field name="tipo">aprobacion</field>
+    </record>
+    <record id="punto_humedad_paneton" model="donofrio.calidad.punto">
+        <field name="name">Humedad del panetón</field>
+        <field name="sequence">50</field>
+        <field name="categ_id" ref="donofrio_base.cat_paneton"/>
+        <field name="tipo">rango</field>
+        <field name="valor_min">22</field>
+        <field name="valor_max">28</field>
+        <field name="unidad">%</field>
+    </record>
+
+    <!-- El inspector que ya cargó donofrio_base recibe el grupo del módulo -->
+    <record id="donofrio_base.user_inspector_calidad" model="res.users">
+        <field name="group_ids" eval="[Command.link(ref('group_calidad_inspector'))]"/>
+    </record>
+
+    <!-- HU-19: rangos de las cámaras de donofrio_base. Esas ubicaciones son noupdate, así que un <record> no se
+         aplicaría al actualizar un módulo ya instalado: la función es idempotente y respeta lo que se edite a mano -->
+    <function model="stock.location" name="_cargar_rangos_frio"/>
+
+    <!-- Días de anticipación del cron de lotes por vencer: se puede cambiar sin que una actualización lo pise -->
+    <data noupdate="1">
+        <record id="param_dias_alerta_vencimiento" model="ir.config_parameter">
+            <field name="key">donofrio_calidad.dias_alerta_vencimiento</field>
+            <field name="value">7</field>
+        </record>
+    </data>
+
+    <record id="ir_cron_lotes_por_vencer" model="ir.cron">
+        <field name="name">Calidad: lotes por vencer</field>
+        <field name="model_id" ref="stock.model_stock_lot"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_lotes_por_vencer()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>
