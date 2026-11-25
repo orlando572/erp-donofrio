@@ -119,18 +119,18 @@ mrp_production 1───* donofrio_calidad_inspeccion *───1 stock_lot
 
 `scripts/test.sh donofrio_calidad`: **12 pruebas, sin errores** (creación al terminar la OP y sin duplicados, líneas según el producto, aprobar con y sin cumplir, rechazar con motivo, despacho de lote rechazado y aprobado, unicidad, permisos, certificado de aprobada y error en las demás).
 
-| Qué se verificó en la pantalla de Odoo (base `donofrio`, usuario Inspector de Calidad, 24/11/2026) | Captura |
+| Qué se verificó en la pantalla de Odoo (base `donofrio`, usuario Inspector de Calidad, con los datos de demostración de la HU-16; PNG de 1600 × 900, tomados el 25/11/2026) | Captura |
 |---|---|
-| Lista de inspecciones por medir | [`HU-17_lista_inspecciones.jpg`](../capturas/sprint-4/HU-17_lista_inspecciones.jpg) |
-| Medir los cuatro puntos desde la pantalla y aprobar (INS/00003: pasó de «En medición» a «Aprobado») | [`HU-17_inspeccion_aprobada.jpg`](../capturas/sprint-4/HU-17_inspeccion_aprobada.jpg) |
-| Inspección rechazada por pasteurización a 76 °C, con su motivo | [`HU-17_inspeccion_rechazada.jpg`](../capturas/sprint-4/HU-17_inspeccion_rechazada.jpg) |
-| Certificado PDF con logo, mediciones y responsable | [`HU-18_certificado_pdf.jpg`](../capturas/sprint-4/HU-18_certificado_pdf.jpg) |
+| Lista de inspecciones por medir | [`HU-17_lista_inspecciones.png`](../capturas/sprint-4/HU-17_lista_inspecciones.png) |
+| Medir los cuatro puntos desde la pantalla y aprobar (INS/00180, aprobada, con las cuatro mediciones dentro de su norma) | [`HU-17_inspeccion_aprobada.png`](../capturas/sprint-4/HU-17_inspeccion_aprobada.png) |
+| Inspección rechazada por pasteurización a 79.46 °C (INS/00177), con su motivo | [`HU-17_inspeccion_rechazada.png`](../capturas/sprint-4/HU-17_inspeccion_rechazada.png) |
+| Certificado PDF de INS/00180 con logo, mediciones y responsable | [`HU-18_certificado_pdf.png`](../capturas/sprint-4/HU-18_certificado_pdf.png) |
 
 ## 5.5b.8 Límites
 
 - **El bloqueo del despacho se probó con pruebas automáticas, no en la pantalla.** Cubre la salida a cliente por una transferencia; no se probó el punto de venta con un lote rechazado.
-- **Las inspecciones de las 188 órdenes históricas no existen:** solo se crean al terminar una orden nueva. Las tres de las capturas se crearon a mano sobre órdenes ya terminadas, **solo en la base de desarrollo**.
-- En las capturas, el inspector figura como «OdooBot» porque se inició la medición por script; al iniciarla un usuario en la pantalla, queda su nombre.
+- **Las inspecciones de las capturas son datos de demostración** (HU-16, 188 inspecciones en la base de desarrollo, no en el repositorio); se tomaron solo con lectura, sin crear ni editar registros. En un despliegue nuevo solo se crean al terminar una orden de fabricación.
+- En las capturas, el historial de cada inspección figura a nombre de «OdooBot», porque la demostración se cargó por script; al crearla un usuario en la pantalla, queda su nombre.
 - El módulo se instaló (`-i`) y se actualizó (`-u`) sobre la base `donofrio`, que tiene datos, sin errores ni avisos. No se probó una actualización entre dos versiones distintas del módulo, porque solo existe una.
 - El mensaje del historial de cambios dice «created» en inglés porque el módulo no trae traducciones `.po` (los textos de las vistas sí están en español).
 - El aviso del rechazo al **jefe de producción** (CU008, A1) se resuelve con una actividad al responsable de la orden; si la orden no tiene responsable, la actividad queda para quien rechaza.

@@ -21,7 +21,7 @@
 | Tests y ACL de cada modelo nuevo | **Cumple** | 12 pruebas sin errores (`scripts/test.sh donofrio_calidad`); `security/ir.model.access.csv` con las tres tablas |
 | Actualización (`-u`) sin errores sobre una base con datos | **Cumple** | Instalado y actualizado sobre la base `donofrio`, sin errores ni avisos |
 | Criterios verificados en la pantalla | **Cumple, con límites** | Se midió, aprobó y rechazó desde la pantalla y se abrió el PDF. **No** se probó en la pantalla el bloqueo del despacho (solo con pruebas automáticas) ni el punto de venta |
-| Capturas | **Cumple** | [`docs/capturas/sprint-4/`](../../capturas/sprint-4/): lista, inspección aprobada, inspección rechazada y certificado PDF (en JPG, a baja resolución) |
+| Capturas | **Cumple** | [`docs/capturas/sprint-4/`](../../capturas/sprint-4/): lista, inspección aprobada, inspección rechazada y certificado PDF (rehechas el 25/11 en PNG de 1600 × 900, con los datos de demostración de la HU-16) |
 | Checklist de la épica #144 | **Hecho** el 24/11/2026 | Casillas de HU-17 y HU-18 con su PR; la épica sigue abierta hasta que se decida el cierre |
 | Sección del informe | **Cumple** | [5.5b](../../informe/05_05_modulo_donofrio_calidad.md), RF011 y RF012 en 4.2.2 y 10.1, CU008, 4.4 y 4.2.5 |
 | **Tag de release de M1** | **Falta** (`v1.0.0` de la Fase 1 ya existe desde el 24/11/2026) | `v1.1.0` lo crea Orlando desde `main`, tras el PR `develop` → `main` que lleve M1 |
@@ -37,7 +37,7 @@
 | Bloqueo del despacho en el punto de venta | Equipo | Sin prueba; hoy solo se cubre la salida a cliente por transferencia |
 | Inspecciones de las órdenes históricas | — | No existen: solo se crean al terminar una orden nueva |
 | Traducciones `.po` | — | El historial de cambios muestra «created» en inglés |
-| Capturas en PNG y a mayor resolución | Evelyn | Las actuales son JPG a escala reducida |
+| ~~Capturas en PNG y a mayor resolución~~ | **Resuelto** (25/11) | PNG de 1600 × 900 con los datos de demostración (HU-17 y HU-18) |
 | Marcar la tarjeta de #144 en el Project | Orlando | Evelyn solo tiene lectura |
 
 ## 4. Recomendación
