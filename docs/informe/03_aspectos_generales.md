@@ -18,37 +18,9 @@ D'Onofrio fue fundada en 1897 por Pedro (Pietro) D'Onofrio, un inmigrante italia
 
 El **giro** es la fabricación y comercialización de helados, chocolates y panetón, con venta por canal moderno (autoservicios), canal tradicional (bodegas y distribuidores), punto de venta propio y heladeros concesionarios. El **escenario modelado** es la unidad de helados y confitería de Nestlé Perú, con corte en 2026 y dos sedes: **Planta Lima** y el **CD Arequipa**, abastecido desde Lima. La **estacionalidad** marca el caso: los helados tienen su temporada alta en verano, de diciembre a marzo [S]; el panetón, en la campaña de Navidad, de octubre a diciembre [V]; y los chocolates se producen todo el año, con picos en fechas comerciales [S]. Eso exige producción anticipada, listas de precios de campaña y FEFO por vencimiento.
 
-### 3.2.2 Áreas y organigrama
+### 3.2.2 Áreas y trabajadores
 
-El ERP cubre las cinco áreas que piden los lineamientos: **Marketing y Ventas**, **Logística y Distribución**, **Producción y Operaciones**, **Gerencia** y **Extras** (Compras, Administración y Finanzas, Recursos Humanos y TI). El organigrama está cargado en el módulo de Recursos Humanos de Odoo.
-
-```mermaid
-flowchart TD
-    GG["Gerencia General<br/>(Unidad Helados y Confitería)"]
-    GG --> MV["Marketing y Ventas"]
-    GG --> LD["Logística y Distribución"]
-    GG --> PO["Producción y Operaciones"]
-    GG --> CO["Compras"]
-    GG --> AF["Administración y Finanzas<br/>(Facturación)"]
-    GG --> RH["Recursos Humanos"]
-    GG --> TI["Tecnologías de la Información"]
-    MV --> CM["Canal Moderno"]
-    MV --> CT["Canal Tradicional"]
-    MV --> HE["Heladeros<br/>(rutas y liquidación)"]
-    LD --> AL["Almacén Planta Lima<br/>(cámaras de frío)"]
-    LD --> CD["CD Arequipa"]
-    LD --> DE["Despacho"]
-    PO --> LH["Línea Helados"]
-    PO --> LC["Línea Chocolates"]
-    PO --> LP["Línea Panetón"]
-    PO --> AC["Aseguramiento de Calidad"]
-```
-
-*Figura 3.1. Organigrama de la unidad.*
-
-### 3.2.3 Trabajadores y responsabilidades
-
-Son 21 empleados **ficticios** (S2), de los cuales diez tienen usuario en el ERP según su rol. Gerencia General tiene 1 (el gerente, que dirige y decide con los indicadores); Marketing y Ventas, 4 (jefe, vendedor de Canal Moderno, cajero de punto de venta y ejecutivo de Canal Tradicional, que fijan precios, campañas y ventas); Heladeros, 2 (supervisor y liquidador, que organizan rutas y liquidan a diario); Logística, 4 (jefe de almacén, encargados de Lima y Arequipa y coordinador de despacho); Producción, 5 (jefe, tres técnicos de línea e inspector de calidad); y Extras, 5 (comprador, contador, asistente de facturación, jefa de RR. HH. y analista de TI). Los heladeros no son empleados sino concesionarios que compran a precio de heladero y liquidan cada día (S4), por lo que se modelan como contactos.
+El ERP cubre las cinco áreas que piden los lineamientos: **Marketing y Ventas**, **Logística y Distribución**, **Producción y Operaciones**, **Gerencia** y **Extras** (Compras, Administración y Finanzas, Recursos Humanos y TI), con el organigrama cargado en el módulo de Recursos Humanos de Odoo. Son 21 empleados **ficticios** (S2), diez de ellos con usuario en el ERP según su rol; los heladeros no son empleados sino concesionarios que compran a precio de heladero y liquidan cada día (S4), por lo que se modelan como contactos.
 
 ### 3.2.4 Problemas y oportunidades
 
@@ -68,13 +40,12 @@ Los problemas son supuestos de la situación actual (S7). La última columna mue
 
 ### 3.2.5 Supuestos académicos
 
-Los datos maestros son ficticios pero verosímiles (S2, conforme a la Ley 29733); la fecha de corte es 2026 bajo Nestlé Perú (S1); los nombres de productos se inspiran en marcas públicas, con recetas, precios y vida útil estimados (S3); los heladeros son concesionarios (S4); el helado se guarda a −18 °C o menos y los lácteos entre 2 y 6 °C (S5); el CD Arequipa se abastece desde Lima (S6); la situación actual se basa en Excel y registros manuales (S7); se usa un servidor de contenedores con una réplica de base de datos (S8); y el contexto es peruano: PEN, IGV 18 %, es_PE y America/Lima (S9).
+Los datos maestros son ficticios pero verosímiles (S2, Ley 29733); el corte es 2026 bajo Nestlé Perú (S1); los productos se inspiran en marcas públicas con recetas, precios y vida útil estimados (S3); los heladeros son concesionarios (S4); el helado se guarda a −18 °C o menos y los lácteos entre 2 y 6 °C (S5); el CD Arequipa se abastece desde Lima (S6); la situación actual se basa en Excel y registros manuales (S7); hay un servidor de contenedores con réplica de base de datos (S8); y el contexto es peruano: PEN, IGV 18 %, es_PE y America/Lima (S9).
 
 ## 3.3 Visión
 
 > **Propuesta académica (redacción propia).** Ser la unidad de helados y confitería que llega fresca y a tiempo a cada rincón del país, con cada lote trazable de la compra del insumo hasta el cliente y decisiones tomadas con datos del día.
 
-Se inspira en el propósito público de Nestlé de aprovechar el poder de los alimentos para mejorar la calidad de vida (Nestlé India, s. f.); no es la visión oficial de la empresa.
 
 ## 3.4 Misión
 
@@ -84,11 +55,11 @@ Se inspira en el propósito público de Nestlé de aprovechar el poder de los al
 
 ### 3.5.1 Análisis PESTEL
 
-En lo **político**, pesan la política comercial del país [S] y la transición de Nestlé a Froneri [V], que se declara como riesgo y no se modela. En lo **económico**, la estacionalidad marcada, un mercado de panetón de unos US$ 125 millones al año [P] y los precios de lácteos y cacao [S] justifican listas de precios por temporada. En lo **social**, la marca de arraigo histórico [V] y el heladero como figura popular [S] piden un trato diferenciado a ese canal. En lo **tecnológico**, los comprobantes electrónicos son obligatorios (SUNAT, s. f.) y el EDI `l10n_pe_edi` es Enterprise [V], por lo que se factura con `l10n_pe` sin envío a SUNAT. En lo **ecológico**, el consumo de energía de las cámaras y los residuos de empaque [S] se reflejan en el registro de temperaturas y mermas. En lo **legal**, rigen la Ley 29733 de datos personales (Congreso de la República del Perú, 2011), la Ley 29571 del consumidor (2010), la Ley 30021 de alimentación saludable (2013), el D. S. 007-98-SA de vigilancia sanitaria y HACCP (Ministerio de Salud, 1998) y el IGV de 18 %.
+En lo **político**, pesan la política comercial del país [S] y la transición de Nestlé a Froneri [V], que se declara como riesgo y no se modela. En lo **económico**, la estacionalidad marcada, un mercado de panetón de unos US$ 125 millones al año [P] y los precios de lácteos y cacao [S] justifican listas de precios por temporada. En lo **social**, la marca de arraigo histórico [V] y el heladero como figura popular [S] piden un trato diferenciado a ese canal. En lo **tecnológico**, los comprobantes electrónicos son obligatorios (SUNAT, s. f.) y el EDI `l10n_pe_edi` es Enterprise [V], por lo que se factura con `l10n_pe` sin envío a SUNAT. En lo **ecológico**, el consumo de energía de las cámaras y los residuos de empaque [S] se reflejan en el registro de temperaturas y mermas. En lo **legal**, rigen la Ley 29733 de datos personales (Congreso de la República del Perú, 2011), el D. S. 007-98-SA de vigilancia sanitaria y HACCP (Ministerio de Salud, 1998) y el IGV de 18 %.
 
 ### 3.5.2 Cinco fuerzas de Porter
 
-La **rivalidad** es alta: los helados y el panetón compiten con marcas de Alicorp/Lamborgini y Gloria y con panaderías y heladerías artesanales (Gestión, s. f.-a) [S]. La amenaza de **nuevos entrantes** es media: las marcas artesanales y el *delivery* entran con poca inversión, pero la red de distribución y las cámaras de frío son una barrera. El poder de los **clientes** es medio-alto, porque los autoservicios negocian precio y condiciones; el de los **proveedores** es medio, pues lácteos, cacao y harina dependen de pocos proveedores; y la amenaza de **sustitutos** es media (postres caseros y otros snacks). Si el negocio de helados pasa a Froneri, la unidad perdería la línea del pico de verano; por eso el diseño separa líneas de producto y canales, de modo que el ERP siga útil con chocolates y panetón.
+La **rivalidad** es alta (marcas de Alicorp/Lamborgini y Gloria, panaderías y heladerías artesanales; Gestión, s. f.-a) [S]. Los **nuevos entrantes** son una amenaza media: el *delivery* entra con poca inversión, pero la red de distribución y las cámaras de frío son una barrera. El poder de los **clientes** es medio-alto (los autoservicios negocian) y el de los **proveedores**, medio (pocos proveedores de lácteos, cacao y harina); los **sustitutos** son una amenaza media. Si los helados pasan a Froneri, el diseño separa líneas de producto y canales para que el ERP siga útil con chocolates y panetón.
 
 ## 3.6 Estrategia empresarial
 
@@ -103,13 +74,9 @@ Las **fortalezas** son la marca histórica desde 1897 [V], la red extensa de hel
 - **FA:** diversificar entre helados, chocolates y panetón para amortiguar la pérdida eventual de la línea de helados.
 - **DA:** controlar vencimientos y temperaturas para evitar pérdidas ante precios altos de insumos.
 
-### 3.6.3 Estacionalidad complementaria
+### 3.6.3 Cascada de metas de COBIT 2019
 
-La estrategia es producir helado con anticipación en la cámara de congelación y liberar capacidad de la línea de helados para el panetón al acercarse la Navidad, con las mismas instalaciones y la misma fuerza de distribución todo el año. El ERP lo apoya con listas de precios por campaña y reportes por mes.
-
-### 3.6.4 Cascada de metas de COBIT 2019
-
-COBIT 2019 (ISACA, 2018) se usa como marco de referencia, sin evaluar madurez, para pasar de la necesidad de la gerencia a lo que el proyecto construye. **Integrar procesos** (EG08, AG08, BAI03) se atiende con Odoo configurado por código y probado de punta a punta; la **disponibilidad en temporada alta** (EG06, APO09, DSS01, DSS04), con el despliegue protegido, la réplica y los respaldos medidos; la **protección de la información** (EG02, EG03, AG07, APO12, APO13, DSS05), con TLS, verificación en dos pasos, auditoría y datos ficticios; el **cambio sin romper la operación** (AG06, BAI06, DSS02, DSS03), con PR revisados, integración continua y mesa de servicios; y **decidir con datos** (EG07, AG10, MEA01), con dashboards, KPI y pruebas de rendimiento.
+COBIT 2019 (ISACA, 2018) sirve de referencia, sin evaluar madurez: **integrar procesos** (EG08, AG08, BAI03) con Odoo configurado por código y probado de punta a punta; **disponibilidad en temporada alta** (EG06, APO09, DSS01, DSS04) con despliegue protegido, réplica y respaldos; **protección de la información** (EG02, EG03, AG07, APO12, APO13, DSS05) con TLS, verificación en dos pasos y auditoría; **cambio sin romper la operación** (AG06, BAI06, DSS02, DSS03) con PR revisados e integración continua; y **decidir con datos** (EG07, AG10, MEA01) con dashboards y KPI.
 
 ## 3.7 Planificación empresarial
 

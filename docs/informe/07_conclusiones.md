@@ -10,43 +10,24 @@ El proyecto cumple su meta principal: un ERP sobre Odoo 19 Community y PostgreSQ
 
 | # | Problema (3.2.4) | Conclusión |
 |---|---|---|
-| 1 | La liquidación de heladeros es manual | Resuelto con M2: la liquidación diaria calcula lo vendido, el importe a precio de heladero, la comisión y la diferencia de efectivo, crea el pedido de venta y se imprime con firmas |
-| 2 | Los lotes vencen sin control y no hay FEFO | Resuelto: los lotes llevan vencimiento, la salida respeta FEFO, un lote vencido no se despacha y hay alerta 30 días antes |
-| 3 | Las temperaturas se anotan a mano | Resuelto con M3: rango por cámara, actividad al jefe de almacén ante una lectura fuera de rango y aviso de lotes por vencer. Las lecturas son manuales, sin sensores |
-| 4 | La calidad no se liga al lote | Resuelto con M1: inspección por puntos de control ligada a la orden y al lote, certificado en PDF y bloqueo del lote rechazado |
-| 5 | La planificación no usa datos consolidados | Resuelto: dashboards y vistas por línea, canal y mes, y el tablero propio de M4 |
-| 6 | Cada área digita por separado | Resuelto: un solo ERP con el ciclo vender-comprar-producir-facturar probado de punta a punta |
-| 7 | La gerencia no tiene reportes a tiempo | Resuelto: el tablero y los análisis salen del propio ERP y el tablero carga en 2.11 s |
+| 1 | Liquidación de heladeros manual | Resuelto con M2: calcula lo vendido, la comisión y la diferencia de efectivo, crea el pedido y se imprime con firmas |
+| 2 | Lotes sin control de vencimiento ni FEFO | Resuelto: lotes con vencimiento, salida por FEFO y alerta 30 días antes |
+| 3 | Temperaturas a mano | Resuelto con M3: rango por cámara y actividad ante una lectura fuera de rango (lecturas manuales, sin sensores) |
+| 4 | Calidad sin ligar al lote | Resuelto con M1: inspección ligada a la orden y al lote, certificado en PDF y bloqueo del lote rechazado |
+| 5 | Planificación sin datos consolidados | Resuelto: dashboards y tablero de M4 |
+| 6 | Cada área digita por separado | Resuelto: un solo ERP probado de punta a punta |
+| 7 | Gerencia sin reportes a tiempo | Resuelto: el tablero carga en 2.11 s |
 
 Los siete problemas se resuelven: cuatro con la Fase 1 (2, 5, 6 y 7) y tres con los módulos de la Fase 2 (1, 3 y 4). Resuelto significa que el sistema lo cubre con datos de demostración; no se probó con usuarios ni datos reales.
 
 ## 7.3 Una conclusión por área
 
-- **Marketing y ventas:** el embudo CRM, las listas de precios por canal y temporada, el punto de venta con boleta, la facturación con IGV y la liquidación del heladero (M2) cubren el flujo de venta. No hay envío electrónico a SUNAT, que requiere un módulo Enterprise.
-- **Logística y producción:** lotes con vencimiento, FEFO, recepción, despacho en dos pasos y reposición a Arequipa funcionan y están probados; las órdenes de producción consumen insumos por FEFO, crean el lote y calculan el costo, y con M1 nace la inspección del lote.
-- **Gerencia:** los dashboards, las vistas guardadas y el tablero de M4 muestran ventas, producción, stock por vencer y, según los módulos instalados, calidad, liquidaciones y temperatura.
-- **Compras, RR. HH. y TI:** el reabastecimiento mín./máx., los usuarios por rol y la mesa de servicios con SLA funcionan.
-- **Infraestructura y seguridad:** la réplica, los respaldos, Nginx con TLS, el segundo factor y la auditoría están hechos y verificados, y las releases publican imagen y zip.
+**Marketing y ventas:** el embudo CRM, las listas de precios por canal, el punto de venta con boleta, la facturación con IGV y la liquidación del heladero cubren el flujo de venta (sin envío electrónico a SUNAT, que es Enterprise). **Logística y producción:** lotes con vencimiento, FEFO, despacho en dos pasos, reposición a Arequipa y órdenes de producción con costo y, con M1, inspección del lote. **Gerencia:** dashboards, vistas guardadas y el tablero de M4. **Compras, RR. HH. y TI:** reabastecimiento mín./máx., usuarios por rol y mesa de servicios con SLA. **Infraestructura y seguridad:** réplica, respaldos, Nginx con TLS, segundo factor y auditoría, verificados.
 
 ## 7.4 Una conclusión por requerimiento no funcional
 
-| RNF | Resultado | Cumple |
-|---|---|---|
-| RNF001 portabilidad | Tablero y liquidación revisados en 375 × 812 sin desplazamiento horizontal | Parcial |
-| RNF002 rendimiento | p95 de 9 a 18 ms con 20 usuarios virtuales | Sí |
-| RNF003 usabilidad | Interfaz en español, revisión por roles y evaluación heurística | Con límites |
-| RNF004 trazabilidad de lotes | Probada de la compra a la entrega | Sí |
-| RNF005 lote vencido o rechazado | Probado; el punto de venta no verifica el vencimiento | Con límites |
-| RNF006 continuidad | RPO de segundos con la réplica y RTO de 31 s | Sí |
-| RNF007 mantenibilidad | CI obligatorio con 218 pruebas y `ruff` | Sí |
-| RNF008 rendimiento web | Login 100, tablero 76 (carga en 2.11 s) y backend 59: límite conocido | Parcial |
-| RNF009 seguridad | ZAP sin alertas altas, 2FA, TLS y contraseñas | Con límites |
-| RNF010 auditoría | `auditlog` en precios, pedidos y compras | Sí |
-| RNF011 disponibilidad | Reinicio automático y *healthcheck*; sin medición continua | Parcial |
-| RNF012 reproducibilidad | Entorno con un comando; cinco releases con imagen y zip | Sí |
-| RNF013 datos personales | Datos ficticios, sin política de privacidad | Parcial |
+De los 13 requerimientos no funcionales, 6 cumplen (rendimiento, trazabilidad, continuidad, mantenibilidad, auditoría y reproducibilidad), 3 cumplen con límites (usabilidad, lote vencido o rechazado y seguridad) y 4 son parciales (portabilidad, rendimiento web, disponibilidad y datos personales).
 
-De los 13 RNF, 6 cumplen, 3 cumplen con límites y 4 son parciales.
 
 ## 7.5 Conclusión sobre la gestión del proyecto
 

@@ -25,10 +25,8 @@ La eficacia (Ef.) es 3 si el control es automático y está verificado con una p
 | RSI-10 Indisponibilidad (4) | Reinicio automático y *healthchecks* | 1 | 4 Media | Un solo nodo y sin medición continua |
 | RSI-11 Cambios sin rastro en precios y pedidos (6) | `auditlog` sobre listas de precios y pedidos de venta y compra | 3 | 3 Media | Prueba del cambio de precio con usuario, fecha y valores |
 | RSI-13 y 14 Componentes vulnerables y código sin revisión (4) | Versiones fijadas; PR con aprobación del otro integrante y CI (`lint` y `test`) obligatorio | 2 | 2 Baja | Dependabot no está configurado |
-| RSI-15 Cabeceras de seguridad laxas (4) | CSP, `X-Frame-Options`, cookies `Secure; HttpOnly; SameSite=Lax` | 2 | 2 Baja | ZAP: 0 alertas altas; la CSP admite `unsafe-inline` por OWL |
-| RSI-16 Exposición de datos personales (2) | Datos ficticios y mínimos; campos privados de empleados protegidos | 2 | 2 Baja | Sin política de privacidad |
 
-Los 11 riesgos de prioridad Alta pasan a nivel residual 3 o 4 (Media) y ninguno queda en Alta; los residuales de RSI-09 y RSI-10 dependen del despliegue en un solo equipo.
+Los riesgos de cabeceras laxas (RSI-15, CSP que admite `unsafe-inline` por OWL) y de datos personales (RSI-16, datos ficticios y sin política de privacidad) quedan en prioridad Baja. Los 11 riesgos de prioridad Alta pasan a nivel residual 3 o 4 (Media) y ninguno queda en Alta; los residuales de RSI-09 y RSI-10 dependen del despliegue en un solo equipo.
 
 ## 5.12 Identificación de ataques y defensa
 
@@ -36,12 +34,8 @@ Los 11 riesgos de prioridad Alta pasan a nivel residual 3 o 4 (Media) y ninguno 
 
 | Ataque (OWASP 2021) | Cómo se intentó | Defensa | Resultado y límite |
 |---|---|---|---|
-| Inyección SQL (A03) | `' OR '1'='1` y `x'); DROP TABLE res_partner;--` en una búsqueda, por JSON-RPC | Solo ORM con consultas parametrizadas | Rechazado: 0 filas y la tabla intacta. Prueba manual puntual |
 | XSS (A03) | `"><script>alert(1)</script>` en el parámetro `redirect` del login | Escape de QWeb y CSP | Sale escapado; ZAP lo clasificó informativo |
 | Fuerza bruta (A07) | Intentos repetidos en `/web/login` | Bloqueo tras 5 intentos, contraseñas de 12 o más y 2FA | Mitigado: `Login attempt ignored` en el registro |
-| Gestor de BD o PostgreSQL expuestos (A05) | `/web/database/manager` y puerto 5432 | `list_db = False`, 404 y puertos en `127.0.0.1` | Rechazado: 404 |
 | Robo de sesión (A02, A07) | Leer la cookie por JavaScript, capturarla en la red o clickjacking | Cookie `HttpOnly; Secure; SameSite=Lax`, TLS, HSTS, `X-Frame-Options` y 2FA | Mitigado; la cookie dura 7 días y el certificado es autofirmado |
-| Pérdida de datos (A04) | Borrado accidental o base corrupta | Respaldos con sumas, restauración y réplica | Recuperable: RTO de 31 s; un respaldo alterado se rechaza |
-| Caída del servicio | Contenedor caído o CPU agotada | `restart: unless-stopped`, *healthchecks* y `workers = 2` | Resiste la carga medida: 0 % de errores en la prueba normal y 0.005 % en la de esfuerzo (5.14) |
 
-Otras categorías con evidencia: A05 (ZAP *baseline* con 0 alertas altas y 58 reglas pasivas sin hallazgo), A06 (imagen y `auditlog` fijados), A09 (`auditlog` e inicios de sesión registrados) y A08 (CI obligatorio y ramas protegidas). Los controles que el plan nombraba y no se implementaron son Uptime Kuma, Dependabot y la cinta de entorno de OCA.
+La inyección SQL (A03) se rechazó con entradas maliciosas por JSON-RPC (0 filas, tabla intacta), el gestor de BD responde 404 (A05) y la pérdida de datos es recuperable en 31 s. Otras categorías con evidencia: A05 (ZAP *baseline* con 0 alertas altas y 58 reglas pasivas sin hallazgo), A06 (imagen y `auditlog` fijados), A09 (`auditlog` e inicios de sesión registrados) y A08 (CI obligatorio y ramas protegidas). Los controles que el plan nombraba y no se implementaron son Uptime Kuma, Dependabot y la cinta de entorno de OCA.

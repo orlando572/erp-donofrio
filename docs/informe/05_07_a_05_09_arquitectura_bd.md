@@ -10,9 +10,7 @@ La arquitectura se describe con el modelo C4 (contexto, contenedores y component
 
 En el contexto participan los 10 usuarios por rol, el ERP (Odoo 19.0 Community sobre PostgreSQL 16) y GitHub (repositorio, Actions, GHCR y releases). Quedan fuera del alcance el servidor de correo saliente, que el código de verificación por correo necesitaría en un despliegue real (con la app TOTP no hace falta), y el envío electrónico a SUNAT, que es Enterprise.
 
-![C4 de contenedores](../diagramas/c4/c4_contenedores.png)
-
-*Figura 5.7-b. Contenedores del proyecto Compose, volúmenes, respaldos y GitHub.*
+Los contenedores del proyecto Compose, sus volúmenes y respaldos son los de la tabla siguiente.
 
 | Contenedor | Tecnología | Puertos |
 |---|---|---|

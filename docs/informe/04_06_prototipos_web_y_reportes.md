@@ -10,21 +10,7 @@ La **visibilidad del estado** se logra con la barra de estado del documento (bor
 
 ## 4.6.2 Propuesta de prototipos web
 
-Cada caso de uso tiene su mockup y su pantalla real configurada. Las de la Fase 1 son pantallas estándar de Odoo; las de la Fase 2 son propias, y se muestran tres capturas reales con los datos de demostración.
-
-![Liquidación confirmada del heladero con su pedido de venta](../capturas/sprint-4/HU-20_liquidacion_confirmada_con_pedido.png)
-
-*Figura 4.23. Pantalla real de la liquidación del heladero (M2, CU004).*
-
-![Inspección de calidad aprobada](../capturas/sprint-4/HU-17_inspeccion_aprobada.png)
-
-*Figura 4.24. Pantalla real de la inspección de calidad aprobada (M1, CU008).*
-
-![Tablero gerencial de KPI](../capturas/sprint-4/HU-22_tablero_todos_los_almacenes.png)
-
-*Figura 4.25. Pantalla real del tablero gerencial (M4, CU009).*
-
-La estructura es la del mockup; cambian el color (el mockup usa el amarillo de marca) y algunos nombres de campo.
+Cada caso de uso tiene su mockup y su pantalla real configurada. Las de la Fase 1 son pantallas estándar de Odoo; las de la Fase 2 son propias y se muestran con datos de demostración en 5.5 (inspección de calidad, liquidación del heladero y tablero gerencial). La estructura es la del mockup; cambian el color (el mockup usa el amarillo de marca) y algunos nombres de campo.
 
 ## 4.6.3 Prototipos de informes y reportes
 

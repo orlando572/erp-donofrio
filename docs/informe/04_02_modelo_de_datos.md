@@ -32,11 +32,7 @@ Las relaciones son 1:N desde la tabla con la FK; las N:M de Odoo pasan por tabla
 
 El diseño lógico muestra, para las tablas centrales del negocio, el tipo de dato, las PK y FK y las cardinalidades; sale del mismo extractor, por lo que coincide con la base real. Se presenta el flujo de inventario y lotes, base de la trazabilidad y del FEFO.
 
-![Diseño lógico: inventario](../diagramas/er/logico_inventario.png)
-
-*Figura 4.14. Diseño lógico del inventario: `stock_picking` → `stock_move` → `stock_move_line` → `stock_lot`, y las existencias en `stock_quant`.*
-
-`stock_move_line` registra el `stock_lot` que entró o salió, `stock_quant` guarda la cantidad por producto, ubicación y lote, y `stock_lot` guarda las fechas de vencimiento, retiro y alerta: con la de retiro Odoo aplica FEFO y con el vencimiento, la alerta a 30 días. El pedido se une a su entrega y a su factura por `sale_id` y `account_move`, y la orden de producción consume y produce mediante `stock_move`, de modo que el lote queda ligado a sus insumos.
+El flujo es `stock_picking` → `stock_move` → `stock_move_line` → `stock_lot`, con las existencias en `stock_quant`. `stock_move_line` registra el `stock_lot` que entró o salió, `stock_quant` guarda la cantidad por producto, ubicación y lote, y `stock_lot` guarda las fechas de vencimiento, retiro y alerta: con la de retiro Odoo aplica FEFO y con el vencimiento, la alerta a 30 días. El pedido se une a su entrega y a su factura por `sale_id` y `account_move`, y la orden de producción consume y produce mediante `stock_move`, de modo que el lote queda ligado a sus insumos.
 
 **Por qué el ORM y no SQL propio.** El esquema lo crea el ORM de Odoo a partir de las clases de los modelos, así que siempre coincide con el código instalado; las reglas de negocio (FEFO, FIFO, IGV), los permisos y la auditoría se aplican en el ORM y un `INSERT` manual los eludiría; y el código es más corto y se prueba con `TransactionCase`. Por eso `donofrio_base` solo escribe datos y *hooks* que usan el ORM, y el SQL del proyecto se limita a consultas de lectura para documentar y medir.
 
