@@ -12,11 +12,11 @@ La plantilla sugiere Excalidraw o Figma. Aquí se usó un **generador propio** (
 python3 docs/diagramas/generar_pantallas.py        # escribe .svg en docs/diagramas/pantallas/
 ```
 
-El PNG sale del SVG con el mismo comando de Docker de [`docs/diagramas/README.md`](../diagramas/README.md).
+El PNG sale del SVG con el mismo comando de Docker de [el README](../diagramas/README.md).
 
 - **Wireframes (4.4.1):** escala de grises, sin marca, para acordar la **estructura**: qué campos, qué tabla y qué acciones tiene cada pantalla. Uno por caso de uso.
 - **Mockups (4.4.2):** alta fidelidad con la paleta de marca: **amarillo de los carritos** (`#F7C60A`, desde 1919) como color de acción y de cabecera, tinta oscura para el texto y verde, rojo y azul solo para alertas.
-- **Pantallas de la Fase 2:** las de liquidación, inspección, temperaturas y tablero se diseñaron en la Fase 1 (etiqueta «Módulo propio de la Fase 2») y **se implementaron en la Fase 2**: ahora cada una tiene su pantalla real en `docs/capturas/sprint-4/` (con los datos de demostración de la HU-16) y su estado en la tabla de abajo. Los wireframes y mockups se conservan como el diseño original ([02 §2.3](../plan/02_mapeo_plantilla.md)).
+- **Pantallas de la Fase 2:** las de liquidación, inspección, temperaturas y tablero se diseñaron en la Fase 1 (etiqueta «Módulo propio de la Fase 2») y **se implementaron en la Fase 2**: ahora cada una tiene su pantalla real en `docs/capturas/sprint-4/` (con los datos de demostración de la HU-16) y su estado en la tabla de abajo. Los wireframes y mockups se conservan como el diseño original.
 - **Pantallas estándar de la Fase 1:** muestran lo que ya existe en Odoo configurado; el mockup es una **propuesta de cómo se vería con la marca**, no una pantalla nueva por construir. Las capturas reales de la interfaz están en `docs/capturas/sprint-2/`.
 - **Vista móvil:** solo la liquidación del heladero (CU004) la necesita, porque el liquidador la usa de pie, junto al despacho.
 

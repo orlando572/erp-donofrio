@@ -55,4 +55,4 @@ Los cuatro módulos de la Fase 2 **ya están construidos**. Lo que queda abierto
 | Auditoría con `auditlog` de liquidaciones, inspecciones y temperaturas | RNF010 | M1 a M3 usan el historial del chatter |
 | Versión parcial del tablero por áreas y mejora del rendimiento del tablero | M4 (RF013, RNF008) | Lighthouse da 76; es un límite conocido |
 
-La construcción de los módulos se hizo uno a uno, con confirmación explícita del equipo y un mini gate por módulo (`docs/scrum/gates/gate-m1-calidad.md` a `gate-m4-tablero.md`).
+La construcción de los módulos se hizo uno a uno, con confirmación explícita del equipo y un mini gate por módulo (el mini gate de M1 a el mini gate de M4).

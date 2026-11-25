@@ -2,7 +2,7 @@
 
 > **Estado:** versión final del Cierre (25/11/2026; los datos medidos son los del 23/11/2026 salvo donde se indica) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [06 §6.5](../plan/06_github_ci_infra.md), [09 §9.2](../plan/09_normas_marcos.md)
 >
-> Describe el **estado real de `develop`**: las mediciones son del 23/11/2026 y los módulos de la Fase 2 se suman al 25/11/2026. Existen la réplica (HU-25), los respaldos con restauración (HU-26), Nginx con TLS (HU-27), pruebas de carga y seguridad (HU-28) y el flujo de release hacia GHCR (HU-29; publicadas `v1.0.0` a `v1.4.0`). Las consultas a PostgreSQL de este documento se hicieron en modo de solo lectura sobre la base de desarrollo `donofrio_perf`. Cómo regenerar cada diagrama: [docs/diagramas/README.md](../diagramas/README.md).
+> Describe el **estado real de `develop`**: las mediciones son del 23/11/2026 y los módulos de la Fase 2 se suman al 25/11/2026. Existen la réplica (HU-25), los respaldos con restauración (HU-26), Nginx con TLS (HU-27), pruebas de carga y seguridad (HU-28) y el flujo de release hacia GHCR (HU-29; publicadas `v1.0.0` a `v1.4.0`). Las consultas a PostgreSQL de este documento se hicieron en modo de solo lectura sobre la base de desarrollo `donofrio_perf`. Cómo regenerar cada diagrama: [el README](../diagramas/README.md).
 
 ## 5.7 Diagramas de arquitectura del sistema (C4)
 
@@ -82,7 +82,7 @@ El mapeo de modelos a tablas está en [5.1](05_01_a_05_06_backend.md) y el model
 
 Los demás parámetros son los **valores por defecto de PostgreSQL 16**, verificados con `pg_settings` en el primario: `wal_level = replica`, `max_wal_senders = 10`, `max_replication_slots = 10`, `hot_standby = on`, `password_encryption = scram-sha-256`.
 
-### Evidencias (23/11/2026, 15:01; [`HU-25_evidencia_replica.txt`](../capturas/sprint-3/HU-25_evidencia_replica.txt))
+### Evidencias (23/11/2026, 15:01; [la evidencia de la réplica](../capturas/sprint-3/HU-25_evidencia_replica.txt))
 
 | # | Comprobación | Resultado |
 |---|---|---|
@@ -112,7 +112,7 @@ Resultado final de `scripts/verificar_replica.sh`: «Réplica verificada: todas 
 | [`scripts/verificar_backup.sh`](../../scripts/verificar_backup.sh) y job `backup` de `ci.yml` | Ciclo completo en una BD temporal: respaldo → restauración → comparación → rechazo de un respaldo alterado → retención de 7 días |
 | Programación diaria | **Documentada, no instalada:** el encabezado de `backup.sh` y el manual de instalación indican la línea de `cron` (`0 2 * * * …`); el repositorio no la instala. Una copia fuera del equipo se logra apuntando `BACKUP_DIR` a una carpeta sincronizada |
 
-Evidencia ([`HU-26_evidencia_respaldo.txt`](../capturas/sprint-3/HU-26_evidencia_respaldo.txt), 23/11/2026, base `donofrio`):
+Evidencia ([la evidencia del respaldo](../capturas/sprint-3/HU-26_evidencia_respaldo.txt), 23/11/2026, base `donofrio`):
 
 | Medida | Valor |
 |---|---|
@@ -159,7 +159,7 @@ Todas tienen su último *autovacuum* y *autoanalyze* el 23/11/2026, el día de l
 
 ### `pg_stat_statements`: **no implementado**
 
-El plan ([06 §6.5](../plan/06_github_ci_infra.md)) contemplaba `pg_stat_statements` para medir las consultas más lentas. **No está activado** en el *compose*: la extensión está disponible en la imagen (`pg_available_extensions` la lista, versión 1.10), pero `shared_preload_libraries` está vacío y `pg_extension` solo tiene `plpgsql` y `pg_trgm`. Queda como **trabajo futuro**: bastaría agregar `-c shared_preload_libraries=pg_stat_statements` al `command` de `db` y ejecutar `CREATE EXTENSION pg_stat_statements` en la base. La capacidad se midió, en cambio, con k6 y `docker stats` (5.14).
+El plan contemplaba `pg_stat_statements` para medir las consultas más lentas. **No está activado** en el *compose*: la extensión está disponible en la imagen (`pg_available_extensions` la lista, versión 1.10), pero `shared_preload_libraries` está vacío y `pg_extension` solo tiene `plpgsql` y `pg_trgm`. Queda como **trabajo futuro**: bastaría agregar `-c shared_preload_libraries=pg_stat_statements` al `command` de `db` y ejecutar `CREATE EXTENSION pg_stat_statements` en la base. La capacidad se midió, en cambio, con k6 y `docker stats` (5.14).
 
 ### Índices
 

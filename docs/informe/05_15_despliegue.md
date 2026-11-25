@@ -1,8 +1,8 @@
 # 5.15 Despliegue: enfoque, herramientas, mejores prácticas y gestión de servicios
 
-> **Estado:** versión final del Cierre (25/11/2026; los datos medidos son los del 23/11/2026 salvo donde se indica) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [06 §6.4 y §6.5](../plan/06_github_ci_infra.md), [02 §2.2](../plan/02_mapeo_plantilla.md) (5.15 y 5.16), [09 §9.3](../plan/09_normas_marcos.md), [docs/dev/release.md](../dev/release.md), [manual de instalación](../manuales/manual_instalacion.md), `.github/workflows/*.yml`
+> **Estado:** versión final del Cierre (25/11/2026; los datos medidos son los del 23/11/2026 salvo donde se indica) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [06 §6.4 y §6.5](../plan/06_github_ci_infra.md), [02 §2.2](../plan/02_mapeo_plantilla.md) (5.15 y 5.16), [09 §9.3](../plan/09_normas_marcos.md), [la guía de release](../dev/release.md), [manual de instalación](../manuales/manual_instalacion.md), `.github/workflows/*.yml`
 >
-> Describe lo que **existe en `develop` al 25/11/2026** (los resultados medidos del despliegue son del 23/11/2026). Una cosa que el plan nombraba **no existe**: un despliegue automático a una VM (`cd.yml` y `deploy.sh` eran opcionales). Las releases **sí existen**: `v1.0.0` (24/11/2026, núcleo) y `v1.1.0` a `v1.4.0` (25/11/2026, módulos M1 a M4) están publicadas con su zip adjunto y su imagen en GHCR (ver [6.4](06_04_a_06_06_repositorio.md), Tabla 26b). Cómo regenerar el pipeline: [docs/diagramas/README.md](../diagramas/README.md).
+> Describe lo que **existe en `develop` al 25/11/2026** (los resultados medidos del despliegue son del 23/11/2026). Una cosa que el plan nombraba **no existe**: un despliegue automático a una VM (`cd.yml` y `deploy.sh` eran opcionales). Las releases **sí existen**: `v1.0.0` (24/11/2026, núcleo) y `v1.1.0` a `v1.4.0` (25/11/2026, módulos M1 a M4) están publicadas con su zip adjunto y su imagen en GHCR (ver [6.4](06_04_a_06_06_repositorio.md), Tabla 26b). Cómo regenerar el pipeline: [el README](../diagramas/README.md).
 
 ## 5.15.1 Enfoque de despliegue
 
@@ -44,9 +44,9 @@ Volver a desarrollo: `docker compose --profile proxy down && docker compose up -
 
 | Verificación | Resultado | Evidencia |
 |---|---|---|
-| `scripts/verificar_despliegue.sh` (7 grupos: redirección, TLS, cabeceras, gestor de BD, gzip y *websocket*, modo producción, bloqueo de login) | **Todas las comprobaciones pasaron**, también tras los cambios de HU-28 | [`HU-27_evidencia_seguridad.txt`](../capturas/sprint-3/HU-27_evidencia_seguridad.txt), [`HU-28_evidencia_k6_zap.txt`](../capturas/sprint-3/HU-28_evidencia_k6_zap.txt) |
+| `scripts/verificar_despliegue.sh` (7 grupos: redirección, TLS, cabeceras, gestor de BD, gzip y *websocket*, modo producción, bloqueo de login) | **Todas las comprobaciones pasaron**, también tras los cambios de HU-28 | [la evidencia de seguridad](../capturas/sprint-3/HU-27_evidencia_seguridad.txt), [la evidencia de k6 y ZAP](../capturas/sprint-3/HU-28_evidencia_k6_zap.txt) |
 | Contenedores | `db`, `db-replica` y `odoo` en `healthy`; Nginx en marcha | ídem |
-| Imagen de release (ensayo local) | Construida con `--build-context addons=./addons` (3.25 GB); `scripts/probar_imagen.sh`: Odoo 19.0, `donofrio_base` y `auditlog` dentro, configuración de desarrollo y de producción correctas, contraseña de ejemplo rechazada; la imagen arranca sola y carga 109 módulos | [`HU-29_evidencia_release.txt`](../capturas/sprint-3/HU-29_evidencia_release.txt) |
+| Imagen de release (ensayo local) | Construida con `--build-context addons=./addons` (3.25 GB); `scripts/probar_imagen.sh`: Odoo 19.0, `donofrio_base` y `auditlog` dentro, configuración de desarrollo y de producción correctas, contraseña de ejemplo rechazada; la imagen arranca sola y carga 109 módulos | [la evidencia de la release](../capturas/sprint-3/HU-29_evidencia_release.txt) |
 | Zip del código (ensayo) | `erp-donofrio-v0.0.0-prueba.zip`: 17 MB, 349 entradas, sin `.env` | ídem |
 
 ## 5.15.2 Herramientas utilizadas
@@ -122,27 +122,27 @@ No hay un servidor público: el sistema se ejecuta en la PC de quien lo levanta.
 
 ## 5.15.6 Gestión de servicios (ITIL 4 / ISO 20000-1)
 
-> Corresponde a la fila 5.16 de [02 §2.2](../plan/02_mapeo_plantilla.md), asignada a Orlando, y cubre las entradas del índice de la plantilla sobre control de cambios y capacidad (tablas 26 a 38). El plan indica **consultar al docente si espera estas secciones** (no están en el cuerpo de la plantilla); esa consulta sigue pendiente. Aquí solo va lo que **ya existe**; la mesa de servicios TI (incidentes y solicitudes) es de Evelyn (HU-32, `donofrio_base/data/mesa_servicios_data.xml`).
+> Cubre el control de cambios y la capacidad de los servicios. Aquí solo va lo que **ya existe**; la mesa de servicios TI (incidentes y solicitudes) es de Evelyn (HU-32).
 
 ### Control de cambios (habilitación del cambio)
 
 | Etapa ITIL | Cómo se hace hoy | Evidencia |
 |---|---|---|
 | Solicitud de cambio | Issue de GitHub (épicas y bugs con plantilla: `.github/ISSUE_TEMPLATE/epica.yml` y `bug.yml`); cada HU nace de una épica | Issues del repositorio |
-| Evaluación | Revisión del PR por el otro integrante con la checklist de la DoD (sin patrones legacy, ACL y pruebas, `-u` sin errores, textos en español) | `.github/pull_request_template.md` |
+| Evaluación | Revisión del PR por el otro integrante con la checklist de la DoD (sin patrones legacy, ACL y pruebas, `-u` sin errores, textos en español) | la plantilla de pull request |
 | Autorización | Aprobación del PR; conversaciones resueltas | Protección de `develop` (5.15.3) |
 | Implementación | *Squash and merge* a `develop`; *merge commit* a `main` | Historial de Git |
 | Verificación | CI en verde (`lint`, `test`, `replica`, `backup`, `proxy`) y, antes de entregar, `verificar_despliegue.sh` | Figura 5.15-a; Actions |
-| Cierre y despliegue | Tag `vX.Y.Z` → `release.yml` → imagen y zip; despliegue y rollback manuales (5.15.1) | `docs/dev/release.md` |
+| Cierre y despliegue | Tag `vX.Y.Z` → `release.yml` → imagen y zip; despliegue y rollback manuales (5.15.1) | la guía de release |
 
-**No existe** la plantilla de solicitud de cambio (RFC, `solicitud_cambio.yml`) ni las etiquetas `tipo:cambio-*` que contemplaba [09 §9.3](../plan/09_normas_marcos.md); el formato RFC está en el [anexo 10.4](anexo_10_04_rfc.md) como ejemplo lleno. El flujo anterior se representa con la Figura 5.15-a; **no se dibujaron** los dos BPMN que pedía el plan (control de cambios y solicitud de acceso).
+**No existe** la plantilla de solicitud de cambio (RFC, `solicitud_cambio.yml`) ni las etiquetas `tipo:cambio-*` que se contemplaba; el formato RFC está en el [anexo 10.4](anexo_10_04_rfc.md) como ejemplo lleno. El flujo anterior se representa con la Figura 5.15-a; **no se dibujaron** los dos BPMN que pedía el plan (control de cambios y solicitud de acceso).
 
 ### Capacidad y desempeño
 
 | Elemento | Resultado real | Fuente |
 |---|---|---|
 | Medición de capacidad | k6 con 20 usuarios virtuales sobre el despliegue protegido; `docker stats` cada 10 s | [5.14, Tabla 22](05_13_a_05_14_pruebas.md) |
-| Carga normal (20 usuarios, pausas de 1 a 3 s) | p95 de 12 ms en listas; Odoo 39 % de una CPU y 440 MiB como máximo | `HU-28_evidencia_k6_zap.txt` |
+| Carga normal (20 usuarios, pausas de 1 a 3 s) | p95 de 12 ms en listas; Odoo 39 % de una CPU y 440 MiB como máximo | la evidencia de k6 y ZAP |
 | Esfuerzo (20 usuarios sin pausas, ritmo 20 veces mayor) | p95 de 100 ms; Odoo hasta 160 % de CPU (los 2 *workers* casi saturados) y 513 MiB | ídem |
 | Umbral de capacidad observado | El primer recurso que se agota es la **CPU de Odoo** (2 *workers*); PostgreSQL llegó a 57 % y 201 MiB | ídem |
 | Proyección de usuarios (heladeros en verano frente a invierno) | **No hecha:** no hay datos de usuarios concurrentes reales; k6 solo mide 20 virtuales | — |

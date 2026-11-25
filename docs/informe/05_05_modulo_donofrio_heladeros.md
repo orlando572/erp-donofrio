@@ -1,6 +1,6 @@
 # 5.5c Documentación del módulo `donofrio_heladeros` (M2)
 
-> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (dueña del módulo) · **Revisa:** Orlando · **Fuente:** `addons/donofrio_heladeros/` en `develop` (HU-20 en el PR #223; HU-21 y el cierre del módulo en el PR #225; release [`v1.2.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.2.0), mini gate en [`gate-m2-heladeros.md`](../scrum/gates/gate-m2-heladeros.md)), la base de desarrollo `donofrio` y las capturas de [`docs/capturas/sprint-4/`](../capturas/sprint-4/)
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (dueña del módulo) · **Revisa:** Orlando · **Fuente:** `addons/donofrio_heladeros/` en `develop` (HU-20 en el PR #223; HU-21 y el cierre del módulo en el PR #225; release [`v1.2.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.2.0), mini gate en [el mini gate de M2](../scrum/gates/gate-m2-heladeros.md)), la base de desarrollo `donofrio` y las capturas de [`docs/capturas/sprint-4/`](../capturas/sprint-4/)
 >
 > Complementa 5.5 (`donofrio_base`) y 5.5b (`donofrio_calidad`). Las dos tablas del módulo **ya están** en el ER general ([4.2.6](04_02_modelo_de_datos.md), 41 tablas) y en el diccionario ([4.2.8, Tablas 40 y 41](04_02_diccionario_datos.md)); aquí solo se explica cómo funcionan.
 

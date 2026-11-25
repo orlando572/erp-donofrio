@@ -61,7 +61,7 @@ Un KPI es una métrica con una fórmula, una meta y una fuente. En la **Fase 1**
 
 ## 4.7.3 Definición y clasificación de acuerdos de servicio (SLA)
 
-Un SLA fija lo que el equipo de TI se compromete a dar a los usuarios del ERP. Se clasifican en cinco grupos y se relacionan con ISO/IEC 20000-1 (gestión de servicios) y con las prácticas ITIL 4 de [09 §9.3](../plan/09_normas_marcos.md).
+Un SLA fija lo que el equipo de TI se compromete a dar a los usuarios del ERP. Se clasifican en cinco grupos y se relacionan con ISO/IEC 20000-1 (gestión de servicios) y con las prácticas ITIL 4.
 
 **Tabla 15. Acuerdos de servicio**
 

@@ -1,8 +1,8 @@
 # 6.4 a 6.6 Repositorio: resumen de GitHub, ramificación y estrategia de fusión
 
-> **Estado:** versión final del Cierre (25/11/2026) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [06 §6.2 a §6.6](../plan/06_github_ci_infra.md), [docs/dev/release.md](../dev/release.md), [4.3.1](04_03_infraestructura.md)
+> **Estado:** versión final del Cierre (25/11/2026) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [06 §6.2 a §6.6](../plan/06_github_ci_infra.md), [la guía de release](../dev/release.md), [4.3.1](04_03_infraestructura.md)
 >
-> Mide el **estado real del repositorio al 25/11/2026** (`develop` en `339c907`, tras el PR #231; `main` en el merge commit del PR #229). Los datos salen de `gh` y `git` en modo de solo lectura y están guardados con fecha en la tabla de los **82 PR** [`S4_informe_final_prs_fusionados.tsv`](../capturas/sprint-4/S4_informe_final_prs_fusionados.tsv) (que amplía la del 23/11, [`S3-informe6_prs_fusionados.tsv`](../capturas/sprint-3/S3-informe6_prs_fusionados.tsv)) y, para el 23/11, en [`S3-informe6_evidencia_github.txt`](../capturas/sprint-3/S3-informe6_evidencia_github.txt). Entre ambas fechas pasaron la Fase 2 completa (M1 a M4), los tags `v1.0.0` a `v1.4.0` y los PR #199 a #231. De Evelyn son 6.1, 6.2, 6.3, 6.7, 6.8 y 6.12; aquí solo se enlazan.
+> Mide el **estado real del repositorio al 25/11/2026** (`develop` en `339c907`, tras el PR #231; `main` en el merge commit del PR #229). Los datos salen de `gh` y `git` en modo de solo lectura y están guardados con fecha en la tabla de los **82 PR** [la lista de PR fusionados](../capturas/sprint-4/S4_informe_final_prs_fusionados.tsv) (que amplía la del 23/11, [la lista de PR fusionados](../capturas/sprint-3/S3-informe6_prs_fusionados.tsv)) y, para el 23/11, en [la evidencia de GitHub](../capturas/sprint-3/S3-informe6_evidencia_github.txt). Entre ambas fechas pasaron la Fase 2 completa (M1 a M4), los tags `v1.0.0` a `v1.4.0` y los PR #199 a #231. De Evelyn son 6.1, 6.2, 6.3, 6.7, 6.8 y 6.12; aquí solo se enlazan.
 
 ## 6.4 Resumen del GitHub
 
@@ -32,9 +32,9 @@
 
 Los tags `v1.1.0` a `v1.4.0` apuntan al commit en que cerró cada módulo en `develop`; como el PR #229 (*merge commit*) llevó todo ese historial a `main`, los cuatro son **ancestros de `main`**. Las cuatro releases y sus imágenes se publicaron (ejecuciones de `release.yml`) el 25/11/2026 entre las 00:40 y las 00:50 (hora de Lima), una tras otra, con el flujo `release.yml` (cuatro ejecuciones en verde).
 
-**Estructura del repositorio.** Es la prevista en [06 §6.1](../plan/06_github_ci_infra.md) con estas diferencias, comprobadas en el árbol de `develop`: existen los cuatro módulos en `addons/` (`donofrio_base`, `donofrio_calidad`, `donofrio_heladeros` y `donofrio_tablero`), `docker/` (Odoo, PostgreSQL, Nginx), `scripts/` (23 scripts y la carpeta `perf/`; entre ellos los `verificar_*.sh`), `docs/` (`plan`, `informe`, `capturas`, `scrum`, `pm`, `dev`, `diagramas`, `manuales`, `usabilidad`) y `.github/` con 3 workflows, 2 plantillas de *issue* y la plantilla de PR. El repositorio tiene unos 570 archivos versionados.
+**Estructura del repositorio.** Es la prevista en el plan con estas diferencias, comprobadas en el árbol de `develop`: existen los cuatro módulos en `addons/` (`donofrio_base`, `donofrio_calidad`, `donofrio_heladeros` y `donofrio_tablero`), `docker/` (Odoo, PostgreSQL, Nginx), `scripts/` (23 scripts y la carpeta `perf/`; entre ellos los `verificar_*.sh`), `docs/` (`plan`, `informe`, `capturas`, `scrum`, `pm`, `dev`, `diagramas`, `manuales`, `usabilidad`) y `.github/` con 3 workflows, 2 plantillas de *issue* y la plantilla de PR. El repositorio tiene unos 570 archivos versionados.
 
-**Plan frente a realidad en `.github/`.** No existen `dependabot.yml`, `CODEOWNERS`, `cd.yml`, `.pre-commit-config.yaml` ni la plantilla `solicitud_cambio.yml` de [09 §9.3](../plan/09_normas_marcos.md). La calidad del código la comprueba el job `lint` con `scripts/check_legacy.sh` y `ruff` 0.8.4 (no `pylint-odoo` ni *pre-commit*), y la solicitud de cambio es el propio PR con su plantilla (anexo [10.4](anexo_10_04_rfc.md)).
+**Plan frente a realidad en `.github/`.** No existen `dependabot.yml`, `CODEOWNERS`, `cd.yml`, `.pre-commit-config.yaml` ni la plantilla `solicitud_cambio.yml`. La calidad del código la comprueba el job `lint` con `scripts/check_legacy.sh` y `ruff` 0.8.4 (no `pylint-odoo` ni *pre-commit*), y la solicitud de cambio es el propio PR con su plantilla (anexo [10.4](anexo_10_04_rfc.md)).
 
 ### Tabla 27. Protección de ramas (`gh api …/branches/{rama}/protection`, 25/11/2026)
 
@@ -86,7 +86,7 @@ Los jobs `replica`, `backup` y `proxy` se agregaron en el Sprint 3, por eso tien
 
 *Ilustración 6.4-c. Corrida del flujo `release.yml` (id `45335041382`) sobre `4d0d94d` y el tag `v1.0.0`: éxito en 2 min 59 s y 3 artefactos. Captura: [`S4-release_corrida.png`](../capturas/sprint-4/S4-release_corrida.png).*
 
-**Capturas que siguen sin tomarse.** De las del plan ([06 §6.6](../plan/06_github_ci_infra.md)) faltan la página principal del repositorio, las reglas de protección de ramas y *Insights*; para ellas la evidencia es el texto fechado de arriba.
+**Capturas que siguen sin tomarse.** De las que preveía el plan faltan la página principal del repositorio, las reglas de protección de ramas y *Insights*; para ellas la evidencia es el texto fechado de arriba.
 
 ## 6.5 Ramificación
 
@@ -103,7 +103,7 @@ Los jobs `replica`, `backup` y `proxy` se agregaron en el Sprint 3, por eso tien
 | `release/*` | PR `develop` → `main` con su tag (no está en el plan como rama) | **2 ramas**: `release/v1.0.0` (PR #222) y `release/v1.4.0` (PR #229) |
 | `hotfix/*` | Corrección urgente sobre `main` | **No se usó** |
 
-**Diferencias con [06 §6.2](../plan/06_github_ci_infra.md):** (1) aparecieron las ramas `chore/*` y `release/*`; (2) los PR del informe del Sprint 3 salieron de `feature/S3-informe-*` y no de `docs/*`; (3) la rama de corrección lleva la HU y no el número del *issue* (`fix/HU-09-…`). Ninguna rama vive más de unas horas: el proyecto entero (de la creación del repositorio al cierre de la Fase 2) ocurrió entre el 22 y el 25/11/2026.
+**Diferencias con el plan:** (1) aparecieron las ramas `chore/*` y `release/*`; (2) los PR del informe del Sprint 3 salieron de `feature/S3-informe-*` y no de `docs/*`; (3) la rama de corrección lleva la HU y no el número del *issue* (`fix/HU-09-…`). Ninguna rama vive más de unas horas: el proyecto entero (de la creación del repositorio al cierre de la Fase 2) ocurrió entre el 22 y el 25/11/2026.
 
 ### Figura 12. Flujograma de ramas (`gitGraph`)
 
@@ -165,13 +165,13 @@ gitGraph
 
 Las 38 ramas de trabajo que quedan en el remoto **ya están fusionadas**: GitHub las ve «por delante» de `develop` porque el *squash* crea otro commit; no tienen trabajo sin fusionar. Las otras **44** ramas de los 82 PR se borraron al fusionar (`delete_branch_on_merge = true`). Esta rama (`feature/cierre-informe-final`) se suma a la lista al abrir su PR.
 
-**Fusionadas** (por el encabezado de cada PR): 82 ramas en total: 43 `feature/*`, 34 `docs/*`, 2 `chore/*`, 2 `release/*` y 1 `fix/*`. La tabla completa, con número de PR, autor, quién fusionó, método y rama base, está en [`S4_informe_final_prs_fusionados.tsv`](../capturas/sprint-4/S4_informe_final_prs_fusionados.tsv).
+**Fusionadas** (por el encabezado de cada PR): 82 ramas en total: 43 `feature/*`, 34 `docs/*`, 2 `chore/*`, 2 `release/*` y 1 `fix/*`. La tabla completa, con número de PR, autor, quién fusionó, método y rama base, está en [la lista de PR fusionados](../capturas/sprint-4/S4_informe_final_prs_fusionados.tsv).
 
 ## 6.6 Merge strategy
 
 ### Lo que dice el plan
 
-1. PR de `feature/*` a `develop` con la plantilla ([`.github/pull_request_template.md`](../../.github/pull_request_template.md)).
+1. PR de `feature/*` a `develop` con la plantilla ([la plantilla de pull request](../../.github/pull_request_template.md)).
 2. Revisión cruzada del otro integrante con la checklist de la DoD.
 3. **Squash and merge** a `develop`, un commit por HU.
 4. `develop` → `main` con **merge commit** (no *squash*) y tag.
@@ -190,7 +190,7 @@ Las 38 ramas de trabajo que quedan en el remoto **ya están fusionadas**: GitHub
 | Conflictos | `git rebase` | **Se resolvieron fusionando `develop` en la rama (merge, no *rebase*)**, sin *force push*. Ver abajo |
 | `develop` → `main` | *Merge commit* con tag | **Hecho dos veces:** el PR #222 (24/11, núcleo, `v1.0.0`) se fusionó con *squash* —`main` solo tenía el commit inicial y quedó con un solo commit—, no con *merge commit*; el PR #229 (25/11, Fase 2, `v1.4.0`) sí fue *merge commit*, con sus padres `4d0d94d` y el último commit de `develop`. Los tags `v1.1.0` a `v1.3.0` se pusieron sobre commits de `develop` que `main` contiene desde el #229 |
 
-Con el método real, el *merge commit* de los primeros sprints es una **forma válida** de conservar el detalle de cada rama, y el *squash* desde el #184 es el del plan. La documentación del plan ([06 §6.2](../plan/06_github_ci_infra.md)) se mantiene como objetivo; el informe documenta la realidad.
+Con el método real, el *merge commit* de los primeros sprints es una **forma válida** de conservar el detalle de cada rama, y el *squash* desde el #184 es el del plan. La documentación del plan se mantiene como objetivo; el informe documenta la realidad.
 
 ### Conflictos y su resolución
 
@@ -208,13 +208,13 @@ De los otros 5 PR con *merge* de `develop` (#168, #170, #179, #194 y #196) no ha
 
 ### Limitación conocida: `enforce_admins` desactivado
 
-Las reglas de `develop` y `main` (Tabla 27) **no aplican a los administradores** (`enforce_admins = false`). El repositorio tiene **un solo administrador, Orlando** (`orlando572`, rol *admin*); Evelyn tiene rol *write* (`gh api …/collaborators`) y sí queda sujeta a las reglas. En la práctica, Orlando podría fusionar sin aprobación o sin CI, y su propio PR no lo frena la regla de la aprobación del otro integrante. **Se usó dos veces con motivo documentado** (los PR #152 y #153 del Sprint 1, abiertos antes de que existiera el CI, fusionados con la aprobación de Evelyn) y en los PR #154 a #156 (aprobación descartada al cambiar la base). Desde el Sprint 2 los PR se abren directos contra `develop` y no se repitió. **No se activó, por decisión del PO:** en la Retro del Sprint 2 ([`docs/scrum/sprint-2/retro.md`](../scrum/sprint-2/retro.md)) Evelyn decidió el 23/11/2026 dejarlo desactivado como salida de emergencia y compensarlo cumpliendo siempre la revisión cruzada; activar `enforce_admins` en `develop` y `main` queda como recomendación técnica ([8.2.8](08_recomendaciones.md)). *Mitigaciones:* los PR de los 3 sprints pasan por la plantilla con la DoD, la aprobación del otro integrante se registra en GitHub y el CI corre en cada PR. Este es el control **C-14** de [5.11](05_10_a_05_12_seguridad.md) (estado «Parcial»).
+Las reglas de `develop` y `main` (Tabla 27) **no aplican a los administradores** (`enforce_admins = false`). El repositorio tiene **un solo administrador, Orlando** (`orlando572`, rol *admin*); Evelyn tiene rol *write* (`gh api …/collaborators`) y sí queda sujeta a las reglas. En la práctica, Orlando podría fusionar sin aprobación o sin CI, y su propio PR no lo frena la regla de la aprobación del otro integrante. **Se usó dos veces con motivo documentado** (los PR #152 y #153 del Sprint 1, abiertos antes de que existiera el CI, fusionados con la aprobación de Evelyn) y en los PR #154 a #156 (aprobación descartada al cambiar la base). Desde el Sprint 2 los PR se abren directos contra `develop` y no se repitió. **No se activó, por decisión del PO:** en la Retro del Sprint 2 ([la retro](../scrum/sprint-2/retro.md)) Evelyn decidió el 23/11/2026 dejarlo desactivado como salida de emergencia y compensarlo cumpliendo siempre la revisión cruzada; activar `enforce_admins` en `develop` y `main` queda como recomendación técnica ([8.2.8](08_recomendaciones.md)). *Mitigaciones:* los PR de los 3 sprints pasan por la plantilla con la DoD, la aprobación del otro integrante se registra en GitHub y el CI corre en cada PR. Este es el control **C-14** de [5.11](05_10_a_05_12_seguridad.md) (estado «Parcial»).
 
 ### Evidencia
 
 | Qué | Dónde |
 |---|---|
-| Configuración del repo, protección de ramas, PR, Actions, releases (23/11/2026; el 25/11 se repitió con `gh`, ver las Tablas 26 a 28) | [`S3-informe6_evidencia_github.txt`](../capturas/sprint-3/S3-informe6_evidencia_github.txt) |
-| Los 82 PR: método, autor, quién fusionó, aprobación, merges de `develop` y rama base | [`S4_informe_final_prs_fusionados.tsv`](../capturas/sprint-4/S4_informe_final_prs_fusionados.tsv) (los 49 del 23/11: [`S3-informe6_prs_fusionados.tsv`](../capturas/sprint-3/S3-informe6_prs_fusionados.tsv)) |
-| Trazabilidad requisito → HU → PR | [`trazabilidad.md`](trazabilidad.md) |
+| Configuración del repo, protección de ramas, PR, Actions, releases (23/11/2026; el 25/11 se repitió con `gh`, ver las Tablas 26 a 28) | [la evidencia de GitHub](../capturas/sprint-3/S3-informe6_evidencia_github.txt) |
+| Los 82 PR: método, autor, quién fusionó, aprobación, merges de `develop` y rama base | [la lista de PR fusionados](../capturas/sprint-4/S4_informe_final_prs_fusionados.tsv) (los 49 del 23/11: [la lista de PR fusionados](../capturas/sprint-3/S3-informe6_prs_fusionados.tsv)) |
+| Trazabilidad requisito → HU → PR | [la matriz de trazabilidad (10.7)](trazabilidad.md) |
 | Excepciones del Sprint 1 y reglas de protección | [4.3.1](04_03_infraestructura.md) |

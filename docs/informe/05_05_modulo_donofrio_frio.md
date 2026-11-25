@@ -1,6 +1,6 @@
 # 5.5d Documentación de la cadena de frío (M3, incremento de `donofrio_calidad`)
 
-> **Estado:** versión final del Cierre (25/11/2026) · **Autor:** Orlando (dueño del módulo) · **Revisa:** Evelyn · **Fuente:** `addons/donofrio_calidad/` en `develop` (PR #226, HU-19, commit `98263c9`; release [`v1.3.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.3.0), mini gate en [`gate-m3-cadena-frio.md`](../scrum/gates/gate-m3-cadena-frio.md)), una base nueva con el módulo instalado y las capturas de [`docs/capturas/sprint-4/`](../capturas/sprint-4/)
+> **Estado:** versión final del Cierre (25/11/2026) · **Autor:** Orlando (dueño del módulo) · **Revisa:** Evelyn · **Fuente:** `addons/donofrio_calidad/` en `develop` (PR #226, HU-19, commit `98263c9`; release [`v1.3.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.3.0), mini gate en [el mini gate de M3](../scrum/gates/gate-m3-cadena-frio.md)), una base nueva con el módulo instalado y las capturas de [`docs/capturas/sprint-4/`](../capturas/sprint-4/)
 >
 > Complementa 5.5 (`donofrio_base`), 5.5b (`donofrio_calidad`, M1) y 5.5c (`donofrio_heladeros`, M2). La cadena de frío **no es un módulo aparte**: es un incremento de `donofrio_calidad`, así que no tiene carpeta propia. Su tabla nueva ya está en el ER general ([4.2.6](04_02_modelo_de_datos.md), 42 tablas) y en el diccionario ([4.2.8, Tabla 42](04_02_diccionario_datos.md)); aquí solo se explica cómo funciona y qué se verificó.
 

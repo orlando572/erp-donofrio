@@ -2,7 +2,7 @@
 
 > **Estado:** versión final del Cierre (25/11/2026) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [04 §4.5](../plan/04_scrum_pmbok.md), [05](../plan/05_reparto_equipo.md), [03 §3.3](../plan/03_modulos_odoo.md)
 >
-> Cubre el **núcleo de la Fase 1** (Odoo 19.0 Community + `donofrio_base`) y los **módulos de la Fase 2, ya implementados** (M1 calidad, M2 heladeros, M3 cadena de frío y M4 tablero). Todo sale de lo que existe: las clases, del código de `addons/` y de los modelos de Odoo instalados; el ER, el diseño lógico y el diccionario, de una **base de datos real** con los módulos instalados, no de un dibujo a mano. Las clases de la Fase 2 se dibujan aparte en la Figura 4.2.5-b; M4 no crea tablas. Cómo regenerar cada figura: [docs/diagramas/README.md](../diagramas/README.md).
+> Cubre el **núcleo de la Fase 1** (Odoo 19.0 Community + `donofrio_base`) y los **módulos de la Fase 2, ya implementados** (M1 calidad, M2 heladeros, M3 cadena de frío y M4 tablero). Todo sale de lo que existe: las clases, del código de `addons/` y de los modelos de Odoo instalados; el ER, el diseño lógico y el diccionario, de una **base de datos real** con los módulos instalados, no de un dibujo a mano. Las clases de la Fase 2 se dibujan aparte en la Figura 4.2.5-b; M4 no crea tablas. Cómo regenerar cada figura: [el README](../diagramas/README.md).
 
 ## 4.2.5 Diagrama de clases
 
@@ -43,7 +43,7 @@ El dominio de D'Onofrio no se modela con clases nuevas: se apoya en los modelos 
 
 ### Clases de la Fase 2 (implementadas)
 
-Las clases de los módulos de la Fase 2 se diseñaron a partir del plan ([03 §3.3](../plan/03_modulos_odoo.md)) y **se implementaron en orden fijo (M1 → M2 → M3 → M4)**, cada una con su mini gate. La figura se redibujó con los nombres y atributos **reales del código** (en amarillo las clases propias; en gris los modelos de Odoo que usan o extienden) y ya no lleva el estereotipo «propuesto».
+Las clases de los módulos de la Fase 2 se diseñaron a partir del plan y **se implementaron en orden fijo (M1 → M2 → M3 → M4)**, cada una con su mini gate. La figura se redibujó con los nombres y atributos **reales del código** (en amarillo las clases propias; en gris los modelos de Odoo que usan o extienden) y ya no lleva el estereotipo «propuesto».
 
 ![Clases de la Fase 2](../diagramas/clases/clases_fase2.png)
 
@@ -104,8 +104,8 @@ El diccionario se **genera con un script reproducible**, [`scripts/diccionario_d
 
 | Archivo | Contenido | Tamaño |
 |---|---|---|
-| [`04_02_diccionario_datos.md`](04_02_diccionario_datos.md) | **Diccionario del núcleo (cuerpo del informe):** resumen de las 42 tablas centrales con su número de columnas y filas, lo que agregan `donofrio_base`, `donofrio_calidad` y `donofrio_heladeros` y la Tabla 5 de cada una (Tablas 4.2.8-1 a 4.2.8-42) | 42 tablas, 1.358 filas de columnas |
-| [`anexo_diccionario_datos.md`](anexo_diccionario_datos.md) | **Anexo:** las otras 661 tablas del esquema, agrupadas por el módulo de Odoo que define cada una | Archivo generado, grande |
+| [4.2.8](04_02_diccionario_datos.md) | **Diccionario del núcleo (cuerpo del informe):** resumen de las 42 tablas centrales con su número de columnas y filas, lo que agregan `donofrio_base`, `donofrio_calidad` y `donofrio_heladeros` y la Tabla 5 de cada una (Tablas 4.2.8-1 a 4.2.8-42) | 42 tablas, 1.358 filas de columnas |
+| [el anexo del diccionario de datos](anexo_diccionario_datos.md) | **Anexo:** las otras 661 tablas del esquema, agrupadas por el módulo de Odoo que define cada una | Archivo generado, grande |
 
 **Tablas propias del núcleo: ninguna.** `donofrio_base` **no crea tablas** en la Fase 1 (ni modelos nuevos). Lo que agrega al esquema es, en estricto sentido:
 

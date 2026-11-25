@@ -1,8 +1,8 @@
 # 6.1 a 6.3 Equipo Scrum, cuadro de sprints y GitHub Projects
 
-> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [04 §4.1, §4.4 y §4.11](../plan/04_scrum_pmbok.md), [05 §5.1](../plan/05_reparto_equipo.md), `docs/scrum/`, `docs/pm/roles.md`
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [04 §4.1, §4.4 y §4.11](../plan/04_scrum_pmbok.md), [05 §5.1](../plan/05_reparto_equipo.md), `docs/scrum/`, la definición de roles
 >
-> Las cifras salen de GitHub (solo lectura) con [`scripts/burndown.py`](../../scripts/burndown.py) al 25/11/2026 (datos en [`S4_informe_final_burndown.csv`](../capturas/sprint-4/S4_informe_final_burndown.csv)). Se pueden repetir en cualquier momento con `python3 scripts/burndown.py`.
+> Las cifras salen de GitHub (solo lectura) con [`scripts/burndown.py`](../../scripts/burndown.py) al 25/11/2026 (datos en [los datos del burndown](../capturas/sprint-4/S4_informe_final_burndown.csv)). Se pueden repetir en cualquier momento con `python3 scripts/burndown.py`.
 
 ## 6.1 Descripción del Scrum Team
 
@@ -27,9 +27,9 @@ El equipo tiene **dos personas** que comparten todos los roles de desarrollo. La
 ### Cómo trabaja el equipo
 
 - **Un sprint dura un día** (*timebox* de ~1 día): el plazo es único y fijo, la entrega del viernes 27/11 a las 14:30.
-- **Daily asíncrona**, escrita en `docs/scrum/sprint-N/dailies.md` y en el issue «Dailies» (#132).
+- **Daily asíncrona**, escrita en las dailies y en el issue «Dailies» (#132).
 - **Una rama y un PR por HU**, directo contra `develop`, con aprobación del otro integrante y CI en verde (anexo 10.4).
-- **Conocimiento cruzado:** en cada Review el otro integrante demuestra una HU ajena (regla de [05 §5.1](../plan/05_reparto_equipo.md)).
+- **Conocimiento cruzado:** en cada Review el otro integrante demuestra una HU ajena.
 
 **Evidencia de la revisión cruzada.** Los 82 PR fusionados tienen al menos una revisión del otro integrante; 79 conservan su aprobación vigente (medido en [6.4 a 6.6](06_04_a_06_06_repositorio.md)).
 
@@ -57,7 +57,7 @@ Los **puntos** salen de las HU de cada épica (no de la tarjeta de la épica), p
 
 ![Burndown de los sprints 1 a 4](../capturas/sprint-4/S4_informe_final_burndown.png)
 
-Cada punto de la línea amarilla es una HU terminada (fecha de fusión de su último PR); la línea punteada es el ritmo ideal. Los datos exactos están en [`S4_informe_final_burndown.csv`](../capturas/sprint-4/S4_informe_final_burndown.csv) (la versión del 23/11, con S1 a S3, sigue en [`S3-informe6_burndown.csv`](../capturas/sprint-3/S3-informe6_burndown.csv)).
+Cada punto de la línea amarilla es una HU terminada (fecha de fusión de su último PR); la línea punteada es el ritmo ideal. Los datos exactos están en [los datos del burndown](../capturas/sprint-4/S4_informe_final_burndown.csv) (la versión del 23/11, con S1 a S3, sigue en [los datos del burndown](../capturas/sprint-3/S3-informe6_burndown.csv)).
 
 **Lectura del gráfico.**
 - Los tres sprints bajan **en escalones** y no en pendiente suave: el trabajo de varias HU se fusionó casi a la vez (por ejemplo, tres HU del S2 entre las 02:14 y las 02:15). Es lo esperado cuando cada HU entra por un PR que se aprueba y se fusiona en tandas.
@@ -100,7 +100,7 @@ La gestión del proyecto se hace con **GitHub Projects**, la herramienta gratuit
 | **Roadmap** | Línea de tiempo por la fecha de cada iteración | Cuándo toca cada épica | ![Roadmap](../capturas/sprint-3/S3-6.3_project_roadmap.png) |
 | **Insights** | Gráfico *burn up* de ítems cerrados y abiertos | El avance en el tiempo | ![Insights](../capturas/sprint-3/S3-6.3_project_insights.png) |
 
-El issue **«Dailies» (#132)** es el registro de las dailies; el detalle de cada una está en `docs/scrum/sprint-N/dailies.md`.
+El issue **«Dailies» (#132)** es el registro de las dailies; el detalle de cada una está en las dailies.
 
 ### Hallazgos de gestión (al 25/11/2026)
 

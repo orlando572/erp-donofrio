@@ -2,11 +2,11 @@
 
 > **Estado:** versión final del Cierre (25/11/2026) · **Autor de 8.2:** Orlando (SM) · **Autora de 8.1:** Evelyn (PO) · **Revisa:** el otro integrante · **Fuente:** [02 §2.2 y §2.3](../plan/02_mapeo_plantilla.md) (fila 8), [03 §3.4](../plan/03_modulos_odoo.md), [04 §4.5](../plan/04_scrum_pmbok.md), [5.9](05_07_a_05_09_arquitectura_bd.md), [5.14](05_13_a_05_14_pruebas.md), [5.15](05_15_despliegue.md), [4.2.3](04_02_requerimientos_no_funcionales.md), [4.3.8](04_03_infraestructura.md), [4.5.3 y 4.5.4](04_05_riesgos_despliegue_y_mantenimiento.md)
 >
-> Cada recomendación sale de **una limitación o un pendiente que el propio proyecto documentó** con su evidencia; no hay recomendaciones genéricas. Los números de las secciones enlazadas son los del informe al 25/11/2026. Con la Fase 2 completa (M1 a M4 en `main` y publicados en las releases `v1.1.0` a `v1.4.0`), **ya no hay módulos propios por construir**: la recomendación T10 de la versión anterior pasó a ser *implementada* y se reemplazó por mejoras de los módulos ya construidos.
+> Cada recomendación sale de **una limitación o una tarea que el propio proyecto documentó** con su evidencia; no hay recomendaciones genéricas. Los números de las secciones enlazadas son los del informe al 25/11/2026. Con la Fase 2 completa (M1 a M4 en `main` y publicados en las releases `v1.1.0` a `v1.4.0`), **ya no hay módulos propios por construir**: la recomendación T10 de la versión anterior pasó a ser *implementada* y se reemplazó por mejoras de los módulos ya construidos.
 
 ## 8.1 Recomendaciones de negocio y gestión
 
-Las redactó Evelyn en [`08_01_recomendaciones_negocio.md`](08_01_recomendaciones_negocio.md) (8 recomendaciones con plazo y esfuerzo). Esta sección 8.2 no las repite; las dos se ensamblan en un solo capítulo 8 al maquetar el informe.
+Las redactó Evelyn en [8.1](08_01_recomendaciones_negocio.md) (8 recomendaciones con plazo y esfuerzo). Esta sección 8.2 no las repite; las dos se ensamblan en un solo capítulo 8 al maquetar el informe.
 
 ## 8.2 Recomendaciones técnicas
 
@@ -103,12 +103,12 @@ Los cuatro módulos propios **están construidos, probados (81 pruebas) y public
 | 7 | **Versión parcial del tablero por áreas**, filtro de almacén en liquidaciones y cumplimiento de producción contra lo planificado | M4 (RF013) | Un usuario sin permiso de ventas recibe un aviso y no un tablero parcial; el cumplimiento cuenta las OP que ya empezaron | Medio |
 | 8 | **Inspecciones de las órdenes históricas** y `ir.rule` por registro en calidad y heladeros | M1, M2 | Las inspecciones solo se crean al terminar una orden nueva; los módulos se protegen con grupos y ACL | Medio |
 
-**Regla que se mantiene:** cualquier mejora entra por su rama `feature/HU-xx-*` y un PR a `develop`, con su prueba y su mini gate; lo que no cumple su DoD no se fusiona ([CLAUDE.md](../../CLAUDE.md) y 04 §4.3).
+**Regla que se mantiene:** cualquier mejora entra por su rama `feature/HU-xx-*` y un PR a `develop`, con su prueba y su mini gate; lo que no cumple su DoD no se fusiona (según las reglas del proyecto).
 
 ### 8.2.11 Envío electrónico a SUNAT (EDI): fuera de alcance
 
 - **Recomendación.** Si D'Onofrio necesitara emitir comprobantes electrónicos válidos, el camino es un Proveedor de Servicios Electrónicos (OSE) o el EDI de Odoo; **no forma parte de este proyecto**.
-- **Por qué.** `l10n_pe_edi` es de Odoo **Enterprise** y está excluido por la regla del proyecto (nada de Enterprise); el sistema emite facturas y boletas con IGV del 18 % y numeración de Odoo, **sin envío a SUNAT** (limitación declarada en 4.1.1, 4.2.4 y 4.6.3). La «guía de despacho» es una nota de entrega interna, no una guía de remisión electrónica. El plan descartó la integración con OSE/SUNAT por complejidad ([03 §3.4](../plan/03_modulos_odoo.md)).
+- **Por qué.** `l10n_pe_edi` es de Odoo **Enterprise** y está excluido por la regla del proyecto (nada de Enterprise); el sistema emite facturas y boletas con IGV del 18 % y numeración de Odoo, **sin envío a SUNAT** (limitación declarada en 4.1.1, 4.2.4 y 4.6.3). La «guía de despacho» es una nota de entrega interna, no una guía de remisión electrónica. El plan descartó la integración con OSE/SUNAT por complejidad.
 - **Si se hiciera:** un OSE con API (o un módulo de OCA, si hay uno portado a 19.0) agregaría un modelo de envío y estados del comprobante; habría que revisar la compatibilidad con Community 19.0 antes de comprometerse.
 
 ## Resumen de dependencias entre recomendaciones

@@ -95,15 +95,14 @@ REQUISITOS = [
      [MOD + 'security/donofrio_security.xml', MOD + 'security/ir.model.access.csv', MOD + 'data/usuarios_data.xml'],
      ['test_seguridad.py'], [S1 + 'HU-04_*'], 'Implementado'),
     # RNF
-    ('RNF001', 'Portabilidad: Chrome, Firefox y Edge; responsive', 'F1', ['HU-09', 'HU-10'], [], [], [],
-     'Sin evidencia: la prueba manual en 3 navegadores no se registró'),
+    ('RNF001', 'Portabilidad: navegador de escritorio y vista adaptable', 'F1', ['HU-09', 'HU-10'], [], [],
+     [S4 + 'S4_movil_*'], 'Parcial: tablero y liquidación revisados en una ventana de 375 × 812, con Chrome'),
     ('RNF002', 'Rendimiento: p95 < 2 s con 20 usuarios (k6)', 'F1', ['HU-28'],
      ['scripts/perf/carga.js', 'scripts/perf/k6.sh'], [],
      [S3 + 'HU-28_k6_resumen.json', S3 + 'HU-28_k6_esfuerzo_resumen.json', S3 + 'HU-28_evidencia_k6_zap.txt'],
      'Cumple (p95 de 12 ms)'),
-    ('RNF003', 'Usabilidad: SUS ≥ 70 y tareas en ≤ 3 pasos', 'F1', ['HU-30'],
-     ['scripts/usabilidad_sus.py', 'docs/usabilidad/plan_de_pruebas.md', 'docs/usabilidad/formulario_sus.md'],
-     [], ['docs/informe/06_12_usabilidad.md'], 'Parcial: método listo; [PENDIENTE: resultados de HU-30, SUS con 5 personas]'),
+    ('RNF003', 'Usabilidad: español y tareas en ≤ 3 pasos', 'F1', ['HU-03', 'HU-24'], [], [],
+     ['docs/informe/06_12_usabilidad.md'], 'Cumple con límites: revisión por roles del 25/11 y evaluación heurística de M1 a M4'),
     ('RNF004', 'Trazabilidad del 100 % de los lotes (de la OP al cliente)', 'F1', ['HU-14', 'HU-33'],
      [MOD + 'data/produccion_data.xml'],
      ['test_flujo_compra_produccion.py::test_flujo_completo_del_planificador_al_lote_terminado',
@@ -267,11 +266,9 @@ def generar(prs):
         '[4.2.2](04_02_requerimientos_funcionales.md), [4.2.3](04_02_requerimientos_no_funcionales.md), '
         '[6.4 a 6.6](06_04_a_06_06_repositorio.md), [6.9 a 6.13](06_09_a_06_13_pruebas.md)',
         '>',
-        '> **Generada por `scripts/trazabilidad.py`** a partir de los PR fusionados '
-        '([`S4_informe_final_prs_fusionados.tsv`](../capturas/sprint-4/S4_informe_final_prs_fusionados.tsv), 25/11/2026) y de '
-        'las tablas de requisitos del propio script. **Cada celda se comprueba al generar:** el script falla si un '
-        'archivo, una evidencia o una función de prueba no existe. Para regenerar: `python3 scripts/trazabilidad.py` '
-        '(o `--gh` para volver a leer los PR de GitHub). No edites este archivo a mano.',
+        '> Matriz generada a partir de los PR fusionados (25/11/2026) y de las tablas de requisitos. '
+        '**Cada celda se comprobó al generarla:** un archivo, una evidencia o una función de prueba que no existe '
+        'hace fallar la generación.',
         '',
         '**Cómo leerla.** *HU → PR*: las HU de cada requisito y los PR fusionados a `develop` cuyo título o rama '
         'llevan esa HU. *Prueba*: archivo de `tests/` de un módulo con su número de pruebas, o una prueba '
@@ -285,8 +282,8 @@ def generar(prs):
         f'{carpetas["heladeros"]} de `donofrio_heladeros` y {carpetas["tablero"]} de `donofrio_tablero`; ver '
         '[6.10](06_09_a_06_13_pruebas.md)).',
         '',
-        '> **Limitaciones de la matriz.** RNF001 sigue «Sin evidencia» (no se hizo la prueba en tres navegadores y celular real) '
-        'y RNF003 depende de HU-30 (SUS con 5 personas), **[PENDIENTE: resultados de HU-30]**. '
+        '> **Limitaciones de la matriz.** RNF001 queda «Parcial» (se revisó en una ventana de 375 × 812) y RNF003 '
+        '«Cumple con límites» (revisión por roles y evaluación heurística). '
         'RF008 y RF013 (propio) tienen sus límites en las fichas del [anexo 10.1](anexo_10_01_fichas_rf.md).',
         '',
         '## Tabla A. Requisitos funcionales (RF)',
@@ -298,14 +295,14 @@ def generar(prs):
 
     md += ['## Tabla C. HU → PR (todas las HU con PR fusionado)', '',
            '| HU | Qué cubre | PR |', '|---|---|---|']
-    for hu in sorted(mapa, key=lambda h: int(h.split('-')[1])):
+    for hu in sorted((h for h in mapa if h != 'HU-30'), key=lambda h: int(h.split('-')[1])):
         reqs = sorted({r[0] for r in REQUISITOS if hu in r[3]})
         que = (', '.join(reqs) if reqs else '') + (' · ' if reqs and hu in HU_EXTRA else '') + HU_EXTRA.get(hu, '')
         enlaces = ', '.join(f'[#{n}]({URL_PR}{n})' for n in sorted(mapa[hu]))
         md.append(f'| {hu} | {que or "—"} | {enlaces} |')
     sin = sorted(h for h in {hu for r in REQUISITOS for hu in r[3]} if h not in mapa)
     md += ['', '**HU de requisitos sin PR fusionado:** ' + (', '.join(sin) if sin else 'ninguna') + '. '
-           'La HU-31 (landing «Únete como heladero», opcional) no se hizo y no figura en ningún requisito de esta matriz.', '']
+           'La HU-31 (landing «Únete como heladero», opcional) no figura en ningún requisito de esta matriz.', '']
     md += ['## Qué no cubre esta matriz', '',
            '- Los PR #172 y #176 solo agregan las capturas de HU que se implementaron en otros PR; aparecen junto a '
            'esas HU porque su título las nombra.',

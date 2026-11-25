@@ -1,6 +1,6 @@
 # 5.5b Documentación del módulo `donofrio_calidad` (M1)
 
-> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn · **Revisa:** Orlando (dueño del módulo) · **Fuente:** `addons/donofrio_calidad/` en `develop` (PR #219, #220, #221 y #224; release [`v1.1.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.1.0), mini gate en [`gate-m1-calidad.md`](../scrum/gates/gate-m1-calidad.md)), una base de desarrollo con el módulo instalado y las capturas de [`docs/capturas/sprint-4/`](../capturas/sprint-4/)
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn · **Revisa:** Orlando (dueño del módulo) · **Fuente:** `addons/donofrio_calidad/` en `develop` (PR #219, #220, #221 y #224; release [`v1.1.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.1.0), mini gate en [el mini gate de M1](../scrum/gates/gate-m1-calidad.md)), una base de desarrollo con el módulo instalado y las capturas de [`docs/capturas/sprint-4/`](../capturas/sprint-4/)
 >
 > Complementa la sección 5.5 (`donofrio_base`). **No** sustituye al ER general del núcleo (4.2.6): las tres tablas de este módulo se listan aquí, extraídas de la base real con `information_schema`, y **sí están** en el ER general (4.2.6, área «Calidad (M1)») y en el diccionario del núcleo (Tablas 4.2.8-37 a 4.2.8-39), regenerados con `scripts/diagrama_er.py` y `scripts/diccionario_datos.py` sobre una base con el módulo instalado.
 

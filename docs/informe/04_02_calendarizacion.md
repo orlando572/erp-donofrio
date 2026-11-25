@@ -6,13 +6,13 @@
 
 ## Cómo se calendariza el proyecto
 
-El plazo es de pocos días, así que cada sprint dura **un día** (*timebox* de ~1 día en cada `planning.md`) y los hitos se ordenan por **criterio de salida**, no por horas estimadas ([04 §4.10](../plan/04_scrum_pmbok.md)). El cronograma se mantiene en el GitHub Project «Scrum ERP D'Onofrio» (campo *Iteración* y vista *Roadmap*) y aquí se resume con las fechas reales.
+El plazo es de pocos días, así que cada sprint dura **un día** (*timebox* de ~1 día en cada el planning) y los hitos se ordenan por **criterio de salida**, no por horas estimadas. El cronograma se mantiene en el GitHub Project «Scrum ERP D'Onofrio» (campo *Iteración* y vista *Roadmap*) y aquí se resume con las fechas reales.
 
 ## Tabla 6: cronograma de hitos
 
 | Hito | Entregable verificable | Sprint | Resp. | Fecha | Estado |
 |---|---|---|---|---|---|
-| H0 | Acta de constitución; empresa confirmada con el docente | S0 | E | 22/11/2026 | Hecho: acta redactada y empresa asignada por el docente (ver `docs/pm/acta_constitucion.md`) |
+| H0 | Acta de constitución; empresa confirmada con el docente | S0 | E | 22/11/2026 | Hecho: acta redactada y empresa asignada por el docente (ver el acta de constitución) |
 | H1 | Entorno Docker + repo + CI en verde | S1 | O | 22/11/2026 | Hecho |
 | H2 | Datos maestros de D'Onofrio por código (`donofrio_base`) | S1 | O | 23/11/2026 | Hecho |
 | H3 | Ciclo estándar de punta a punta + transacciones | S2 | E+O | 23/11/2026 | Hecho: HU-08 a HU-16 fusionadas en `develop`, 16 semanas de datos de demostración (3/8 al 22/11/2026); el 25/11 la HU-16 se completó ([PR #230](https://github.com/orlando572/erp-donofrio/pull/230)) con datos de los módulos de la Fase 2 para que todas las vistas tengan datos |
@@ -41,13 +41,13 @@ gantt
     Entrega (H8)                   :crit, milestone, h8, 2026-11-27 14:30, 0d
 ```
 
-La Fase 2 (S4) se completó antes de la hora de corte (jueves 26/11, 08:00); el Cierre y la entrega **no se movieron** ([07 §7.1, R1](../plan/07_riesgos_entrega.md)). Las horas del Gantt son hora de Lima.
+La Fase 2 (S4) se completó antes de la hora de corte (jueves 26/11, 08:00); el Cierre y la entrega **no se movieron**. Las horas del Gantt son hora de Lima.
 
 ## Cómo se actualiza
 
-1. Al cerrar cada sprint, se pasan sus fechas de «previsto» a las reales de su `review.md`.
-2. Al llegar a H4, el informe del Gate 0 ([`docs/scrum/gates/gate-0-fase1.md`](../scrum/gates/gate-0-fase1.md)) fijó qué módulos de la F2 entraban; los cuatro entraron, cada uno con su mini gate.
-3. El Gantt de GitHub Projects (vista *Roadmap*) debe coincidir con este; si no, manda el del Project y se corrige este archivo.
+1. Al cerrar cada sprint, se pasan sus fechas de «previsto» a las reales de su la review.
+2. Al llegar a H4, el informe del Gate 0 ([el informe del Gate 0](../scrum/gates/gate-0-fase1.md)) fijó qué módulos de la F2 entraban; los cuatro entraron, cada uno con su mini gate.
+3. El Gantt de GitHub Projects (vista *Roadmap*) debe coincidir con este; si no, manda el del Project y se corrige este cronograma.
 
 ## Notas
 

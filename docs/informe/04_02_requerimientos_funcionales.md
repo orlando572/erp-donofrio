@@ -49,7 +49,7 @@ Necesidad del negocio → RF / RNF → Historia de usuario (HU) → Épica (issu
 | F1 (núcleo) | RF001, RF002, RF003, RF005, RF006, RF007, RF009, RF010, RF013 (estándar), RF014, RF015, RF016, RF017, RF018 | 14 |
 | F2 (módulo propio) | RF004 (M2), RF008 (M3), RF011 y RF012 (M1) y RF013 (tablero OWL de M4) | 4 + la parte propia de RF013 |
 
-Los **18 RF están implementados**: 14 con el núcleo (F1) y 4 más la parte propia de RF013 con los módulos de la Fase 2, que se construyeron uno a uno, con su mini gate ([`docs/scrum/gates/`](../scrum/gates/)): M1 → [`gate-m1-calidad.md`](../scrum/gates/gate-m1-calidad.md), M2 → [`gate-m2-heladeros.md`](../scrum/gates/gate-m2-heladeros.md), M3 → [`gate-m3-cadena-frio.md`](../scrum/gates/gate-m3-cadena-frio.md) y M4 → [`gate-m4-tablero.md`](../scrum/gates/gate-m4-tablero.md). Cada uno conserva su caso de uso, wireframe y mockup ([02 §2.3](../plan/02_mapeo_plantilla.md)); la trazabilidad RF → HU → PR → prueba está en [`trazabilidad.md`](trazabilidad.md).
+Los **18 RF están implementados**: 14 con el núcleo (F1) y 4 más la parte propia de RF013 con los módulos de la Fase 2, que se construyeron uno a uno, con su mini gate ([`docs/scrum/gates/`](../scrum/gates/)): M1 → [el mini gate de M1](../scrum/gates/gate-m1-calidad.md), M2 → [el mini gate de M2](../scrum/gates/gate-m2-heladeros.md), M3 → [el mini gate de M3](../scrum/gates/gate-m3-cadena-frio.md) y M4 → [el mini gate de M4](../scrum/gates/gate-m4-tablero.md). Cada uno conserva su caso de uso, wireframe y mockup; la trazabilidad RF → HU → PR → prueba está en [la matriz de trazabilidad (10.7)](trazabilidad.md).
 
 ## Matriz RF ↔ épica del GitHub Project
 

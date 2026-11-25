@@ -2,7 +2,7 @@
 
 > **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md) (4.6.1 a 4.6.4), [03 §3.3](../plan/03_modulos_odoo.md), wireframes y mockups de [4.4](04_04_prototipos.md)
 >
-> La 4.6.4 (optimización de rendimiento web) está en [04_06_wpo.md](04_06_wpo.md). Los datos de las pantallas son los de demostración (ficticios).
+> La 4.6.4 (optimización de rendimiento web) está en [4.6.4](04_06_wpo.md). Los datos de las pantallas son los de demostración (ficticios).
 
 ## 4.6.1 Buenas prácticas de conversión de prototipos a web UI/UX
 

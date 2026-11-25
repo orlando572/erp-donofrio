@@ -1,6 +1,6 @@
 # 9. Referencias y bibliografía
 
-> **Estado:** versión final del Cierre (25/11/2026; los datos medidos son los del 23/11/2026 salvo donde se indica) · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [3 Aspectos generales](03_aspectos_generales.md), [01 §1.4 del plan](../plan/01_alcance_escenario.md), [09 del plan](../plan/09_normas_marcos.md) y [`manual_herramientas.md`](../manuales/manual_herramientas.md)
+> **Estado:** versión final del Cierre (25/11/2026; los datos medidos son los del 23/11/2026 salvo donde se indica) · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [3 Aspectos generales](03_aspectos_generales.md), [01 §1.4 del plan](../plan/01_alcance_escenario.md), [09 del plan](../plan/09_normas_marcos.md) y [el manual de herramientas](../manuales/manual_herramientas.md)
 >
 > **Formato:** APA 7.ª edición, con sangría francesa al pasar el informe a Word. Las fechas «s. f.» son de páginas sin fecha visible en la fuente. **Antes de la entrega hay que abrir cada enlace** y, en las páginas que cambian (Wikipedia, documentación), agregar la fecha de consulta. Los enlaces de normas y de noticias salen de las fuentes ya verificadas del plan y de búsquedas del 23/11/2026; el texto de las normas modificadas se debe contrastar con su versión vigente en El Peruano o en el SPIJ.
 
@@ -134,7 +134,7 @@ ZAP. (s. f.). *ZAP documentation*. https://www.zaproxy.org/docs/
 
 1. **Datos [P].** La cifra de «unos 30 % del mercado de panetón» sale de un post de LinkedIn que cita al CMA (2024); no se encontró un enlace verificable, así que el informe cita solo a El Comercio (s. f.) y la redacta con «según…».
 2. **Competidores de Porter.** Gestión (s. f.-a) respalda a Alicorp y Lamborgini; **Gloria** no está respaldada por una fuente del plan y queda como supuesto [S].
-3. **Títulos con puntos suspensivos.** Siguen el texto abreviado del plan (01 §1.4); hay que completarlos al abrir el enlace.
+3. **Títulos con puntos suspensivos.** Siguen el texto abreviado del plan; hay que completarlos al abrir el enlace.
 4. **Enlaces.** Abrir cada URL antes de la entrega y completar la fecha de consulta de las páginas que cambian.
 5. **Ediciones.** Confirmar la edición de OWASP (2021, o la 2025 si ya es final en la fecha de entrega) y la numeración de cláusulas de ISO/IEC 20000-1 con el texto de la norma.
 6. **Formato del docente.** El plan fija APA 7; si el docente pide otro detalle (por ejemplo, la cita de normas), se ajusta aquí.

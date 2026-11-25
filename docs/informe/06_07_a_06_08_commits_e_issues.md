@@ -2,7 +2,7 @@
 
 > **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [06 §6.7 y §6.8](../plan/06_github_ci_infra.md), [04 §4.11](../plan/04_scrum_pmbok.md)
 >
-> Las cifras se miden con [`scripts/estadisticas_repo.py`](../../scripts/estadisticas_repo.py) (solo lectura, repetible) y están guardadas con fecha en [`S4_informe_final_estadisticas_commits_issues.md`](../capturas/sprint-4/S4_informe_final_estadisticas_commits_issues.md) (la del 23/11 sigue en [`S3-informe6_estadisticas_commits_issues.md`](../capturas/sprint-3/S3-informe6_estadisticas_commits_issues.md)). **Fecha de corte: 25/11/2026**, con `develop` en `339c907`; son **82 PR** fusionados.
+> Las cifras se miden con [`scripts/estadisticas_repo.py`](../../scripts/estadisticas_repo.py) (solo lectura, repetible) y están guardadas con fecha en [las estadísticas de commits e issues](../capturas/sprint-4/S4_informe_final_estadisticas_commits_issues.md) (la del 23/11 sigue en [las estadísticas de commits e issues](../capturas/sprint-3/S3-informe6_estadisticas_commits_issues.md)). **Fecha de corte: 25/11/2026**, con `develop` en `339c907`; son **82 PR** fusionados.
 
 ## 6.7 Resumen de commits
 

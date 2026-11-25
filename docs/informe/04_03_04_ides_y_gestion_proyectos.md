@@ -13,7 +13,7 @@
 | Herramienta | Versión | Para qué se usó en el proyecto |
 |---|---|---|
 | **Visual Studio Code** | 1.146.0 | Editor de los dos integrantes para `addons/`, `scripts/` y `docs/`; vista previa de Markdown. En Windows se usa con la extensión **WSL**, de modo que el código queda en Ubuntu. No se exige ninguna extensión; las útiles son *Python*, *PlantUML* y *Markdown All in One* |
-| **Claude Code** (asistente de IA) | 2.1.328 | Ayuda a programar y a redactar bajo las reglas de `CLAUDE.md`; un *hook* (`.claude/hooks/bloquear_legacy.py`) rechaza los patrones de Odoo anteriores a la 19. Es una herramienta de los *Developers*, no un rol (riesgo R5) |
+| **Claude Code** (asistente de IA) | 2.1.328 | Ayuda a programar y a redactar bajo las reglas de las reglas del proyecto; un *hook* (`.claude/hooks/bloquear_legacy.py`) rechaza los patrones de Odoo anteriores a la 19. Es una herramienta de los *Developers*, no un rol (riesgo R5) |
 | **Git** y **`gh`** | 2.53.0 y 2.46.0 | Control de versiones; la CLI de GitHub crea PR y lee el Project |
 | **Docker y Compose** | 29.1.3 y 2.40.3 | Entorno reproducible con un comando; los scripts de pruebas, diagramas y rendimiento corren en contenedores |
 | **DBeaver** | — | Lectura de PostgreSQL (`localhost:5432` y réplica en `5433`) para revisar tablas y consultas |
@@ -28,7 +28,7 @@ Los conteos son de `git ls-files` al 25/11/2026 (`develop` `339c907`). Los lengu
 |---|---|---|---|
 | **Python** | 3.12.3 (la de la imagen `odoo:19.0-20261112`) | Los cuatro módulos (`donofrio_base`, `donofrio_calidad`, `donofrio_heladeros` y `donofrio_tablero`: modelos, *hooks* y 218 pruebas con `TransactionCase`); los scripts de carga de datos, medición y trazabilidad (`scripts/`); los generadores de diagramas (`docs/diagramas/`) | 75 |
 | **XML** | — | Datos y configuración del ERP por código (empresa, usuarios, almacenes, productos, recetas, listas de precios, reglas de acceso, vistas guardadas); los diagramas BPMN 2.0 | 25 en `addons/` (datos, vistas, seguridad y reportes) y 12 `.bpmn` |
-| **CSV** | — | Permisos de acceso de los módulos (`security/ir.model.access.csv`) y la lista de issues del Project (`epicas.csv`) | 9 |
+| **CSV** | — | Permisos de acceso de los módulos (`security/ir.model.access.csv`) y la lista de issues del Project (el registro de épicas) | 9 |
 | **Bash** | — | `docker compose` y 20 scripts: pruebas (`test.sh`), respaldo y restauración, despliegue protegido, verificaciones | 20 |
 | **YAML** | — | `docker-compose.yml` y los *workflows* de GitHub Actions (`ci.yml`, `perf.yml` y `release.yml`) | 6 |
 | **JavaScript (OWL)** | — | El tablero gerencial de M4 (`donofrio_tablero/static/src/tablero/tablero.js`, un componente OWL con Chart.js, que ya trae Odoo) y el script de carga de k6 (`scripts/perf/carga.js`) | 2 |
@@ -63,7 +63,7 @@ La plantilla nombra otra herramienta de tableros (6.3 menciona *Monday*). Se us�
 
 ### 4.3.9.2 Estructura de los ítems
 
-- Las **HU** van como checklist dentro de un issue de **épica**, una por área y dueño en cada sprint. Los riesgos viven en [`plan_riesgos.md`](../pm/plan_riesgos.md) y los entregables del informe, en la checklist del issue «Informe final».
+- Las **HU** van como checklist dentro de un issue de **épica**, una por área y dueño en cada sprint. Los riesgos viven en [el registro de riesgos](../pm/plan_riesgos.md) y los entregables del informe, en la checklist del issue «Informe final».
 - El título de la épica nombra sus HU: `[HU-08, HU-09, HU-10] Ventas, CRM y PdV`.
 - Una rama por HU (`feature/HU-xx-*`), `[HU-xx]` en cada commit y `Parte de #n` en cada PR; el último PR de la épica la cierra con `Closes #n`.
 - Los issues de gestión son: constitución (#129), repositorio (#130), registro de riesgos (#131), «Dailies» (#132), Gate 0 (#143), informe final (#149) y entrega (#150). Los riesgos y las dailies reciben un comentario en cada Retro y cada Daily.
@@ -81,7 +81,7 @@ La plantilla nombra otra herramienta de tableros (6.3 menciona *Monday*). Se us�
 | **Tipo** | Selección | Épica · Gestión · Bug | Clase de ítem |
 | **Prioridad** | Selección | Must (F1 y gestión) · Should (M1 a M4) · Could (opcionales) | Orden |
 
-Los campos se crean por código con [`crear_project.sh`](../pm/github-projects/crear_project.sh) (CLI `gh`; el campo de iteración, con GraphQL porque la CLI no lo soporta). La lista de los 22 issues está en [`epicas.csv`](../pm/github-projects/epicas.csv).
+Los campos se crean por código con [`crear_project.sh`](../pm/github-projects/crear_project.sh) (CLI `gh`; el campo de iteración, con GraphQL porque la CLI no lo soporta). La lista de los 22 issues está en [el registro de épicas](../pm/github-projects/epicas.csv).
 
 ### 4.3.9.4 Vistas
 

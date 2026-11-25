@@ -1,6 +1,6 @@
 # 5.5e Documentación del módulo `donofrio_tablero` (M4)
 
-> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (dueña del módulo) · **Revisa:** Orlando · **Fuente:** `addons/donofrio_tablero/` (HU-22 y HU-24, con las dos correcciones del 24/11), una instancia local con datos de demostración y las capturas y mediciones de [`docs/capturas/sprint-4/`](../capturas/sprint-4/) ([`S4_evidencia_verificacion_m4.txt`](../capturas/sprint-4/S4_evidencia_verificacion_m4.txt))
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (dueña del módulo) · **Revisa:** Orlando · **Fuente:** `addons/donofrio_tablero/` (HU-22 y HU-24, con las dos correcciones del 24/11), una instancia local con datos de demostración y las capturas y mediciones de [`docs/capturas/sprint-4/`](../capturas/sprint-4/) ([la verificación de M4](../capturas/sprint-4/S4_evidencia_verificacion_m4.txt))
 >
 > Complementa 5.5 (`donofrio_base`), 5.5b (M1), 5.5c (M2) y 5.5d (M3). **M4 no crea tablas:** su servicio de datos es un modelo abstracto, así que el ER general (42 tablas) y el diccionario de datos no cambian.
 
@@ -67,8 +67,8 @@ El tablero **no tiene ACL propios**: es un modelo abstracto sin tabla y lee con 
 | Filtro «Almacén: WH-AQP CD Arequipa»: las tarjetas y el gráfico cambian | [`HU-22_tablero_filtro_arequipa.png`](../capturas/sprint-4/HU-22_tablero_filtro_arequipa.png) |
 | Vendedor sin acceso a Inventario: aviso en vez de error | [`HU-22_tablero_sin_permiso_vendedor.png`](../capturas/sprint-4/HU-22_tablero_sin_permiso_vendedor.png) |
 | Tablero en una ventana de 375 × 812 | [`S4_movil_tablero.png`](../capturas/sprint-4/S4_movil_tablero.png), [`S4_movil_tablero_abajo.png`](../capturas/sprint-4/S4_movil_tablero_abajo.png), [`S4_movil_login.png`](../capturas/sprint-4/S4_movil_login.png) |
-| Lighthouse del tablero y del login | [`S4_lighthouse_m4_resultados.csv`](../capturas/sprint-4/S4_lighthouse_m4_resultados.csv), [`S4_evidencia_verificacion_m4.txt`](../capturas/sprint-4/S4_evidencia_verificacion_m4.txt) |
-| Tiempos de `get_kpis`, cifras de control y favicon (base del 24/11 por la mañana) | [`HU-22_evidencia_tablero.txt`](../capturas/sprint-4/HU-22_evidencia_tablero.txt) |
+| Lighthouse del tablero y del login | [los resultados de Lighthouse de M4](../capturas/sprint-4/S4_lighthouse_m4_resultados.csv), [la verificación de M4](../capturas/sprint-4/S4_evidencia_verificacion_m4.txt) |
+| Tiempos de `get_kpis`, cifras de control y favicon (base del 24/11 por la mañana) | [la evidencia del tablero](../capturas/sprint-4/HU-22_evidencia_tablero.txt) |
 
 Cifras de control: en la instancia local nueva (las capturas HU-22 del 25/11 muestran S/ 2,844,413.33, S/ 2,525,068.21 de Lima y S/ 319,345.12 de Arequipa), las ventas de noviembre del tablero (S/ 2,844,413.33) coinciden con la suma de los pedidos confirmados en la base (consulta SQL), y Lima (S/ 2,525,068.21) más Arequipa (S/ 319,345.12) dan el total. La medición anterior, sobre la base `donofrio` del equipo, dio S/ 2,844,525.83 (Arequipa igual): la diferencia de S/ 112.50 está en Lima, no se investigó y proviene de que la base nueva se cargó de nuevo. En esa base `get_kpis` tardó entre 30 y 57 ms y la página 177 ms (meta de RNF008: menos de 3 s).
 

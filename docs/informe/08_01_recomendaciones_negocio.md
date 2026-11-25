@@ -59,7 +59,7 @@
 
 **Por qué.** Los comprobantes electrónicos son obligatorios (SUNAT); sin el envío, el ERP no reemplaza al sistema contable actual.
 
-**Cómo.** Evaluar, antes de poner el ERP en producción, entre conectar el ERP a un proveedor de servicios electrónicos autorizado, o mantener el sistema actual solo para el envío y conciliar con la numeración de Odoo. No se evaluó ninguna de las dos opciones en este proyecto: es una **decisión pendiente** de Finanzas y TI, y el costo no se estimó.
+**Cómo.** Evaluar, antes de poner el ERP en producción, entre conectar el ERP a un proveedor de servicios electrónicos autorizado, o mantener el sistema actual solo para el envío y conciliar con la numeración de Odoo. No se evaluó ninguna de las dos opciones en este proyecto: es una **decisión que corresponde** a Finanzas y TI, y el costo no se estimó.
 
 ### 5. Medir con el tablero gerencial y decidir con él
 
@@ -85,7 +85,7 @@
 
 **Por qué.** El negocio es estacional y no puede perder sus datos en temporada alta. Todo esto está probado en una PC, no en el servidor real.
 
-**Cómo.** Repetir la prueba de restauración en el servidor definitivo, guardar una copia **fuera** del servidor y medir la disponibilidad en el tiempo (RNF011 sigue pendiente; la meta es 99 %).
+**Cómo.** Repetir la prueba de restauración en el servidor definitivo, guardar una copia **fuera** del servidor y medir la disponibilidad en el tiempo (RNF011 no se midió; la meta es 99 %).
 
 ### 8. Preparar el sistema para el escenario Froneri
 

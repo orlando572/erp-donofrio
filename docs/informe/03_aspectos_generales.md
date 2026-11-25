@@ -1,6 +1,6 @@
 # 3. Aspectos generales
 
-> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (PO) · **Fuentes:** [01_alcance_escenario.md](../plan/01_alcance_escenario.md), [03_modulos_odoo.md](../plan/03_modulos_odoo.md) · **Revisa:** Orlando
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (PO) · **Fuentes:** [el alcance del caso](../plan/01_alcance_escenario.md), [el plan de módulos de Odoo](../plan/03_modulos_odoo.md) · **Revisa:** Orlando
 >
 > Leyenda de evidencia, igual que en el plan: **[V]** verificado con fuente · **[P]** reportado por una sola fuente o sin fecha clara · **[S]** supuesto académico. Las fuentes se citan en formato APA 7 y se listan en la [sección 9](09_referencias.md).
 >
@@ -21,7 +21,7 @@
 
 > ¿Cómo puede D'Onofrio, como unidad de helados y confitería, integrar sus procesos de ventas, logística, producción y gestión en un solo sistema, de modo que cada lote sea trazable desde la compra del insumo hasta el cliente y la gerencia vea datos confiables a tiempo, usando una plataforma abierta (Odoo 19 Community) y sin depender de licencias Enterprise?
 
-**Solución propuesta:** un ERP sobre **Odoo 19.0 Community + PostgreSQL 16 en Docker**, en dos fases. La Fase 1 (garantizada) usa Odoo estándar configurado por código en el módulo `donofrio_base`; la Fase 2 agregó **cuatro módulos propios**, que se construyeron uno a uno y están publicados en las releases `v1.1.0` a `v1.4.0`: calidad (M1), liquidación de heladeros (M2), cadena de frío (M3) y tablero gerencial (M4) ([04 §4.3](../plan/04_scrum_pmbok.md) y los mini gates de [`docs/scrum/gates/`](../scrum/gates/)).
+**Solución propuesta:** un ERP sobre **Odoo 19.0 Community + PostgreSQL 16 en Docker**, en dos fases. La Fase 1 (garantizada) usa Odoo estándar configurado por código en el módulo `donofrio_base`; la Fase 2 agregó **cuatro módulos propios**, que se construyeron uno a uno y están publicados en las releases `v1.1.0` a `v1.4.0`: calidad (M1), liquidación de heladeros (M2), cadena de frío (M3) y tablero gerencial (M4) (y el mini gate de cada módulo).
 
 ---
 
@@ -117,7 +117,7 @@ Son 21 empleados **ficticios** (supuesto S2), los mismos que carga `donofrio_bas
 
 ### 3.2.4 Problemas y oportunidades (tabla 1 de la plantilla)
 
-Todos los problemas son **supuestos AS-IS** (S7). El estado final es el del 25/11/2026, con la Fase 2 completa ([02 §2.3](../plan/02_mapeo_plantilla.md)); la última columna conserva el estado que había solo con la Fase 1 para que se vea qué aportó cada módulo.
+Todos los problemas son **supuestos AS-IS** (S7). El estado final es el del 25/11/2026, con la Fase 2 completa; la última columna conserva el estado que había solo con la Fase 1 para que se vea qué aportó cada módulo.
 
 | ID | Problema empresarial | Oportunidad | Tecnología propuesta | Con solo la Fase 1 | Estado final (25/11/2026) |
 |---|---|---|---|---|---|
@@ -210,13 +210,13 @@ La demanda de helados sube en verano y la de panetón en Navidad. La estrategia 
 
 ### 3.6.4 Cascada de metas de COBIT 2019
 
-COBIT 2019 se usa como **marco de referencia** para pasar de lo que necesita la gerencia a lo que el proyecto construye: *necesidad del interesado → meta empresarial (EG) → meta de alineamiento de TI (AG) → objetivo de gestión → componente del ERP*. No se hace evaluación de capacidad ni de madurez: queda fuera del alcance. Las necesidades salen de [1.6 del plan](../plan/01_alcance_escenario.md) y del análisis de interesados (`docs/pm/interesados.md`); la columna final dice **dónde está la evidencia** en este repositorio.
+COBIT 2019 se usa como **marco de referencia** para pasar de lo que necesita la gerencia a lo que el proyecto construye: *necesidad del interesado → meta empresarial (EG) → meta de alineamiento de TI (AG) → objetivo de gestión → componente del ERP*. No se hace evaluación de capacidad ni de madurez: queda fuera del alcance. Las necesidades salen de [1.6 del plan](../plan/01_alcance_escenario.md) y del análisis de interesados (el análisis de interesados); la columna final dice **dónde está la evidencia** en este repositorio.
 
 | Necesidad de la gerencia de D'Onofrio | Meta empresarial (EG) | Meta de alineamiento (AG) | Objetivos de gestión | Cómo lo atiende el proyecto (evidencia) |
 |---|---|---|---|---|
 | Integrar ventas, almacén y producción, y liquidar a los heladeros sin errores | **EG08** Optimización de la funcionalidad de los procesos internos | **AG08** Habilitar y soportar los procesos integrando aplicaciones y tecnología | **BAI03** Gestionar la identificación y construcción de soluciones | Odoo estándar configurado por código en `donofrio_base`, construido con Scrum; ciclo vender-comprar-producir-facturar probado de punta a punta (HU-33). La liquidación del heladero es la Fase 2 |
 | Que el sistema esté disponible en temporada alta | **EG06** Continuidad y disponibilidad del servicio | **AG05** Entrega de servicios de I&T alineada con el negocio | **APO09** Acuerdos de servicio · **DSS01** Operaciones · **DSS04** Continuidad | Tablas de SLA (4.7.3); despliegue con Nginx y TLS; réplica en caliente (HU-25); respaldos y restauración con RTO medido de 31 s (HU-26) |
-| Proteger la información de clientes y de la operación | **EG02** Riesgo de negocio gestionado · **EG03** Cumplimiento de leyes externas | **AG02** Riesgo de I&T gestionado · **AG07** Seguridad de la información y privacidad · **AG01** Cumplimiento | **APO12** Riesgo · **APO13** Seguridad · **DSS05** Servicios de seguridad | Registro de riesgos (`docs/pm/plan_riesgos.md`); seguridad del despliegue: 2FA, política de contraseñas, TLS y auditoría (HU-27); ZAP sin alertas altas (HU-28); datos ficticios por la Ley 29733 |
+| Proteger la información de clientes y de la operación | **EG02** Riesgo de negocio gestionado · **EG03** Cumplimiento de leyes externas | **AG02** Riesgo de I&T gestionado · **AG07** Seguridad de la información y privacidad · **AG01** Cumplimiento | **APO12** Riesgo · **APO13** Seguridad · **DSS05** Servicios de seguridad | Registro de riesgos (el registro de riesgos); seguridad del despliegue: 2FA, política de contraseñas, TLS y auditoría (HU-27); ZAP sin alertas altas (HU-28); datos ficticios por la Ley 29733 |
 | Cambiar el sistema sin romper la operación | **EG08** | **AG06** Agilidad para convertir requerimientos en soluciones operativas | **BAI06** Cambios de TI · **DSS02** Solicitudes e incidentes · **DSS03** Problemas | Todo cambio entra por PR con CI y revisión del otro integrante (anexo 10.4); *release* automática (HU-29); mesa de servicios en Project (HU-32, anexos 10.3 y 10.5); plantilla `bug.yml` para registrar problemas |
 | Decidir con datos | **EG07** Calidad de la información de gestión | **AG10** Calidad de la información de gestión de I&T | **MEA01** Supervisar el desempeño y la conformidad | Dashboards estándar y vistas guardadas (HU-23); KPI y SLA en 4.7; pruebas de carga y de rendimiento (HU-28) |
 

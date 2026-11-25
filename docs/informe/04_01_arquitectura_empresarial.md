@@ -14,7 +14,7 @@ Se ordena la arquitectura con las **cuatro capas de TOGAF** (The Open Group, 202
 
 ## Arquitectura actual (AS-IS) y propuesta (TO-BE) por capa
 
-| Capa | AS-IS (supuesto S7) | TO-BE (propuesta con Odoo 19) | Problemas que resuelve ([01 §1.6](../plan/01_alcance_escenario.md)) |
+| Capa | AS-IS (supuesto S7) | TO-BE (propuesta con Odoo 19) | Problemas que resuelve |
 |---|---|---|---|
 | **Negocio** | Cinco áreas con procesos manuales: venta B2B, liquidación del heladero, producción y calidad, almacén con cadena de frío y compras. Cada área decide con sus papeles; la gerencia recibe reportes armados a mano al cierre | Procesos de punta a punta en un solo flujo: CRM → pedido → entrega FEFO → factura; compra → recepción; orden de producción → lote. Punto de venta con boleta, gerencia con dashboards y vistas pivote, y mesa de servicios TI | 5, 6 y 7 |
 | **Datos** | Excel por área, kárdex, planillas de temperatura y formatos de inspección en papel. No hay lote ni vencimiento en un sistema, y el mismo dato se digita dos o más veces | Una sola base **PostgreSQL 16** donde lote, vencimiento y movimiento quedan ligados. Los datos maestros se cargan por código con `donofrio_base`. Réplica de lectura y respaldos diarios (Sprint 3) | 2, 4 y 6 |
@@ -43,8 +43,8 @@ COBIT 2019 se usa como marco de referencia (alineación, no certificación). Est
 | **DSS03** Gestión de problemas | Issues de GitHub con la plantilla «Bug» |
 | **DSS04** Gestión de la continuidad | Réplica de PostgreSQL y respaldos con restauración probada (HU-25 y HU-26, Sprint 3) |
 | **DSS05** Gestión de servicios de seguridad | Roles con mínimo privilegio y `ir.rule` (HU-04); gestor de BD deshabilitado; TLS, 2FA y política de contraseñas en el Sprint 3 |
-| **APO12** Gestión del riesgo | Plan de riesgos en `docs/pm/plan_riesgos.md` |
-| **APO13** Gestión de la seguridad | Controles de ISO 27001 demostrados en Odoo (ver [09 §9.2](../plan/09_normas_marcos.md)) |
+| **APO12** Gestión del riesgo | Plan de riesgos en el registro de riesgos |
+| **APO13** Gestión de la seguridad | Controles de ISO 27001 demostrados en Odoo |
 | **APO09** Gestión de acuerdos de servicio | SLA por prioridad de la mesa de servicios (Sprint 3) |
 | **MEA01** Monitoreo del desempeño y la conformidad | Burndown por puntos, CI y pruebas de carga, seguridad y WPO (Sprint 3) |
 
