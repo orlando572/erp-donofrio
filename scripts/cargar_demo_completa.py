@@ -24,6 +24,10 @@ Partes (se ejecutan en este orden; cada una hace su propio commit y deja su marc
 * ``mesa``: tickets de la mesa de servicios con distintas prioridades y etapas, con su SLA cumplido o incumplido.
 * ``calendario``: reuniones en la agenda (semanal de producción, comité mensual, visitas a clientes ligadas a
   las oportunidades, capacitación de heladeros, auditoría, etc.).
+* ``fechas``: lleva a la ventana del 3/8 al 22/11 lo que la carga inicial dejó con la fecha de la corrida (25/11):
+  asientos de mano de obra de las órdenes de fabricación y de los cierres de Yape del PdV, albaranes del PdV,
+  solicitudes de compra del planificador, operaciones de las órdenes, vencimiento de las cotizaciones y los tres
+  tickets de la mesa que trae donofrio_base.
 
 Reglas:
 
@@ -46,7 +50,7 @@ INICIO = date(2026, 8, 3)
 FIN = date(2026, 11, 22)
 HOY = date(2026, 11, 25)         # fecha de referencia de la demostración (corte del 26/11)
 PARAMETRO = 'donofrio_demo_completa.'
-PARTES = ('contactos', 'crm', 'calidad', 'heladeros', 'frio', 'mesa', 'calendario')
+PARTES = ('contactos', 'crm', 'calidad', 'heladeros', 'frio', 'mesa', 'calendario', 'fechas')
 PARTES_A_CARGAR = [p for p in os.environ.get('DONOFRIO_DEMO_PARTES', ','.join(PARTES)).split(',') if p]
 # La hora de Lima es UTC-5: Odoo guarda las fechas con hora en UTC
 DESFASE_LIMA = timedelta(hours=5)
@@ -936,10 +940,156 @@ def cargar_calendario(env):
     print(f'  Calendario: {n} reuniones en la agenda ({len(eventos)} en total).')
 
 
+# --- Fechas fuera de la ventana -----------------------------------------------------------------------------
+
+def fin_de_la_ventana():
+    """Primer instante después del 22/11 en hora de Lima (UTC)."""
+    return lima(FIN + timedelta(days=1), 0)
+
+
+def fechar_asientos_de_mano_de_obra(env):
+    """Asientos «WH/MO/… - Labour» (diario de valoración): llevan el día de su orden de fabricación.
+
+    Camino estándar: borrador → fecha → publicar. El número se limpia para que Odoo asigne el del mes que
+    corresponde (STJ/2026/08/…); un asiento ya publicado no admite otra fecha con el número del mes anterior."""
+    Asiento = env['account.move']
+    asientos = Asiento.search([('ref', 'like', '% - Labour'), ('date', '>=', FIN + timedelta(days=1)),
+                               ('state', '=', 'posted')])
+    por_orden = {o.name: o for o in env['mrp.production'].search([('name', 'in', [a.ref.split(' - ')[0] for a in asientos])])}
+    pendientes = sorted(((por_orden[a.ref.split(' - ')[0]].date_start.date(), a.id) for a in asientos
+                         if a.ref.split(' - ')[0] in por_orden))
+    for dia, asiento_id in pendientes:
+        asiento = Asiento.browse(asiento_id)
+        mid = ultimo_mensaje(env)
+        asiento.button_draft()
+        asiento.write({'name': '/', 'date': dia})
+        asiento.action_post()
+        fechar_mensajes(env, 'account.move', asiento.id, mid, lima(dia, 19))
+    return len(pendientes)
+
+
+def fechar_cierres_de_yape(env):
+    """Asientos «Combine Yape POS payments…»: llevan el día en que se cerró su sesión de caja.
+
+    Están conciliados con los pagos del PdV; pasarlos a borrador deshace esa conciliación, así que se corrige la
+    fecha directamente (asiento, apuntes, pagos y conciliaciones parciales), como hace ``cargar_transacciones.py``."""
+    cr = env.cr
+    env.flush_all()
+    cr.execute("""
+        UPDATE account_move m SET date = (s.stop_at - interval '5 hours')::date
+          FROM pos_session s
+         WHERE m.ref LIKE 'Combine Yape POS payments from %%' AND s.stop_at IS NOT NULL
+           AND s.name = substring(m.ref FROM 'Combine Yape POS payments from (.*)$') AND m.date > %(fin)s
+     RETURNING m.id""", {'fin': FIN})
+    ids = [fila[0] for fila in cr.fetchall()]
+    if ids:
+        cr.execute("UPDATE account_move_line l SET date = m.date FROM account_move m WHERE m.id = l.move_id AND m.id = ANY(%s) AND l.date <> m.date", (ids,))
+        cr.execute("UPDATE account_payment p SET date = m.date FROM account_move m WHERE m.id = p.move_id AND m.id = ANY(%s) AND p.date <> m.date", (ids,))
+        cr.execute("""UPDATE account_partial_reconcile r SET max_date = GREATEST(d.date, c.date)
+                        FROM account_move_line d, account_move_line c
+                       WHERE d.id = r.debit_move_id AND c.id = r.credit_move_id AND r.max_date > %s
+                         AND (d.move_id = ANY(%s) OR c.move_id = ANY(%s))""", (FIN, ids, ids))
+    env.invalidate_all()
+    return len(ids)
+
+
+def fechar_albaranes_del_pdv(env):
+    """Los albaranes del PdV se crearon el 25/11 y su fecha prevista quedó ahí: se iguala a la de entrega."""
+    env.flush_all()
+    env.cr.execute("""UPDATE stock_picking SET scheduled_date = date_done
+                       WHERE state = 'done' AND date_done IS NOT NULL AND date_done < %(tope)s AND scheduled_date >= %(tope)s""",
+                   {'tope': fin_de_la_ventana()})
+    n = env.cr.rowcount
+    env.invalidate_all()
+    return n
+
+
+def fechar_compras_del_planificador(env):
+    """Solicitudes de cotización (borrador) que generó el planificador al instalar: se fechan el 22/11.
+
+    No son un error: los mínimos y máximos de los insumos salen del consumo semanal (HU-13) y al cierre de los
+    datos las existencias de insumos son cero (la recepción de cada semana cubre lo que se consume), así que el
+    planificador pide hasta el máximo (cerca de 3,6 semanas de compras, unos S/ 2,4 millones; las compras
+    históricas son de S/ 663 mil por semana). Mientras las solicitudes sigan en borrador cuentan como entrada
+    prevista y el cron diario no las duplica. Se conservan, solo con fecha de pedido dentro de la ventana
+    (la entrega prevista sigue en diciembre, como corresponde a una compra aún sin confirmar)."""
+    cr = env.cr
+    env.flush_all()
+    tope = fin_de_la_ventana()
+    pedido = lima(FIN, 12)
+    cr.execute("""UPDATE purchase_order SET date_order = %(pedido)s, date_calendar_start = %(pedido)s
+                   WHERE state = 'draft' AND date_order >= %(tope)s RETURNING id""", {'pedido': pedido, 'tope': tope})
+    movidas = len(cr.fetchall())
+    cr.execute("""UPDATE purchase_order SET create_date = %(pedido)s - interval '1 hour', write_date = %(pedido)s
+                   WHERE state = 'draft' AND create_date >= %(tope)s RETURNING id""", {'pedido': pedido, 'tope': tope})
+    ids = [fila[0] for fila in cr.fetchall()]
+    cr.execute("""UPDATE mail_message SET date = %(pedido)s, create_date = %(pedido)s
+                   WHERE model = 'purchase.order' AND res_id = ANY(%(ids)s) AND date >= %(tope)s""",
+               {'pedido': pedido, 'ids': ids, 'tope': tope})
+    env.invalidate_all()
+    return movidas or len(ids)
+
+
+def fechar_operaciones_y_cotizaciones(env):
+    """Operaciones de las órdenes terminadas (la fecha de fin quedó en la planificada, hasta 2027) y vencimiento
+    de los pedidos confirmados (30 días desde su fecha, no desde la corrida)."""
+    cr = env.cr
+    env.flush_all()
+    tope = fin_de_la_ventana()
+    cr.execute("""UPDATE mrp_workorder w SET date_start = t.ini, date_finished = t.fin
+                    FROM (SELECT workorder_id, MIN(date_start) AS ini, MAX(date_end) AS fin
+                            FROM mrp_workcenter_productivity WHERE date_end IS NOT NULL GROUP BY 1) t
+                   WHERE t.workorder_id = w.id AND w.state = 'done' AND w.date_finished >= %s""", (tope,))
+    operaciones = cr.rowcount
+    cr.execute("""UPDATE mrp_workorder w SET date_start = p.date_start, date_finished = p.date_finished
+                    FROM mrp_production p
+                   WHERE p.id = w.production_id AND w.state = 'done' AND w.date_finished >= %s AND p.date_finished < %s""", (tope, tope))
+    operaciones += cr.rowcount
+    cr.execute("""UPDATE sale_order SET validity_date = (date_order + interval '30 days')::date
+                   WHERE state = 'sale' AND validity_date >= %s AND date_order < %s""", (FIN + timedelta(days=1), tope))
+    env.invalidate_all()
+    return operaciones, cr.rowcount
+
+
+def fechar_tickets_de_la_mesa(env):
+    """Los tres tickets abiertos que trae donofrio_base se crearon al instalar (25/11): se llevan al 21 y 22/11."""
+    cr = env.cr
+    nuevos = (('ticket_ti_reporte', date(2026, 11, 21), 15), ('ticket_ti_clave', date(2026, 11, 22), 9),
+              ('ticket_ti_boleta_pdv', date(2026, 11, 22), 10))
+    movidos = 0
+    for xmlid, dia, hora in nuevos:
+        ticket = ref(env, xmlid)
+        if ticket.create_date < fin_de_la_ventana():
+            continue
+        alta = lima(dia, hora)
+        ticket.date_deadline = alta + timedelta(hours=HORAS_SLA[ticket.priority])
+        env.flush_all()
+        cr.execute("""UPDATE project_task SET create_date = %s, write_date = %s, date_assign = %s,
+                          date_last_stage_update = %s WHERE id = %s""", (alta, alta, alta, alta, ticket.id))
+        cr.execute("UPDATE mail_message SET date = %s, create_date = %s WHERE model = 'project.task' AND res_id = %s",
+                   (alta, alta, ticket.id))
+        movidos += 1
+    env.invalidate_all()
+    return movidos
+
+
+def cargar_fechas(env):
+    asientos = fechar_asientos_de_mano_de_obra(env)
+    yape = fechar_cierres_de_yape(env)
+    albaranes = fechar_albaranes_del_pdv(env)
+    compras = fechar_compras_del_planificador(env)
+    operaciones, cotizaciones = fechar_operaciones_y_cotizaciones(env)
+    tickets = fechar_tickets_de_la_mesa(env)
+    print(f'  Fechas: {asientos} asientos de mano de obra, {yape} cierres de Yape, {albaranes} albaranes del PdV, '
+          f'{compras} solicitudes de compra, {operaciones} operaciones de órdenes, {cotizaciones} cotizaciones y '
+          f'{tickets} tickets llevados a la ventana.')
+
+
 # --- Programa principal -------------------------------------------------------------------------------------
 
 PROCEDIMIENTOS = {'contactos': cargar_contactos, 'crm': cargar_crm, 'calidad': cargar_calidad,
-                  'heladeros': cargar_heladeros, 'frio': cargar_frio, 'mesa': cargar_mesa, 'calendario': cargar_calendario}
+                  'heladeros': cargar_heladeros, 'frio': cargar_frio, 'mesa': cargar_mesa, 'calendario': cargar_calendario,
+                  'fechas': cargar_fechas}
 
 
 def fechar_rezagados(env, desde):
