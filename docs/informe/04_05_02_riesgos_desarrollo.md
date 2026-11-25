@@ -1,8 +1,8 @@
 # 4.5.2 Riesgos de la etapa de desarrollo (tabla 11)
 
-> **Estado:** borrador del Sprint 3 · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [`docs/pm/plan_riesgos.md`](../pm/plan_riesgos.md) (registro de riesgos, etapa «Desarrollo»), [07 §7.1](../plan/07_riesgos_entrega.md) y las actas de [`docs/scrum/`](../scrum/)
+> **Estado:** versión final del Cierre (25/11/2026); las tablas son la foto del 23/11 y el apartado 4.5.2.6 trae la actualización · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [`docs/pm/plan_riesgos.md`](../pm/plan_riesgos.md) (registro de riesgos, etapa «Desarrollo»), [07 §7.1](../plan/07_riesgos_entrega.md) y las actas de [`docs/scrum/`](../scrum/)
 >
-> Los riesgos de despliegue y mantenimiento (4.5.3 y 4.5.4) los redacta Orlando. El **nivel** es impacto × probabilidad con las escalas de [4.5.1](../pm/plan_riesgos.md): prioridad **Alta** de 6 a 9, **Media** de 3 a 5 y **Baja** de 1 a 2. Los valores de impacto y probabilidad son los del registro; esta sección **no los cambia**, solo agrega la situación real al 23/11/2026.
+> Los riesgos de despliegue y mantenimiento (4.5.3 y 4.5.4) los redacta Orlando. El **nivel** es impacto × probabilidad con las escalas de [4.5.1](../pm/plan_riesgos.md): prioridad **Alta** de 6 a 9, **Media** de 3 a 5 y **Baja** de 1 a 2. Los valores de impacto y probabilidad son los del registro; esta sección **no los cambia**, solo agrega la situación real al 23/11/2026, actualizada al 25/11/2026 en el apartado 4.5.2.6.
 
 ## 4.5.2.1 Resumen de la etapa
 
@@ -14,13 +14,15 @@ El registro tiene **15 riesgos de la etapa de desarrollo** (R1 a R6, R10, R12, R
 | **Media** (3 a 5) | R3 (3, cerrado); R16, R18, R19, R20 y RS-07 (4) | 6 |
 | **Baja** (1 a 2) | R10 y R12 (2) | 2 |
 
-**Lectura de la situación real.**
+**Lectura de la situación real al 23/11/2026** (antes de construir la Fase 2; el estado al 25/11 está en 4.5.2.6).
 - **1 cerrado** (R3) y **2 mitigados** con evidencia (R2 y R18).
 - **1 se materializó en parte y se aceptó** (R6): en Community no hay calidad ni envío a SUNAT; se declaró como limitación.
-- **El riesgo dominante es el plazo (R1)**, que condiciona a R15, R17, R19 y R20: la Fase 1 se terminó en unas 21 horas, pero la Fase 2 y las pruebas con usuarios dependen del tiempo que queda hasta el viernes 27/11 a las 14:30.
+- **El riesgo dominante es el plazo (R1)**, que condiciona a R15, R17, R19 y R20: la Fase 1 se terminó en unas 21 horas; entonces la Fase 2 y las pruebas con usuarios dependían del tiempo que quedaba hasta el viernes 27/11 a las 14:30. La Fase 2 se completó después (4.5.2.6); las pruebas con usuarios siguen pendientes.
 - Los demás siguen abiertos con acciones concretas (ver la tabla).
 
 ## 4.5.2.2 Tabla de riesgos de desarrollo
+
+> Las filas son la foto del **23/11/2026**, antes de construir la Fase 2: donde dicen que «no se empezó ningún módulo» o que depende del Gate 0, la actualización del 25/11 (todos los módulos construidos) está en [4.5.2.6](#4526-actualización-al-cierre-de-la-fase-2-25112026).
 
 | Id | Tipo | Riesgo | I | P | Nivel | Prioridad | Estrategia y control | Resp. | Situación real al 23/11/2026 | Estado |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -38,7 +40,7 @@ El registro tiene **15 riesgos de la etapa de desarrollo** (R1 a R6, R10, R12, R
 | **R18** | Técnico | El agente de IA sigue con la Fase 2 sin autorización tras el gate | 2 | 2 | 4 | Media | Evitar: regla del gate en `CLAUDE.md`; solo vale la confirmación explícita en el chat | Orlando | La regla está en `CLAUDE.md` desde el S0 y no hay código de la Fase 2 en el repositorio | **Mitigado** |
 | **R19** | Humano | Sin Fase 2, un integrante se queda sin código propio que defender | 2 | 2 | 4 | Media | Mitigar: cada uno es dueño de sus datos, pruebas y configuración en `donofrio_base` | Evelyn y Orlando | Cada integrante firma sus HU con datos, pruebas y evidencias. Las de Evelyn: HU-05, 08, 09, 10, 13, 15, 23, 32 y su parte de HU-16, 28 y 33 | **Abierto**: depende de la decisión del Gate 0 (el módulo M2 `donofrio_heladeros` es de Evelyn) |
 | **R20** | Humano | Fatiga por el ritmo de un sprint por día | 2 | 2 | 4 | Media | Mitigar: dailies cortas, revisión cruzada, CI como red de seguridad, Cierre sin desarrollo | Evelyn y Orlando | Los tres sprints se hicieron en unas 21 horas. El CI atrapó errores sin esfuerzo humano; el Cierre sigue sin desarrollo. Es un riesgo real mientras dure la semana de entrega | **Abierto** |
-| **RS-07** | Organizacional | Normas, cifras o competidores del informe citados sin verificar la fuente | 2 | 2 | 4 | Media | Mitigar: marcas «[cita]» en el borrador y lista de pendientes en [`03_aspectos_generales.md`](03_aspectos_generales.md); verificar cada fuente y citarla en APA 7 | Evelyn | Las marcas «[cita]» de la sección 3 y de 4.1.3 y 4.2.3 se resuelven con las referencias de la sección 9; las cifras con una sola fuente se redactan con «según…» | **Mitigando**: se cierra al fusionar la sección 9 y quitar las marcas |
+| **RS-07** | Organizacional | Normas, cifras o competidores del informe citados sin verificar la fuente | 2 | 2 | 4 | Media | Mitigar: marcas «[cita]» en el borrador y lista de pendientes en [`03_aspectos_generales.md`](03_aspectos_generales.md); verificar cada fuente y citarla en APA 7 | Evelyn | Las marcas «[cita]» de la sección 3 y de 4.1.3 y 4.2.3 se resuelven con las referencias de la sección 9; las cifras con una sola fuente se redactan con «según…» | **Mitigado** al 25/11/2026: la sección 9 está fusionada y las marcas «[cita]» se quitaron de las secciones 3, 4.1.3, 4.2.3 y del anexo 10.2 (queda dicho que los nombres de las normas de pago no se cotejaron con su texto) |
 
 ## 4.5.2.3 Impedimentos del equipo
 
@@ -58,7 +60,22 @@ El registro tiene **15 riesgos de la etapa de desarrollo** (R1 a R6, R10, R12, R
 
 **Historial del seguimiento (issue #131).** Hay un comentario por la Retro del S1 (23/11/2026: R2 baja de P=3 a P=2, entra RS-07 y RS-01 a RS-06 quedan sin cambios) y otro por la Retro del S2 (sin cambios). **Falta** el comentario de la Retro del S3 y, con él, el cierre del issue, que se hace cuando esta sección esté fusionada.
 
-## 4.5.2.5 Acciones antes del Gate 0
+## 4.5.2.6 Actualización al cierre de la Fase 2 (25/11/2026)
+
+Las filas de arriba conservan lo medido el 23/11/2026, antes del Gate 0. Con la Fase 2 completa, lo que cambió es esto (los valores de impacto y probabilidad del registro **no se tocaron**; el seguimiento formal en el issue #131 sigue abierto):
+
+| Riesgo | Qué pasó | Situación al 25/11/2026 |
+|---|---|---|
+| **R1** Plazo | La Fase 2 completa (M1 a M4) se terminó el 25/11, antes de la hora de corte (jueves 26/11, 08:00); el Cierre se mantuvo reservado | **Mitigado** en lo técnico; el plazo sigue siendo el viernes 27/11 a las 14:30 |
+| **R4** Carga desigual | Cada integrante es dueño de dos módulos: Orlando M1 y M3, Evelyn M2 y M4; los PR de cada uno los aprobó el otro (79 de 82 con aprobación vigente). La demo cruzada **no se hizo todavía** | **Abierto**: **[PENDIENTE: demo cruzada en vivo]** |
+| **R6** Funcionalidad no disponible en Community | La inspección de calidad (Enterprise) se cubrió con el módulo propio M1; el envío electrónico a SUNAT sigue sin existir | Se materializó y se mitigó con módulo propio, salvo SUNAT (limitación declarada, [8](08_recomendaciones.md)) |
+| **R15** Documentación al final | Cada módulo trajo su documentación (5.5b a 5.5e), su mini gate y sus capturas con su PR; este informe pasó a su estado final en el Cierre | **Mitigado** |
+| **R17** La Fase 2 se come el Cierre o deja un módulo a medias | Los cuatro módulos se fusionaron completos, cada uno con su mini gate; los límites de cada uno están declarados (vista móvil en celular real, Lighthouse, sensores) | **Mitigado**: ningún módulo quedó a medias |
+| **R18** El agente de IA sigue sin autorización | Cada módulo empezó con la confirmación explícita de Evelyn u Orlando en el chat, según `CLAUDE.md` | **Mitigado** |
+| **R19** Sin Fase 2, un integrante sin código propio | Ya no aplica: la Fase 2 se construyó y cada integrante tiene módulos propios | **Cerrado** |
+| **R20** Fatiga | Los cuatro módulos se hicieron entre el 24 y el 25/11, y el Cierre sigue en curso | **Abierto** hasta la entrega |
+
+## 4.5.2.5 Acciones antes del Gate 0 (histórico, 23/11/2026)
 
 1. Hacer la **demo cruzada** en vivo (R4).
 2. Escribir el **párrafo de metodología** sobre el uso del asistente de IA (R5).

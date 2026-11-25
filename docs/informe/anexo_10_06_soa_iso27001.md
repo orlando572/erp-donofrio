@@ -1,6 +1,6 @@
 # Anexo 10.6 Declaración de Aplicabilidad (SoA) ISO/IEC 27001:2022 y política de seguridad
 
-> **Estado:** borrador del Sprint 3 · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [09 §9.2, §9.8 y §9.9](../plan/09_normas_marcos.md), [02 §2.2](../plan/02_mapeo_plantilla.md) (fila 10.6), [5.10 a 5.12](05_10_a_05_12_seguridad.md), [5.13 y 5.14](05_13_a_05_14_pruebas.md), [6.4 a 6.6](06_04_a_06_06_repositorio.md), [6.9 a 6.13](06_09_a_06_13_pruebas.md)
+> **Estado:** versión final del Cierre (25/11/2026; los datos medidos son los del 23/11/2026 salvo donde se indica) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [09 §9.2, §9.8 y §9.9](../plan/09_normas_marcos.md), [02 §2.2](../plan/02_mapeo_plantilla.md) (fila 10.6), [5.10 a 5.12](05_10_a_05_12_seguridad.md), [5.13 y 5.14](05_13_a_05_14_pruebas.md), [6.4 a 6.6](06_04_a_06_06_repositorio.md), [6.9 a 6.13](06_09_a_06_13_pruebas.md)
 >
 > Mide el **estado real de `develop` al 23/11/2026** (`1e303ed`). Los riesgos (RSI-xx) y los controles (C-xx) de [5.10 a 5.12](05_10_a_05_12_seguridad.md) **no se repiten**: aquí se les asigna el control del Anexo A que cubren y se usan sus resultados como evidencia.
 >

@@ -1,6 +1,6 @@
 # 5.5e Documentación del módulo `donofrio_tablero` (M4)
 
-> **Estado:** borrador del Sprint 4 · **Autora:** Evelyn (dueña del módulo) · **Revisa:** Orlando · **Fuente:** `addons/donofrio_tablero/` (HU-22 y HU-24, con las dos correcciones del 24/11), una instancia local con datos de demostración y las capturas y mediciones de [`docs/capturas/sprint-4/`](../capturas/sprint-4/) ([`S4_evidencia_verificacion_m4.txt`](../capturas/sprint-4/S4_evidencia_verificacion_m4.txt))
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (dueña del módulo) · **Revisa:** Orlando · **Fuente:** `addons/donofrio_tablero/` (HU-22 y HU-24, con las dos correcciones del 24/11), una instancia local con datos de demostración y las capturas y mediciones de [`docs/capturas/sprint-4/`](../capturas/sprint-4/) ([`S4_evidencia_verificacion_m4.txt`](../capturas/sprint-4/S4_evidencia_verificacion_m4.txt))
 >
 > Complementa 5.5 (`donofrio_base`), 5.5b (M1), 5.5c (M2) y 5.5d (M3). **M4 no crea tablas:** su servicio de datos es un modelo abstracto, así que el ER general (42 tablas) y el diccionario de datos no cambian.
 
@@ -59,7 +59,7 @@ El tablero **no tiene ACL propios**: es un modelo abstracto sin tabla y lee con 
 
 ## 5.5e.6 Pruebas y evidencia
 
-`scripts/test.sh donofrio_tablero`: **21 pruebas, sin errores** (24/11/2026, rama con las dos correcciones). `scripts/test.sh donofrio_calidad donofrio_heladeros donofrio_tablero`: **79 pruebas, sin errores** (también pasan las 21 con M4 solo, donde las tarjetas opcionales no están y sus pruebas se omiten). `scripts/check_legacy.sh`: sin patrones legacy. Las pruebas cubren la estructura, las ventas contra un pedido real y el filtro de almacén, las producciones, el stock por vencer y vencido, las tres tarjetas opcionales (con y sin su módulo), el permiso de lectura (4 pruebas del aviso de «sin permiso» y del menú) y que `get_kpis` tarde menos de 3 s.
+`scripts/test.sh donofrio_tablero`: **21 pruebas, sin errores** (24/11/2026, rama con las dos correcciones). `scripts/test.sh donofrio_calidad donofrio_heladeros donofrio_tablero`: **81 pruebas, sin errores** (79 el 24/11; una prueba más en `donofrio_calidad` y otra en `donofrio_heladeros`, agregadas después, suman 81) (también pasan las 21 con M4 solo, donde las tarjetas opcionales no están y sus pruebas se omiten). `scripts/check_legacy.sh`: sin patrones legacy. Las pruebas cubren la estructura, las ventas contra un pedido real y el filtro de almacén, las producciones, el stock por vencer y vencido, las tres tarjetas opcionales (con y sin su módulo), el permiso de lectura (4 pruebas del aviso de «sin permiso» y del menú) y que `get_kpis` tarde menos de 3 s.
 
 | Qué se verificó en la pantalla (instancia local de esta rama, Gerente General, 24/11/2026) | Evidencia |
 |---|---|
@@ -90,7 +90,7 @@ Lighthouse 12.2.1, solo *Performance*, mediana de 3 corridas, con el método de 
 | Tablero, móvil (4G lenta, CPU 4× más lenta) | — | **39** | 12.16 | 680 | No |
 
 - **El tablero no llega a 80:** las tres corridas dieron 76, 76 y 81; una sola pasó el umbral, así que no es estable. Sí cumple la parte de la **carga en menos de 3 s** (LCP de 2.11 s). El puntaje lo frena el *Speed Index* (2.97 s); no se hizo un análisis más fino.
-- **El móvil queda en 39:** el perfil móvil de Lighthouse emula un CPU 4 veces más lento y el JavaScript del cliente web de Odoo bloquea el hilo 680 ms. RNF008 se definió para escritorio; se informa como límite, no se corrigió.
+- **El móvil queda en 39:** el perfil móvil de Lighthouse emula un CPU 4 veces más lento y el JavaScript del cliente web de Odoo bloquea el hilo 680 ms. RNF008 se definió para escritorio; se declara como **límite conocido** (lo explica el JavaScript de Odoo, igual que el 59 del backend), no se corrigió.
 - **Con otro usuario en «después»:** el Gerente General (el único con el menú y todos los datos) pide 2FA en el despliegue protegido y un script no lo puede dar; el Jefe de Ventas ve el menú, pero recibe el aviso de «sin permiso». El tablero «después» se midió con el Jefe de Almacén, que no tiene 2FA y lee todos los datos (abre la acción por su dirección). «Antes» se midió con el Gerente. No se debilitó ningún control de seguridad. Una primera tanda midió por error la pantalla de login con el Gerente (la sesión no pasó el 2FA); se descartó y el script ahora se detiene si la página termina en el login.
 - **Comparación con la HU-28:** ahí el backend dio 59 y el dashboard de Ventas 80; esta medición corrió en otra PC (Linux, `--network host`) y no es directamente comparable. El script de esta medición es [`S4_lighthouse_m4.py`](../capturas/sprint-4/S4_lighthouse_m4.py).
 
@@ -105,7 +105,7 @@ La primera vez, el tablero se abrió con el Inspector de Calidad y falló con «
 
 ## 5.5e.8 Límites
 
-- **Lighthouse del tablero: 76 en escritorio (meta 80, no cumple) y 39 en móvil** (5.5e.6.2); el LCP de 2.11 s sí cumple los 3 s. Se midió en una PC de desarrollo con Docker, no en el servidor definitivo, y el tablero «después» con el Jefe de Almacén (el Gerente pide 2FA).
+- **Lighthouse del tablero: 76 en escritorio (meta 80, no cumple; límite conocido) y 39 en móvil** (5.5e.6.2); el LCP de 2.11 s sí cumple los 3 s. Se midió en una PC de desarrollo con Docker, no en el servidor definitivo, y el tablero «después» con el Jefe de Almacén (el Gerente pide 2FA).
 - **El celular se probó en un emulador** (Chromium y el navegador integrado con el tamaño de un teléfono), no en un teléfono real (5.5e.6.1).
 - **No hay pruebas de JavaScript** (por ejemplo de Hoot): el componente OWL se verificó a mano en la pantalla (tarjetas, gráfico y cambio de almacén).
 - **Cumplimiento de producción:** cuenta las OP del mes que ya empezaron (no las que siguen en borrador); no es un plan contra lo ejecutado.

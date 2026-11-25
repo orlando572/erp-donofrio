@@ -1,0 +1,83 @@
+numero	autor	fusionado_por	metodo	aprobacion_del_otro	rama	fusionado_utc	commits	merges_de_develop	titulo	base
+1	orlando572	orlando572	squash	APPROVED	docs/s0-artefactos-po	2026-11-23 01:44	4	0	docs(scrum): completa el Sprint 0 con los artefactos del PO [S0]	develop
+151	orlando572	Eve3000a	merge commit	APPROVED	chore/s0-cierre-windows	2026-11-23 02:13	2	0	chore(repo): cierre del S0, capturas y compatibilidad con Windows [S0]	develop
+152	orlando572	orlando572	squash	APPROVED	docs/s1-planning	2026-11-23 03:38	1	0	docs(scrum): planning del Sprint 1 – Fundaciones [S1]	develop
+153	orlando572	orlando572	merge commit	APPROVED	feature/HU-01-entorno-docker	2026-11-23 03:38	2	0	feat(infra): entorno Docker con Odoo 19.0 y PostgreSQL 16 [HU-01]	develop
+154	orlando572	orlando572	merge commit	sin aprobación vigente (descartada al cambiar la base)	feature/HU-02-ci	2026-11-23 03:39	2	0	feat(ci): esqueleto de donofrio_base, scripts/test.sh y workflow de CI [HU-02]	develop
+155	orlando572	orlando572	merge commit	sin aprobación vigente (descartada al cambiar la base)	feature/HU-03-compania-peru	2026-11-23 03:39	1	0	feat(base): compañía con localización peruana por código [HU-03]	develop
+156	orlando572	orlando572	merge commit	sin aprobación vigente (descartada al cambiar la base)	feature/HU-06-almacenes	2026-11-23 03:39	1	0	feat(base): almacenes de Lima y Arequipa con ubicaciones de frío y ruta [HU-06]	develop
+157	orlando572	orlando572	merge commit	APPROVED	feature/HU-04-usuarios-roles	2026-11-23 03:44	1	0	feat(seguridad): 10 usuarios por rol y regla de registro del CD Arequipa [HU-04]	develop
+158	orlando572	orlando572	merge commit	APPROVED	feature/HU-07-productos-recetas	2026-11-23 03:46	1	0	feat(base): productos, insumos y recetas con lote y vida útil [HU-07]	develop
+159	orlando572	orlando572	squash	APPROVED	chore/ci-no-cancelar-develop	2026-11-23 03:50	1	0	ci: no cancelar corridas en develop y main, solo en PR [HU-02]	develop
+160	Eve3000a	Eve3000a	merge commit	APPROVED	feature/HU-05-organigrama-empleados	2026-11-23 04:39	1	0	feat(rrhh): organigrama, puestos y empleados de D'Onofrio [HU-05]	develop
+161	Eve3000a	orlando572	squash	APPROVED	docs/s1-analisis-empresarial	2026-11-23 04:57	1	0	docs(informe): análisis empresarial, RF, BPMN AS-IS y casos de uso de Evelyn [S1]	develop
+162	orlando572	orlando572	squash	APPROVED	docs/s1-informe-orlando	2026-11-23 05:24	2	0	docs(informe): BPMN AS-IS de producción y almacén, RNF, arquitectura e infraestructura de Orlando [S1]	develop
+163	Eve3000a	orlando572	squash	APPROVED	docs/s1-capturas-project	2026-11-23 05:50	1	0	docs(scrum): capturas de las vistas e Insights del GitHub Project al cierre del Sprint 1 [S1]	develop
+164	orlando572	orlando572	squash	APPROVED	docs/s1-review-retro	2026-11-23 05:51	1	0	docs(scrum): review y retrospectiva del Sprint 1 [S1]	develop
+165	orlando572	orlando572	squash	APPROVED	docs/s1-dailies-citas	2026-11-23 05:51	1	0	docs(scrum): dailies del Sprint 1 y marcas [cita] en 4.1.3 y 4.2.3 [S1]	develop
+166	Eve3000a	Eve3000a	merge commit	APPROVED	docs/s1-riesgos-r2-rs07	2026-11-23 05:51	1	0	docs(pm): actualiza el registro de riesgos tras la Retro del Sprint 1 [S1]	develop
+167	Eve3000a	orlando572	squash	APPROVED	feature/HU-09-listas-de-precios	2026-11-23 06:18	1	0	feat(ventas): listas de precios por canal y temporada [HU-09]	develop
+168	Eve3000a	orlando572	squash	APPROVED	feature/HU-08-embudo-crm	2026-11-23 06:35	2	1	feat(crm): embudo por canal con equipos, etapas y 20 oportunidades [HU-08]	develop
+169	orlando572	Eve3000a	merge commit	APPROVED	feature/HU-11-lotes-fefo	2026-11-23 06:41	1	0	feat(inventario): lotes con vencimiento, salida FEFO y alerta a 30 días con responsable [HU-11]	develop
+170	Eve3000a	orlando572	squash	APPROVED	feature/HU-10-pdv-boleta	2026-11-23 07:15	3	1	feat(pdv): punto de venta con efectivo y Yape, boleta y cierre de caja [HU-10]	develop
+171	Eve3000a	orlando572	squash	APPROVED	fix/HU-09-vigencia-hora-lima	2026-11-23 07:14	1	0	fix(ventas): vigencia de las listas de precios en hora de Lima [HU-09]	develop
+172	Eve3000a	orlando572	squash	APPROVED	docs/s2-capturas-hu08-hu09-hu10	2026-11-23 07:14	2	0	docs(scrum): capturas de evidencia de HU-08, HU-09 y HU-10 [S2]	develop
+173	orlando572	orlando572	merge commit	APPROVED	feature/HU-12-recepcion-despacho	2026-11-23 07:33	1	0	test(inventario): recepción desde la OC, despacho pick + ship y reposición a Arequipa [HU-12]	develop
+174	orlando572	orlando572	merge commit	APPROVED	feature/HU-14-ordenes-produccion	2026-11-23 07:33	2	0	feat(produccion): OP con insumos FEFO, lote con vencimiento, costo y asientos de valoración [HU-14]	develop
+175	orlando572	orlando572	merge commit	APPROVED	feature/HU-16-transacciones-inventario	2026-11-23 07:34	3	0	feat(datos): script de transacciones de inventario y producción con semilla fija [HU-16]	develop
+176	orlando572	orlando572	merge commit	APPROVED	docs/s2-capturas-orlando	2026-11-23 07:34	1	0	docs(capturas): evidencias de HU-11, HU-12 y HU-14 del Sprint 2	develop
+177	orlando572	orlando572	merge commit	APPROVED	docs/s2-informe-orlando	2026-11-23 07:34	8	0	docs(informe): TO-BE de producción y almacén, CU005 a CU008, 4.3.2, 4.3.3 y manual de instalación [S2]	develop
+178	Eve3000a	orlando572	squash	APPROVED	feature/HU-15-factura-boleta-igv	2026-11-23 08:53	1	0	feat(facturacion): factura (01) y boleta (03) con IGV desde el pedido, en su diario [HU-15]	develop
+179	Eve3000a	orlando572	squash	APPROVED	feature/HU-13-reabastecimiento-minmax	2026-11-23 19:20	2	1	feat(compras): reabastecimiento mín./máx. de insumos con RFQ y recepción [HU-13]	develop
+180	Eve3000a	Eve3000a	merge commit	APPROVED	feature/HU-16-ventas-pdv-compras	2026-11-23 19:26	1	0	feat(datos): ventas, PdV y compras en el script de transacciones y 30 clientes ficticios [HU-16]	develop
+181	Eve3000a	orlando572	squash	APPROVED	docs/s2-informe-evelyn	2026-11-23 19:39	2	0	docs(informe): TO-BE de ventas, compras y heladeros, wireframes y mockups, CU011 y CU012, 4.2.9 y daily [S2]	develop
+182	orlando572	orlando572	squash	APPROVED	docs/s2-review-retro	2026-11-23 19:40	1	0	docs(scrum): review, retrospectiva y daily de cierre del Sprint 2 [S2]	develop
+183	orlando572	Eve3000a	merge commit	APPROVED	docs/s2-actualiza-estado	2026-11-23 19:43	1	0	docs(scrum): actualiza la Review, la Retro y la Daily del Sprint 2 con la documentación de Evelyn [S2]	develop
+184	Eve3000a	orlando572	squash	APPROVED	docs/s2-aceptacion-po	2026-11-23 19:55	2	0	docs(scrum): aceptación del incremento del Sprint 2, retro confirmada y guion de la demo cruzada [S2]	develop
+185	orlando572	orlando572	squash	APPROVED	docs/s3-planning	2026-11-23 20:02	1	0	docs(scrum): planning del Sprint 3 (Calidad del núcleo) [S3]	develop
+186	orlando572	Eve3000a	squash	APPROVED	feature/HU-25-replica	2026-11-23 20:04	1	0	feat(infra): réplica en streaming de PostgreSQL con perfil replica y script de verificación [HU-25]	develop
+187	orlando572	Eve3000a	squash	APPROVED	feature/HU-26-backups	2026-11-23 20:10	2	1	feat(infra): respaldo diario con retención de 7 días y restauración en una BD nueva con RTO medido [HU-26]	develop
+188	Eve3000a	orlando572	squash	APPROVED	feature/HU-23-tablero-estandar	2026-11-23 20:34	1	0	feat(gerencia): dashboards estándar y vistas guardadas de ventas, producción y stock por vencer [HU-23]	develop
+189	orlando572	Eve3000a	squash	APPROVED	feature/HU-27-seguridad-despliegue	2026-11-23 20:47	4	2	feat(seguridad): Nginx con TLS, Odoo en modo producción, 2FA, política de contraseñas, bloqueo de login y auditoría [HU-27]	develop
+190	orlando572	Eve3000a	squash	APPROVED	feature/HU-29-release	2026-11-23 21:00	2	0	feat(release): publicar imagen en GHCR y zip en GitHub Releases con cada tag vX.Y.Z [HU-29]	develop
+191	Eve3000a	orlando572	squash	APPROVED	feature/HU-33-test-pedido-fefo-factura	2026-11-23 21:02	1	0	test(ventas): flujo pedido → entrega FEFO en pick y ship → factura o boleta con IGV [HU-33]	develop
+192	orlando572	orlando572	squash	APPROVED	feature/HU-33-tests-compra-op	2026-11-23 21:07	2	1	test(integracion): flujo compra → recepción → OP → lote con vencimiento [HU-33]	develop
+193	Eve3000a	orlando572	squash	APPROVED	feature/HU-32-mesa-servicios-ti	2026-11-23 21:46	1	0	feat(ti): mesa de servicios en Project con tipos de ticket ITIL y SLA por prioridad [HU-32]	develop
+194	Eve3000a	Eve3000a	squash	APPROVED	feature/HU-28-lighthouse	2026-11-23 21:50	2	1	perf(wpo): medición Lighthouse antes y después en login, backend y dashboard [HU-28]	develop
+195	Eve3000a	Eve3000a	squash	APPROVED	feature/HU-30-usabilidad	2026-11-23 22:44	8	0	docs(usabilidad): plan de pruebas, cuestionario SUS y script de cálculo [HU-30]	develop
+196	orlando572	orlando572	squash	APPROVED	feature/HU-28-k6-zap	2026-11-23 21:51	2	1	feat(pruebas): carga con k6 y seguridad con ZAP baseline sobre el despliegue protegido [HU-28]	develop
+197	orlando572	Eve3000a	squash	APPROVED	feature/S3-informe-4-2	2026-11-23 22:17	1	0	docs(informe): clases, ER, diseño lógico y diccionario de datos del núcleo (4.2.5 a 4.2.8) [S3]	develop
+198	orlando572	Eve3000a	squash	APPROVED	feature/S3-informe-5	2026-11-23 22:40	1	0	docs(informe): sección 5 (back-end, BD, seguridad, pruebas y despliegue) del núcleo [S3]	develop
+199	Eve3000a	Eve3000a	squash	APPROVED	docs/s3-informe-4-7-evelyn	2026-11-23 23:15	1	0	docs(informe): 4.7 métricas clave, KPI y acuerdos de nivel de servicio con mediciones del sprint [S3]	develop
+200	orlando572	orlando572	squash	APPROVED	feature/S3-informe-6	2026-11-23 23:11	1	0	docs(informe): repositorio, pruebas, SoA ISO 27001, trazabilidad y RFC (6.4 a 6.13, 10.4, 10.6) [S3]	develop
+201	Eve3000a	orlando572	squash	APPROVED	docs/s3-informe-4-6-evelyn	2026-11-23 23:19	2	0	docs(informe): 4.6.1 a 4.6.3 prototipos web, buenas prácticas de UI/UX y reportes [S3]	develop
+202	orlando572	orlando572	squash	APPROVED	feature/S3-manual-herramientas-abstract	2026-11-23 23:21	2	0	docs(manuales): manual de herramientas, abstract y manual de instalación al día [S3]	develop
+203	Eve3000a	orlando572	squash	APPROVED	docs/s3-informe-cobit-itil-evelyn	2026-11-23 23:27	1	0	docs(informe): cascada COBIT, prácticas ITIL y anexos 10.3 y 10.5 [S3]	develop
+204	Eve3000a	orlando572	squash	APPROVED	docs/s3-informe-6-evelyn	2026-11-23 23:44	1	0	docs(informe): 6.1 a 6.3 y 6.7 a 6.8 equipo, sprints con burndown, GitHub Projects, commits e issues [S3]	develop
+205	Eve3000a	orlando572	squash	APPROVED	docs/s3-resumen-conclusiones-evelyn	2026-11-23 23:45	1	0	docs(informe): 1 Resumen y 7 Conclusiones en borrador [S3]	develop
+206	Eve3000a	orlando572	squash	APPROVED	docs/s3-daily-review-evelyn	2026-11-23 23:45	2	0	docs(scrum): daily de Evelyn y review del Sprint 3 [S3]	develop
+207	Eve3000a	orlando572	squash	APPROVED	docs/s3-informe-4-1-4-evelyn	2026-11-24 04:11	1	0	docs(informe): 4.1.4 oportunidades de innovación [S3]	develop
+208	Eve3000a	orlando572	squash	APPROVED	docs/s3-informe-4-2-scrum-evelyn	2026-11-24 04:11	1	0	docs(informe): 4.2.10 a 4.2.12 roles, artefactos y eventos Scrum [S3]	develop
+209	orlando572	Eve3000a	squash	APPROVED	docs/s3-informe-orlando	2026-11-24 04:20	4	0	docs(informe): 4.3.6, 4.3.8, 4.5.3 y 4.5.4, RNF al día, anexo 10.2 y recomendaciones técnicas [S3]	develop
+210	Eve3000a	orlando572	squash	APPROVED	docs/s3-informe-4-3-evelyn	2026-11-24 04:11	1	0	docs(informe): 4.3.4 IDEs y lenguajes, 4.3.9 gestión de proyectos [S3]	develop
+211	Eve3000a	orlando572	squash	APPROVED	docs/s3-informe-4-5-2-evelyn	2026-11-24 04:11	1	0	docs(informe): 4.5.2 riesgos de desarrollo [S3]	develop
+212	Eve3000a	orlando572	squash	APPROVED	docs/s3-informe-9-referencias-evelyn	2026-11-24 04:12	1	0	docs(informe): 9 referencias en APA 7 y marcas [cita] resueltas [S3]	develop
+213	orlando572	Eve3000a	squash	APPROVED	docs/s3-eventos-orlando	2026-11-24 04:21	1	0	docs(scrum): retro, daily de Orlando y review del Sprint 3 al día [S3]	develop
+214	Eve3000a	orlando572	squash	APPROVED	docs/s3-informe-10-1-fichas-rf-evelyn	2026-11-24 04:11	1	0	docs(informe): anexo 10.1 fichas de RF [S3]	develop
+215	Eve3000a	orlando572	squash	APPROVED	docs/s3-informe-8-1-evelyn	2026-11-24 04:12	1	0	docs(informe): 8.1 recomendaciones de negocio [S3]	develop
+216	orlando572	Eve3000a	squash	APPROVED	docs/s3-gate0-verificacion	2026-11-24 04:21	3	1	docs(gate): verificación de los criterios de salida de la Fase 1 [S3]	develop
+217	orlando572	Eve3000a	squash	APPROVED	docs/plan-fase2-completa	2026-11-24 04:34	1	0	docs(plan): Fase 2 completa con hora de corte, Cierre ampliado y manual de usuario [S3]	develop
+218	Eve3000a	orlando572	squash	APPROVED	docs/s3-gate-0-fase1-evelyn	2026-11-24 04:39	1	0	docs(gate): informe del Gate 0 de la Fase 1 [S3]	develop
+219	Eve3000a	orlando572	squash	APPROVED	feature/HU-17-inspecciones-calidad	2026-11-24 04:58	2	0	feat(calidad): inspecciones por puntos de control ligadas a la OP y al lote [HU-17]	develop
+220	Eve3000a	orlando572	squash	APPROVED	feature/HU-18-certificado-calidad	2026-11-24 05:05	4	0	feat(calidad): certificado de calidad del lote en PDF [HU-18]	develop
+221	Eve3000a	orlando572	squash	APPROVED	feature/HU-17-18-evidencias-m1	2026-11-24 05:30	1	0	docs(calidad): evidencias, 5.5b y mini gate de M1 [HU-17][HU-18]	develop
+222	orlando572	orlando572	squash	APPROVED	release/v1.0.0	2026-11-24 05:38	96	17	release: núcleo v1.0.0 de la Fase 1 (develop → main) [S3]	main
+223	Eve3000a	Eve3000a	squash	APPROVED	feature/HU-20-liquidacion-heladeros	2026-11-24 06:07	3	0	feat(heladeros): liquidación diaria del heladero [HU-20]	develop
+224	orlando572	Eve3000a	squash	APPROVED	feature/HU-17-cierre-m1-v1	2026-11-24 06:07	8	2	docs(cierre): v1.0.0 verificado, ER y diccionario con M1, ISO/HACCP, .po y prueba del PdV [HU-17]	develop
+225	Eve3000a	orlando572	squash	APPROVED	feature/HU-21-pdf-liquidacion-y-cierre-m2	2026-11-24 06:32	2	0	feat(heladeros): PDF de liquidación y cierre de M2 con documentación y mini gate [HU-21]	develop
+226	orlando572	orlando572	squash	APPROVED	feature/HU-19-cadena-de-frio	2026-11-24 07:14	6	0	feat(calidad): cadena de frío (M3) con documentación y mini gate [HU-19]	develop
+227	Eve3000a	orlando572	squash	APPROVED	feature/HU-22-24-tablero-y-marca-m4	2026-11-24 07:54	3	0	feat(tablero): tablero gerencial OWL, marca del backend y cierre de M4 [HU-22][HU-24]	develop
+228	orlando572	Eve3000a	squash	APPROVED	feature/HU-22-correcciones-m4	2026-11-24 09:01	6	0	fix(tablero): login con marca, aviso sin permiso y verificación de M4 [HU-22][HU-24]	develop
+229	orlando572	orlando572	merge commit	APPROVED	release/v1.4.0	2026-11-25 05:31	100	17	release: Fase 2 completa, M1 a M4 (develop → main) [S4]	main
+230	orlando572	orlando572	squash	APPROVED	feature/HU-16-demo-completa	2026-11-25 07:28	4	0	feat(datos): demostración completa para las vistas vacías [HU-16]	develop
+231	orlando572	Eve3000a	squash	APPROVED	feature/HU-16-capturas-png	2026-11-25 08:07	1	0	docs(capturas): PNG con datos de demostración y juego para el manual [HU-16][HU-17][HU-20][HU-22]	develop

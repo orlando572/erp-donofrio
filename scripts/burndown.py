@@ -121,7 +121,7 @@ def imprimir(hus, cierre, csv_ruta=None):
 
 def grafico_svg(hus, cierre, ruta):
     """Un panel por sprint con la línea ideal (de todos los puntos a 0) y la real (tras cada HU terminada)."""
-    sprints = [sp for sp in ('S1', 'S2', 'S3') if any(d['sprint'] == sp and d['hecha'] for d in hus.values())]
+    sprints = [sp for sp in ('S1', 'S2', 'S3', 'S4') if any(d['sprint'] == sp and d['hecha'] for d in hus.values())]
     ancho, alto, margen = 340, 250, 44
     partes = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{ancho * len(sprints) + 20}" height="{alto + 70}" font-family="DejaVu Sans, Arial, sans-serif" font-size="11">',
               f'<rect width="100%" height="100%" fill="#fff"/>']

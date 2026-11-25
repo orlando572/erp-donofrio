@@ -1,0 +1,121 @@
+@startuml clases_fase2
+' 4.2.5. Clases de la Fase 2, IMPLEMENTADAS (M1 a M4, releases v1.1.0 a v1.4.0).
+' Fuente: addons/donofrio_calidad, addons/donofrio_heladeros y addons/donofrio_tablero en develop (25/11/2026).
+title Clases de la Fase 2 (implementadas): calidad, cadena de frío, heladeros y tablero
+hide empty members
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 12
+skinparam classAttributeIconSize 0
+skinparam ArrowColor #888888
+skinparam class {
+  BorderColor #555555
+  BackgroundColor #FFFFFF
+  BackgroundColor<<M1>> #FFF4C2
+  BorderColor<<M1>> #9A6B00
+  BackgroundColor<<M2>> #FFF4C2
+  BorderColor<<M2>> #9A6B00
+  BackgroundColor<<M3>> #FFF4C2
+  BorderColor<<M3>> #9A6B00
+  BackgroundColor<<M4>> #FFF4C2
+  BorderColor<<M4>> #9A6B00
+}
+skinparam stereotypeCBackgroundColor #FFFFFF
+skinparam nodesep 30
+skinparam ranksep 80
+
+package "Modelos de Odoo que se extienden o se usan (Fase 1)" #F4F4F4 {
+  class "mrp.production" as mrp_production
+  class "stock.lot" as stock_lot {
+    calidad_estado (calculado)
+    alerta_vencimiento_fecha
+  }
+  class "stock.location" as stock_location {
+    control_temperatura
+    temp_min
+    temp_max
+  }
+  class "sale.order" as sale_order
+  class "product.pricelist" as product_pricelist
+  class "res.partner (heladero)" as partner
+}
+
+package "M1 donofrio_calidad" #FFFDF0 {
+  class "donofrio.calidad.punto" as punto <<M1>> {
+    nombre
+    tipo : rango | aprobacion
+    valor_min, valor_max, unidad
+  }
+  class "donofrio.calidad.inspeccion" as inspeccion <<M1>> {
+    estado : pendiente | en medición | aprobado | rechazado
+    motivo_rechazo
+    --
+    action_iniciar()
+    action_aprobar()
+    action_rechazar()
+    action_imprimir_certificado()
+  }
+  class "donofrio.calidad.linea" as medicion <<M1>> {
+    medicion
+    cumple_manual
+    resultado (calculado)
+  }
+}
+
+package "M3 cadena de frío (dentro de donofrio_calidad)" #FFFDF0 {
+  class "donofrio.temperatura" as temperatura <<M3>> {
+    temperatura (°C)
+    fecha
+    fuera_de_rango (calculado)
+    --
+    actividad al jefe de almacén
+  }
+}
+
+package "M2 donofrio_heladeros" #FFFDF0 {
+  class "donofrio.liquidacion" as liquidacion <<M2>> {
+    estado : borrador | despachado | liquidado
+    fecha, porcentaje_comision
+    efectivo_entregado
+    total_importe, total_comision
+    diferencia_efectivo
+    --
+    action_despachar()
+    action_confirmar() : crea y confirma un sale.order
+    action_imprimir()
+  }
+  class "donofrio.liquidacion.linea" as linea_liq <<M2>> {
+    despachado, devuelto, merma
+    vendido (calculado)
+    precio_unitario, importe
+  }
+}
+
+package "M4 donofrio_tablero" #FFFDF0 {
+  class "donofrio.tablero (abstracto, sin tabla)" as kpis <<M4>> {
+    get_kpis(warehouse_id) : usa _read_group
+  }
+}
+
+punto "1" <-- "*" medicion : punto de control
+inspeccion "1" *-- "*" medicion
+inspeccion "*" ..> "1" mrp_production : ligada a
+inspeccion "*" ..> "1" stock_lot : aprueba o rechaza
+temperatura "*" ..> "1" stock_location : se registra en
+liquidacion "1" *-- "*" linea_liq
+liquidacion "*" ..> "1" partner : heladero
+liquidacion "*" ..> "1" product_pricelist : lista «Heladero»
+liquidacion "*" ..> "0..1" sale_order : crea al liquidar
+kpis ..> sale_order : lee
+kpis ..> inspeccion : lee (si M1 está instalado)
+kpis ..> liquidacion : lee (si M2 está instalado)
+kpis ..> temperatura : lee (si M3 está instalado)
+
+legend bottom
+  Amarillo = clase propia de un módulo de la Fase 2, implementada y probada (218 pruebas en total; ver 6.10).
+  Gris = modelo estándar de Odoo que el módulo usa o extiende. Los nombres y atributos salen del código en develop.
+  Releases: M1 v1.1.0, M2 v1.2.0, M3 v1.3.0 y M4 v1.4.0.
+  M3 no tiene carpeta propia: vive en donofrio_calidad. M4 no crea tablas: lee los datos de los módulos anteriores.
+endlegend
+@enduml

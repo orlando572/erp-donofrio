@@ -1,6 +1,6 @@
 # 4.3.4 y 4.3.9 IDEs y lenguajes de programación; plataforma de gestión de proyectos
 
-> **Estado:** borrador del Sprint 3 · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [manual de herramientas](../manuales/manual_herramientas.md), [`docs/pm/github-projects/`](../pm/github-projects/README.md), [04 §4.11](../plan/04_scrum_pmbok.md) y el repositorio (`git ls-files`, 23/11/2026)
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [manual de herramientas](../manuales/manual_herramientas.md), [`docs/pm/github-projects/`](../pm/github-projects/README.md), [04 §4.11](../plan/04_scrum_pmbok.md) y el repositorio (`git ls-files`, 23/11/2026)
 >
 > Solo se describe **lo que se usó**. Lo que el plan nombraba y no se usó está en la [sección 11 del manual](../manuales/manual_herramientas.md) y se resume al final de 4.3.4.
 
@@ -22,19 +22,20 @@ Las versiones del grupo A son las de la PC de Orlando el 23/11/2026; el manual e
 
 ### 4.3.4.2 Lenguajes y formatos
 
-Los conteos son de `git ls-files` al 23/11/2026. Los lenguajes están ordenados de mayor a menor peso en el producto.
+Los conteos son de `git ls-files` al 25/11/2026 (`develop` `339c907`). Los lenguajes están ordenados de mayor a menor peso en el producto.
 
 | Lenguaje o formato | Versión | Dónde se usa | Archivos |
 |---|---|---|---|
-| **Python** | 3.12.3 (la de la imagen `odoo:19.0-20261112`) | El módulo `donofrio_base` (modelos, *hooks* y 136 pruebas con `TransactionCase`); los scripts de carga de datos, medición y trazabilidad (`scripts/`); los generadores de diagramas (`docs/diagramas/`) | 43 |
-| **XML** | — | Datos y configuración del ERP por código (empresa, usuarios, almacenes, productos, recetas, listas de precios, reglas de acceso, vistas guardadas); los diagramas BPMN 2.0 | 14 de datos del módulo y 12 `.bpmn` |
-| **CSV** | — | Permisos de acceso del módulo (`security/ir.model.access.csv`) y la lista de issues del Project (`epicas.csv`) | 6 |
+| **Python** | 3.12.3 (la de la imagen `odoo:19.0-20261112`) | Los cuatro módulos (`donofrio_base`, `donofrio_calidad`, `donofrio_heladeros` y `donofrio_tablero`: modelos, *hooks* y 218 pruebas con `TransactionCase`); los scripts de carga de datos, medición y trazabilidad (`scripts/`); los generadores de diagramas (`docs/diagramas/`) | 75 |
+| **XML** | — | Datos y configuración del ERP por código (empresa, usuarios, almacenes, productos, recetas, listas de precios, reglas de acceso, vistas guardadas); los diagramas BPMN 2.0 | 25 en `addons/` (datos, vistas, seguridad y reportes) y 12 `.bpmn` |
+| **CSV** | — | Permisos de acceso de los módulos (`security/ir.model.access.csv`) y la lista de issues del Project (`epicas.csv`) | 9 |
 | **Bash** | — | `docker compose` y 20 scripts: pruebas (`test.sh`), respaldo y restauración, despliegue protegido, verificaciones | 20 |
 | **YAML** | — | `docker-compose.yml` y los *workflows* de GitHub Actions (`ci.yml`, `perf.yml` y `release.yml`) | 6 |
-| **JavaScript** | — | Solo el script de carga de k6 (`scripts/perf/carga.js`) | 1 |
-| **Markdown** | — | Informe, manuales, actas de Scrum y plan | 80 |
+| **JavaScript (OWL)** | — | El tablero gerencial de M4 (`donofrio_tablero/static/src/tablero/tablero.js`, un componente OWL con Chart.js, que ya trae Odoo) y el script de carga de k6 (`scripts/perf/carga.js`) | 2 |
+| **SCSS** | — | La marca visual de M4 (HU-24): color primario `#9A6B00`, barra superior amarilla, estilos del tablero y de las pantallas «sin datos» | 3 |
+| **Markdown** | — | Informe, manuales, actas de Scrum y plan | 103 |
 | **PlantUML** | 1.2026.10 | Casos de uso, clases, ER y arquitectura C4; se convierte a PNG con Graphviz 14.0.1 en un contenedor | 14 |
-| **SVG** | — | Los generadores en Python escriben los BPMN, la arquitectura y los mockups; `rsvg-convert` los pasa a PNG | 58 |
+| **SVG** | — | Los generadores en Python escriben los BPMN, la arquitectura y los mockups; `rsvg-convert` los pasa a PNG | 60 |
 | **SQL** | — | Consultas de comprobación en DBeaver y en los scripts (`pg_stat_replication`, extracción del esquema para el ER); no hay archivos `.sql` versionados | — |
 | **Mermaid** | — | Organigrama y algunos diagramas dentro del Markdown del informe | — |
 
@@ -43,16 +44,14 @@ Los conteos son de `git ls-files` al 23/11/2026. Los lenguajes están ordenados 
 - `scripts/check_legacy.sh` busca los patrones de Odoo ≤ 16 (por ejemplo `<tree>`, `attrs=`); corre en el CI y como *hook* del asistente de IA.
 - `scripts/test.sh` instala el módulo con `--test-enable` e imprime solo los errores; es lo que corre el trabajo `test` en cada PR.
 
-### 4.3.4.3 Lo que no se usó
+### 4.3.4.3 Lo que se previó y no se usó
+
+Con la Fase 2 completa, el JavaScript con OWL (el tablero de M4) y el SCSS (la marca de HU-24) **sí se usaron** y están en la tabla anterior. Lo que no se usó:
 
 | Previsto | Estado | Por qué |
 |---|---|---|
-| **JavaScript con OWL** (tablero del módulo M4) | **No se usó** | El módulo `donofrio_tablero` es de la Fase 2 y no se construyó; el tablero de la Fase 1 sale de los dashboards estándar |
-| **SCSS** (marca visual, HU-24) | **No se usó** | También es del M4 |
-| Módulos propios en Python más allá de `donofrio_base` | **No hay** | Los módulos M1 a M4 esperan la decisión del Gate 0 |
+| Pruebas de JavaScript (Hoot) del componente OWL | **No hay** | El tablero se verificó a mano en la pantalla y con las pruebas de Python de `get_kpis()` ([5.5e.8](05_05_modulo_donofrio_tablero.md)) |
 | SchemaSpy, draw.io, Camunda Modeler | No se usaron | Se reemplazaron por `scripts/diagrama_er.py` con PlantUML y por generadores en Python ([manual, sección 11](../manuales/manual_herramientas.md)) |
-
-Si el equipo construye alguno de esos módulos tras el Gate 0, esta sección se actualiza con el JavaScript y el SCSS reales.
 
 ---
 

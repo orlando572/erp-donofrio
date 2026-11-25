@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Genera los diagramas de arquitectura (Orlando) como SVG:
   - arquitectura_empresarial.svg  (4.1.3: capas TOGAF, AS-IS frente a TO-BE)
-  - infraestructura.svg           (4.3.1: PC de desarrollo, contenedores, GitHub y nube; estado real del Sprint 3)
+  - infraestructura.svg           (4.3.1: PC de desarrollo, contenedores, GitHub y nube; estado real al cierre, 25/11/2026)
   - pipeline_cicd.svg             (5.15: de la rama de trabajo a la release y al despliegue en el nodo)
 Los diagramas C4 (5.7 y 5.8) están en docs/diagramas/c4/ (PlantUML) y el grafo de dependencias entre módulos (5.4) lo
 genera scripts/grafo_dependencias.py.
@@ -110,7 +110,7 @@ def arquitectura_empresarial():
             'Excel, correo y Word; un sistema contable aislado; sin integración entre áreas',
         ], [
             'Odoo 19 Community: Ventas, CRM, Punto de venta, Inventario, Manufactura, Compras, Facturación (l10n_pe), RR. HH. y Project',
-            'donofrio_base en la Fase 1; donofrio_calidad, donofrio_heladeros y donofrio_tablero en la Fase 2, solo si se confirman en el gate',
+            'donofrio_base (Fase 1) y, en la Fase 2, donofrio_calidad (con la cadena de frío), donofrio_heladeros y donofrio_tablero, implementados',
         ]),
         ('Tecnología', '#f3eefb', [
             'PC de oficina y un servidor de archivos (supuesto)',
@@ -137,7 +137,7 @@ def infraestructura():
     W, H = 1500, 760
     L = Lienzo(W, H)
     L.texto(W / 2, 32, "Infraestructura tecnológica del ERP de D'Onofrio", 18, 'bold')
-    L.texto(W / 2, 54, 'Línea continua: existe en develop (Sprint 3) · Línea punteada: opcional o aún sin publicar (GHCR espera el primer tag v*)', 12, color='#555')
+    L.texto(W / 2, 54, 'Línea continua: existe y está publicado (v1.0.0 a v1.4.0) · Línea punteada: opcional (VM en la nube, no implementada)', 12, color='#555')
 
     # Usuario
     L.caja(120, 75, 790, 70, 'Usuario (navegador)', ['Chrome, Firefox o Edge · https://localhost:8443 con el perfil proxy · http://localhost:8069 en desarrollo'],
@@ -182,7 +182,7 @@ def infraestructura():
     L.caja(1205, 230, 260, 130, 'Actions · runner ubuntu-24.04',
            ['ci.yml: jobs lint, test, replica, backup y proxy', 'perf.yml (manual): k6 y ZAP', 'release.yml: imagen y zip'], relleno='#e8f9ee', borde='#1e7e34')
     L.caja(1205, 375, 260, 175, 'GHCR · ghcr.io/orlando572/erp-donofrio',
-           ['Imagen de Odoo en cada tag v*', 'Zip del código en la Release', 'HU-29: workflow listo y probado en ensayo; aún no hay tag publicado'], relleno='#fff', borde='#555', punteada=True)
+           ['Imagen de Odoo en cada tag v*', 'Zip del código en la Release', 'HU-29: publicadas v1.0.0 a v1.4.0 (24 y 25/11/2026)'], relleno='#fff', borde='#555')
     L.flecha([(1150, 330), (1190, 330)], etiqueta='')
     L.texto(1170, 318, 'push', 11, color='#333')
 
@@ -228,7 +228,7 @@ def pipeline_cicd():
 
     # Fila 2: release y despliegue
     L.caja(20, 330, 230, 150, '6. PR develop → main', ['Merge commit (no squash)', 'Conserva la trazabilidad de cada HU', 'CI en verde y 1 aprobación'], relleno='#fff', borde='#555')
-    L.caja(290, 330, 230, 150, '7. Tag vX.Y.Z', ['git tag -a desde main', 'v0.x = preliminar; v1.0.0 = núcleo de la Fase 1', 'Al 23/11/2026 no se publicó ninguno'],
+    L.caja(290, 330, 230, 150, '7. Tag vX.Y.Z', ['git tag -a desde main', 'v1.0.0 = núcleo de la Fase 1; v1.1.0 a v1.4.0 = M1 a M4', 'Publicados el 24 y 25/11/2026'],
            relleno='#fff', borde='#555', punteada=True)
     L.caja(560, 330, 470, 150, '8. release.yml (tag v*; en PR y manual es un ensayo)', [
         'Construye la imagen con --build-context addons=./addons y la prueba (scripts/probar_imagen.sh)',
@@ -252,7 +252,7 @@ def pipeline_cicd():
         'Secretos: solo GITHUB_TOKEN en Actions; las contraseñas del compose salen de .env (no versionado)'], relleno='#f4f7fb', borde='#999', tam=11)
     L.caja(760, 530, 720, 140, 'Dónde queda cada entregable', [
         'Código y PR: github.com/orlando572/erp-donofrio (ramas main y develop protegidas)',
-        'Imagen: ghcr.io/orlando572/erp-donofrio:vX.Y.Z (aparece con el primer tag)',
+        'Imagen: ghcr.io/orlando572/erp-donofrio:vX.Y.Z (v1.0.0 a v1.4.0 publicadas)',
         'Zip del código: adjunto de la GitHub Release',
         'Evidencias de cada job: pestaña Actions del repositorio'], relleno='#f4f7fb', borde='#999', tam=11)
     return L.cierre()

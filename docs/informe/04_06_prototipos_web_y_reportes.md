@@ -1,6 +1,6 @@
 # 4.6 Prototipos web, buenas prácticas de UI/UX y reportes
 
-> **Estado:** borrador del Sprint 3 · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md) (4.6.1 a 4.6.4), [03 §3.3](../plan/03_modulos_odoo.md), wireframes y mockups de [4.4](04_04_prototipos.md)
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md) (4.6.1 a 4.6.4), [03 §3.3](../plan/03_modulos_odoo.md), wireframes y mockups de [4.4](04_04_prototipos.md)
 >
 > La 4.6.4 (optimización de rendimiento web) está en [04_06_wpo.md](04_06_wpo.md). Los datos de las pantallas son los de demostración (ficticios).
 
@@ -46,7 +46,7 @@ Reglas que salen de la tabla: **el amarillo de marca se usa solo como fondo** de
 
 ### Diseño adaptable (responsive)
 
-Odoo es adaptable por diseño. Para la única pantalla que lo exige en el plan se diseñó una **vista móvil**: la liquidación del heladero (CU004). La comprobación en Chrome, Firefox y Edge y en móvil (RNF001) no se ha hecho todavía.
+Odoo es adaptable por diseño. Para la única pantalla que lo exige en el plan se diseñó una **vista móvil**: la liquidación del heladero (CU004). La vista móvil de la liquidación y del tablero se vio en un emulador de 375 × 812 (sin desplazamiento horizontal); la comprobación en Chrome, Firefox y Edge y en un celular real (RNF001) no se hizo: **[PENDIENTE: prueba del tablero y de la liquidación en un celular real, a cargo del equipo]**.
 
 ### Etiquetas en español
 
@@ -54,7 +54,7 @@ Todo el texto visible está en español (`es_PE`). Limitaciones: los títulos de
 
 ## 4.6.2 Propuesta de prototipos web
 
-Cada caso de uso de la Fase 1 tiene su **mockup** (propuesta con la marca) y la **pantalla real** ya configurada. Los de la Fase 2 solo tienen el diseño; si el Gate 0 no confirma su módulo quedan como «Diseñado – trabajo futuro».
+Cada caso de uso de la Fase 1 tiene su **mockup** (propuesta con la marca) y la **pantalla real** ya configurada. Los de la Fase 2 (M1 a M4) **también tienen ya su pantalla real**, con los datos de demostración de la HU-16 (más abajo).
 
 ### Fase 1: pantallas estándar configuradas
 
@@ -72,16 +72,18 @@ Cada caso de uso de la Fase 1 tiene su **mockup** (propuesta con la marca) y la 
 
 La **mesa de servicios TI** (HU-32) no tiene caso de uso propio; su pantalla real es el Kanban de tickets: ![](../capturas/sprint-3/HU-32_mesa_servicios_kanban.png)
 
-**Qué cambia entre el mockup y la pantalla real.** La estructura es la misma; cambian el color (el mockup usa el amarillo de marca y Odoo usa su tema estándar) y algunos nombres de campo. El mockup del tablero (CU009) es el del módulo propio de la Fase 2: la pantalla real de la Fase 1 son los dashboards estándar de Odoo.
+**Qué cambia entre el mockup y la pantalla real.** La estructura es la misma; cambian el color (el mockup usa el amarillo de marca y Odoo usa su tema estándar) y algunos nombres de campo. El mockup del tablero (CU009) es el del módulo propio de M4; la pantalla real de la Fase 1 son los dashboards estándar de Odoo, y la de M4 está abajo.
 
-### Fase 2: pantallas propias (solo diseño)
+### Fase 2: pantallas propias (implementadas)
 
-| CU | Pantalla | Módulo | Mockup |
-|---|---|---|---|
-| CU004 | Liquidación diaria del heladero (y vista móvil) | M2 `donofrio_heladeros` | ![](../diagramas/pantallas/mk_cu004_liquidacion.png) |
-| CU006 | Registro de temperaturas de las cámaras | M3 cadena de frío | ![](../diagramas/pantallas/mk_cu006_temperaturas.png) |
-| CU008 | Inspección de calidad del lote | M1 `donofrio_calidad` | ![](../diagramas/pantallas/mk_cu008_inspeccion.png) |
-| CU009 | Tablero gerencial de KPI propio | M4 `donofrio_tablero` | ![](../diagramas/pantallas/mk_cu009_tablero.png) |
+Capturas reales en PNG de 1600 × 900, tomadas con los datos de demostración de la HU-16 ([PR #231](https://github.com/orlando572/erp-donofrio/pull/231)); el juego completo para el manual está en [`docs/capturas/manual/`](../capturas/manual/).
+
+| CU | Pantalla | Módulo | Mockup (diseño original) | Pantalla real |
+|---|---|---|---|---|
+| CU004 | Liquidación diaria del heladero (y vista móvil) | M2 `donofrio_heladeros` (`v1.2.0`) | ![](../diagramas/pantallas/mk_cu004_liquidacion.png) | ![](../capturas/sprint-4/HU-20_liquidacion_confirmada_con_pedido.png) |
+| CU006 | Registro de temperaturas de las cámaras | M3 cadena de frío (`v1.3.0`) | ![](../diagramas/pantallas/mk_cu006_temperaturas.png) | ![](../capturas/sprint-4/HU-19_lectura_fuera_de_rango.png) |
+| CU008 | Inspección de calidad del lote | M1 `donofrio_calidad` (`v1.1.0`) | ![](../diagramas/pantallas/mk_cu008_inspeccion.png) | ![](../capturas/sprint-4/HU-17_inspeccion_aprobada.png) |
+| CU009 | Tablero gerencial de KPI propio | M4 `donofrio_tablero` (`v1.4.0`) | ![](../diagramas/pantallas/mk_cu009_tablero.png) | ![](../capturas/sprint-4/HU-22_tablero_todos_los_almacenes.png) |
 
 ## 4.6.3 Prototipos de informes y reportes
 
@@ -105,19 +107,19 @@ La factura, la boleta y la nota de entrega llevan el **logo y los datos de la co
 - **La boleta se titula «Factura» y rotula «RUC» al DNI**, porque usa la plantilla estándar de la factura (ya declarado en HU-15).
 - **El PDF no se prueba en el CI:** `wkhtmltopdf` se cuelga cuando la prueba corre dentro del propio servidor; la prueba automática revisa el HTML del reporte y el PDF se verifica a mano.
 
-### Fase 2: reportes propios (solo diseño)
+### Fase 2: reportes propios (implementados)
 
-Se diseñan ahora aunque no se construyan: si el Gate 0 confirma el módulo, se hacen con QWeb sobre la misma plantilla.
+Los dos reportes se hicieron con QWeb sobre la misma plantilla: el certificado de calidad (M1, HU-18) y la liquidación del heladero con firmas (M2, HU-21).
 
-| Reporte | Módulo | Mockup (hoja A4) |
-|---|---|---|
-| Certificado de calidad del lote | M1 `donofrio_calidad` (HU-18) | ![](../diagramas/pantallas/mk_rp_certificado_calidad.png) |
-| Liquidación del heladero (con firmas) | M2 `donofrio_heladeros` (HU-21) | ![](../diagramas/pantallas/mk_rp_liquidacion_heladero.png) |
+| Reporte | Módulo | Mockup (hoja A4) | PDF real |
+|---|---|---|---|
+| Certificado de calidad del lote | M1 `donofrio_calidad` (HU-18) | ![](../diagramas/pantallas/mk_rp_certificado_calidad.png) | ![](../capturas/sprint-4/HU-18_certificado_pdf.png) |
+| Liquidación del heladero (con firmas) | M2 `donofrio_heladeros` (HU-21) | ![](../diagramas/pantallas/mk_rp_liquidacion_heladero.png) | ![](../capturas/sprint-4/HU-21_pdf_liquidacion.png) |
 
 Los wireframes en escala de grises de estos dos reportes están en `docs/diagramas/pantallas/wf_rp_*.png`.
 
 ## Pendiente
 
-- Probar la vista móvil y los tres navegadores (RNF001).
-- Reemplazar los mockups de la Fase 2 por las pantallas reales si se construyen sus módulos.
+- Probar la vista móvil en un celular real y los tres navegadores (RNF001): **[PENDIENTE: prueba en un celular real]**.
+- ~~Reemplazar los mockups de la Fase 2 por las pantallas reales~~: hecho en este cierre.
 - Pasar las capturas de la nota de entrega y de la orden de producción a una versión con lote si se mejora la plantilla.

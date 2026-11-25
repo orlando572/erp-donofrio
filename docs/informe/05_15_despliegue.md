@@ -1,8 +1,8 @@
 # 5.15 Despliegue: enfoque, herramientas, mejores prácticas y gestión de servicios
 
-> **Estado:** borrador del Sprint 3 · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [06 §6.4 y §6.5](../plan/06_github_ci_infra.md), [02 §2.2](../plan/02_mapeo_plantilla.md) (5.15 y 5.16), [09 §9.3](../plan/09_normas_marcos.md), [docs/dev/release.md](../dev/release.md), [manual de instalación](../manuales/manual_instalacion.md), `.github/workflows/*.yml`
+> **Estado:** versión final del Cierre (25/11/2026; los datos medidos son los del 23/11/2026 salvo donde se indica) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [06 §6.4 y §6.5](../plan/06_github_ci_infra.md), [02 §2.2](../plan/02_mapeo_plantilla.md) (5.15 y 5.16), [09 §9.3](../plan/09_normas_marcos.md), [docs/dev/release.md](../dev/release.md), [manual de instalación](../manuales/manual_instalacion.md), `.github/workflows/*.yml`
 >
-> Describe lo que **existe en `develop` al 23/11/2026**. Una cosa que el plan nombraba **no existe**: un despliegue automático a una VM (`cd.yml` y `deploy.sh` eran opcionales). La release **sí existe desde el 24/11/2026**: el tag `v1.0.0` está en `main` y la GitHub Release «ERP D'Onofrio v1.0.0» está publicada; **pendiente de verificar** el zip adjunto y la imagen en GHCR (el paquete respondía 404 antes del tag). Cómo regenerar el pipeline: [docs/diagramas/README.md](../diagramas/README.md).
+> Describe lo que **existe en `develop` al 25/11/2026** (los resultados medidos del despliegue son del 23/11/2026). Una cosa que el plan nombraba **no existe**: un despliegue automático a una VM (`cd.yml` y `deploy.sh` eran opcionales). Las releases **sí existen**: `v1.0.0` (24/11/2026, núcleo) y `v1.1.0` a `v1.4.0` (25/11/2026, módulos M1 a M4) están publicadas con su zip adjunto y su imagen en GHCR (ver [6.4](06_04_a_06_06_repositorio.md), Tabla 26b). Cómo regenerar el pipeline: [docs/diagramas/README.md](../diagramas/README.md).
 
 ## 5.15.1 Enfoque de despliegue
 
@@ -75,7 +75,7 @@ Volver a desarrollo: `docker compose --profile proxy down && docker compose up -
 | Flujo | Disparador | Job | Qué hace | Duración (corrida de `develop` del 23/11/2026) |
 |---|---|---|---|---|
 | `ci.yml` | `pull_request`, `push` a `develop` y `main`, lunes 11:00 UTC y manual | `lint` | `scripts/check_legacy.sh` y `ruff` 0.8.4 sobre `addons/`. **Obligatorio** en `develop` | 11 s |
-| | | `test` | Construye la imagen, instala `donofrio_base` en una base nueva y corre las 136 pruebas con `scripts/test.sh`; falla con `ERROR`, una prueba roja o cero pruebas. **Obligatorio** en `develop` | 199 s |
+| | | `test` | Construye la imagen, instala los módulos en una base nueva y corre las pruebas con `scripts/test.sh` (136 el 23/11; 218 al 25/11, con los módulos de la Fase 2); falla con `ERROR`, una prueba roja o cero pruebas. **Obligatorio** en `develop` | 199 s |
 | | | `replica` | Levanta el primario y la réplica y corre `scripts/verificar_replica.sh` | 24 s |
 | | | `backup` | Base mínima y `scripts/verificar_backup.sh` (respaldo, restauración, integridad y retención) | 65 s |
 | | | `proxy` | Despliegue protegido (`levantar_prod.sh`) y `scripts/verificar_despliegue.sh` | 105 s |
@@ -84,14 +84,14 @@ Volver a desarrollo: `docker compose --profile proxy down && docker compose up -
 
 `ci.yml` usa `concurrency` (cancela las corridas viejas solo en los PR) y permisos de solo lectura; `release.yml` pide `contents: write` y `packages: write` y usa únicamente `GITHUB_TOKEN`.
 
-### Protección de ramas (API de GitHub, 23/11/2026)
+### Protección de ramas (API de GitHub, 25/11/2026)
 
 | Rama | Aprobaciones | Checks obligatorios | Conversaciones resueltas | *Force push* | Aplica a administradores |
 |---|---|---|---|---|---|
 | `develop` | 1 (se descartan al cambiar el código) | `lint`, `test` | Sí | Prohibido | **No** |
-| `main` | 1 | **Ninguno** | Sí | Prohibido | **No** |
+| `main` | 1 | `lint`, `test` (el 23/11 no tenía ninguno) | Sí | Prohibido | **No** |
 
-Las releases salen de `main` (merge commit desde `develop`); los PR de trabajo entran a `develop` con *squash*.
+Las releases salen de `main`: el PR #222 (24/11, núcleo) entró con *squash* y el #229 (25/11, Fase 2) con *merge commit*; los PR de trabajo entran a `develop` con *squash*.
 
 ## 5.15.4 Mejores prácticas aplicadas
 
@@ -107,12 +107,12 @@ Las releases salen de `main` (merge commit desde `develop`); los PR de trabajo e
 
 ## 5.15.5 URLs de publicación
 
-| Qué | URL | Estado al 24/11/2026 |
+| Qué | URL | Estado al 25/11/2026 |
 |---|---|---|
 | Repositorio | <https://github.com/orlando572/erp-donofrio> | Público |
 | Actions | <https://github.com/orlando572/erp-donofrio/actions> | Corridas en verde de `ci.yml` |
-| Releases | <https://github.com/orlando572/erp-donofrio/releases> | **Publicada:** «ERP D'Onofrio v1.0.0» (24/11/2026, 05:43 UTC), sobre el tag `v1.0.0` de `main`. **Pendiente de verificar:** el zip adjunto |
-| Imagen | `ghcr.io/orlando572/erp-donofrio:vX.Y.Z` | **Pendiente de verificar** (el paquete respondía 404 antes del tag; falta confirmar que `release.yml` lo publicó y que su visibilidad es pública) |
+| Releases | <https://github.com/orlando572/erp-donofrio/releases> | **Publicadas 5 releases**: `v1.0.0` (24/11/2026, núcleo) y `v1.1.0` a `v1.4.0` (25/11/2026, M1 a M4; `v1.4.0` es la *Latest*), cada una con su `erp-donofrio-vX.Y.Z.zip` (de 23,5 a 26,1 MiB) |
+| Imagen | `ghcr.io/orlando572/erp-donofrio:vX.Y.Z` | **Publicada** por `release.yml` con cada tag: verificada sin sesión para `v1.0.0` y `latest` (24/11/2026). La CLI no pudo listar las versiones (falta el permiso `read:packages`), así que `v1.1.0` a `v1.4.0` no se comprobaron una por una |
 | ERP, front-end y back-end (demo protegida) | `https://localhost:8443` (entrada `/odoo`; `http://localhost:8080` redirige) | Solo en la PC donde se levanta el perfil `proxy`; certificado autofirmado |
 | ERP en desarrollo | `http://localhost:8069` (*websocket* en `8072`) | Solo en la PC |
 | Persistencia (PostgreSQL primario) | `localhost:5432` | Solo en la PC |
@@ -135,7 +135,7 @@ No hay un servidor público: el sistema se ejecuta en la PC de quien lo levanta.
 | Verificación | CI en verde (`lint`, `test`, `replica`, `backup`, `proxy`) y, antes de entregar, `verificar_despliegue.sh` | Figura 5.15-a; Actions |
 | Cierre y despliegue | Tag `vX.Y.Z` → `release.yml` → imagen y zip; despliegue y rollback manuales (5.15.1) | `docs/dev/release.md` |
 
-**No existe** la plantilla de solicitud de cambio (RFC, `solicitud_cambio.yml`) ni las etiquetas `tipo:cambio-*` que contemplaba [09 §9.3](../plan/09_normas_marcos.md); el formato RFC del anexo 10.4 está pendiente. El flujo anterior se representa con la Figura 5.15-a; **no se dibujaron** los dos BPMN que pedía el plan (control de cambios y solicitud de acceso).
+**No existe** la plantilla de solicitud de cambio (RFC, `solicitud_cambio.yml`) ni las etiquetas `tipo:cambio-*` que contemplaba [09 §9.3](../plan/09_normas_marcos.md); el formato RFC está en el [anexo 10.4](anexo_10_04_rfc.md) como ejemplo lleno. El flujo anterior se representa con la Figura 5.15-a; **no se dibujaron** los dos BPMN que pedía el plan (control de cambios y solicitud de acceso).
 
 ### Capacidad y desempeño
 

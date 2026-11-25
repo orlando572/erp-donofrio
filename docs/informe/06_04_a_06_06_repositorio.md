@@ -1,52 +1,66 @@
 # 6.4 a 6.6 Repositorio: resumen de GitHub, ramificación y estrategia de fusión
 
-> **Estado:** borrador del Sprint 3 · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [06 §6.2 a §6.6](../plan/06_github_ci_infra.md), [docs/dev/release.md](../dev/release.md), [4.3.1](04_03_infraestructura.md)
+> **Estado:** versión final del Cierre (25/11/2026) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [06 §6.2 a §6.6](../plan/06_github_ci_infra.md), [docs/dev/release.md](../dev/release.md), [4.3.1](04_03_infraestructura.md)
 >
-> Mide el **estado real del repositorio al 23/11/2026** (`develop` en `1e303ed`). Los datos salen de `gh` y `git` en modo de solo lectura y están guardados con fecha en [`S3-informe6_evidencia_github.txt`](../capturas/sprint-3/S3-informe6_evidencia_github.txt) y en la tabla de los 49 PR [`S3-informe6_prs_fusionados.tsv`](../capturas/sprint-3/S3-informe6_prs_fusionados.tsv). *Actualización del 24/11/2026:* el PR #222 fusionó la Fase 1 en `main` (*merge commit* `4d0d94d`, CI en verde), el tag `v1.0.0` está en `main` y la GitHub Release está publicada; los datos de las tablas de abajo son los del 23/11. El paquete de GHCR quedó público con las etiquetas `v1.0.0` y `latest`, y la evidencia visual de la Release está en las capturas de 6.4 ([`docs/dev/release.md`](../dev/release.md)). De Evelyn son 6.1, 6.2, 6.3, 6.7, 6.8 y 6.12; aquí solo se enlazan.
+> Mide el **estado real del repositorio al 25/11/2026** (`develop` en `339c907`, tras el PR #231; `main` en el merge commit del PR #229). Los datos salen de `gh` y `git` en modo de solo lectura y están guardados con fecha en la tabla de los **82 PR** [`S4_informe_final_prs_fusionados.tsv`](../capturas/sprint-4/S4_informe_final_prs_fusionados.tsv) (que amplía la del 23/11, [`S3-informe6_prs_fusionados.tsv`](../capturas/sprint-3/S3-informe6_prs_fusionados.tsv)) y, para el 23/11, en [`S3-informe6_evidencia_github.txt`](../capturas/sprint-3/S3-informe6_evidencia_github.txt). Entre ambas fechas pasaron la Fase 2 completa (M1 a M4), los tags `v1.0.0` a `v1.4.0` y los PR #199 a #231. De Evelyn son 6.1, 6.2, 6.3, 6.7, 6.8 y 6.12; aquí solo se enlazan.
 
 ## 6.4 Resumen del GitHub
 
 ### Tabla 26. Qué hay en GitHub y su estado
 
-| Elemento | URL o ubicación | Estado al 23/11/2026 |
+| Elemento | URL o ubicación | Estado al 25/11/2026 |
 |---|---|---|
 | Repositorio | <https://github.com/orlando572/erp-donofrio> | **Público**, licencia LGPL-3.0, rama por defecto `develop` (para que `Closes #n` cierre las épicas al fusionar) |
-| Ramas | `develop` (integración) y `main` (entregado) | Ambas **protegidas** (ver Tabla 27). `main` conserva el commit inicial del Sprint 0 (`284e9bf`) y al 23/11 iba 76 commits detrás de `develop` (sin ningún PR `develop` → `main`). **24/11/2026:** el PR #222 fusionó la Fase 1 en `main` (*merge commit* `4d0d94d`, CI en verde); `lint` y `test` aún no son checks obligatorios |
-| Pull requests | <https://github.com/orlando572/erp-donofrio/pulls?q=is%3Apr> | **49** PR, todos **fusionados** y a `develop` (0 abiertos, 0 cerrados sin fusionar). 30 de Orlando y 19 de Evelyn |
-| Actions | <https://github.com/orlando572/erp-donofrio/actions> | 3 workflows: `CI` (`ci.yml`), `Release` (`release.yml`) y `Pruebas no funcionales` (`perf.yml`, solo manual). **109 ejecuciones** (Tabla 28) |
-| Releases | <https://github.com/orlando572/erp-donofrio/releases> | Al 23/11 **no había ninguna** (0 tags). **24/11/2026:** el tag `v1.0.0` está en `main` y la Release «ERP D'Onofrio v1.0.0» está publicada (05:43 UTC). **Pendiente de verificar:** el zip adjunto |
-| Paquete (GHCR) | `ghcr.io/orlando572/erp-donofrio` | Al 23/11 **no existía** (la página del paquete respondía 404). `release.yml` publica al empujar un tag `v*`: con `v1.0.0` ya debió correr, y el 24/11/2026 se verificó que el paquete existe y es público (las etiquetas `v1.0.0` y `latest` se descargan sin iniciar sesión). El ensayo de la cadena (construir, probar y empaquetar sin publicar) corrió en el PR #190 con éxito |
-| GitHub Project | <https://github.com/users/orlando572/projects/4> | Público, «Scrum ERP D'Onofrio», 22 ítems. Vistas, Insights y *Dailies* son de Evelyn ([6.2](../plan/02_mapeo_plantilla.md), 6.3) |
-| Issues | <https://github.com/orlando572/erp-donofrio/issues> | 22 (11 abiertos y 11 cerrados); plantillas `epica.yml` y `bug.yml`. Lo explica Evelyn en 6.8 |
+| Ramas | `develop` (integración) y `main` (entregado) | Ambas **protegidas**, con `lint` y `test` como checks obligatorios (ver Tabla 27). `main` recibió dos PR de release: el #222 (24/11, núcleo, *squash*) y el #229 (25/11, Fase 2 completa, *merge commit*). Al 25/11, `develop` va 2 commits por delante de `main` (los PR #230 y #231, de datos de demostración y capturas) |
+| Pull requests | <https://github.com/orlando572/erp-donofrio/pulls?q=is%3Apr> | **82** PR, todos **fusionados** (80 a `develop` y 2 a `main`; 0 abiertos, 0 cerrados sin fusionar). 43 de Orlando y 39 de Evelyn. En el 23/11 eran 49 |
+| Actions | <https://github.com/orlando572/erp-donofrio/actions> | 3 workflows: `CI` (`ci.yml`), `Release` (`release.yml`) y `Pruebas no funcionales` (`perf.yml`, solo manual). **199 ejecuciones** (Tabla 28) |
+| Releases | <https://github.com/orlando572/erp-donofrio/releases> | **5 releases** con su zip: `v1.0.0` (núcleo), `v1.1.0` (M1), `v1.2.0` (M2), `v1.3.0` (M3) y `v1.4.0` (M4, *Latest*); detalle en la Tabla 26b |
+| Paquete (GHCR) | `ghcr.io/orlando572/erp-donofrio` | **Público.** `release.yml` publica la imagen con cada tag `v*`; el 24/11/2026 se verificó en el navegador, sin sesión, que `v1.0.0` y `latest` se descargan. La CLI no pudo listar las versiones (falta el permiso `read:packages`), así que la visibilidad de `v1.1.0` a `v1.4.0` no se comprobó una por una |
+| GitHub Project | <https://github.com/users/orlando572/projects/4> | Público, «Scrum ERP D'Onofrio», 22 ítems. Vistas, Insights y *Dailies* son de Evelyn ([6.2](06_01_a_06_03_equipo_sprints_y_project.md), 6.3) |
+| Issues | <https://github.com/orlando572/erp-donofrio/issues> | 22 (9 abiertos y 13 cerrados); plantillas `epica.yml` y `bug.yml`. Lo explica Evelyn en 6.8 |
 | Seguridad del repositorio | Settings → Code security | `secret scanning` y `push protection` **activos**; *Dependabot security updates* **desactivado** |
 
-**Estructura del repositorio.** Es la prevista en [06 §6.1](../plan/06_github_ci_infra.md) con estas diferencias, comprobadas en el árbol de `develop`: existe `addons/donofrio_base/` (la Fase 1; los módulos de la Fase 2 no existen), `docker/` (Odoo, PostgreSQL, Nginx), `scripts/` (18 scripts y la carpeta `perf/`; entre ellos los `verificar_*.sh`), `docs/` (`plan`, `informe`, `capturas`, `scrum`, `pm`, `dev`, `diagramas`, `manuales`, `usabilidad`) y `.github/` con 3 workflows, 2 plantillas de *issue* y la plantilla de PR.
+### Tabla 26b. Releases publicadas
+
+| Release | Qué entrega | Commit del tag | Fecha del commit (Lima) | Zip adjunto |
+|---|---|---|---|---|
+| [`v1.0.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.0.0) | Núcleo de la Fase 1 (`donofrio_base`); PR #222 | `4d0d94d` (en `main`) | 24/11/2026 00:38 | `erp-donofrio-v1.0.0.zip`, 23,5 MiB |
+| [`v1.1.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.1.0) | M1 `donofrio_calidad` (HU-17 y HU-18) | `16c1ad0` (cierre de M1 en `develop`) | 24/11/2026 00:30 | `erp-donofrio-v1.1.0.zip`, 23,6 MiB |
+| [`v1.2.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.2.0) | M2 `donofrio_heladeros` (HU-20 y HU-21) | `bcfd523` | 24/11/2026 01:32 | `erp-donofrio-v1.2.0.zip`, 24,4 MiB |
+| [`v1.3.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.3.0) | M3 cadena de frío (HU-19) | `602a037` | 24/11/2026 02:14 | `erp-donofrio-v1.3.0.zip`, 24,9 MiB |
+| [`v1.4.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.4.0) | M4 `donofrio_tablero` y marca (HU-22 y HU-24); **Latest** | `5e97fbc` | 24/11/2026 04:01 | `erp-donofrio-v1.4.0.zip`, 26,1 MiB |
+
+Los tags `v1.1.0` a `v1.4.0` apuntan al commit en que cerró cada módulo en `develop`; como el PR #229 (*merge commit*) llevó todo ese historial a `main`, los cuatro son **ancestros de `main`**. Las cuatro releases y sus imágenes se publicaron (ejecuciones de `release.yml`) el 25/11/2026 entre las 00:40 y las 00:50 (hora de Lima), una tras otra, con el flujo `release.yml` (cuatro ejecuciones en verde).
+
+**Estructura del repositorio.** Es la prevista en [06 §6.1](../plan/06_github_ci_infra.md) con estas diferencias, comprobadas en el árbol de `develop`: existen los cuatro módulos en `addons/` (`donofrio_base`, `donofrio_calidad`, `donofrio_heladeros` y `donofrio_tablero`), `docker/` (Odoo, PostgreSQL, Nginx), `scripts/` (23 scripts y la carpeta `perf/`; entre ellos los `verificar_*.sh`), `docs/` (`plan`, `informe`, `capturas`, `scrum`, `pm`, `dev`, `diagramas`, `manuales`, `usabilidad`) y `.github/` con 3 workflows, 2 plantillas de *issue* y la plantilla de PR. El repositorio tiene unos 570 archivos versionados.
 
 **Plan frente a realidad en `.github/`.** No existen `dependabot.yml`, `CODEOWNERS`, `cd.yml`, `.pre-commit-config.yaml` ni la plantilla `solicitud_cambio.yml` de [09 §9.3](../plan/09_normas_marcos.md). La calidad del código la comprueba el job `lint` con `scripts/check_legacy.sh` y `ruff` 0.8.4 (no `pylint-odoo` ni *pre-commit*), y la solicitud de cambio es el propio PR con su plantilla (anexo [10.4](anexo_10_04_rfc.md)).
 
-### Tabla 27. Protección de ramas (`gh api …/branches/{rama}/protection`, 23/11/2026)
+### Tabla 27. Protección de ramas (`gh api …/branches/{rama}/protection`, 25/11/2026)
 
 | Regla | `develop` | `main` |
 |---|---|---|
 | Aprobaciones requeridas del PR | 1 | 1 |
 | Descartar aprobaciones al cambiar el código (`dismiss_stale_reviews`) | Sí | Sí |
-| Checks obligatorios | **`lint` y `test`** | **Ninguno** |
+| Checks obligatorios | **`lint` y `test`** | **`lint` y `test`** (el 23/11 no tenía ninguno) |
 | Resolver las conversaciones antes de fusionar | Sí | Sí |
 | *Force push* y borrado de la rama | Prohibidos | Prohibidos |
 | Historial lineal / commits firmados | No | No |
 | **Aplica a administradores (`enforce_admins`)** | **No** | **No** |
 
-El plan pedía «1 aprobación y CI en verde» en `main`; en la realidad `main` exige la aprobación pero **no** tiene checks obligatorios (se pondrán al abrir el primer PR de release, porque hoy `main` no tiene commits que probar). Los *rulesets* no se usan (0).
+El plan pedía «1 aprobación y CI en verde» en `main`; el 23/11 `main` exigía la aprobación pero no tenía checks (no tenía commits que probar) y, con el primer PR de release, se le pusieron `lint` y `test`. Los *rulesets* no se usan (0).
 
-### Tabla 28. Ejecuciones de GitHub Actions (23/11/2026)
+### Tabla 28. Ejecuciones de GitHub Actions (25/11/2026)
 
 | Workflow | Ejecuciones | Resultado | Cuándo corre |
 |---|---|---|---|
-| **CI** | 108 | 96 correctas · 10 canceladas · **2 en rojo** | `pull_request` (62), `push` a `develop` y `main` (45) y `schedule` semanal (1: lunes 06:00 hora de Lima) |
-| **Release** | 1 | 1 correcta (ensayo del PR #190) | Tag `v*` (publica), PR que toque la release o ejecución manual (ensayo) |
+| **CI** | 192 | 165 correctas · 23 canceladas · **4 en rojo** | `pull_request` (113), `push` a `develop` y `main` (78) y `schedule` semanal (1: lunes 06:00 hora de Lima) |
+| **Release** | 7 | 7 correctas: 2 ensayos en PR (#190 y #222) y 5 publicaciones, una por tag (`v1.0.0` a `v1.4.0`) | Tag `v*` (publica), PR que toque la release o ejecución manual (ensayo) |
 | **Pruebas no funcionales** | 0 | — | Solo manual (`workflow_dispatch`): k6 y ZAP |
 
-Los **jobs de `ci.yml`** y su resultado acumulado:
+Los **4 rojos** del CI son 4 ejecuciones de PR que el propio PR corrigió antes de fusionarse: 2 del #189 (HU-27, el paso de verificación del despliegue, 23/11) y 2 del job `lint` en los PR de M1 y M3 (`feature/HU-17-inspecciones-calidad` el 24/11, por dos variables llamadas `l`, y `feature/HU-19-cadena-de-frio` el 24/11); en los dos casos se corrigió en el mismo PR y se fusionó con el CI en verde. Es la evidencia de que el control funciona. Las **23 canceladas** las reemplazó una corrida más reciente del mismo grupo de concurrencia; no son fallos. La corrida más reciente sobre `develop` (`339c907`, 25/11/2026, tras el PR #231) terminó **en verde**, con `0 failed, 0 error(s) of 218 tests`.
+
+Los **jobs de `ci.yml`** (medición del 23/11/2026, a la hora del corte del Sprint 3, antes de la Fase 2; no se repitió el conteo por job):
 
 | Job | Qué hace | Ejecuciones | Resultado | Duración (mediana · máx.) |
 |---|---|---|---|---|
@@ -56,13 +70,13 @@ Los **jobs de `ci.yml`** y su resultado acumulado:
 | `backup` | Respaldo, restauración en una base nueva y retención con `verificar_backup.sh` (HU-26) | 36 | 36 correctas | 75 s · 97 s |
 | `proxy` | Nginx con TLS y `verificar_despliegue.sh` (HU-27) | 32 | 29 correctas · **2 en rojo** · 1 cancelada | 87 s · 119 s |
 
-Los jobs `replica`, `backup` y `proxy` se agregaron en el Sprint 3, por eso tienen menos ejecuciones. Las **2 ejecuciones en rojo** son del PR #189 (HU-27): el paso de verificación del despliegue falló, en la segunda con «no acepta tls1_3» y «ningún intento se bloqueó» (el script de verificación usaba `openssl` y contaba mal el bloqueo por *worker*); se corrigió en el mismo PR y se fusionó con el CI en verde. Es la evidencia de que el control funciona. Las **10 canceladas** las reemplazó una corrida más reciente del mismo grupo de concurrencia; no son fallos. De la corrida programada hay **una** ejecución (éxito, id `45279340817`).
+Los jobs `replica`, `backup` y `proxy` se agregaron en el Sprint 3, por eso tienen menos ejecuciones. Las 2 ejecuciones en rojo del job `proxy` son del PR #189: la segunda falló con «no acepta tls1_3» y «ningún intento se bloqueó» (el script de verificación usaba `openssl` y contaba mal el bloqueo por *worker*). De la corrida programada hay **una** ejecución (éxito, id `45279340817`).
 
-**Capturas de la Release (24/11/2026).** Se tomaron en el navegador integrado **sin iniciar sesión**, lo que prueba que son públicas: la GitHub Release `v1.0.0` con el zip adjunto, el paquete de GHCR con sus etiquetas y la corrida del flujo Release en verde.
+**Capturas de la Release `v1.0.0` (24/11/2026).** Se tomaron en el navegador integrado **sin iniciar sesión**, lo que prueba que son públicas: la GitHub Release `v1.0.0` con el zip adjunto, el paquete de GHCR con sus etiquetas y la corrida del flujo Release en verde. No se repitieron para `v1.1.0` a `v1.4.0`; su evidencia es la lista de la Tabla 26b (`gh release list`) y las cuatro ejecuciones de `release.yml`.
 
 ![Ilustración 6.4-a. GitHub Release v1.0.0 con erp-donofrio-v1.0.0.zip adjunto (el zip pesa 23,5 MiB, unos 24,7 MB)](../capturas/sprint-4/S4-release_v1.0.0.png)
 
-*Ilustración 6.4-a. Release «ERP D'Onofrio v1.0.0» (marcada *Latest*) con `erp-donofrio-v1.0.0.zip` entre los *assets*. Captura: [`S4-release_v1.0.0.png`](../capturas/sprint-4/S4-release_v1.0.0.png).*
+*Ilustración 6.4-a. Release «ERP D'Onofrio v1.0.0» (*Latest* el 24/11; hoy lo es `v1.4.0`) con `erp-donofrio-v1.0.0.zip` entre los *assets*. Captura: [`S4-release_v1.0.0.png`](../capturas/sprint-4/S4-release_v1.0.0.png).*
 
 ![Ilustración 6.4-b. Paquete erp-donofrio en GHCR, público, con las etiquetas latest y v1.0.0](../capturas/sprint-4/S4-paquete_ghcr.png)
 
@@ -78,21 +92,22 @@ Los jobs `replica`, `backup` y `proxy` se agregaron en el Sprint 3, por eso tien
 
 ### Esquema real
 
-| Rama | Propósito | Cómo se usó (de los 49 PR) |
+| Rama | Propósito | Cómo se usó (de los 82 PR) |
 |---|---|---|
-| `main` | Lo entregado y aceptado; un tag por entrega (`v1.0.0` = núcleo) | Al 23/11 solo tenía el commit inicial. **24/11/2026:** el PR #222 fusionó `develop` en `main` y existe el tag `v1.0.0` |
-| `develop` | Integración continua del sprint | Base de los 49 PR; 77 commits |
-| `feature/HU-xx-*` | Una HU | **30 ramas** (tipo `feature/`); 28 son de una HU y 2 son de informe (`feature/S3-informe-4-2` y `S3-informe-5`) |
-| `docs/*` | Avance del informe y de Scrum | **16 ramas** (`docs/s1-planning`, `docs/s2-review-retro`…) |
+| `main` | Lo entregado y aceptado; un tag por entrega (`v1.0.0` = núcleo) | Al 23/11 solo tenía el commit inicial. **24/11/2026:** el PR #222 llevó el núcleo a `main` (*squash*) y se creó `v1.0.0`. **25/11/2026:** el PR #229 fusionó la Fase 2 (*merge commit*) y se crearon `v1.1.0` a `v1.4.0`. Recibió **2 PR** (`release/v1.0.0` y `release/v1.4.0`) |
+| `develop` | Integración continua del sprint | Base de **80 PR**; 81 commits en la primera línea de historia (`git log --first-parent`) |
+| `feature/HU-xx-*` | Una HU | **43 ramas** (tipo `feature/`): 39 llevan una HU en el nombre (las del núcleo y las de los módulos de la Fase 2, incluidos sus PR de cierre y de correcciones) y 4 son de informe o manuales (`feature/S3-informe-4-2`, `S3-informe-5`, `S3-informe-6` y `S3-manual-herramientas-abstract`) |
+| `docs/*` | Avance del informe y de Scrum | **34 ramas** (`docs/s1-planning`, `docs/s2-review-retro`, `docs/s3-informe-*-evelyn`…) |
 | `fix/*` | Corrección de un defecto | **1 rama**: `fix/HU-09-vigencia-hora-lima` |
 | `chore/*` | Mantenimiento (no está en el plan) | **2 ramas**: `chore/s0-cierre-windows` y `chore/ci-no-cancelar-develop` |
+| `release/*` | PR `develop` → `main` con su tag (no está en el plan como rama) | **2 ramas**: `release/v1.0.0` (PR #222) y `release/v1.4.0` (PR #229) |
 | `hotfix/*` | Corrección urgente sobre `main` | **No se usó** |
 
-**Diferencias con [06 §6.2](../plan/06_github_ci_infra.md):** (1) aparecieron las ramas `chore/*`; (2) los PR del informe del Sprint 3 salieron de `feature/S3-informe-*` y no de `docs/*`; (3) la rama de corrección lleva la HU y no el número del *issue* (`fix/HU-09-…`). Ninguna rama vive más de unas horas: el proyecto entero (de la creación del repositorio a hoy) ocurrió el 22 y el 23/11/2026.
+**Diferencias con [06 §6.2](../plan/06_github_ci_infra.md):** (1) aparecieron las ramas `chore/*` y `release/*`; (2) los PR del informe del Sprint 3 salieron de `feature/S3-informe-*` y no de `docs/*`; (3) la rama de corrección lleva la HU y no el número del *issue* (`fix/HU-09-…`). Ninguna rama vive más de unas horas: el proyecto entero (de la creación del repositorio al cierre de la Fase 2) ocurrió entre el 22 y el 25/11/2026.
 
 ### Figura 12. Flujograma de ramas (`gitGraph`)
 
-Resumen fiel del esquema real. `develop` sale del commit inicial de `main`; cada HU vive en su rama y vuelve por PR. Hasta el Sprint 2 los PR se fusionaron con *merge commit* (rombo resaltado) y desde el #184 con *squash* (un solo commit por PR). `develop` → `main` con *merge commit* y tag es el paso del Gate 0, que se ejecutó el 24/11/2026 (PR #222), después de generar este gráfico, y por eso no aparece en él.
+Resumen fiel del esquema real. `develop` sale del commit inicial de `main`; cada HU vive en su rama y vuelve por PR. Hasta el Sprint 2 los PR se fusionaron con *merge commit* (rombo resaltado) y desde el #184 con *squash* (un solo commit por PR). `develop` → `main` es el paso del Gate 0 (PR #222, *squash*, 24/11/2026) y el de la Fase 2 (PR #229, *merge commit*, 25/11/2026); el gráfico los muestra, resumiendo con un solo nodo los PR de cada módulo. Los tags `v1.1.0` a `v1.2.0` y `v1.3.0` apuntan a commits de `develop` que `main` ya contiene tras el #229 y no se dibujan por separado.
 
 ```mermaid
 gitGraph
@@ -122,25 +137,35 @@ gitGraph
   commit id: "fusiona develop"
   checkout develop
   commit id: "squash #189 HU-27"
+  commit id: "squash #218 gate 0"
+  checkout main
+  commit id: "squash #222 núcleo" tag: "v1.0.0"
+  checkout develop
+  commit id: "squash #219/#220 M1"
+  commit id: "squash #223/#225 M2"
+  commit id: "squash #226 M3"
+  commit id: "squash #227/#228 M4"
+  checkout main
+  merge develop id: "merge #229" tag: "v1.4.0"
+  checkout develop
+  commit id: "squash #230 y #231 datos y capturas"
 ```
 
-*Lectura.* Las ramas `feature/HU-26-backups` y `feature/HU-27-seguridad-despliegue` traen un commit «fusiona develop»: es la forma de resolver los conflictos (6.6). El paso final `develop` → `main` + `tag v1.0.0` se hizo el 24/11/2026 (PR #222) y aparecerá en este gráfico cuando se regenere.
+*Lectura.* Las ramas `feature/HU-26-backups` y `feature/HU-27-seguridad-despliegue` traen un commit «fusiona develop»: es la forma de resolver los conflictos (6.6). Los pasos a `main` (PR #222 con `v1.0.0` y PR #229 con `v1.4.0`) están dibujados al final.
 
 ### Listado real de ramas
 
-**Remotas** (`git branch -r`, 23/11/2026): 15, de las cuales 2 están protegidas.
+**Remotas** (`git branch -r`, 25/11/2026): **40**, de las cuales 2 están protegidas (`main` y `develop`).
 
 | Rama remota | Estado |
 |---|---|
-| `main` | Protegida; sin avance desde el Sprint 0 |
+| `main` | Protegida; recibió los PR #222 y #229 |
 | `develop` | Protegida; rama de integración |
-| `docs/s2-aceptacion-po`, `docs/s3-planning` | PR #184 y #185 fusionados (squash); la rama sigue en el remoto |
-| `feature/HU-23-tablero-estandar`, `HU-25-replica`, `HU-26-backups`, `HU-27-seguridad-despliegue`, `HU-28-k6-zap`, `HU-28-lighthouse`, `HU-29-release`, `HU-30-usabilidad`, `HU-33-tests-compra-op` | PR #188, #186, #187, #189, #196, #194, #190, #195 y #192, todos fusionados (squash); la rama sigue en el remoto |
-| `feature/S3-informe-4-2`, `feature/S3-informe-5` | PR #197 y #198 fusionados (squash) |
+| 38 ramas de trabajo (`docs/*`, `feature/*` y `release/*`) | Todas con su PR **fusionado** (82 PR en total, 0 abiertos): `docs/s2-aceptacion-po`, `docs/s3-planning`, las `docs/s3-informe-*`, `feature/HU-16-*`, `HU-17-*`, `HU-18-*`, `HU-19-*`, `HU-20-*`, `HU-22-*`, `HU-23` a `HU-30`, `HU-33`, `feature/S3-*`, `release/v1.0.0` y `release/v1.4.0` |
 
-Las 13 ramas de trabajo que quedan en el remoto **ya están fusionadas**: GitHub las ve «por delante» de `develop` porque el *squash* crea otro commit; no tienen trabajo sin fusionar. Las otras **36** ramas de los 49 PR se borraron al fusionar (`delete_branch_on_merge = true`). Esta rama (`feature/S3-informe-6`) se suma a la lista al abrir su PR.
+Las 38 ramas de trabajo que quedan en el remoto **ya están fusionadas**: GitHub las ve «por delante» de `develop` porque el *squash* crea otro commit; no tienen trabajo sin fusionar. Las otras **44** ramas de los 82 PR se borraron al fusionar (`delete_branch_on_merge = true`). Esta rama (`feature/cierre-informe-final`) se suma a la lista al abrir su PR.
 
-**Fusionadas** (por el encabezado de cada PR): 49 ramas en total: 30 `feature/*`, 16 `docs/*`, 2 `chore/*` y 1 `fix/*`. La tabla completa, con número de PR, autor, quién fusionó y método, está en [`S3-informe6_prs_fusionados.tsv`](../capturas/sprint-3/S3-informe6_prs_fusionados.tsv).
+**Fusionadas** (por el encabezado de cada PR): 82 ramas en total: 43 `feature/*`, 34 `docs/*`, 2 `chore/*`, 2 `release/*` y 1 `fix/*`. La tabla completa, con número de PR, autor, quién fusionó, método y rama base, está en [`S4_informe_final_prs_fusionados.tsv`](../capturas/sprint-4/S4_informe_final_prs_fusionados.tsv).
 
 ## 6.6 Merge strategy
 
@@ -154,22 +179,22 @@ Las 13 ramas de trabajo que quedan en el remoto **ya están fusionadas**: GitHub
 
 ### Lo que se hizo (discrepancias plan–realidad)
 
-| Punto | Plan | **Realidad al 23/11/2026** |
+| Punto | Plan | **Realidad al 25/11/2026** |
 |---|---|---|
-| Método a `develop` | Siempre *squash* | **Mixto: 32 *squash* y 17 *merge commit*.** Los 17 *merge commit* son todos hasta el PR #183 (Sprint 0, 1 y 2): #151, #153 a #158, #160, #166, #169, #173 a #177, #180 y #183. **Desde el #184 (cierre del Sprint 2) los 15 PR son *squash*** (el repositorio permite los dos métodos: `allow_squash_merge` y `allow_merge_commit` en `true`; el *rebase* está desactivado). Desde ese PR coincide con el plan: un commit por PR |
-| Historial de `develop` | Un commit por HU | `git log --first-parent origin/develop`: 50 commits (1 raíz, 32 *squash* y 17 *merge commit*); el historial de los primeros sprints conserva los commits de cada rama |
-| Revisión cruzada | 1 aprobación del otro integrante | **46 de 49 PR** (94 %) con aprobación vigente del otro integrante; en los 49 revisó el otro. Los otros **3** (#154, #155 y #156, del Sprint 1) se fusionaron con la aprobación **descartada** al cambiar su base a `develop` y con el código ya revisado y los checks en verde (4.3.1) |
-| Quién fusiona | El revisor | 26 PR los fusionó su propio autor **después** de la aprobación del otro; 23 los fusionó el otro integrante |
+| Método a `develop` | Siempre *squash* | **Mixto: 63 *squash* y 17 *merge commit*** (de los 80 PR a `develop`). Los 17 *merge commit* son todos hasta el PR #183 (Sprint 0, 1 y 2): #151, #153 a #158, #160, #166, #169, #173 a #177, #180 y #183. **Desde el #184 (cierre del Sprint 2) los 46 PR son *squash*** (el repositorio permite los dos métodos: `allow_squash_merge` y `allow_merge_commit` en `true`; el *rebase* está desactivado). Desde ese PR coincide con el plan: un commit por PR |
+| Historial de `develop` | Un commit por HU | `git log --first-parent origin/develop`: 81 commits (1 raíz, 63 *squash* y 17 *merge commit*); el historial de los primeros sprints conserva los commits de cada rama |
+| Revisión cruzada | 1 aprobación del otro integrante | **79 de 82 PR** (96 %) con aprobación vigente del otro integrante; en los 82 revisó el otro. Los otros **3** (#154, #155 y #156, del Sprint 1) se fusionaron con la aprobación **descartada** al cambiar su base a `develop` y con el código ya revisado y los checks en verde (4.3.1). Los 33 PR nuevos (#199 a #231) tienen todos su aprobación vigente |
+| Quién fusiona | El revisor | De los 82 PR, **34** los fusionó su propio autor **después** de la aprobación del otro y **48** los fusionó el otro integrante |
 | Conversaciones resueltas | Obligatorio | Activado en las dos ramas; **0** comentarios en línea de código (la revisión se dejó en la aprobación y en 3 comentarios de conversación) |
 | Aprobación al cambiar el código | — | `dismiss_stale_reviews` está activo: **13 revisiones** de 11 PR se descartaron al hacer un push nuevo y hubo que volver a aprobar |
 | Conflictos | `git rebase` | **Se resolvieron fusionando `develop` en la rama (merge, no *rebase*)**, sin *force push*. Ver abajo |
-| `develop` → `main` | *Merge commit* con tag | **Aún no ocurrió**; se hace en el Gate 0 (`docs/dev/release.md`) |
+| `develop` → `main` | *Merge commit* con tag | **Hecho dos veces:** el PR #222 (24/11, núcleo, `v1.0.0`) se fusionó con *squash* —`main` solo tenía el commit inicial y quedó con un solo commit—, no con *merge commit*; el PR #229 (25/11, Fase 2, `v1.4.0`) sí fue *merge commit*, con sus padres `4d0d94d` y el último commit de `develop`. Los tags `v1.1.0` a `v1.3.0` se pusieron sobre commits de `develop` que `main` contiene desde el #229 |
 
-Con el método real, el *merge commit* de los primeros sprints es una **forma válida** de conservar el detalle de cada rama, y el *squash* del Sprint 3 es el del plan. La documentación del plan ([06 §6.2](../plan/06_github_ci_infra.md)) se mantiene como objetivo; el informe documenta la realidad.
+Con el método real, el *merge commit* de los primeros sprints es una **forma válida** de conservar el detalle de cada rama, y el *squash* desde el #184 es el del plan. La documentación del plan ([06 §6.2](../plan/06_github_ci_infra.md)) se mantiene como objetivo; el informe documenta la realidad.
 
 ### Conflictos y su resolución
 
-Un conflicto aparece cuando otro PR toca los mismos archivos entre que se abre el PR y se fusiona. **8 PR** integraron `develop` dentro de su rama con un *merge commit* (9 *merge commits* en total): #168, #170, #179, #187, #189 (dos veces), #192, #194 y #196. Tres lo explicaron en un comentario del PR:
+Un conflicto aparece cuando otro PR toca los mismos archivos entre que se abre el PR y se fusiona. **10 PR** integraron `develop` dentro de su rama con un *merge commit* (12 *merge commits* en total, sin contar los dos PR de release): #168, #170, #179, #187, #189 (dos veces), #192, #194, #196, #216 y #224 (dos veces). Tres lo explicaron en un comentario del PR:
 
 | PR | Qué chocó | Cómo se resolvió |
 |---|---|---|
@@ -189,7 +214,7 @@ Las reglas de `develop` y `main` (Tabla 27) **no aplican a los administradores**
 
 | Qué | Dónde |
 |---|---|
-| Configuración del repo, protección de ramas, PR, Actions, releases | [`S3-informe6_evidencia_github.txt`](../capturas/sprint-3/S3-informe6_evidencia_github.txt) |
-| Los 49 PR: método, autor, quién fusionó, aprobación y merges de `develop` | [`S3-informe6_prs_fusionados.tsv`](../capturas/sprint-3/S3-informe6_prs_fusionados.tsv) |
+| Configuración del repo, protección de ramas, PR, Actions, releases (23/11/2026; el 25/11 se repitió con `gh`, ver las Tablas 26 a 28) | [`S3-informe6_evidencia_github.txt`](../capturas/sprint-3/S3-informe6_evidencia_github.txt) |
+| Los 82 PR: método, autor, quién fusionó, aprobación, merges de `develop` y rama base | [`S4_informe_final_prs_fusionados.tsv`](../capturas/sprint-4/S4_informe_final_prs_fusionados.tsv) (los 49 del 23/11: [`S3-informe6_prs_fusionados.tsv`](../capturas/sprint-3/S3-informe6_prs_fusionados.tsv)) |
 | Trazabilidad requisito → HU → PR | [`trazabilidad.md`](trazabilidad.md) |
 | Excepciones del Sprint 1 y reglas de protección | [4.3.1](04_03_infraestructura.md) |

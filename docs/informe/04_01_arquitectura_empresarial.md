@@ -1,6 +1,6 @@
 # 4.1.3 Arquitectura empresarial
 
-> **Estado:** borrador del Sprint 1 · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [01 §1.6](../plan/01_alcance_escenario.md), [09 §9.1](../plan/09_normas_marcos.md), [03](../plan/03_modulos_odoo.md)
+> **Estado:** versión final del Cierre (25/11/2026) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [01 §1.6](../plan/01_alcance_escenario.md), [09 §9.1](../plan/09_normas_marcos.md), [03](../plan/03_modulos_odoo.md)
 >
 > La situación actual (AS-IS) es un supuesto académico (S7): no hay acceso a los sistemas internos de D'Onofrio. La propuesta (TO-BE) sí describe lo que se construye en este proyecto.
 
@@ -18,17 +18,17 @@ Se ordena la arquitectura con las **cuatro capas de TOGAF** (The Open Group, 202
 |---|---|---|---|
 | **Negocio** | Cinco áreas con procesos manuales: venta B2B, liquidación del heladero, producción y calidad, almacén con cadena de frío y compras. Cada área decide con sus papeles; la gerencia recibe reportes armados a mano al cierre | Procesos de punta a punta en un solo flujo: CRM → pedido → entrega FEFO → factura; compra → recepción; orden de producción → lote. Punto de venta con boleta, gerencia con dashboards y vistas pivote, y mesa de servicios TI | 5, 6 y 7 |
 | **Datos** | Excel por área, kárdex, planillas de temperatura y formatos de inspección en papel. No hay lote ni vencimiento en un sistema, y el mismo dato se digita dos o más veces | Una sola base **PostgreSQL 16** donde lote, vencimiento y movimiento quedan ligados. Los datos maestros se cargan por código con `donofrio_base`. Réplica de lectura y respaldos diarios (Sprint 3) | 2, 4 y 6 |
-| **Aplicación** | Excel, correo y Word; un sistema contable aislado; ninguna integración entre áreas | **Odoo 19 Community** con Ventas, CRM, Punto de venta, Inventario, Manufactura, Compras, Facturación (`l10n_pe`), RR. HH. y Project. `donofrio_base` en la Fase 1; `donofrio_calidad`, `donofrio_heladeros` y `donofrio_tablero` en la Fase 2, solo si se confirman en el gate | 1 a 7 (la F2 cubre 1, 3 y 4 de forma completa) |
-| **Tecnología** | PC de oficina y un servidor de archivos. Sin entornos separados ni respaldos verificados | **Docker Compose** (Odoo 19 + PostgreSQL 16), Nginx con TLS y réplica en el Sprint 3. GitHub (código y Projects), Actions (CI) y GHCR (imágenes). Ubuntu o WSL2 en las PC de desarrollo ([4.3.1](04_03_infraestructura.md)) | 6 |
+| **Aplicación** | Excel, correo y Word; un sistema contable aislado; ninguna integración entre áreas | **Odoo 19 Community** con Ventas, CRM, Punto de venta, Inventario, Manufactura, Compras, Facturación (`l10n_pe`), RR. HH. y Project. `donofrio_base` (Fase 1) y, en la Fase 2, `donofrio_calidad` (con la cadena de frío), `donofrio_heladeros` y `donofrio_tablero`, **implementados** | 1 a 7 (la F2 cubre 1, 3 y 4 de forma completa) |
+| **Tecnología** | PC de oficina y un servidor de archivos. Sin entornos separados ni respaldos verificados | **Docker Compose** (Odoo 19 + PostgreSQL 16), Nginx con TLS y réplica (Sprint 3). GitHub (código y Projects), Actions (CI) y GHCR (imágenes). Ubuntu o WSL2 en las PC de desarrollo ([4.3.1](04_03_infraestructura.md)) | 6 |
 
-## Estado de la arquitectura propuesta al cierre del Sprint 1
+## Estado de la arquitectura propuesta al cierre del proyecto (25/11/2026)
 
-| Capa | Ya está en `develop` | Falta |
+| Capa | Lo que está en `main` | Lo que queda fuera |
 |---|---|---|
-| Negocio | Compañía con localización peruana (RUC ficticio, PEN, IGV 18 %), 10 usuarios por rol con permisos mínimos, organigrama y empleados en RR. HH. (HU-05) | Los procesos de punta a punta (Sprint 2) y los dashboards (Sprint 3) |
-| Datos | Base PostgreSQL 16 con datos maestros cargados por código: 2 almacenes y 8 ubicaciones, 25 productos terminados, 22 insumos y 12 recetas con lote y vida útil | Transacciones de demostración (HU-16), réplica (HU-25) y respaldos (HU-26) |
-| Aplicación | Odoo 19 con Inventario, Manufactura, Ventas, Compras, Punto de venta, Facturación y RR. HH. instalados; módulo `donofrio_base` | CRM, Project y los dashboards; los módulos propios de la Fase 2 no se empiezan sin confirmación del equipo |
-| Tecnología | Docker Compose con Odoo y PostgreSQL, CI en cada PR, protección de `develop` (1 aprobación y los checks `lint` y `test` para quien colabora; ver [4.3.1](04_03_infraestructura.md)) | Nginx con TLS (HU-27), imágenes en GHCR y release `v1.0.0` (HU-29), VM en la nube (opcional) |
+| Negocio | Compañía con localización peruana (RUC ficticio, PEN, IGV 18 %), 10 usuarios por rol con permisos mínimos, organigrama, los procesos de punta a punta (CRM → pedido → entrega FEFO → factura; compra → recepción; orden de producción → lote), dashboards de gerencia, mesa de servicios y, con la Fase 2, la liquidación del heladero, la inspección de calidad con certificado, la cadena de frío y el tablero gerencial | Envío electrónico a SUNAT (necesita Enterprise) |
+| Datos | Base PostgreSQL 16 con datos maestros por código (`donofrio_base`), transacciones de demostración del 3/8 al 22/11/2026 (HU-16), réplica en *streaming* (HU-25) y respaldos con restauración de 31 s (HU-26); 42 tablas centrales en el ER (6 de ellas de los módulos propios) | Promoción de la réplica no probada; datos de producción reales |
+| Aplicación | Odoo 19 con Inventario, Manufactura, Ventas, CRM, Compras, Punto de venta, Facturación, RR. HH. y Project; `donofrio_base`, `donofrio_calidad`, `donofrio_heladeros` y `donofrio_tablero` (218 pruebas en el CI) | Aplicación móvil propia |
+| Tecnología | Docker Compose con Odoo y PostgreSQL, Nginx con TLS (HU-27), CI en cada PR, `develop` protegida, imágenes en GHCR y *releases* `v1.0.0` a `v1.4.0` (HU-29) | VM en la nube (opcional, no implementada) |
 
 ## Objetivos de COBIT 2019 que soporta la arquitectura
 
@@ -48,12 +48,12 @@ COBIT 2019 se usa como marco de referencia (alineación, no certificación). Est
 | **APO09** Gestión de acuerdos de servicio | SLA por prioridad de la mesa de servicios (Sprint 3) |
 | **MEA01** Monitoreo del desempeño y la conformidad | Burndown por puntos, CI y pruebas de carga, seguridad y WPO (Sprint 3) |
 
-> Los objetivos DSS02, DSS04, APO09 y MEA01 dependen de trabajo del Sprint 3: hoy están **planificados**, no implementados.
+> Los objetivos DSS02, DSS04, APO09 y MEA01 dependen del trabajo del Sprint 3 (HU-25, HU-26, HU-28 y HU-32), que está **implementado** y medido; ver [4.7](04_07_acuerdos_de_nivel_de_servicio.md), [5.14](05_13_a_05_14_pruebas.md) y [5.9](05_07_a_05_09_arquitectura_bd.md).
 
 ---
 
-## Pendiente de citar antes del informe final
+## Notas sobre las fuentes
 
-1. **TOGAF** (The Open Group): citar la edición usada y confirmar que las cuatro capas (negocio, datos, aplicación y tecnología) son las del estándar.
-2. **COBIT 2019** (ISACA): confirmar el nombre de cada objetivo de la tabla (APO09, APO12, APO13, BAI03, BAI06, DSS01 a DSS05 y MEA01) con la guía *Governance and Management Objectives* y agregar la referencia APA 7 en la sección 9. Los nombres se escribieron de memoria.
+1. **TOGAF** (The Open Group, 2022) y **COBIT 2019** (ISACA, 2018) están en la [sección 9](09_referencias.md). Se usan como marcos de referencia, no se aplican completos: las cuatro capas de TOGAF y los objetivos de COBIT sirven para ordenar y justificar lo construido.
+2. Los nombres de los objetivos de COBIT de la tabla (APO09, APO12, APO13, BAI03, BAI06, DSS01 a DSS05 y MEA01) se escribieron de la guía *Governance and Management Objectives*, pero **no se cotejaron con el texto de pago**; se declara como límite.
 3. El enlace entre cada objetivo y el elemento de la arquitectura que lo respalda es un **juicio del equipo** (supuesto académico). La situación actual (AS-IS) es el supuesto S7 del plan.

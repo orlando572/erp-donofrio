@@ -11,7 +11,7 @@ campos, tabla, kanban, tarjetas de KPI, gráfico...). De esa misma descripción 
 * ``mk_*``: mockup en alta fidelidad con la paleta de marca (amarillo de los carritos, 1919).
 
 Los datos que aparecen son ficticios y verosímiles (supuesto S7 del plan). Las pantallas con
-``f2=True`` dependen de un módulo propio de la Fase 2: se diseñan en la F1 aunque no se construyan.
+``f2=True`` dependen de un módulo propio de la Fase 2: se diseñaron en la F1 y se implementaron en la F2.
 """
 from pathlib import Path
 from xml.sax.saxutils import escape
@@ -355,7 +355,7 @@ PANTALLAS = [
 ]
 
 
-# Reportes en PDF (QWeb) de la Fase 2: se diseñan en la F1 aunque no se construyan (4.6.3). Hoja A4 sin barra de la aplicación.
+# Reportes en PDF (QWeb) de la Fase 2: se diseñaron en la F1 y se implementaron en la F2 (4.6.3). Hoja A4 sin barra de la aplicación.
 REPORTES = [
     Pantalla('rp_certificado_calidad', 'CU008', 'Certificado de calidad del lote', 'Calidad (M1)',
              'Calidad › Inspecciones › INS/00018 › Imprimir', hu='HU-18', f2=True, reporte=True, ancho=794, partes=[
@@ -430,7 +430,7 @@ def dibujar(pantalla, mockup):
     if pantalla.f2:
         s.append(f'<rect x="{margen}" y="110" width="250" height="20" rx="10" '
                  f'fill="{AMARILLO_CLARO if mockup else "#EEEEEE"}" stroke="{e.tinta}" stroke-dasharray="3 2"/>'
-                 + t(margen + 125, 124, 'Módulo propio de la Fase 2 (diseño)', e, 10, ancla='middle'))
+                 + t(margen + 125, 124, 'Módulo propio de la Fase 2 (implementado)', e, 10, ancla='middle'))
     s += cuerpo
     s.append(t(w - margen, alto_total - 8, 'Wireframe' if not mockup else 'Mockup', e, 9, color=e.gris, ancla='end'))
     s.append('</svg>')

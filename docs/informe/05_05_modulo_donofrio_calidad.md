@@ -1,6 +1,6 @@
 # 5.5b Documentación del módulo `donofrio_calidad` (M1)
 
-> **Estado:** borrador del Sprint 4 · **Autora:** Evelyn · **Revisa:** Orlando (dueño del módulo) · **Fuente:** `addons/donofrio_calidad/` en `develop` (PR #219 y #220), una base de desarrollo con el módulo instalado y las capturas de [`docs/capturas/sprint-4/`](../capturas/sprint-4/)
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn · **Revisa:** Orlando (dueño del módulo) · **Fuente:** `addons/donofrio_calidad/` en `develop` (PR #219, #220, #221 y #224; release [`v1.1.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.1.0), mini gate en [`gate-m1-calidad.md`](../scrum/gates/gate-m1-calidad.md)), una base de desarrollo con el módulo instalado y las capturas de [`docs/capturas/sprint-4/`](../capturas/sprint-4/)
 >
 > Complementa la sección 5.5 (`donofrio_base`). **No** sustituye al ER general del núcleo (4.2.6): las tres tablas de este módulo se listan aquí, extraídas de la base real con `information_schema`, y **sí están** en el ER general (4.2.6, área «Calidad (M1)») y en el diccionario del núcleo (Tablas 4.2.8-37 a 4.2.8-39), regenerados con `scripts/diagrama_er.py` y `scripts/diccionario_datos.py` sobre una base con el módulo instalado.
 
@@ -28,7 +28,7 @@ La Calidad estándar de Odoo es Enterprise, así que M1 la construye como módul
 | `security/` | Grupos `Calidad: inspector` y `Calidad: jefatura` y `ir.model.access.csv` |
 | `data/calidad_data.xml` | Secuencia `INS/` y cinco puntos de control; asigna el grupo al usuario Inspector de Calidad |
 | `views/calidad_views.xml` | Lista, formulario, búsqueda, acciones y menú |
-| `tests/test_inspeccion.py` | 12 pruebas |
+| `tests/test_inspeccion.py` | 13 pruebas (y `test_pdv.py`, 2, y `test_idioma.py`, 1) |
 
 ## 5.5b.3 Estados y reglas
 
@@ -117,7 +117,7 @@ mrp_production 1───* donofrio_calidad_inspeccion *───1 stock_lot
 
 ## 5.5b.7 Pruebas y evidencia
 
-`scripts/test.sh donofrio_calidad`: **12 pruebas, sin errores** (creación al terminar la OP y sin duplicados, líneas según el producto, aprobar con y sin cumplir, rechazar con motivo, despacho de lote rechazado y aprobado, unicidad, permisos, certificado de aprobada y error en las demás).
+`scripts/test.sh donofrio_calidad`: **45 pruebas, sin errores** (13 de inspección, 2 del punto de venta, 1 de idioma y 29 de la cadena de frío de [5.5d](05_05_modulo_donofrio_frio.md)). Las de inspección cubren la creación al terminar la OP y sin duplicados, líneas según el producto, aprobar con y sin cumplir, rechazar con motivo, despacho de lote rechazado y aprobado, unicidad, permisos, certificado de aprobada y error en las demás.
 
 | Qué se verificó en la pantalla de Odoo (base `donofrio`, usuario Inspector de Calidad, con los datos de demostración de la HU-16; PNG de 1600 × 900, tomados el 25/11/2026) | Captura |
 |---|---|
@@ -128,9 +128,9 @@ mrp_production 1───* donofrio_calidad_inspeccion *───1 stock_lot
 
 ## 5.5b.8 Límites
 
-- **El bloqueo del despacho se probó con pruebas automáticas, no en la pantalla.** Cubre la salida a cliente por una transferencia; no se probó el punto de venta con un lote rechazado.
+- **El bloqueo del despacho se probó con pruebas automáticas, no en la pantalla.** Cubre la salida a cliente por una transferencia y, desde el PR #224, el punto de venta (`test_pdv.py`, 2 pruebas); el bloqueo en el PdV no se vio en la pantalla.
 - **Las inspecciones de las capturas son datos de demostración** (HU-16, 188 inspecciones en la base de desarrollo, no en el repositorio); se tomaron solo con lectura, sin crear ni editar registros. En un despliegue nuevo solo se crean al terminar una orden de fabricación.
 - En las capturas, el historial de cada inspección figura a nombre de «OdooBot», porque la demostración se cargó por script; al crearla un usuario en la pantalla, queda su nombre.
 - El módulo se instaló (`-i`) y se actualizó (`-u`) sobre la base `donofrio`, que tiene datos, sin errores ni avisos. No se probó una actualización entre dos versiones distintas del módulo, porque solo existe una.
-- El mensaje del historial de cambios dice «created» en inglés porque el módulo no trae traducciones `.po` (los textos de las vistas sí están en español).
+- El mensaje de creación del historial de cambios sale en español: el módulo trae `i18n/es.po` desde el PR #224 (`test_idioma.py`); los otros módulos propios no traen `.po` y sus textos están en español en el código.
 - El aviso del rechazo al **jefe de producción** (CU008, A1) se resuelve con una actividad al responsable de la orden; si la orden no tiene responsable, la actividad queda para quien rechaza.

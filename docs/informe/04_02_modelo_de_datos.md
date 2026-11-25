@@ -1,8 +1,8 @@
-# 4.2.5 a 4.2.8 Modelo de datos del núcleo: clases, ER, diseño lógico y diccionario
+# 4.2.5 a 4.2.8 Modelo de datos: clases, ER, diseño lógico y diccionario
 
-> **Estado:** borrador del Sprint 3 · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [04 §4.5](../plan/04_scrum_pmbok.md), [05](../plan/05_reparto_equipo.md), [03 §3.3](../plan/03_modulos_odoo.md)
+> **Estado:** versión final del Cierre (25/11/2026) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [04 §4.5](../plan/04_scrum_pmbok.md), [05](../plan/05_reparto_equipo.md), [03 §3.3](../plan/03_modulos_odoo.md)
 >
-> Cubre el **núcleo de la Fase 1** (Odoo 19.0 Community + `donofrio_base`). Todo sale de lo que existe: las clases, del código de `addons/donofrio_base/` y de los modelos de Odoo instalados; el ER, el diseño lógico y el diccionario, de una **base de datos real** con `donofrio_base` recién instalado desde `develop`, no de un dibujo a mano. Las clases de la Fase 2 (calidad, cadena de frío, heladeros y tablero) se dibujan aparte como **propuesto**: **no están implementadas** y no tienen tablas. Cómo regenerar cada figura: [docs/diagramas/README.md](../diagramas/README.md).
+> Cubre el **núcleo de la Fase 1** (Odoo 19.0 Community + `donofrio_base`) y los **módulos de la Fase 2, ya implementados** (M1 calidad, M2 heladeros, M3 cadena de frío y M4 tablero). Todo sale de lo que existe: las clases, del código de `addons/` y de los modelos de Odoo instalados; el ER, el diseño lógico y el diccionario, de una **base de datos real** con los módulos instalados, no de un dibujo a mano. Las clases de la Fase 2 se dibujan aparte en la Figura 4.2.5-b; M4 no crea tablas. Cómo regenerar cada figura: [docs/diagramas/README.md](../diagramas/README.md).
 
 ## 4.2.5 Diagrama de clases
 
@@ -41,20 +41,20 @@ El dominio de D'Onofrio no se modela con clases nuevas: se apoya en los modelos 
 
 `donofrio_base` **no define ningún modelo nuevo (`_name`)**: solo extiende cuatro modelos estándar con `_inherit`, y de ellos únicamente `project.task` gana una columna. Los 10 usuarios por rol, la compañía, los almacenes, los productos, las listas de materiales, los precios, los clientes, los empleados y los reabastecimientos son **registros** (datos XML) en las tablas de Odoo, no estructura.
 
-### Clases propuestas de la Fase 2
+### Clases de la Fase 2 (implementadas)
 
-Las clases de los módulos de la Fase 2 se diseñan a partir del plan ([03 §3.3](../plan/03_modulos_odoo.md)) y se dibujan con el estereotipo `<<propuesto>>`, borde punteado y fondo amarillo. **No existe código, ni tabla, ni prueba de ellas.** Si un módulo no se construye (orden fijo M1 → M2 → M3 → M4), queda como «Diseñado – trabajo futuro».
+Las clases de los módulos de la Fase 2 se diseñaron a partir del plan ([03 §3.3](../plan/03_modulos_odoo.md)) y **se implementaron en orden fijo (M1 → M2 → M3 → M4)**, cada una con su mini gate. La figura se redibujó con los nombres y atributos **reales del código** (en amarillo las clases propias; en gris los modelos de Odoo que usan o extienden) y ya no lleva el estereotipo «propuesto».
 
-![Clases propuestas de la Fase 2](../diagramas/clases/clases_fase2_propuesto.png)
+![Clases de la Fase 2](../diagramas/clases/clases_fase2.png)
 
-*Figura 4.2.5-b. Clases propuestas (no implementadas) de la Fase 2, ligadas a los modelos de Odoo que sí existen. Se genera con [`clases_fase2_propuesto.puml`](../diagramas/clases/clases_fase2_propuesto.puml).*
+*Figura 4.2.5-b. Clases implementadas de la Fase 2, ligadas a los modelos de Odoo que usan o extienden. Se genera con [`clases_fase2.puml`](../diagramas/clases/clases_fase2.puml) (PlantUML).*
 
-| Clase propuesta | Módulo | Estado | Relación con el núcleo |
+| Clase | Módulo y release | Estado | Relación con el núcleo |
 |---|---|---|---|
-| `donofrio.calidad.punto`, `donofrio.calidad.inspeccion` y su línea de medición | M1 `donofrio_calidad` | **Implementado** (24/11/2026) | La inspección se liga a `mrp.production` y `stock.lot`; un lote rechazado no se despacha. Tablas y diccionario en [5.5b](05_05_modulo_donofrio_calidad.md) |
-| `donofrio.temperatura` y `control_temperatura`, `temp_min` y `temp_max` en `stock.location` | M3 cadena de frío (incremento de `donofrio_calidad`) | **Implementado** (24/11/2026) | Registra temperaturas por ubicación, marca la lectura fuera de rango y crea una actividad al jefe de almacén; agrega también `stock.lot.alerta_vencimiento_fecha` para el cron de lotes por vencer. Tablas y diccionario en [5.5d](05_05_modulo_donofrio_frio.md) |
-| `donofrio.liquidacion` y su línea | M2 `donofrio_heladeros` | **Implementado** (24/11/2026) | Al liquidar crea y confirma un `sale.order`. Tablas y diccionario en [5.5c](05_05_modulo_donofrio_heladeros.md) |
-| Servicio de KPIs (`get_kpis()`) | M4 `donofrio_tablero` | **Implementado** (24/11/2026) | Modelo abstracto: **no tiene tablas** (el ER no cambia: 42 tablas). Lee ventas y, si están instalados, los módulos anteriores ([5.5e](05_05_modulo_donofrio_tablero.md)) |
+| `donofrio.calidad.punto`, `donofrio.calidad.inspeccion` y su línea de medición | M1 `donofrio_calidad` (`v1.1.0`) | **Implementado** (24/11/2026) | La inspección se liga a `mrp.production` y `stock.lot`; un lote rechazado no se despacha. Tablas y diccionario en [5.5b](05_05_modulo_donofrio_calidad.md) |
+| `donofrio.temperatura` y `control_temperatura`, `temp_min` y `temp_max` en `stock.location` | M3 cadena de frío, incremento de `donofrio_calidad` (`v1.3.0`) | **Implementado** (24/11/2026) | Registra temperaturas por ubicación, marca la lectura fuera de rango y crea una actividad al jefe de almacén; agrega también `stock.lot.alerta_vencimiento_fecha` para el cron de lotes por vencer. Tablas y diccionario en [5.5d](05_05_modulo_donofrio_frio.md) |
+| `donofrio.liquidacion` y su línea | M2 `donofrio_heladeros` (`v1.2.0`) | **Implementado** (24/11/2026) | Al liquidar crea y confirma un `sale.order`. Tablas y diccionario en [5.5c](05_05_modulo_donofrio_heladeros.md) |
+| Servicio de KPIs (`get_kpis()`) | M4 `donofrio_tablero` (`v1.4.0`) | **Implementado** (24/11/2026) | Modelo abstracto: **no tiene tablas** (el ER no cambia: 42 tablas). Lee ventas y, si están instalados, los módulos anteriores ([5.5e](05_05_modulo_donofrio_tablero.md)) |
 
 ## 4.2.6 Diseño de base de datos: modelo ER
 
@@ -140,7 +140,7 @@ Las descripciones vienen de la etiqueta y la ayuda que Odoo guarda por campo; la
 |  | `alert_date` | timestamp | 8 B | Sí | Fecha de alerta — Fecha que determina la caducidad de los números de lote y serie con el filtro "Alertas de caducidad". |
 |  | `standard_price` | jsonb | variable | Sí | Costo — El valor del lote (calculado de forma automática con AVCO) Se utiliza para valorar el producto cuando se desconoce el costo de compra (po… |
 
-El diccionario completo y el anexo se regeneran con un comando (ver [README de diagramas](../diagramas/README.md)); también puede escribirse un CSV (`--csv`) que se abre en Excel. Si cambia el esquema (por ejemplo, cuando se construya el módulo M1), basta volver a ejecutar los scripts sobre una BD limpia: aparecerán las tablas `donofrio_*` en el ER, el diseño lógico y el diccionario.
+El diccionario completo y el anexo se regeneran con un comando (ver [README de diagramas](../diagramas/README.md)); también puede escribirse un CSV (`--csv`) que se abre en Excel. Cuando cambie el esquema, basta volver a ejecutar los scripts sobre una BD limpia. Con M1, M2 y M3 ya aparecen las tablas `donofrio_*` en el ER y el diccionario; M4 no agrega ninguna.
 
 ## Notas de verificación
 

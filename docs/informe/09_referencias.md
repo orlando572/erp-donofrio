@@ -1,6 +1,6 @@
 # 9. Referencias y bibliografía
 
-> **Estado:** borrador del Sprint 3 · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [3 Aspectos generales](03_aspectos_generales.md), [01 §1.4 del plan](../plan/01_alcance_escenario.md), [09 del plan](../plan/09_normas_marcos.md) y [`manual_herramientas.md`](../manuales/manual_herramientas.md)
+> **Estado:** versión final del Cierre (25/11/2026; los datos medidos son los del 23/11/2026 salvo donde se indica) · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [3 Aspectos generales](03_aspectos_generales.md), [01 §1.4 del plan](../plan/01_alcance_escenario.md), [09 del plan](../plan/09_normas_marcos.md) y [`manual_herramientas.md`](../manuales/manual_herramientas.md)
 >
 > **Formato:** APA 7.ª edición, con sangría francesa al pasar el informe a Word. Las fechas «s. f.» son de páginas sin fecha visible en la fuente. **Antes de la entrega hay que abrir cada enlace** y, en las páginas que cambian (Wikipedia, documentación), agregar la fecha de consulta. Los enlaces de normas y de noticias salen de las fuentes ya verificadas del plan y de búsquedas del 23/11/2026; el texto de las normas modificadas se debe contrastar con su versión vigente en El Peruano o en el SPIJ.
 

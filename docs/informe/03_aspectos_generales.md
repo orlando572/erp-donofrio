@@ -1,6 +1,6 @@
 # 3. Aspectos generales
 
-> **Estado:** borrador del Sprint 1 · **Autora:** Evelyn (PO) · **Fuentes:** [01_alcance_escenario.md](../plan/01_alcance_escenario.md), [03_modulos_odoo.md](../plan/03_modulos_odoo.md) · **Revisa:** Orlando
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (PO) · **Fuentes:** [01_alcance_escenario.md](../plan/01_alcance_escenario.md), [03_modulos_odoo.md](../plan/03_modulos_odoo.md) · **Revisa:** Orlando
 >
 > Leyenda de evidencia, igual que en el plan: **[V]** verificado con fuente · **[P]** reportado por una sola fuente o sin fecha clara · **[S]** supuesto académico. Las fuentes se citan en formato APA 7 y se listan en la [sección 9](09_referencias.md).
 >
@@ -21,7 +21,7 @@
 
 > ¿Cómo puede D'Onofrio, como unidad de helados y confitería, integrar sus procesos de ventas, logística, producción y gestión en un solo sistema, de modo que cada lote sea trazable desde la compra del insumo hasta el cliente y la gerencia vea datos confiables a tiempo, usando una plataforma abierta (Odoo 19 Community) y sin depender de licencias Enterprise?
 
-**Solución propuesta:** un ERP sobre **Odoo 19.0 Community + PostgreSQL 16 en Docker**, en dos fases. La Fase 1 (garantizada) usa Odoo estándar configurado por código en el módulo `donofrio_base`; la Fase 2 (opcional) agrega módulos propios para liquidación de heladeros, calidad, cadena de frío y tablero gerencial ([04 §4.3](../plan/04_scrum_pmbok.md)).
+**Solución propuesta:** un ERP sobre **Odoo 19.0 Community + PostgreSQL 16 en Docker**, en dos fases. La Fase 1 (garantizada) usa Odoo estándar configurado por código en el módulo `donofrio_base`; la Fase 2 agregó **cuatro módulos propios**, que se construyeron uno a uno y están publicados en las releases `v1.1.0` a `v1.4.0`: calidad (M1), liquidación de heladeros (M2), cadena de frío (M3) y tablero gerencial (M4) ([04 §4.3](../plan/04_scrum_pmbok.md) y los mini gates de [`docs/scrum/gates/`](../scrum/gates/)).
 
 ---
 
@@ -117,17 +117,17 @@ Son 21 empleados **ficticios** (supuesto S2), los mismos que carga `donofrio_bas
 
 ### 3.2.4 Problemas y oportunidades (tabla 1 de la plantilla)
 
-Todos los problemas son **supuestos AS-IS** (S7). Su estado final depende de la fase alcanzada ([02 §2.3](../plan/02_mapeo_plantilla.md)).
+Todos los problemas son **supuestos AS-IS** (S7). El estado final es el del 25/11/2026, con la Fase 2 completa ([02 §2.3](../plan/02_mapeo_plantilla.md)); la última columna conserva el estado que había solo con la Fase 1 para que se vea qué aportó cada módulo.
 
-| ID | Problema empresarial | Oportunidad | Tecnología propuesta | Estado solo con Fase 1 |
-|---|---|---|---|---|
-| 1 | La liquidación diaria de los heladeros se hace en papel o Excel, con descuadres y mermas no trazadas | Automatización | `donofrio_heladeros` (F2-M2); en la F1, pedido de venta + devolución estándar | Propuesta |
-| 2 | El vencimiento de lotes no se controla y el despacho no sigue FEFO | Integración en tiempo real | Inventario Odoo con lotes y `product_expiry` | Resuelto |
-| 3 | Las temperaturas de las cámaras se anotan a mano y las alertas llegan tarde | Digitalización y alertas | Cadena de frío en `donofrio_calidad` (F2-M3) | Propuesta |
-| 4 | Las inspecciones de calidad están en papel y no se ligan al lote | Trazabilidad | `donofrio_calidad` + MRP (F2-M1); en la F1, lotes y trazabilidad estándar | Propuesta |
-| 5 | La planificación de campañas se hace sin datos consolidados | Analítica | Dashboards estándar y vistas pivote (F1) + tablero OWL (F2-M4) | Resuelto |
-| 6 | Ventas, almacén y producción usan sistemas separados y digitan dos veces | Integración de sistemas | ERP Odoo 19 único sobre PostgreSQL | Resuelto |
-| 7 | La gerencia no tiene reportes oportunos | Analítica (BI) | Dashboards estándar de Odoo | Resuelto |
+| ID | Problema empresarial | Oportunidad | Tecnología propuesta | Con solo la Fase 1 | Estado final (25/11/2026) |
+|---|---|---|---|---|---|
+| 1 | La liquidación diaria de los heladeros se hace en papel o Excel, con descuadres y mermas no trazadas | Automatización | `donofrio_heladeros` (F2-M2); en la F1, pedido de venta + devolución estándar | Propuesta | **Resuelto** (M2, `v1.2.0`) |
+| 2 | El vencimiento de lotes no se controla y el despacho no sigue FEFO | Integración en tiempo real | Inventario Odoo con lotes y `product_expiry` | Resuelto | **Resuelto** |
+| 3 | Las temperaturas de las cámaras se anotan a mano y las alertas llegan tarde | Digitalización y alertas | Cadena de frío en `donofrio_calidad` (F2-M3) | Propuesta | **Resuelto** (M3, `v1.3.0`; lecturas a mano, sin sensores) |
+| 4 | Las inspecciones de calidad están en papel y no se ligan al lote | Trazabilidad | `donofrio_calidad` + MRP (F2-M1); en la F1, lotes y trazabilidad estándar | Propuesta | **Resuelto** (M1, `v1.1.0`) |
+| 5 | La planificación de campañas se hace sin datos consolidados | Analítica | Dashboards estándar y vistas pivote (F1) + tablero OWL (F2-M4) | Resuelto | **Resuelto y reforzado** (M4, `v1.4.0`) |
+| 6 | Ventas, almacén y producción usan sistemas separados y digitan dos veces | Integración de sistemas | ERP Odoo 19 único sobre PostgreSQL | Resuelto | **Resuelto** |
+| 7 | La gerencia no tiene reportes oportunos | Analítica (BI) | Dashboards estándar de Odoo | Resuelto | **Resuelto** (más el tablero propio de M4) |
 
 ### 3.2.5 Supuestos académicos
 
@@ -200,9 +200,9 @@ Se inspira en el propósito público de Nestlé de aprovechar el poder de los al
 | **FO** (fortaleza + oportunidad) | Usar los datos de ventas por canal y temporada para anticipar la producción de verano y de Navidad con la red de heladeros existente | Dashboards y vistas pivote (HU-23) |
 | **FO** | Aprovechar la marca histórica con trazabilidad completa del lote como argumento de calidad | Lotes y FEFO (HU-11) |
 | **DO** (debilidad + oportunidad) | Reemplazar Excel y papel por un solo ERP que registre ventas, stock y producción una sola vez | Odoo 19 + `donofrio_base` |
-| **DO** | Digitalizar la liquidación de heladeros para detectar descuadres y mermas | Pedido + devolución estándar (F1); `donofrio_heladeros` (F2) |
+| **DO** | Digitalizar la liquidación de heladeros para detectar descuadres y mermas | Pedido + devolución estándar (F1); `donofrio_heladeros` (M2, implementado) |
 | **FA** (fortaleza + amenaza) | Diversificar entre helados, chocolates y panetón para amortiguar el riesgo de perder la línea de helados | Costeo y análisis por línea |
-| **DA** (debilidad + amenaza) | Controlar vencimientos y temperaturas para evitar pérdidas ante precios altos de insumos | Alertas de vencimiento (F1); cadena de frío (F2-M3) |
+| **DA** (debilidad + amenaza) | Controlar vencimientos y temperaturas para evitar pérdidas ante precios altos de insumos | Alertas de vencimiento (F1); cadena de frío (M3, implementada) |
 
 ### 3.6.3 Estacionalidad complementaria
 
@@ -222,7 +222,7 @@ COBIT 2019 se usa como **marco de referencia** para pasar de lo que necesita la 
 
 **Los 11 objetivos de gestión** que usa el proyecto son APO09, APO12, APO13, BAI03, BAI06, DSS01, DSS02, DSS03, DSS04, DSS05 y MEA01. El mapa inverso (qué componente del ERP o de la infraestructura soporta cada objetivo) está en 4.1.3.
 
-**Lo que la cascada no cubre.** La Fase 2 (calidad, heladeros, cadena de frío y tablero propio) atendería la necesidad de integrar procesos con más detalle; mientras no se construya, la fila 1 se apoya solo en Odoo estándar. COBIT es aquí una guía de alineamiento y no una auditoría.
+**Lo que la cascada no cubre.** La Fase 2 (calidad, heladeros, cadena de frío y tablero propio) ya está implementada y atiende con más detalle la necesidad de integrar procesos (fila 1); lo que queda fuera son los envíos electrónicos a SUNAT y los sensores, que van como trabajo futuro ([8](08_recomendaciones.md)). COBIT es aquí una guía de alineamiento y no una auditoría.
 
 ---
 
@@ -235,11 +235,11 @@ Los objetivos estratégicos se organizan en un **Cuadro de Mando Integral sencil
 | Financiera | Crecer la venta por canal y temporada | Ventas del mes por canal y línea | +10 % frente al mismo mes del año anterior | Pivote de ventas (`ir.filters`) y dashboard de ventas | RF013, RF014 |
 | Financiera | Reducir pérdidas por vencimiento | Valor del stock vencido o por vencer a 30 días | < 2 % del inventario | Reporte de lotes por vencer (`product_expiry`) | RF006 |
 | Cliente | Cumplir los pedidos a tiempo | Pedidos entregados a tiempo | ≥ 95 % | Entregas y fechas comprometidas | RF002, RF007 |
-| Cliente | Atender bien al canal heladero | Descuadre de liquidación por heladero | < 2 % del despachado | Pedido + devolución (F1); liquidación (F2) | RF004 |
+| Cliente | Atender bien al canal heladero | Descuadre de liquidación por heladero | < 2 % del despachado | Liquidación del heladero (M2; en la F1, pedido + devolución) | RF004 |
 | Procesos internos | Trazar todos los lotes | Lotes de terminado con trazabilidad completa | 100 % | Trazabilidad de lotes | RF006, RF010 |
 | Procesos internos | Producir según el plan | Cumplimiento de las órdenes de producción | ≥ 90 % | Órdenes de producción (MRP) | RF010 |
 | Aprendizaje y crecimiento | Datos de personal y roles al día | Empleados con puesto, jefe y usuario por rol | 100 % de los usuarios del ERP con empleado | RR. HH. y usuarios (HU-04, HU-05) | RF017, RF018 |
-| Aprendizaje y crecimiento | Que los usuarios usen el sistema sin ayuda | Puntaje de usabilidad (SUS) | ≥ 70 | Prueba con 5 usuarios (HU-30) | RNF003 |
+| Aprendizaje y crecimiento | Que los usuarios usen el sistema sin ayuda | Puntaje de usabilidad (SUS) | ≥ 70 | Prueba con 5 usuarios (HU-30) **[PENDIENTE: resultados de HU-30]** | RNF003 |
 
 ---
 

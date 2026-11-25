@@ -36,8 +36,8 @@
 <rect x="840" y="372" width="640" height="118" rx="8" fill="#f0f9f2" stroke="#1e7e34" stroke-width="1.5"/>
 <text x="850" y="392" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• Odoo 19 Community: Ventas, CRM, Punto de venta, Inventario, Manufactura, Compras,</text>
 <text x="850" y="408" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  Facturación (l10n_pe), RR. HH. y Project</text>
-<text x="850" y="426" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• donofrio_base en la Fase 1; donofrio_calidad, donofrio_heladeros y donofrio_tablero en</text>
-<text x="850" y="442" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  la Fase 2, solo si se confirman en el gate</text>
+<text x="850" y="426" text-anchor="start" font-size="13" font-weight="normal" fill="#222">• donofrio_base (Fase 1) y, en la Fase 2, donofrio_calidad (con la cadena de frío),</text>
+<text x="850" y="442" text-anchor="start" font-size="13" font-weight="normal" fill="#222">  donofrio_heladeros y donofrio_tablero, implementados</text>
 <polyline fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#flecha)" points="785,431 840,431"/>
 <rect x="20" y="502" width="140" height="118" rx="8" fill="#f3eefb" stroke="#222" stroke-width="1.5"/>
 <text x="90" y="566" text-anchor="middle" font-size="15" font-weight="bold" fill="#222">Tecnología</text>

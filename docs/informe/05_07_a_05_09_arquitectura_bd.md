@@ -1,8 +1,8 @@
 # 5.7 a 5.9 Arquitectura del sistema, integración con la base de datos, replicación y administración de la BD
 
-> **Estado:** borrador del Sprint 3 · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [06 §6.5](../plan/06_github_ci_infra.md), [09 §9.2](../plan/09_normas_marcos.md)
+> **Estado:** versión final del Cierre (25/11/2026; los datos medidos son los del 23/11/2026 salvo donde se indica) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [06 §6.5](../plan/06_github_ci_infra.md), [09 §9.2](../plan/09_normas_marcos.md)
 >
-> Describe el **estado real de `develop` al 23/11/2026**: ya existen la réplica (HU-25), los respaldos con restauración (HU-26), Nginx con TLS (HU-27), pruebas de carga y seguridad (HU-28) y el flujo de release hacia GHCR (HU-29, probado en ensayo; todavía no hay un tag publicado). Las consultas a PostgreSQL de este documento se hicieron en modo de solo lectura sobre la base de desarrollo `donofrio_perf`. Cómo regenerar cada diagrama: [docs/diagramas/README.md](../diagramas/README.md).
+> Describe el **estado real de `develop`**: las mediciones son del 23/11/2026 y los módulos de la Fase 2 se suman al 25/11/2026. Existen la réplica (HU-25), los respaldos con restauración (HU-26), Nginx con TLS (HU-27), pruebas de carga y seguridad (HU-28) y el flujo de release hacia GHCR (HU-29; publicadas `v1.0.0` a `v1.4.0`). Las consultas a PostgreSQL de este documento se hicieron en modo de solo lectura sobre la base de desarrollo `donofrio_perf`. Cómo regenerar cada diagrama: [docs/diagramas/README.md](../diagramas/README.md).
 
 ## 5.7 Diagramas de arquitectura del sistema (C4)
 
@@ -36,7 +36,7 @@ Se usa el modelo C4 (contexto, contenedores y componentes) escrito en **PlantUML
 | `db-replica` | `postgres:16` (perfil `replica`) | `127.0.0.1:5433` | Implementado (HU-25) |
 | Volúmenes | `pgdata`, `pgdata-replica`, `odoo-data` | — | Implementado |
 | `backups/` | Carpeta del anfitrión (ignorada por Git) | — | Implementado (HU-26); el cron diario está documentado, no instalado por el repositorio |
-| GitHub Actions y GHCR | `ci.yml`, `perf.yml`, `release.yml` | — | Actions implementado; **GHCR sin imagen publicada** (aún no hay tag `v*`) |
+| GitHub Actions y GHCR | `ci.yml`, `perf.yml`, `release.yml` | — | Actions implementado; GHCR con imagen publicada para los tags `v1.0.0` a `v1.4.0` |
 | Uptime Kuma, SchemaSpy, VM en la nube | — | — | **No implementados** (opcionales del plan). El ER se genera con `diagrama_er.py` y PlantUML |
 
 ## 5.8 Integración sistema – base de datos
@@ -49,7 +49,7 @@ Se usa el modelo C4 (contexto, contenedores y componentes) escrito en **PlantUML
 
 | Capa | Componentes | Cómo llega a la base de datos |
 |---|---|---|
-| Front-end | Cliente web de Odoo: OWL y plantillas QWeb que corren en el navegador (listas, formularios, kanban, pivote, dashboards y PdV). `donofrio_base` no agrega componentes propios; el tablero OWL de la Fase 2 **no existe** | Nunca directo: llama al servidor por JSON-RPC (`web_search_read`, `web_read`, `web_read_group`), el mismo que mide k6 |
+| Front-end | Cliente web de Odoo: OWL y plantillas QWeb que corren en el navegador (listas, formularios, kanban, pivote, dashboards y PdV). `donofrio_base` no agrega componentes propios; con la Fase 2, `donofrio_tablero` agrega el **tablero OWL** (acción de cliente con Chart.js, [5.5e](05_05_modulo_donofrio_tablero.md)) | Nunca directo: llama al servidor por JSON-RPC (`web_search_read`, `web_read`, `web_read_group`), el mismo que mide k6 |
 | Back-end | Capa HTTP de Odoo (2 *workers* en el despliegue protegido, ninguno en desarrollo), controladores y acciones, ORM y registro de modelos, módulos estándar, módulos de seguridad y `donofrio_base`; tareas programadas (`ir.cron`) | El ORM abre la conexión con `psycopg2` y ejecuta las consultas dentro de una transacción por petición, aplicando ACL y reglas de registro antes de tocar las tablas |
 | Datos | PostgreSQL 16 primario (`db`) y su réplica en *streaming* (`db-replica`) | Odoo lee y escribe **solo en el primario** (`HOST: db`). La réplica no recibe tráfico de Odoo: sirve para consultas de lectura (DBeaver, reportes) y como copia caliente |
 | Archivos | Volumen `odoo-data` (*filestore*) | Los adjuntos no van a la base: la base guarda el nombre del archivo y Odoo lo lee del volumen. Por eso el respaldo incluye las dos cosas |
@@ -163,7 +163,7 @@ El plan ([06 §6.5](../plan/06_github_ci_infra.md)) contemplaba `pg_stat_stateme
 
 ### Índices
 
-`donofrio_base` **no define índices propios** (no tiene modelos nuevos, solo el campo `sla_estado`, sin `index=True`). Los índices los crea el ORM de Odoo: la base medida tiene **1 651 índices** sobre 665 tablas, 11 MB de ellos en `account_move_line` (18 MB en total). Por ejemplo, `stock_lot` (base del FEFO) tiene índices por `name`, `product_id` y `company_id`, y `sale_order`, por `partner_id`, `state`, `date_order` y `name`. En las tablas del núcleo el ORM ya cubre las claves foráneas; con 488 lotes y 437 pedidos, PostgreSQL elige el recorrido secuencial en parte de las lecturas (`stock_lot`: 17 373 secuenciales frente a 56 012 por índice) sin costo apreciable: los p95 de las listas fueron de 12 ms (k6). Si un módulo de la Fase 2 agrega modelos, sus campos de búsqueda frecuente deberían llevar `index=True`.
+`donofrio_base` **no define índices propios** (no tiene modelos nuevos, solo el campo `sla_estado`, sin `index=True`). Los módulos de la Fase 2 **sí** declaran `index=True` en los campos por los que se busca (`production_id` y `lot_id` en la inspección, `location_id`, `fecha` y `fuera_de_rango` en la temperatura, y `inspeccion_id` y `liquidacion_id` en las líneas de inspección y de liquidación); el ORM los crea al instalar, sin medición aparte. Los índices los crea el ORM de Odoo: la base medida tiene **1 651 índices** sobre 665 tablas, 11 MB de ellos en `account_move_line` (18 MB en total). Por ejemplo, `stock_lot` (base del FEFO) tiene índices por `name`, `product_id` y `company_id`, y `sale_order`, por `partner_id`, `state`, `date_order` y `name`. En las tablas del núcleo el ORM ya cubre las claves foráneas; con 488 lotes y 437 pedidos, PostgreSQL elige el recorrido secuencial en parte de las lecturas (`stock_lot`: 17 373 secuenciales frente a 56 012 por índice) sin costo apreciable: los p95 de las listas fueron de 12 ms (k6). Si un módulo de la Fase 2 agrega modelos, sus campos de búsqueda frecuente deberían llevar `index=True`.
 
 ### Tamaño
 
@@ -178,4 +178,4 @@ La base `donofrio_perf` ocupa 143 MB (115 MB en tablas e índices del esquema `p
 | TLS entre Odoo, primario y réplica | No; Docker en un solo nodo |
 | Cron diario de `backup.sh` | Documentado; no instalado por el repositorio |
 | Uptime Kuma, SchemaSpy, VM en la nube | No implementados (opcionales) |
-| Imagen en GHCR | Flujo listo y probado en ensayo; sin tag publicado |
+| Imagen en GHCR | Publicada con cada tag `v1.0.0` a `v1.4.0` (24 y 25/11/2026) |

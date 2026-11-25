@@ -1,6 +1,6 @@
 # 5.5c Documentación del módulo `donofrio_heladeros` (M2)
 
-> **Estado:** borrador del Sprint 4 · **Autora:** Evelyn (dueña del módulo) · **Revisa:** Orlando · **Fuente:** `addons/donofrio_heladeros/` en `develop` (HU-20 en el PR #223; HU-21 y este cierre en el PR siguiente), la base de desarrollo `donofrio` y las capturas de [`docs/capturas/sprint-4/`](../capturas/sprint-4/)
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (dueña del módulo) · **Revisa:** Orlando · **Fuente:** `addons/donofrio_heladeros/` en `develop` (HU-20 en el PR #223; HU-21 y el cierre del módulo en el PR #225; release [`v1.2.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.2.0), mini gate en [`gate-m2-heladeros.md`](../scrum/gates/gate-m2-heladeros.md)), la base de desarrollo `donofrio` y las capturas de [`docs/capturas/sprint-4/`](../capturas/sprint-4/)
 >
 > Complementa 5.5 (`donofrio_base`) y 5.5b (`donofrio_calidad`). Las dos tablas del módulo **ya están** en el ER general ([4.2.6](04_02_modelo_de_datos.md), 41 tablas) y en el diccionario ([4.2.8, Tablas 40 y 41](04_02_diccionario_datos.md)); aquí solo se explica cómo funcionan.
 
@@ -23,7 +23,7 @@ El heladero es un **concesionario** (supuesto S4): compra al precio de la lista 
 | `security/` | Grupos `Heladeros: liquidador` y `Heladeros: jefatura` y `ir.model.access.csv` |
 | `data/heladeros_data.xml` | Secuencia `LIQ/año/` y asigna el grupo al usuario Liquidador de `donofrio_base` |
 | `views/liquidacion_views.xml` | Lista, formulario, búsqueda, acción y menú |
-| `tests/test_liquidacion.py` | 14 pruebas |
+| `tests/test_liquidacion.py` | 15 pruebas |
 
 ## 5.5c.3 Estados, cálculos y reglas
 
@@ -57,7 +57,7 @@ Un usuario sin esos grupos (por ejemplo, el comprador) recibe `AccessError` (pru
 
 ## 5.5c.5 Pruebas y evidencia
 
-`scripts/test.sh donofrio_heladeros`: **14 pruebas, sin errores** (vendido, precio de la lista «Heladero», comisión y diferencia, rechazo de devuelto + merma mayor que lo despachado y de cantidades negativas, una liquidación por día, flujo completo con su pedido confirmado, estados no permitidos, permisos, y el PDF en despachada, con deuda y en borrador).
+`scripts/test.sh donofrio_heladeros`: **15 pruebas, sin errores** (vendido, precio de la lista «Heladero», comisión y diferencia, rechazo de devuelto + merma mayor que lo despachado y de cantidades negativas, una liquidación por día, flujo completo con su pedido confirmado, estados no permitidos, permisos, y el PDF en despachada, con deuda y en borrador).
 
 Verificado en la pantalla de Odoo (base `donofrio`, usuario Liquidador, con los datos de demostración de la HU-16; PNG de 1600 × 900, tomados el 25/11/2026):
 
@@ -73,7 +73,7 @@ Verificado en la pantalla de Odoo (base `donofrio`, usuario Liquidador, con los 
 
 ## 5.5c.6 Límites
 
-- **La vista móvil no se probó en un celular real ni con una pantalla de ancho móvil.** El navegador de las pruebas no permite reducir el ancho de la ventana (la ventana no cambió de tamaño y Odoo no entró en modo móvil), y Odoo no deja incrustar sus páginas en un marco. Se usa el formulario responsive estándar de Odoo; las columnas de precio e importe se pueden ocultar con el selector de columnas de la lista (`optional="show"`). Una condición como `uiEnv.isSmall` no es válida en las vistas de Odoo 19 y se descartó.
+- **La vista móvil no se probó en un celular real ni con una pantalla de ancho móvil** (**[PENDIENTE: prueba en un celular real, a cargo del equipo]**). El navegador de las pruebas no permite reducir el ancho de la ventana (la ventana no cambió de tamaño y Odoo no entró en modo móvil), y Odoo no deja incrustar sus páginas en un marco. Se usa el formulario responsive estándar de Odoo; las columnas de precio e importe se pueden ocultar con el selector de columnas de la lista (`optional="show"`). Una condición como `uiEnv.isSmall` no es válida en las vistas de Odoo 19 y se descartó.
 - **Inventario:** el pedido solo mueve stock por lo vendido (la prueba de pantalla generó su entrega `LIM/PICK/00227` por 100 unidades). Ver 5.5c.3.
 - **Las liquidaciones de las capturas y sus pedidos** son datos de demostración (HU-16) en la base de desarrollo, no en el repositorio; se tomaron solo con lectura. Su liquidador es el usuario «Liquidador de Heladeros (CD Arequipa)».
 - **Filas del diccionario:** la columna «Filas» de 4.2.8 sale ahora de la base de desarrollo `donofrio` (la base `donofrio_perf` con la que se midió ya no existe) e incluye los datos de prueba de M1 y M2; por eso `sale_order` pasó de 437 a 438. Las cifras de 4.2.6 siguen citando `donofrio_perf`.
