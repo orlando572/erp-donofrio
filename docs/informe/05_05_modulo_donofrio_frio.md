@@ -1,6 +1,6 @@
 # 5.5d Documentación de la cadena de frío (M3, incremento de `donofrio_calidad`)
 
-> **Estado:** borrador del Sprint 4 · **Autor:** Orlando (dueño del módulo) · **Revisa:** Evelyn · **Fuente:** `addons/donofrio_calidad/` en la rama de M3 (commit `98263c9`, HU-19), una base nueva con el módulo instalado y las capturas de [`docs/capturas/sprint-4/`](../capturas/sprint-4/)
+> **Estado:** versión final del Cierre (25/11/2026) · **Autor:** Orlando (dueño del módulo) · **Revisa:** Evelyn · **Fuente:** `addons/donofrio_calidad/` en `develop` (PR #226, HU-19, commit `98263c9`; release [`v1.3.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.3.0), mini gate en [`gate-m3-cadena-frio.md`](../scrum/gates/gate-m3-cadena-frio.md)), una base nueva con el módulo instalado y las capturas de [`docs/capturas/sprint-4/`](../capturas/sprint-4/)
 >
 > Complementa 5.5 (`donofrio_base`), 5.5b (`donofrio_calidad`, M1) y 5.5c (`donofrio_heladeros`, M2). La cadena de frío **no es un módulo aparte**: es un incremento de `donofrio_calidad`, así que no tiene carpeta propia. Su tabla nueva ya está en el ER general ([4.2.6](04_02_modelo_de_datos.md), 42 tablas) y en el diccionario ([4.2.8, Tabla 42](04_02_diccionario_datos.md)); aquí solo se explica cómo funciona y qué se verificó.
 
@@ -95,7 +95,7 @@ stock_location 1───* donofrio_temperatura *───1 res_users
 
 ## 5.5d.7 Pruebas y evidencia
 
-`scripts/test.sh donofrio_calidad` (corrido con `docker run` sobre la misma imagen y red, porque desde un *worktree* el `docker compose` recrearía los contenedores): **44 pruebas, 0 fallos, 0 errores** (12 de inspecciones, 2 del punto de venta, 1 de idioma y las **29 de `tests/test_frio.py`**). Las 29 de la cadena de frío:
+`scripts/test.sh donofrio_calidad` (corrido con `docker run` sobre la misma imagen y red, porque desde un *worktree* el `docker compose` recrearía los contenedores): **45 pruebas, 0 fallos, 0 errores** (13 de inspecciones, 2 del punto de venta, 1 de idioma y las **29 de `tests/test_frio.py`**; el 24/11 eran 44 y la de inspección que se agregó después, con el PR #224, subió el total a 45). Las 29 de la cadena de frío:
 
 | Clase | Pruebas | Qué cubren |
 |---|---|---|
