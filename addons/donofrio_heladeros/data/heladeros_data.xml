@@ -11,4 +11,8 @@
     <record id="donofrio_base.user_liquidador" model="res.users">
         <field name="group_ids" eval="[Command.link(ref('group_heladeros_liquidador'))]"/>
     </record>
+
+    <!-- El administrador ve y liquida a todos los heladeros (jefatura incluye al liquidador) -->
+    <function model="res.users" name="write"
+              eval="([ref('base.user_admin')], {'group_ids': [Command.link(ref('group_heladeros_jefe'))]})"/>
 </odoo>

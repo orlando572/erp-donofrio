@@ -55,3 +55,8 @@ class TestCompania(TransactionCase):
         self.assertEqual(self.compania.primary_color, '#C77D00')
         self.assertEqual(self.compania.secondary_color, '#5B3A29')
         self.assertEqual(self.compania.external_report_layout_id, self.env.ref('web.external_layout_standard'))
+
+    def test_el_administrador_sale_en_español(self):
+        admin = self.env.ref('base.user_admin')
+        self.assertEqual(admin.name, 'Administrador')
+        self.assertEqual(self.env.ref('hr.employee_admin').name, 'Administrador')

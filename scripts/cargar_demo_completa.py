@@ -28,6 +28,9 @@ Partes (se ejecutan en este orden; cada una hace su propio commit y deja su marc
   asientos de mano de obra de las órdenes de fabricación y de los cierres de Yape del PdV, albaranes del PdV,
   solicitudes de compra del planificador, operaciones de las órdenes, vencimiento de las cotizaciones y los tres
   tickets de la mesa que trae donofrio_base.
+* ``ajustes``: textos que Odoo dejó en inglés (tarea de bienvenida del administrador, diario «Point of Sale» y
+  referencias de los asientos «Combine … POS payments» y «… - Labour», que Odoo genera en inglés cuando corre
+  sin idioma) y los tickets abiertos de la mesa con plazo posterior al 22/11.
 
 Reglas:
 
@@ -50,7 +53,7 @@ INICIO = date(2026, 8, 3)
 FIN = date(2026, 11, 22)
 HOY = date(2026, 11, 25)         # fecha de referencia de la demostración (corte del 26/11)
 PARAMETRO = 'donofrio_demo_completa.'
-PARTES = ('contactos', 'crm', 'calidad', 'heladeros', 'frio', 'mesa', 'calendario', 'fechas')
+PARTES = ('contactos', 'crm', 'calidad', 'heladeros', 'frio', 'mesa', 'calendario', 'fechas', 'ajustes')
 PARTES_A_CARGAR = [p for p in os.environ.get('DONOFRIO_DEMO_PARTES', ','.join(PARTES)).split(',') if p]
 # La hora de Lima es UTC-5: Odoo guarda las fechas con hora en UTC
 DESFASE_LIMA = timedelta(hours=5)
@@ -1073,6 +1076,74 @@ def fechar_tickets_de_la_mesa(env):
     return movidos
 
 
+def traducir_textos(env):
+    """Pasa a español lo que Odoo creó en inglés al correr sin idioma (``odoo shell`` usa en_US).
+
+    Las traducciones de las referencias son las estándar de Odoo 19 (point_of_sale y mrp_account, es.po): existen,
+    pero solo se aplican a lo que se genera con un usuario en español; lo ya generado se corrige aquí.
+    El contacto y el empleado «Administrator» se renombran en donofrio_base (compania_data.xml)."""
+    env.flush_all()
+    cr = env.cr
+    tarea = env['project.task'].search([('name', '=', 'Welcome Administrator!')])
+    tarea.write({'name': '¡Le damos la bienvenida, Administrador!'})
+    diario = env['account.journal'].search([('code', '=', 'POSS'), ('name', '=', 'Point of Sale')])
+    diario.write({'name': 'Punto de venta'})
+    combinar = (r'Combine (.*) POS payments from (.*)$', r'Combinar pagos de \1 del PdV de \2')
+    mano_de_obra = (r' - Labour$', ' - Mano de obra')
+    pago_manual = (r'^Manual Payment: ', 'Pago manual: ')
+    cambiados = 0
+    for tabla, columna in (('account_move', 'ref'), ('account_move_line', 'name'), ('account_move_line', 'ref'),
+                           ('account_payment', 'memo')):
+        for patron, nuevo in (combinar, mano_de_obra, pago_manual):
+            cr.execute(f"UPDATE {tabla} SET {columna} = regexp_replace({columna}, %s, %s) WHERE {columna} ~ %s",  # noqa: S608
+                       (patron, nuevo, patron))
+            cambiados += cr.rowcount if tabla == 'account_move' else 0
+    env.invalidate_all()
+    return len(tarea) + len(diario), cambiados
+
+
+def ajustar_plazo_de_tickets(env):
+    """Tickets abiertos de la mesa con fecha límite posterior al 22/11.
+
+    Si ya están en análisis o más allá, se resuelven ese día (dentro de su plazo, SLA cumplido); los que siguen
+    en «Nuevo» se llevan a una fecha de creación tal que su plazo venza el 22/11 (quedan con el SLA vencido)."""
+    mesa = ref(env, 'proyecto_mesa_servicios')
+    tope = fin_de_la_ventana()
+    tickets = env['project.task'].search([('project_id', '=', mesa.id), ('date_end', '=', False),
+                                          ('date_deadline', '>=', tope)], order='id')
+    nuevo, resuelto = ref(env, 'etapa_ti_nuevo'), ref(env, 'etapa_ti_resuelto')
+    cr = env.cr
+    for indice, ticket in enumerate(tickets):
+        if ticket.stage_id != nuevo:
+            cierre = lima(FIN, 11 + indice)
+            mid = ultimo_mensaje(env)
+            ticket.write({'stage_id': resuelto.id, 'state': '1_done'})
+            ticket.write({'date_end': cierre})
+            ticket.message_post(body='Atendido y verificado con el usuario.',
+                                message_type='comment', subtype_xmlid='mail.mt_note')
+            fechar_mensajes(env, 'project.task', ticket.id, mid, cierre)
+            env.flush_all()
+            cr.execute("UPDATE project_task SET date_last_stage_update = %s WHERE id = %s", (cierre, ticket.id))
+        else:
+            limite = lima(FIN, 12 + indice)
+            alta = limite - timedelta(hours=HORAS_SLA[ticket.priority])
+            ticket.date_deadline = limite
+            env.flush_all()
+            cr.execute("""UPDATE project_task SET create_date = %s, write_date = %s, date_assign = %s,
+                              date_last_stage_update = %s WHERE id = %s""", (alta, alta, alta, alta, ticket.id))
+            cr.execute("UPDATE mail_message SET date = %s, create_date = %s WHERE model = 'project.task' AND res_id = %s AND date > %s",
+                       (alta, alta, ticket.id, alta))
+    env.invalidate_all()
+    return len(tickets)
+
+
+def cargar_ajustes(env):
+    textos, referencias = traducir_textos(env)
+    tickets = ajustar_plazo_de_tickets(env)
+    print(f'  Ajustes: {textos} textos renombrados, {referencias} asientos con referencia en español y '
+          f'{tickets} tickets abiertos con plazo fuera de la ventana corregidos.')
+
+
 def cargar_fechas(env):
     asientos = fechar_asientos_de_mano_de_obra(env)
     yape = fechar_cierres_de_yape(env)
@@ -1089,7 +1160,7 @@ def cargar_fechas(env):
 
 PROCEDIMIENTOS = {'contactos': cargar_contactos, 'crm': cargar_crm, 'calidad': cargar_calidad,
                   'heladeros': cargar_heladeros, 'frio': cargar_frio, 'mesa': cargar_mesa, 'calendario': cargar_calendario,
-                  'fechas': cargar_fechas}
+                  'fechas': cargar_fechas, 'ajustes': cargar_ajustes}
 
 
 def fechar_rezagados(env, desde):

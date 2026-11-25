@@ -54,6 +54,12 @@
         <field name="group_ids" eval="[Command.link(ref('group_calidad_inspector'))]"/>
     </record>
 
+    <!-- El administrador también necesita el grupo de jefatura: sin él no puede leer los puntos de control ni imprimir
+         el certificado (error 403 «No puede acceder a Punto de control de calidad»). Es una función y no un <record>
+         porque el usuario admin es noupdate en base y un <record> no se aplicaría al actualizar un módulo ya instalado -->
+    <function model="res.users" name="write"
+              eval="([ref('base.user_admin')], {'group_ids': [Command.link(ref('group_calidad_jefe'))]})"/>
+
     <!-- HU-19: rangos de las cámaras de donofrio_base. Esas ubicaciones son noupdate, así que un <record> no se
          aplicaría al actualizar un módulo ya instalado: la función es idempotente y respeta lo que se edite a mano -->
     <function model="stock.location" name="_cargar_rangos_frio"/>
