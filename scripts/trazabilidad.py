@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Genera docs/informe/trazabilidad.md: requisito (RF/RNF) → HU → PR → módulo o archivo → prueba → evidencia.
+"""Genera docs/informe/trazabilidad.md: matriz resumida requisito (RF/RNF) → HU → prueba → estado.
 
 Los datos de los PR salen de la tabla fechada docs/capturas/sprint-4/S4_informe_final_prs_fusionados.tsv
 (columnas numero, rama y titulo; los títulos llevan «[HU-xx]») o, con --gh, de `gh pr list --state merged`
@@ -238,82 +238,71 @@ def celda_rutas(rutas, errores, req):
     return '<br>'.join(partes) if partes else '—'
 
 
-def tabla(titulo, filas, mapa, errores):
-    lineas = [f'### {titulo}', '',
-              '| Requisito | Fase | HU → PR | Módulo o archivo | Prueba (n.º de pruebas) | Evidencia | Estado |',
-              '|---|---|---|---|---|---|---|']
-    for req, texto, fase, hus, archivos, pruebas, evidencias, estado in filas:
-        lineas.append('| ' + ' | '.join([
-            f'**{req}** {texto}', fase, celda_pr(hus, mapa), celda_rutas(archivos, errores, req),
-            celda_pruebas(pruebas, errores, req), celda_rutas(evidencias, errores, req), estado]) + ' |')
-    return lineas + ['']
+def celda_pruebas_resumen(pruebas, errores, req):
+    """Pruebas en forma corta: `test_x` (n) con las pruebas del archivo o con las funciones citadas; las comprueba."""
+    celda_pruebas(pruebas, errores, req)
+    completos, funciones = {}, {}
+    for p in pruebas:
+        archivo, _, funcion = p.partition('::')
+        nombre = Path(ruta_prueba(archivo)[1]).stem
+        if funcion:
+            funciones.setdefault(nombre, set()).add(funcion)
+        else:
+            completos[nombre] = contar_pruebas(archivo)
+    cuentas = dict(completos)
+    for nombre, fs in funciones.items():
+        cuentas.setdefault(nombre, len(fs))
+    return ', '.join(f'`{n}` ({c})' for n, c in cuentas.items()) or '—'
+
+
+# Verificación de los RNF que no se prueban con un archivo de pruebas automáticas
+VERIFICACION_RNF = {
+    'RNF001': 'revisión en ventana angosta',
+    'RNF002': 'k6 (carga normal y de esfuerzo)',
+    'RNF003': 'revisión por roles y evaluación heurística',
+    'RNF006': 'restauración cronometrada y `verificar_replica.sh`',
+    'RNF011': '*healthchecks* de Docker',
+    'RNF012': 'levantar el entorno en una PC limpia y `probar_imagen.sh`',
+}
+
+
+def estado_corto(estado):
+    corto = re.split(r'[:(;]', estado)[0].strip()
+    return 'Cumple' if corto == 'Implementado' else corto
 
 
 def generar(prs):
-    mapa = hu_de_los_prs(prs)
     errores = []
-    filas_rf = [r for r in REQUISITOS if r[0].startswith('RF')]
-    filas_rnf = [r for r in REQUISITOS if r[0].startswith('RNF')]
+    filas = REQUISITOS
     carpetas = {m: sum(len(re.findall(r'^\s+def test_', p.read_text(encoding='utf-8'), flags=re.M))
                        for p in (RAIZ / ADDONS / f'donofrio_{m}' / 'tests').glob('test_*.py'))
                 for m in ('base', 'calidad', 'heladeros', 'tablero')}
     pruebas_total = sum(carpetas.values())
 
     md = [
-        '# Matriz de trazabilidad: requisito → HU → PR → módulo → prueba → evidencia',
+        '# Matriz de trazabilidad: requisito → HU → prueba',
         '',
-        '> **Estado:** versión final del Cierre (25/11/2026) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** '
-        '[4.2.2](04_02_requerimientos_funcionales.md), [4.2.3](04_02_requerimientos_no_funcionales.md), '
-        '[6.4 a 6.6](06_04_a_06_06_repositorio.md), [6.9 a 6.13](06_09_a_06_13_pruebas.md)',
-        '>',
-        '> Matriz generada a partir de los PR fusionados (25/11/2026) y de las tablas de requisitos. '
-        '**Cada celda se comprobó al generarla:** un archivo, una evidencia o una función de prueba que no existe '
-        'hace fallar la generación.',
+        f'Los {sum(1 for r in filas if r[0].startswith("RF"))} requisitos funcionales y los '
+        f'{sum(1 for r in filas if r[0].startswith("RNF"))} no funcionales se relacionan con la historia de usuario '
+        'que los implementa y con las pruebas automáticas que los verifican (entre paréntesis, la cantidad de pruebas '
+        'del archivo). Todos los RF están implementados, los de la Fase 2 con los módulos M1 a M4 (releases `v1.1.0` '
+        f'a `v1.4.0`). El repositorio tiene **{pruebas_total}** pruebas ({carpetas["base"]} de `donofrio_base`, '
+        f'{carpetas["calidad"]} de `donofrio_calidad`, {carpetas["heladeros"]} de `donofrio_heladeros` y '
+        f'{carpetas["tablero"]} de `donofrio_tablero`) y cada celda de archivo, prueba y evidencia se comprobó al '
+        'generar la matriz.',
         '',
-        '**Cómo leerla.** *HU → PR*: las HU de cada requisito y los PR fusionados a `develop` cuyo título o rama '
-        'llevan esa HU. *Prueba*: archivo de `tests/` de un módulo con su número de pruebas, o una prueba '
-        'concreta. *Evidencia*: archivos del repositorio (el número entre paréntesis es cuántos archivos coinciden '
-        'con el patrón). *Estado*: el real al 25/11/2026.',
+        '### Tabla 41. Matriz de trazabilidad',
         '',
-        f'**Resumen.** {len(filas_rf)} RF y {len(filas_rnf)} RNF. **Los 18 RF están implementados**: los de la Fase 2 '
-        '(RF004, RF008, RF011, RF012 y la parte propia de RF013) con los módulos M1 a M4, publicados en las releases '
-        '`v1.1.0` a `v1.4.0`. Las pruebas del repositorio: '
-        f'**{pruebas_total}** ({carpetas["base"]} de `donofrio_base`, {carpetas["calidad"]} de `donofrio_calidad`, '
-        f'{carpetas["heladeros"]} de `donofrio_heladeros` y {carpetas["tablero"]} de `donofrio_tablero`; ver '
-        '[6.10](06_09_a_06_13_pruebas.md)).',
-        '',
-        '> **Limitaciones de la matriz.** RNF001 queda «Parcial» (se revisó en una ventana de 375 × 812) y RNF003 '
-        '«Cumple con límites» (revisión por roles y evaluación heurística). '
-        'RF008 y RF013 (propio) tienen sus límites en las fichas del [anexo 10.1](anexo_10_01_fichas_rf.md).',
-        '',
-        '## Tabla A. Requisitos funcionales (RF)',
-        '',
+        '| Requisito | HU | Pruebas | Estado |',
+        '|---|---|---|---|',
     ]
-    md += tabla('RF001 a RF018', filas_rf, mapa, errores)[2:]
-    md += ['## Tabla B. Requisitos no funcionales (RNF)', '']
-    md += tabla('RNF001 a RNF013', filas_rnf, mapa, errores)[2:]
-
-    md += ['## Tabla C. HU → PR (todas las HU con PR fusionado)', '',
-           '| HU | Qué cubre | PR |', '|---|---|---|']
-    for hu in sorted((h for h in mapa if h != 'HU-30'), key=lambda h: int(h.split('-')[1])):
-        reqs = sorted({r[0] for r in REQUISITOS if hu in r[3]})
-        que = (', '.join(reqs) if reqs else '') + (' · ' if reqs and hu in HU_EXTRA else '') + HU_EXTRA.get(hu, '')
-        enlaces = ', '.join(f'[#{n}]({URL_PR}{n})' for n in sorted(mapa[hu]))
-        md.append(f'| {hu} | {que or "—"} | {enlaces} |')
-    sin = sorted(h for h in {hu for r in REQUISITOS for hu in r[3]} if h not in mapa)
-    md += ['', '**HU de requisitos sin PR fusionado:** ' + (', '.join(sin) if sin else 'ninguna') + '. '
-           'La HU-31 (landing «Únete como heladero», opcional) no figura en ningún requisito de esta matriz.', '']
-    md += ['## Qué no cubre esta matriz', '',
-           '- Los PR #172 y #176 solo agregan las capturas de HU que se implementaron en otros PR; aparecen junto a '
-           'esas HU porque su título las nombra.',
-           '- Los PR de documentación (informe, Scrum, capturas) no llevan HU y no aparecen: están en el '
-           '[TSV completo](../capturas/sprint-4/S4_informe_final_prs_fusionados.tsv).',
-           '- Los PR #230 (datos de demostración, HU-16) y #231 (capturas en PNG, HU-16, 17, 20 y 22) aparecen junto '
-           'a las HU que nombran en su título.',
-           '- La columna *Estado* es la evaluación del 25/11/2026; los criterios de aceptación de cada HU están en '
-           'el Project y en los PR.',
-           '- La trazabilidad hacia las normas (ISO 27001, ITIL, COBIT) está en el anexo '
-           '[10.6](anexo_10_06_soa_iso27001.md).', '']
+    for req, texto, fase, hus, archivos, pruebas, evidencias, estado in filas:
+        celda_rutas(archivos, errores, req)
+        celda_rutas(evidencias, errores, req)
+        md.append('| ' + ' | '.join([
+            f'**{req}** {texto}', ', '.join(hus), (celda_pruebas_resumen(pruebas, errores, req) if pruebas else VERIFICACION_RNF.get(req, '—')),
+            estado_corto(estado)]) + ' |')
+    md.append('')
     return '\n'.join(md), errores
 
 

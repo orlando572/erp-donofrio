@@ -1,17 +1,6 @@
 # 9. Referencias y bibliografía
 
-> **Estado:** versión final del Cierre (25/11/2026; los datos medidos son los del 23/11/2026 salvo donde se indica) · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [3 Aspectos generales](03_aspectos_generales.md), [01 §1.4 del plan](../plan/01_alcance_escenario.md), [09 del plan](../plan/09_normas_marcos.md) y [el manual de herramientas](../manuales/manual_herramientas.md)
->
-> **Formato:** APA 7.ª edición, con sangría francesa al pasar el informe a Word. Las fechas «s. f.» son de páginas sin fecha visible en la fuente. **Antes de la entrega hay que abrir cada enlace** y, en las páginas que cambian (Wikipedia, documentación), agregar la fecha de consulta. Los enlaces de normas y de noticias salen de las fuentes ya verificadas del plan y de búsquedas del 23/11/2026; el texto de las normas modificadas se debe contrastar con su versión vigente en El Peruano o en el SPIJ.
-
-## 9.1 Cómo se citan en el informe
-
-- En el texto: **autor y año** entre paréntesis, por ejemplo (Gestión, s. f.-a) o (ISACA, 2018).
-- Los datos marcados [P] (una sola fuente o sin fecha clara) se redactan con «según…» y nunca como hechos de la empresa.
-- Los datos de D'Onofrio son un **escenario académico** (supuesto S1); las fuentes de prensa sustentan la historia y el contexto de 2026, no los datos internos.
-- Las normas y marcos se citan como **buenas prácticas de referencia**: el proyecto se alinea con ellos y no es una implementación certificada ni auditada (ver [09 del plan](../plan/09_normas_marcos.md)).
-
-## 9.2 Lista de referencias
+Las referencias siguen el formato APA 7.ª edición. En el texto se citan por autor y año entre paréntesis, por ejemplo (Gestión, s. f.-a) o (ISACA, 2018). Las normas y marcos se citan como buenas prácticas de referencia: el proyecto se alinea con ellos y no es una implementación certificada ni auditada. Los datos de D'Onofrio son un escenario académico; las fuentes de prensa sustentan la historia y el contexto, no los datos internos.
 
 America Retail. (s. f.). *Nestlé impulsa icónicas marcas peruanas hacia Estados Unidos*. https://americaretail-malls.com/paises/peru/nestle-impulsa-iconicas-marcas-peruanas-hacia-estados-unidos/
 
@@ -55,9 +44,7 @@ ISACA. (2018). *COBIT® 2019 framework: Introduction and methodology*. ISACA.
 
 ISO. (2015). *ISO 9001:2015. Quality management systems — Requirements*. International Organization for Standardization.
 
-ISO. (2018a). *ISO 22000:2018. Food safety management systems — Requirements for any organization in the food chain*. International Organization for Standardization.
-
-ISO. (2018b). *ISO 31000:2018. Risk management — Guidelines*. International Organization for Standardization.
+ISO. (2018). *ISO 31000:2018. Risk management — Guidelines*. International Organization for Standardization.
 
 ISO. (2019). *ISO 22301:2019. Security and resilience — Business continuity management systems — Requirements*. International Organization for Standardization.
 
@@ -74,8 +61,6 @@ La República. (2026, 18 de noviembre). *Panetón D'Onofrio: Delicia Bites…*. 
 Mercado Negro. (s. f.). *D'Onofrio: la exitosa compañía que inició con una carretilla de helados*. https://mercadonegro.pe/marketing/marcas/donofrio-la-exitosa-compania-que-inicio-con-una-carretilla-de-helados
 
 Mercado Negro. (2026, 24 de junio). *Nestlé negocia la venta global de su negocio de helados y abre interrogantes sobre D'Onofrio en Perú*. https://www.mercadonegro.pe/actualidad/nestle-negocia-la-venta-global-de-su-negocio-de-helados-y-abre-interrogantes-sobre-donofrio-en-peru/
-
-Ministerio de Justicia y Derechos Humanos. (2024). *Decreto Supremo N.° 016-2024-JUS, Reglamento de la Ley N.° 29733, Ley de Protección de Datos Personales*. Diario Oficial El Peruano, 30 de noviembre de 2024. https://www.gob.pe/institucion/anpd/normas-legales/6554453-16-2024-jus
 
 Ministerio de Salud. (1998). *Decreto Supremo N.° 007-98-SA, Reglamento sobre Vigilancia y Control Sanitario de Alimentos y Bebidas*. Diario Oficial El Peruano. https://leap.unep.org/en/countries/pe/national-legislation/decreto-supremo-no-007-98-sa-reglamento-sobre-vigilancia-y
 
@@ -110,31 +95,3 @@ Wikipedia. (s. f.). *D'Onofrio (brand)*. En *Wikipedia*. https://en.wikipedia.or
 World Wide Web Consortium. (2018). *Web Content Accessibility Guidelines (WCAG) 2.1*. https://www.w3.org/TR/WCAG21/
 
 ZAP. (s. f.). *ZAP documentation*. https://www.zaproxy.org/docs/
-
-## 9.3 Dónde se usa cada fuente
-
-| Fuente | Sección del informe |
-|---|---|
-| Prensa y Wikipedia (historia, mercado, Froneri) | [3.2.1](03_aspectos_generales.md) datos de la empresa, 3.5 entorno |
-| Nestlé India (propósito) | 3.3 visión |
-| Leyes 29733, 29571 y 30021, D. S. 007-98-SA y normas de SUNAT | 3.5.1 PESTEL, 5.10 a 5.12 seguridad |
-| TOGAF | [4.1.3](04_01_arquitectura_empresarial.md) arquitectura empresarial |
-| COBIT 2019 | 3.6.4 cascada de metas |
-| ITIL 4 e ISO/IEC 20000-1 | 4.7 y anexos 10.3 y 10.5 |
-| ISO/IEC 25010:2023 | [4.2.3](04_02_requerimientos_no_funcionales.md) RNF |
-| ISO/IEC 27001 y 27002, ISO 31000, ISO 22301 | 4.5 y [5.10 a 5.12](05_10_a_05_12_seguridad.md), anexo 10.6 |
-| ISO 9001, ISO 22000 y HACCP (Codex) | [3.5](03_aspectos_generales.md) y trazabilidad de lotes |
-| OWASP Top 10 y ZAP | 5.12 y 6.13 |
-| Guía Scrum 2020 y PMBOK | 4.2.10 a 4.2.12 ([roles, artefactos y eventos](04_02_10_a_12_scrum.md)) |
-| Heurísticas de Nielsen y WCAG 2.1 | [6.12](06_12_usabilidad.md) y [4.6](04_06_prototipos_web_y_reportes.md) |
-| Documentación de Odoo 19, PostgreSQL 16, Docker, k6 y Lighthouse | 4.3, 5 y 6 |
-| Conventional Commits y GitHub Projects | 6.4 a 6.8 y [4.3.9](04_03_04_ides_y_gestion_proyectos.md) |
-
-## 9.4 Lo que queda por verificar
-
-1. **Datos [P].** La cifra de «unos 30 % del mercado de panetón» sale de un post de LinkedIn que cita al CMA (2024); no se encontró un enlace verificable, así que el informe cita solo a El Comercio (s. f.) y la redacta con «según…».
-2. **Competidores de Porter.** Gestión (s. f.-a) respalda a Alicorp y Lamborgini; **Gloria** no está respaldada por una fuente del plan y queda como supuesto [S].
-3. **Títulos con puntos suspensivos.** Siguen el texto abreviado del plan; hay que completarlos al abrir el enlace.
-4. **Enlaces.** Abrir cada URL antes de la entrega y completar la fecha de consulta de las páginas que cambian.
-5. **Ediciones.** Confirmar la edición de OWASP (2021, o la 2025 si ya es final en la fecha de entrega) y la numeración de cláusulas de ISO/IEC 20000-1 con el texto de la norma.
-6. **Formato del docente.** El plan fija APA 7; si el docente pide otro detalle (por ejemplo, la cita de normas), se ajusta aquí.

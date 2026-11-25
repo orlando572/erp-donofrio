@@ -1,153 +1,66 @@
 # 5.15 Despliegue: enfoque, herramientas, mejores prácticas y gestión de servicios
 
-> **Estado:** versión final del Cierre (25/11/2026; los datos medidos son los del 23/11/2026 salvo donde se indica) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [06 §6.4 y §6.5](../plan/06_github_ci_infra.md), [02 §2.2](../plan/02_mapeo_plantilla.md) (5.15 y 5.16), [09 §9.3](../plan/09_normas_marcos.md), [la guía de release](../dev/release.md), [manual de instalación](../manuales/manual_instalacion.md), `.github/workflows/*.yml`
->
-> Describe lo que **existe en `develop` al 25/11/2026** (los resultados medidos del despliegue son del 23/11/2026). Una cosa que el plan nombraba **no existe**: un despliegue automático a una VM (`cd.yml` y `deploy.sh` eran opcionales). Las releases **sí existen**: `v1.0.0` (24/11/2026, núcleo) y `v1.1.0` a `v1.4.0` (25/11/2026, módulos M1 a M4) están publicadas con su zip adjunto y su imagen en GHCR (ver [6.4](06_04_a_06_06_repositorio.md), Tabla 26b). Cómo regenerar el pipeline: [el README](../diagramas/README.md).
-
 ## 5.15.1 Enfoque de despliegue
 
-| Aspecto | Decisión real |
+El sistema se despliega con Docker Compose en un solo nodo. Hay tres entornos: desarrollo (la PC de cada integrante, `http://localhost:8069`), integración continua (el *runner* `ubuntu-24.04` de GitHub Actions) y la demostración protegida (`https://localhost:8443`, con Nginx, TLS, 2 *workers* y `proxy_mode`).
+
+| Aspecto | Decisión |
 |---|---|
-| **Entornos** | (1) **Desarrollo:** la PC de cada integrante, `workers = 0`, `http://localhost:8069`. (2) **CI:** el *runner* efímero `ubuntu-24.04` de GitHub Actions. (3) **Demostración «en producción»:** la PC de la exposición con el perfil `proxy` (Nginx con TLS, `workers = 2`, `proxy_mode`), `https://localhost:8443`. No hay una VM en la nube |
-| **Estrategia** | **Un solo nodo con reemplazo de contenedores** (*rolling* de un nodo): `docker compose up -d --build --wait` recrea solo lo que cambió y espera a que quede `healthy`. Hay unos segundos de corte; es aceptable para una demo y un solo equipo |
-| **Rollback** | **Por versión etiquetada:** volver al tag anterior (`git checkout vX.Y.Z` y `scripts/levantar_prod.sh`, o correr la imagen `ghcr.io/orlando572/erp-donofrio:vX.Y.Z`) y, si los datos cambiaron, restaurar con `scripts/restore.sh` en una base nueva. **No se ensayó un rollback real**: hasta el 24/11/2026 solo existe el tag `v1.0.0`, así que no hay una versión anterior a la cual volver |
-| **Backup previo** | Obligatorio por procedimiento: `scripts/backup.sh` antes de actualizar. Está documentado en el manual; **no lo ejecuta ningún script de despliegue** |
-| **Blue-green** | Descrito como mejora (dos pilas de Compose detrás de Nginx). **No implementado** |
-| **Actualización de datos** | `odoo -u donofrio_base` sobre la base con datos; los datos `noupdate` **no** se actualizan con `-u`: hay que recrear la base o usar el hook |
-| **Kubernetes** | No aplica: un solo nodo, sin necesidad de orquestar réplicas de Odoo, y la curva de aprendizaje no se justifica para el alcance del proyecto |
+| Estrategia | Reemplazo de contenedores en un nodo: `docker compose up -d --build --wait` recrea solo lo que cambió y espera a que quede `healthy`; hay unos segundos de corte, aceptables para una demostración |
+| Rollback | Por versión etiquetada: volver al tag anterior (`git checkout vX.Y.Z` o la imagen `ghcr.io/orlando572/erp-donofrio:vX.Y.Z`) y, si los datos cambiaron, restaurar el respaldo en una base nueva |
+| Respaldo previo | Se hace con `backup.sh` antes de actualizar, según el manual de instalación |
+| Perfiles de Compose | Base (`db`, `odoo`) para desarrollo; `replica` para la réplica de lectura; `proxy` para el despliegue protegido, que levanta `levantar_prod.sh` |
 
-### Perfiles y servicios de Compose
+**Procedimiento.** (1) Copiar `.env.example` a `.env` y, para el modo protegido, fijar una `ODOO_ADMIN_PASSWD` de 16 caracteres o más. (2) Levantar los contenedores y crear la base con `init_db.sh`. (3) Cargar los datos de demostración con el script de transacciones. (4) Levantar el despliegue protegido con `levantar_prod.sh`, que genera el certificado autofirmado. (5) Ejecutar `verificar_despliegue.sh`. (6) Opcionalmente, la réplica y el respaldo.
 
-| Perfil | Servicios | Comando | Para qué |
-|---|---|---|---|
-| (base) | `db`, `odoo` | `docker compose up -d --build` | Desarrollo |
-| `replica` | `db-replica` | `docker compose --profile replica up -d --wait` | Réplica de lectura (HU-25) |
-| `proxy` | `nginx` | `scripts/levantar_prod.sh` | Despliegue protegido (HU-27): genera el certificado autofirmado, fija `workers = 2` y `proxy_mode`, y levanta con `--build --wait` |
-
-(El perfil `tools` del plan, con SchemaSpy y Uptime Kuma, **no existe**.)
-
-### Procedimiento
-
-| Paso | Comando | Resultado |
-|---|---|---|
-| 1. Entorno | `cp .env.example .env` y, para el modo protegido, una `ODOO_ADMIN_PASSWD` de 16 caracteres o más | `.env` no se versiona |
-| 2. Contenedores y base | `docker compose up -d --build` · `scripts/init_db.sh` | Odoo y PostgreSQL `healthy`; base `donofrio` con `donofrio_base` |
-| 3. Datos de demostración (opcional) | `docker compose run --rm -T odoo odoo shell -d donofrio --no-http < scripts/cargar_transacciones.py` | 16 semanas de transacciones |
-| 4. Despliegue protegido | `scripts/levantar_prod.sh` | `https://localhost:8443`, Nginx con TLS |
-| 5. Prueba de humo | `scripts/verificar_despliegue.sh` | Ver resultados abajo |
-| 6. Réplica (opcional) | `docker compose --profile replica up -d --wait` · `scripts/verificar_replica.sh` | Standby en *streaming* |
-| 7. Respaldo | `scripts/backup.sh` (y, para probarlo, `scripts/verificar_backup.sh`) | `.dump`, filestore y sumas en `backups/` |
-
-Volver a desarrollo: `docker compose --profile proxy down && docker compose up -d`.
-
-### Resultados del despliegue (23/11/2026)
-
-| Verificación | Resultado | Evidencia |
-|---|---|---|
-| `scripts/verificar_despliegue.sh` (7 grupos: redirección, TLS, cabeceras, gestor de BD, gzip y *websocket*, modo producción, bloqueo de login) | **Todas las comprobaciones pasaron**, también tras los cambios de HU-28 | [la evidencia de seguridad](../capturas/sprint-3/HU-27_evidencia_seguridad.txt), [la evidencia de k6 y ZAP](../capturas/sprint-3/HU-28_evidencia_k6_zap.txt) |
-| Contenedores | `db`, `db-replica` y `odoo` en `healthy`; Nginx en marcha | ídem |
-| Imagen de release (ensayo local) | Construida con `--build-context addons=./addons` (3.25 GB); `scripts/probar_imagen.sh`: Odoo 19.0, `donofrio_base` y `auditlog` dentro, configuración de desarrollo y de producción correctas, contraseña de ejemplo rechazada; la imagen arranca sola y carga 109 módulos | [la evidencia de la release](../capturas/sprint-3/HU-29_evidencia_release.txt) |
-| Zip del código (ensayo) | `erp-donofrio-v0.0.0-prueba.zip`: 17 MB, 349 entradas, sin `.env` | ídem |
+**Resultados.** `verificar_despliegue.sh` comprueba siete grupos (redirección, TLS, cabeceras, gestor de BD, gzip y *websocket*, modo producción y bloqueo de login) y todos pasaron. Los contenedores `db`, `db-replica` y `odoo` quedan en `healthy`. La imagen de release (3.25 GB) arranca sola, carga 109 módulos y `probar_imagen.sh` confirma Odoo 19.0, los módulos propios y `auditlog` dentro de ella, y rechaza la contraseña de ejemplo.
 
 ## 5.15.2 Herramientas utilizadas
 
 ### Tabla 25. Herramientas de despliegue
 
-| Herramienta | Uso en el proyecto | Estado |
-|---|---|---|
-| Git y GitHub | Control de versiones, PR con revisión cruzada, ramas `main` y `develop` protegidas, issues y Project | Implementado |
-| Docker 29.1.3 y Compose 2.40.3 | Contenedores, perfiles `replica` y `proxy`, *healthchecks* y volúmenes; mismo `docker-compose.yml` en las dos PC y en el CI | Implementado |
-| GitHub Actions | `ci.yml` (jobs `lint`, `test`, `replica`, `backup`, `proxy`), `perf.yml` (manual) y `release.yml` | Implementado |
-| GHCR | Registro de imágenes `ghcr.io/orlando572/erp-donofrio`; lo llena `release.yml` con cada tag `vX.Y.Z` | **Flujo listo y probado en ensayo; sin imagen publicada** |
-| Nginx 1.30.7 (`nginx:stable`) | Proxy inverso con TLS 1.2/1.3, HSTS, CSP, gzip, caché de *assets* y *websocket* | Implementado |
-| Nube (VM con Let's Encrypt) | VM opcional | **No implementado** |
-| Kubernetes | No aplica (ver arriba) | No aplica |
-| Uptime Kuma | Monitoreo de `/web/health` | **No implementado** |
+| Herramienta | Uso en el proyecto |
+|---|---|
+| Git y GitHub | Control de versiones, PR con revisión cruzada, ramas `main` y `develop` protegidas, issues y Project |
+| Docker 29.1.3 y Compose 2.40.3 | Contenedores, perfiles, *healthchecks* y volúmenes; el mismo `docker-compose.yml` en las dos PC y en el CI |
+| GitHub Actions | `ci.yml` (`lint`, `test`, `replica`, `backup`, `proxy`), `perf.yml` (manual) y `release.yml` |
+| GHCR | Registro de imágenes `ghcr.io/orlando572/erp-donofrio`, llenado por `release.yml` con cada tag |
+| Nginx 1.30.7 | Proxy inverso con TLS 1.2 y 1.3, HSTS, CSP, gzip, caché de *assets* y *websocket* |
+
+Kubernetes no aplica: con un solo nodo no hay réplicas de Odoo que orquestar.
 
 ## 5.15.3 Pipeline CI/CD
 
 ![Pipeline CI/CD](../diagramas/arquitectura/pipeline_cicd.png)
 
-*Figura 5.15-a. Pipeline CI/CD: de la rama de trabajo a la release y al despliegue en el nodo. Línea continua: automático en GitHub Actions; línea punteada: paso manual. Se genera con [`generar_arquitectura.py`](../diagramas/generar_arquitectura.py) (fuente: función `pipeline_cicd`); [SVG](../diagramas/arquitectura/pipeline_cicd.svg).*
+*Figura 5.15-a. Pipeline CI/CD: de la rama de trabajo a la release y al despliegue en el nodo. Línea continua: automático en GitHub Actions; línea punteada: paso manual.*
 
-### Flujos de GitHub Actions
-
-| Flujo | Disparador | Job | Qué hace | Duración (corrida de `develop` del 23/11/2026) |
-|---|---|---|---|---|
-| `ci.yml` | `pull_request`, `push` a `develop` y `main`, lunes 11:00 UTC y manual | `lint` | `scripts/check_legacy.sh` y `ruff` 0.8.4 sobre `addons/`. **Obligatorio** en `develop` | 11 s |
-| | | `test` | Construye la imagen, instala los módulos en una base nueva y corre las pruebas con `scripts/test.sh` (136 el 23/11; 218 al 25/11, con los módulos de la Fase 2); falla con `ERROR`, una prueba roja o cero pruebas. **Obligatorio** en `develop` | 199 s |
-| | | `replica` | Levanta el primario y la réplica y corre `scripts/verificar_replica.sh` | 24 s |
-| | | `backup` | Base mínima y `scripts/verificar_backup.sh` (respaldo, restauración, integridad y retención) | 65 s |
-| | | `proxy` | Despliegue protegido (`levantar_prod.sh`) y `scripts/verificar_despliegue.sh` | 105 s |
-| `perf.yml` («Pruebas no funcionales») | **Solo manual** (`workflow_dispatch`), con semanas de datos, usuarios y duración como parámetros | `carga-y-seguridad` | Crea la base, carga datos, levanta el despliegue protegido y corre k6 y ZAP; sube los reportes como artefactos. **No** es un check requerido: tarda | — (no se ejecutó en Actions; las corridas de HU-28 son locales) |
-| `release.yml` | Tag `v*`; en PR que toca la release y en ejecución manual es un **ensayo** | `release` | Construye y prueba la imagen, empaqueta el zip y, **solo con tag**, publica en GHCR (`:vX.Y.Z` y `:latest`) y crea la GitHub Release con el zip | 2 min 59 s (ensayo del PR de HU-29) |
-
-`ci.yml` usa `concurrency` (cancela las corridas viejas solo en los PR) y permisos de solo lectura; `release.yml` pide `contents: write` y `packages: write` y usa únicamente `GITHUB_TOKEN`.
-
-### Protección de ramas (API de GitHub, 25/11/2026)
-
-| Rama | Aprobaciones | Checks obligatorios | Conversaciones resueltas | *Force push* | Aplica a administradores |
-|---|---|---|---|---|---|
-| `develop` | 1 (se descartan al cambiar el código) | `lint`, `test` | Sí | Prohibido | **No** |
-| `main` | 1 | `lint`, `test` (el 23/11 no tenía ninguno) | Sí | Prohibido | **No** |
-
-Las releases salen de `main`: el PR #222 (24/11, núcleo) entró con *squash* y el #229 (25/11, Fase 2) con *merge commit*; los PR de trabajo entran a `develop` con *squash*.
-
-## 5.15.4 Mejores prácticas aplicadas
-
-| Práctica | Cómo se aplica | Límite |
+| Flujo | Disparador | Qué hace |
 |---|---|---|
-| **Secretos** | `.env` fuera de Git (`.gitignore`); `.env.example` solo con valores de desarrollo; la contraseña maestra se puede leer de un archivo (`ODOO_ADMIN_PASSWD_FILE`); en modo protegido Odoo se niega a arrancar con menos de 16 caracteres o con la de ejemplo; `GITHUB_TOKEN` como único secreto de Actions; *secret scanning* y *push protection* activados | La contraseña de prueba de los usuarios está en `.env.example` (valor de desarrollo) |
-| **Backups** | `backup.sh` con sumas y retención de 7 días; `restore.sh` a una base nueva con RTO medido (31 s); `verificar_backup.sh` en el CI | El *cron* diario está documentado y no instalado; sin cifrado ni copia fuera del equipo por defecto |
-| **Monitoreo** | *Healthchecks* de Odoo (`/web/health`), PostgreSQL y réplica; `restart: unless-stopped`; `docker compose ps` y `logs`; `docker stats` durante k6 | **Sin monitoreo continuo** de disponibilidad (Uptime Kuma no implementado) |
-| **Imágenes y versiones fijadas** | `odoo:19.0-20261112`, `postgres:16`, k6, ZAP y PlantUML con versión; `auditlog` por commit | Dependabot no configurado |
-| **Mismo entorno en todas partes** | El CI usa el mismo `docker-compose.yml` y la misma imagen que las PC (RNF012) | — |
-| **Superficie mínima** | Puertos de Odoo y PostgreSQL solo en `127.0.0.1`; gestor de BD cerrado; TLS | Nginx publica 8080 y 8443 en todas las interfaces |
-| **Cambios controlados** | PR con revisión cruzada y CI antes de fusionar; `-u` sobre una base con datos como criterio de aceptación | `enforce_admins` desactivado; `main` sin checks obligatorios |
+| `ci.yml` | PR, push a `develop` y `main`, lunes 06:00 de Lima y manual | `lint` (`check_legacy.sh` y `ruff`, 11 s), `test` (instala los módulos en una base nueva y corre las 218 pruebas, 199 s), `replica` (24 s), `backup` (65 s) y `proxy` (105 s). `lint` y `test` son obligatorios en `develop` y `main` |
+| `perf.yml` | Manual | Carga de datos, despliegue protegido, k6 y ZAP; sube los reportes como artefactos |
+| `release.yml` | Tag `v*` (ensayo en PR y manual) | Construye y prueba la imagen, empaqueta el zip y, con tag, publica en GHCR (`:vX.Y.Z` y `:latest`) y crea la GitHub Release |
 
-## 5.15.5 URLs de publicación
+Las ramas `develop` y `main` exigen 1 aprobación, conversaciones resueltas, los checks `lint` y `test`, y prohíben el *force push*. Los PR de trabajo entran a `develop` con *squash* y las releases salen de `main` con tag.
 
-| Qué | URL | Estado al 25/11/2026 |
+**Mejores prácticas.** Los secretos no están en el repositorio: `.env` está fuera de Git, la contraseña maestra se puede leer de un archivo y, en modo protegido, Odoo se niega a arrancar con menos de 16 caracteres o con la de ejemplo; `GITHUB_TOKEN` es el único secreto de Actions, con *secret scanning* y *push protection* activos. Los respaldos tienen sumas, retención de 7 días y RTO medido (31 s). Las imágenes y herramientas llevan versión fija y el CI usa la misma imagen que las PC. Los puertos de Odoo y PostgreSQL solo se publican en `127.0.0.1`.
+
+## 5.15.4 Resultados: releases y URLs
+
+### Tabla 26. Releases publicadas
+
+| Release | Fecha | Contenido |
 |---|---|---|
-| Repositorio | <https://github.com/orlando572/erp-donofrio> | Público |
-| Actions | <https://github.com/orlando572/erp-donofrio/actions> | Corridas en verde de `ci.yml` |
-| Releases | <https://github.com/orlando572/erp-donofrio/releases> | **Publicadas 5 releases**: `v1.0.0` (24/11/2026, núcleo) y `v1.1.0` a `v1.4.0` (25/11/2026, M1 a M4; `v1.4.0` es la *Latest*), cada una con su `erp-donofrio-vX.Y.Z.zip` (de 23,5 a 26,1 MiB) |
-| Imagen | `ghcr.io/orlando572/erp-donofrio:vX.Y.Z` | **Publicada** por `release.yml` con cada tag: verificada sin sesión para `v1.0.0` y `latest` (24/11/2026). La CLI no pudo listar las versiones (falta el permiso `read:packages`), así que `v1.1.0` a `v1.4.0` no se comprobaron una por una |
-| ERP, front-end y back-end (demo protegida) | `https://localhost:8443` (entrada `/odoo`; `http://localhost:8080` redirige) | Solo en la PC donde se levanta el perfil `proxy`; certificado autofirmado |
-| ERP en desarrollo | `http://localhost:8069` (*websocket* en `8072`) | Solo en la PC |
-| Persistencia (PostgreSQL primario) | `localhost:5432` | Solo en la PC |
-| Réplica de lectura | `localhost:5433` | Solo en la PC, perfil `replica` |
+| `v1.0.0` | 24/11/2026 | Núcleo: Odoo 19.0 y `donofrio_base` |
+| `v1.1.0` | 25/11/2026 | M1: `donofrio_calidad` (inspección y certificado) |
+| `v1.2.0` | 25/11/2026 | M2: `donofrio_heladeros` (liquidación del heladero) |
+| `v1.3.0` | 25/11/2026 | M3: cadena de frío (incremento de `donofrio_calidad`) |
+| `v1.4.0` | 25/11/2026 | M4: `donofrio_tablero` (tablero gerencial y marca) |
 
-No hay un servidor público: el sistema se ejecuta en la PC de quien lo levanta.
+Cada release trae su `erp-donofrio-vX.Y.Z.zip` (de 23,5 a 26,1 MiB) y su imagen en GHCR. El sistema corre en la PC donde se levanta: ERP protegido en `https://localhost:8443`, desarrollo en `http://localhost:8069`, PostgreSQL en `localhost:5432` y la réplica en `localhost:5433`.
 
-## 5.15.6 Gestión de servicios (ITIL 4 / ISO 20000-1)
+## 5.15.5 Gestión de servicios (ITIL 4 / ISO 20000-1)
 
-> Cubre el control de cambios y la capacidad de los servicios. Aquí solo va lo que **ya existe**; la mesa de servicios TI (incidentes y solicitudes) es de Evelyn (HU-32).
+El control de cambios sigue el flujo de GitHub: la solicitud nace como issue (épica o bug con plantilla); el otro integrante revisa el PR con la lista de la definición de terminado (sin patrones legacy, ACL y pruebas, actualización sin errores, textos en español) y lo aprueba; la implementación es un *squash* a `develop` o un *merge commit* a `main`; la verificación es el CI en verde y `verificar_despliegue.sh`; y el cierre es el tag que dispara `release.yml`. El formato de solicitud de cambio (RFC) está en el anexo 10.4 y la mesa de servicios TI, con incidentes y solicitudes, en `donofrio_base` (HU-32).
 
-### Control de cambios (habilitación del cambio)
-
-| Etapa ITIL | Cómo se hace hoy | Evidencia |
-|---|---|---|
-| Solicitud de cambio | Issue de GitHub (épicas y bugs con plantilla: `.github/ISSUE_TEMPLATE/epica.yml` y `bug.yml`); cada HU nace de una épica | Issues del repositorio |
-| Evaluación | Revisión del PR por el otro integrante con la checklist de la DoD (sin patrones legacy, ACL y pruebas, `-u` sin errores, textos en español) | la plantilla de pull request |
-| Autorización | Aprobación del PR; conversaciones resueltas | Protección de `develop` (5.15.3) |
-| Implementación | *Squash and merge* a `develop`; *merge commit* a `main` | Historial de Git |
-| Verificación | CI en verde (`lint`, `test`, `replica`, `backup`, `proxy`) y, antes de entregar, `verificar_despliegue.sh` | Figura 5.15-a; Actions |
-| Cierre y despliegue | Tag `vX.Y.Z` → `release.yml` → imagen y zip; despliegue y rollback manuales (5.15.1) | la guía de release |
-
-**No existe** la plantilla de solicitud de cambio (RFC, `solicitud_cambio.yml`) ni las etiquetas `tipo:cambio-*` que se contemplaba; el formato RFC está en el [anexo 10.4](anexo_10_04_rfc.md) como ejemplo lleno. El flujo anterior se representa con la Figura 5.15-a; **no se dibujaron** los dos BPMN que pedía el plan (control de cambios y solicitud de acceso).
-
-### Capacidad y desempeño
-
-| Elemento | Resultado real | Fuente |
-|---|---|---|
-| Medición de capacidad | k6 con 20 usuarios virtuales sobre el despliegue protegido; `docker stats` cada 10 s | [5.14, Tabla 22](05_13_a_05_14_pruebas.md) |
-| Carga normal (20 usuarios, pausas de 1 a 3 s) | p95 de 12 ms en listas; Odoo 39 % de una CPU y 440 MiB como máximo | la evidencia de k6 y ZAP |
-| Esfuerzo (20 usuarios sin pausas, ritmo 20 veces mayor) | p95 de 100 ms; Odoo hasta 160 % de CPU (los 2 *workers* casi saturados) y 513 MiB | ídem |
-| Umbral de capacidad observado | El primer recurso que se agota es la **CPU de Odoo** (2 *workers*); PostgreSQL llegó a 57 % y 201 MiB | ídem |
-| Proyección de usuarios (heladeros en verano frente a invierno) | **No hecha:** no hay datos de usuarios concurrentes reales; k6 solo mide 20 virtuales | — |
-| Recursos mínimos | Unos 4 GB de RAM libres para todos los perfiles; la PC medida tiene 12 CPU y 14 GB | [R7](../pm/plan_riesgos.md) |
-
-### Resumen de lo que no existe
-
-Despliegue automático a una VM (`cd.yml`, `deploy.sh`), Uptime Kuma, Dependabot, plantilla de RFC, BPMN de control de cambios y de solicitud de acceso, proyección de usuarios y *cron* de respaldo instalado.
+En capacidad, k6 con 20 usuarios virtuales mostró que el primer recurso que se agota es la CPU de Odoo (160 % de una CPU con 2 *workers* al ritmo de esfuerzo; 39 % a ritmo normal), mientras PostgreSQL llegó a 57 % y 201 MiB. El proyecto necesita unos 4 GB de RAM libres para todos los perfiles; la PC medida tiene 12 CPU y 14 GB.
