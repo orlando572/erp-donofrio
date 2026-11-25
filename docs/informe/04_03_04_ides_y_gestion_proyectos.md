@@ -1,147 +1,22 @@
 # 4.3.4 y 4.3.9 IDEs y lenguajes de programación; plataforma de gestión de proyectos
 
-> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [manual de herramientas](../manuales/manual_herramientas.md), [`docs/pm/github-projects/`](../pm/github-projects/README.md), [04 §4.11](../plan/04_scrum_pmbok.md) y el repositorio (`git ls-files`, 23/11/2026)
->
-> Solo se describe **lo que se usó**. Lo que el plan nombraba y no se usó está en la [sección 11 del manual](../manuales/manual_herramientas.md) y se resume al final de 4.3.4.
-
----
-
 ## 4.3.4 Aplicación de herramientas: IDEs y lenguajes de programación
 
-### 4.3.4.1 Entorno de desarrollo
+El entorno de desarrollo es **Visual Studio Code** (con la extensión WSL en Windows), **Git** y la CLI **`gh`**, **Docker y Compose**, **DBeaver** para leer PostgreSQL y un asistente de IA (Claude Code) como herramienta de los *Developers*, con un *hook* que rechaza patrones de Odoo anteriores a la 19.
 
-| Herramienta | Versión | Para qué se usó en el proyecto |
-|---|---|---|
-| **Visual Studio Code** | 1.146.0 | Editor de los dos integrantes para `addons/`, `scripts/` y `docs/`; vista previa de Markdown. En Windows se usa con la extensión **WSL**, de modo que el código queda en Ubuntu. No se exige ninguna extensión; las útiles son *Python*, *PlantUML* y *Markdown All in One* |
-| **Claude Code** (asistente de IA) | 2.1.328 | Ayuda a programar y a redactar bajo las reglas de las reglas del proyecto; un *hook* (`.claude/hooks/bloquear_legacy.py`) rechaza los patrones de Odoo anteriores a la 19. Es una herramienta de los *Developers*, no un rol (riesgo R5) |
-| **Git** y **`gh`** | 2.53.0 y 2.46.0 | Control de versiones; la CLI de GitHub crea PR y lee el Project |
-| **Docker y Compose** | 29.1.3 y 2.40.3 | Entorno reproducible con un comando; los scripts de pruebas, diagramas y rendimiento corren en contenedores |
-| **DBeaver** | — | Lectura de PostgreSQL (`localhost:5432` y réplica en `5433`) para revisar tablas y consultas |
+**Tabla 4.10. Lenguajes y formatos del proyecto**
 
-Las versiones del grupo A son las de la PC de Orlando el 23/11/2026; el manual explica cómo instalarlas en Ubuntu y en Windows con WSL2.
+| Lenguaje o formato | Dónde se usa |
+|---|---|
+| **Python** 3.12 | Los cuatro módulos (modelos, *hooks* y 218 pruebas con `TransactionCase`), los scripts de datos y medición y los generadores de diagramas |
+| **XML y CSV** | Datos y configuración del ERP, vistas, reportes QWeb, permisos de acceso y diagramas BPMN |
+| **JavaScript (OWL) y SCSS** | Tablero de M4 (componente OWL con Chart.js, que trae Odoo) y la marca visual (color primario `#9A6B00`, barra superior amarilla) |
+| **Bash, YAML, PlantUML y Markdown** | Scripts de pruebas, respaldo y despliegue; Compose y GitHub Actions; diagramas; informe y manuales |
 
-### 4.3.4.2 Lenguajes y formatos
-
-Los conteos son de `git ls-files` al 25/11/2026 (`develop` `339c907`). Los lenguajes están ordenados de mayor a menor peso en el producto.
-
-| Lenguaje o formato | Versión | Dónde se usa | Archivos |
-|---|---|---|---|
-| **Python** | 3.12.3 (la de la imagen `odoo:19.0-20261112`) | Los cuatro módulos (`donofrio_base`, `donofrio_calidad`, `donofrio_heladeros` y `donofrio_tablero`: modelos, *hooks* y 218 pruebas con `TransactionCase`); los scripts de carga de datos, medición y trazabilidad (`scripts/`); los generadores de diagramas (`docs/diagramas/`) | 75 |
-| **XML** | — | Datos y configuración del ERP por código (empresa, usuarios, almacenes, productos, recetas, listas de precios, reglas de acceso, vistas guardadas); los diagramas BPMN 2.0 | 25 en `addons/` (datos, vistas, seguridad y reportes) y 12 `.bpmn` |
-| **CSV** | — | Permisos de acceso de los módulos (`security/ir.model.access.csv`) y la lista de issues del Project (el registro de épicas) | 9 |
-| **Bash** | — | `docker compose` y 20 scripts: pruebas (`test.sh`), respaldo y restauración, despliegue protegido, verificaciones | 20 |
-| **YAML** | — | `docker-compose.yml` y los *workflows* de GitHub Actions (`ci.yml`, `perf.yml` y `release.yml`) | 6 |
-| **JavaScript (OWL)** | — | El tablero gerencial de M4 (`donofrio_tablero/static/src/tablero/tablero.js`, un componente OWL con Chart.js, que ya trae Odoo) y el script de carga de k6 (`scripts/perf/carga.js`) | 2 |
-| **SCSS** | — | La marca visual de M4 (HU-24): color primario `#9A6B00`, barra superior amarilla, estilos del tablero y de las pantallas «sin datos» | 3 |
-| **Markdown** | — | Informe, manuales, actas de Scrum y plan | 103 |
-| **PlantUML** | 1.2026.10 | Casos de uso, clases, ER y arquitectura C4; se convierte a PNG con Graphviz 14.0.1 en un contenedor | 14 |
-| **SVG** | — | Los generadores en Python escriben los BPMN, la arquitectura y los mockups; `rsvg-convert` los pasa a PNG | 60 |
-| **SQL** | — | Consultas de comprobación en DBeaver y en los scripts (`pg_stat_replication`, extracción del esquema para el ER); no hay archivos `.sql` versionados | — |
-| **Mermaid** | — | Organigrama y algunos diagramas dentro del Markdown del informe | — |
-
-**Cómo se verifica el código.**
-- `ruff` 0.8.4 revisa el estilo de `addons/` en el trabajo `lint` del CI (reglas por defecto, 120 columnas).
-- `scripts/check_legacy.sh` busca los patrones de Odoo ≤ 16 (por ejemplo `<tree>`, `attrs=`); corre en el CI y como *hook* del asistente de IA.
-- `scripts/test.sh` instala el módulo con `--test-enable` e imprime solo los errores; es lo que corre el trabajo `test` en cada PR.
-
-### 4.3.4.3 Lo que se previó y no se usó
-
-Con la Fase 2 completa, el JavaScript con OWL (el tablero de M4) y el SCSS (la marca de HU-24) **sí se usaron** y están en la tabla anterior. Lo que no se usó:
-
-| Previsto | Estado | Por qué |
-|---|---|---|
-| Pruebas de JavaScript (Hoot) del componente OWL | **No hay** | El tablero se verificó a mano en la pantalla y con las pruebas de Python de `get_kpis()` ([5.5e.8](05_05_modulo_donofrio_tablero.md)) |
-| SchemaSpy, draw.io, Camunda Modeler | No se usaron | Se reemplazaron por `scripts/diagrama_er.py` con PlantUML y por generadores en Python ([manual, sección 11](../manuales/manual_herramientas.md)) |
-
----
+La calidad del código se verifica en el CI con `ruff`, con `check_legacy.sh` (patrones de Odoo 16 o anteriores) y con la instalación del módulo con `--test-enable`. No hay pruebas de JavaScript del componente OWL: el tablero se verificó en pantalla y con las pruebas de Python de `get_kpis()`.
 
 ## 4.3.9 Plataformas de gestión de proyectos
 
-### 4.3.9.1 Por qué GitHub Projects
+Se usó **GitHub Projects** porque es gratuito, está integrado con issues, PR y *commits*, y el docente lo ve sin invitación. Es un único Project, «Scrum ERP D'Onofrio», con 22 ítems (15 épicas y 7 de gestión). Las HU van como lista dentro de un issue de épica, una por área y dueño en cada sprint; cada HU tiene su rama `feature/HU-xx-*`, `[HU-xx]` en cada commit y `Parte de #n` en cada PR. Los campos son Status, Sprint (S0 a S4 y Cierre), Puntos, Responsable, Fase, Tipo y Prioridad, y las vistas son *Product Backlog* (tabla agrupada por fase), *Sprint actual* (tablero por estado) y *Roadmap* (línea de tiempo). En el Planning se asignan sprint y puntos; la Daily es un comentario en el issue «Dailies»; en la Review se marca la lista de cada épica con el enlace al PR.
 
-La plantilla nombra otra herramienta de tableros (6.3 menciona *Monday*). Se usó **GitHub Projects (v2)** porque es gratuito, está integrado con los issues, los PR y los *commits*, y el docente lo ve sin invitación: el repositorio y el Project son públicos. Es **un solo Project**, «Scrum ERP D'Onofrio» (<https://github.com/users/orlando572/projects/4>), vinculado al repositorio `erp-donofrio`. El Project tiene **22 ítems**: 15 épicas y 7 de gestión.
-
-### 4.3.9.2 Estructura de los ítems
-
-- Las **HU** van como checklist dentro de un issue de **épica**, una por área y dueño en cada sprint. Los riesgos viven en [el registro de riesgos](../pm/plan_riesgos.md) y los entregables del informe, en la checklist del issue «Informe final».
-- El título de la épica nombra sus HU: `[HU-08, HU-09, HU-10] Ventas, CRM y PdV`.
-- Una rama por HU (`feature/HU-xx-*`), `[HU-xx]` en cada commit y `Parte de #n` en cada PR; el último PR de la épica la cierra con `Closes #n`.
-- Los issues de gestión son: constitución (#129), repositorio (#130), registro de riesgos (#131), «Dailies» (#132), Gate 0 (#143), informe final (#149) y entrega (#150). Los riesgos y las dailies reciben un comentario en cada Retro y cada Daily.
-- Los bugs reales usan la plantilla `bug.yml`.
-
-### 4.3.9.3 Campos (tabla de campos)
-
-| Campo | Tipo | Valores | Para qué sirve |
-|---|---|---|---|
-| **Status** | Selección | Backlog · Por hacer · En curso · En revisión · Hecho | Estado de la tarjeta |
-| **Sprint** | Iteración | S0 · S1 · S2 · S3 · S4 · Cierre (1 día cada una) | Sprint al que pertenece la épica; lo usa el filtro `@current` |
-| **Puntos** | Número | Suma de los puntos de las HU de la épica; 0 en gestión | Burndown por puntos |
-| **Responsable** | Selección | Evelyn · Orlando (un solo valor) | Dueño de la épica |
-| **Fase** | Selección | F1 · F2 | Núcleo o módulos propios |
-| **Tipo** | Selección | Épica · Gestión · Bug | Clase de ítem |
-| **Prioridad** | Selección | Must (F1 y gestión) · Should (M1 a M4) · Could (opcionales) | Orden |
-
-Los campos se crean por código con [`crear_project.sh`](../pm/github-projects/crear_project.sh) (CLI `gh`; el campo de iteración, con GraphQL porque la CLI no lo soporta). La lista de los 22 issues está en [el registro de épicas](../pm/github-projects/epicas.csv).
-
-### 4.3.9.4 Vistas
-
-| Vista | Diseño | Filtro | Uso en la gestión |
-|---|---|---|---|
-| **Product Backlog** | Tabla | `tipo:Épica` (agrupada por Fase) | Tabla 8 de la plantilla ([4.2.11](04_02_10_a_12_scrum.md)) |
-| **Sprint actual** | Tablero por Status | `sprint:@current` | Sprint Backlog (tabla 9), Planning, Daily y Review |
-| **Roadmap** | Línea de tiempo | — (por la fecha de cada iteración) | Gantt de la calendarización ([4.2.9](04_02_calendarizacion.md)) |
-
-La API no configura la **agrupación ni el orden** de las vistas; esos dos pasos se hicieron a mano en la interfaz. Las vistas se crean con [`crear_vistas.sh`](../pm/github-projects/crear_vistas.sh) (GraphQL).
-
-![Vista Product Backlog](../capturas/sprint-3/S3-6.3_project_product_backlog.png)
-
-*Ilustración 16a: vista «Product Backlog». Captura del 23/11/2026.*
-
-![Vista Sprint actual](../capturas/sprint-3/S3-6.3_project_sprint_actual.png)
-
-*Ilustración 16b: vista «Sprint actual».*
-
-![Vista Roadmap](../capturas/sprint-3/S3-6.3_project_roadmap.png)
-
-*Ilustración 16c: vista «Roadmap».*
-
-![Insights](../capturas/sprint-3/S3-6.3_project_insights.png)
-
-*Ilustración 16d: Insights, con el *burn up* de ítems abiertos y cerrados.*
-
-### 4.3.9.5 Automatizaciones
-
-El Project tiene seis *workflows* integrados de GitHub; al 23/11/2026 **solo uno está activo**.
-
-| *Workflow* | Estado | Qué hace |
-|---|---|---|
-| Auto-add sub-issues to project | **Activo** | Agrega al Project los sub-issues de un ítem |
-| Item closed | Desactivado | Pasaría la tarjeta a «Hecho» al cerrar el issue |
-| Pull request merged | Desactivado | Pasaría la tarjeta a «Hecho» al fusionar su PR |
-| Pull request linked to issue | Desactivado | Cambiaría el estado al enlazar un PR |
-| Item added to project | Desactivado | Fijaría un estado inicial a los ítems nuevos |
-| Auto-close issue | Desactivado | Cerraría el issue al pasar a «Hecho» |
-
-**Consecuencia.** El estado de las tarjetas se cambia **a mano**. Por eso, al 23/11/2026 las épicas #140 y #142 están cerradas pero siguen en «Backlog», y los puntos de Insights (que cuenta ítems) no coinciden con el burndown por puntos de [6.2](06_01_a_06_03_equipo_sprints_y_project.md). La mejora prevista es activar «Item closed» con el valor «Hecho».
-
-Fuera del Project, la automatización está en el repositorio: el CI exige `lint` y `test` en cada PR a `develop`, y `scripts/burndown.py` calcula el burndown por puntos leyendo el Project con `gh project item-list`.
-
-### 4.3.9.6 Cómo se usó en cada evento Scrum
-
-| Evento | Qué se hizo en el Project |
-|---|---|
-| Planning | Se asignó el sprint y los puntos a las épicas; la vista «Sprint actual» muestra lo planificado |
-| Daily | Un comentario por Daily en el issue «Dailies» (#132) |
-| Review | Se marcó la checklist de cada épica con el enlace al PR y se pasaron las tarjetas a «Hecho» |
-| Retro | Un comentario en el issue «Registro de riesgos» (#131) con el seguimiento de los riesgos |
-| Gate 0 | El issue #143 recibe un comentario con la decisión del equipo |
-
-Detalle de cada evento: [4.2.12](04_02_10_a_12_scrum.md).
-
-### 4.3.9.7 Límites conocidos
-
-1. **Iteraciones con fechas planificadas.** Se crearon de un día cada una desde el 23/11 (S1 = 23/11, S2 = 24/11, S3 = 25/11, S4 = 26/11, Cierre = 27/11) y S0 quedó como iteración completada (22/11). Los tres sprints reales se hicieron entre el 22/11 y el 23/11, así que «Sprint actual» sigue mostrando el S1 y el Roadmap dibuja barras que no coinciden con las fechas reales ([6.2](06_01_a_06_03_equipo_sprints_y_project.md)). Hay que corregir las fechas de las iteraciones.
-2. **Estado de las tarjetas a mano** (ver 4.3.9.5).
-3. **Insights cuenta ítems, no puntos.** Para medir por puntos se usa `scripts/burndown.py`.
-4. **Permisos.** La cuenta de Evelyn solo lee el Project (que pertenece a la cuenta de Orlando); cambiar tarjetas, iteraciones y *workflows* lo hace quien tenga permiso de escritura.
-5. **Las capturas muestran los estados previos a esa corrección.** Se repiten cuando se actualicen las fechas y las tarjetas.
+El Project tiene seis *workflows* integrados y solo uno activo, por lo que el estado de las tarjetas se cambia a mano; el burndown por puntos se calcula con un script que lee el Project, porque Insights cuenta ítems y no puntos.
