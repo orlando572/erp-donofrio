@@ -1,6 +1,6 @@
 # Anexo 10.3 Solicitud de servicio o de acceso
 
-> **Estado:** borrador del Sprint 3 · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [09 §9.3](../plan/09_normas_marcos.md) (ITIL 4, gestión de solicitudes de servicio), [4.7](04_07_acuerdos_de_nivel_de_servicio.md) (SLA) y la mesa de servicios de HU-32
+> **Estado:** versión final del Cierre (25/11/2026; los datos medidos son los del 23/11/2026 salvo donde se indica) · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [09 §9.3](../plan/09_normas_marcos.md) (ITIL 4, gestión de solicitudes de servicio), [4.7](04_07_acuerdos_de_nivel_de_servicio.md) (SLA) y la mesa de servicios de HU-32
 >
 > Los anexos 10.4 (solicitud de cambio) y 10.6 (SoA) son de Orlando; el 10.5 (registro de incidente) es de Evelyn. Este anexo trae el **formato** de la solicitud de servicio o de acceso y **un ejemplo lleno** con un caso de D'Onofrio. El ejemplo es **ficticio** y coincide con uno de los cinco tickets de ejemplo de la «Mesa de Servicios TI».
 >

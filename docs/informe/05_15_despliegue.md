@@ -1,6 +1,6 @@
 # 5.15 Despliegue: enfoque, herramientas, mejores prácticas y gestión de servicios
 
-> **Estado:** borrador del Sprint 3 · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [06 §6.4 y §6.5](../plan/06_github_ci_infra.md), [02 §2.2](../plan/02_mapeo_plantilla.md) (5.15 y 5.16), [09 §9.3](../plan/09_normas_marcos.md), [docs/dev/release.md](../dev/release.md), [manual de instalación](../manuales/manual_instalacion.md), `.github/workflows/*.yml`
+> **Estado:** versión final del Cierre (25/11/2026; los datos medidos son los del 23/11/2026 salvo donde se indica) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [06 §6.4 y §6.5](../plan/06_github_ci_infra.md), [02 §2.2](../plan/02_mapeo_plantilla.md) (5.15 y 5.16), [09 §9.3](../plan/09_normas_marcos.md), [docs/dev/release.md](../dev/release.md), [manual de instalación](../manuales/manual_instalacion.md), `.github/workflows/*.yml`
 >
 > Describe lo que **existe en `develop` al 25/11/2026** (los resultados medidos del despliegue son del 23/11/2026). Una cosa que el plan nombraba **no existe**: un despliegue automático a una VM (`cd.yml` y `deploy.sh` eran opcionales). Las releases **sí existen**: `v1.0.0` (24/11/2026, núcleo) y `v1.1.0` a `v1.4.0` (25/11/2026, módulos M1 a M4) están publicadas con su zip adjunto y su imagen en GHCR (ver [6.4](06_04_a_06_06_repositorio.md), Tabla 26b). Cómo regenerar el pipeline: [docs/diagramas/README.md](../diagramas/README.md).
 

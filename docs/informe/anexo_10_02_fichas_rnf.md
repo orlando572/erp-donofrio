@@ -125,7 +125,7 @@
 | Evidencia | `addons/donofrio_base/tests/test_fefo.py` y `test_flujo_venta.py`; [`S3-informe6_evidencia_tests.txt`](../capturas/sprint-3/S3-informe6_evidencia_tests.txt); TC-CAL-01 y TC-CAL-02 ([5.13](05_13_a_05_14_pruebas.md)). |
 | Límites declarados | Limitación aceptada en la Fase 1 y declarada en la Retro del Sprint 2. |
 | Riesgos relacionados | RS-06 (la alerta a 30 días depende del *cron* de Odoo; la exclusión no). |
-| Qué falta o siguiente paso | Validar el vencimiento del lote en el PdV (mejora) o dejarlo declarado; el lote rechazado, con el módulo de calidad si se construye. |
+| Qué falta o siguiente paso | Validar el vencimiento del lote en el PdV (mejora) o dejarlo declarado; el lote rechazado ya lo bloquea `donofrio_calidad` (M1). |
 
 ## RNF006
 

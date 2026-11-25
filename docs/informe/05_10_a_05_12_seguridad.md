@@ -1,6 +1,6 @@
 # 5.10 a 5.12 Gestión de seguridad de la información: riesgos, controles, ataques y defensa
 
-> **Estado:** borrador del Sprint 3 · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [09 §9.2, §9.6](../plan/09_normas_marcos.md), [07](../plan/07_riesgos_entrega.md), [docs/pm/plan_riesgos.md](../pm/plan_riesgos.md)
+> **Estado:** versión final del Cierre (25/11/2026; los datos medidos son los del 23/11/2026 salvo donde se indica) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [09 §9.2, §9.6](../plan/09_normas_marcos.md), [07](../plan/07_riesgos_entrega.md), [docs/pm/plan_riesgos.md](../pm/plan_riesgos.md)
 >
 > Mide el **estado real de `develop` al 23/11/2026** (HU-04, HU-27 y HU-28); los módulos de la Fase 2 (M1 a M4, 24 y 25/11/2026) no cambiaron los controles de esta sección: sus permisos están en [5.5b a 5.5e](05_05_modulo_donofrio_calidad.md) y la protección de `main` pasó a exigir `lint` y `test` (ver [4.3.1](04_03_infraestructura.md)). **La Declaración de Aplicabilidad (SoA) completa y la trazabilidad norma → control → evidencia no se repiten aquí:** están en el anexo 10.6 y en [09 §9.8 y §9.9](../plan/09_normas_marcos.md) (tarea aparte). Esta sección solo usa de la norma lo necesario para identificar cada riesgo, su control y su prueba.
 >

@@ -39,7 +39,7 @@ Al mapear las brechas por área aparecieron mejoras que no son un «problema» d
 Del [FODA](03_aspectos_generales.md) (3.6.1) y de la [cascada COBIT](03_aspectos_generales.md) (3.6.4) salen cuatro oportunidades externas que el proyecto aprovecha o deja abiertas:
 
 1. **ERP abierto sin licencias Enterprise.** Odoo 19 Community cubre las cinco áreas con costo de licencia cero. El costo es que hay funciones que no existen en Community (calidad, EDI de SUNAT, nómina) y se declaran como limitación o se cubren con módulo propio.
-2. **Datos para planificar la estacionalidad.** Con las transacciones de demostración (HU-16: 16 semanas del núcleo, ampliadas al 22/11/2026 para que todas las vistas tengan datos) se ven las curvas de helados en verano y de panetón en Navidad; es la base de la estrategia FO de [3.6.2](03_aspectos_generales.md).
+2. **Datos para planificar la estacionalidad.** Con las transacciones de demostración (HU-16: 16 semanas, del 3/8 al 22/11/2026, con los datos de los módulos de la Fase 2 agregados el 25/11 para que todas las vistas tengan datos) se ven las curvas de helados en verano y de panetón en Navidad; es la base de la estrategia FO de [3.6.2](03_aspectos_generales.md).
 3. **Trazabilidad como diferencial de calidad.** El lote trazable de la compra al cliente es un argumento comercial y respalda las prácticas de ISO 9001 y HACCP ([09 del plan](../plan/09_normas_marcos.md)).
 4. **Escenario Froneri.** Si el negocio de helados cambia de dueño, un ERP que separa líneas de producto y canales sigue siendo útil con chocolates y panetón. No se modela la transición (supuesto S1).
 

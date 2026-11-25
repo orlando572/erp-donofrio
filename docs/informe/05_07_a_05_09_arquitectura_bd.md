@@ -1,6 +1,6 @@
 # 5.7 a 5.9 Arquitectura del sistema, integración con la base de datos, replicación y administración de la BD
 
-> **Estado:** borrador del Sprint 3 · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [06 §6.5](../plan/06_github_ci_infra.md), [09 §9.2](../plan/09_normas_marcos.md)
+> **Estado:** versión final del Cierre (25/11/2026; los datos medidos son los del 23/11/2026 salvo donde se indica) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [06 §6.5](../plan/06_github_ci_infra.md), [09 §9.2](../plan/09_normas_marcos.md)
 >
 > Describe el **estado real de `develop`**: las mediciones son del 23/11/2026 y los módulos de la Fase 2 se suman al 25/11/2026. Existen la réplica (HU-25), los respaldos con restauración (HU-26), Nginx con TLS (HU-27), pruebas de carga y seguridad (HU-28) y el flujo de release hacia GHCR (HU-29; publicadas `v1.0.0` a `v1.4.0`). Las consultas a PostgreSQL de este documento se hicieron en modo de solo lectura sobre la base de desarrollo `donofrio_perf`. Cómo regenerar cada diagrama: [docs/diagramas/README.md](../diagramas/README.md).
 
