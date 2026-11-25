@@ -7,7 +7,7 @@
 | `c4/` | Diagramas C4 de contexto, contenedores y componentes (5.7 y 5.8) (`.puml`, `.png`, `.svg`) | PlantUML con la librería C4 | Orlando |
 | `dependencias/` | Grafo de dependencias entre módulos (5.4): `dependencias_directas` y `dependencias_completo` (`.dot`, `.svg`, `.png`) y `dependencias.csv` | `scripts/grafo_dependencias.py` + Graphviz | Orlando |
 | `pantallas/` | Wireframes (`wf_*`) y mockups (`mk_*`) de las 12 pantallas de los casos de uso, incluidas las de la Fase 2 (`.svg`, `.png`) | `generar_pantallas.py` | Evelyn |
-| `clases/` | Diagrama de clases del núcleo (modelos de Odoo y extensiones de `donofrio_base`) y clases **propuestas** de la Fase 2 (4.2.5) (`.puml`, `.png`, `.svg`) | PlantUML | Orlando |
+| `clases/` | Diagrama de clases del núcleo (modelos de Odoo y extensiones de `donofrio_base`) y clases de la Fase 2, **implementadas** (4.2.5) (`.puml`, `.png`, `.svg`) | PlantUML | Orlando |
 | `er/` | Modelo ER general (42 tablas: núcleo de la Fase 1, M1 calidad, M2 heladeros y M3 cadena de frío) y diseño lógico (ventas, inventario, producción y compras) (4.2.6 y 4.2.7), extraídos de la BD real (`.puml`, `.png`, `.svg`) | `scripts/diagrama_er.py` + PlantUML | Orlando |
 | `cu/` | Casos de uso de ventas, heladeros y gerencia (Evelyn) y de logística y producción (Orlando) (`.puml` y `.png`) | PlantUML | Evelyn y Orlando |
 
@@ -75,7 +75,7 @@ docker run --rm -v "$PWD/docs/diagramas/pantallas":/b --entrypoint sh python:3.1
 
 ## Clases (4.2.5)
 
-Las dos figuras están escritas a mano en PlantUML (los modelos y campos se verificaron contra `ir_model_fields`; las clases de la Fase 2 son **propuestas**, con estereotipo `<<propuesto>>`).
+Las dos figuras están escritas a mano en PlantUML (los modelos y campos se verificaron contra `ir_model_fields`; las clases de la Fase 2 están **implementadas** y salen del código de `addons/`).
 
 ```bash
 for f in png svg; do docker run --rm -u $(id -u):$(id -g) -v "$PWD/docs/diagramas/clases":/data plantuml/plantuml:latest -charset UTF-8 -t$f /data/*.puml; done

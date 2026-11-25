@@ -1,6 +1,6 @@
 @startuml cu_logistica_produccion
 ' Casos de uso de Logística y Producción (CU005 a CU008).
-' CU005 y CU007 son Fase 1 (Odoo estándar). CU006 (cadena de frío, M3) y CU008 (calidad, M1) son Fase 2: propuestos.
+' CU005 y CU007 son Fase 1 (Odoo estándar). CU006 (cadena de frío, M3) y CU008 (calidad, M1) son Fase 2: implementados.
 left to right direction
 skinparam shadowing false
 skinparam defaultFontName DejaVu Sans
@@ -29,8 +29,8 @@ rectangle "ERP D'Onofrio (Odoo 19 Community)" {
   usecase "CU007\nPlanificar y ejecutar una orden\nde producción con lote" as CU007 #E8F5E9
   usecase "Reservar insumos por FEFO" as FEF #E8F5E9
   usecase "Crear el lote con vencimiento\ny calcular el costo" as LOT #E8F5E9
-  usecase "CU006\nRegistrar temperaturas y alertar\n(propuesto, Fase 2 · M3)" as CU006 #FFF3CD
-  usecase "CU008\nInspeccionar la calidad y liberar el lote\n(propuesto, Fase 2 · M1)" as CU008 #FFF3CD
+  usecase "CU006\nRegistrar temperaturas y alertar\n(implementado, Fase 2 · M3)" as CU006 #FFF3CD
+  usecase "CU008\nInspeccionar la calidad y liberar el lote\n(implementado, Fase 2 · M1)" as CU008 #FFF3CD
   usecase "Bloquear el despacho\nde un lote rechazado" as BLO #FFF3CD
 }
 
@@ -55,7 +55,6 @@ BLO ..> DES : impide el despacho
 legend right
   Verde: implementable con Odoo estándar (Fase 1).
   Amarillo: módulos propios donofrio_calidad (M1) y
-  cadena de frío (M3), solo si el equipo los confirma
-  tras el Gate 0 (trabajo futuro si no).
+  cadena de frío (M3), implementados (v1.1.0 y v1.3.0).
 endlegend
 @enduml

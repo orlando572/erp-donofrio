@@ -52,8 +52,8 @@ COBIT 2019 se usa como marco de referencia (alineación, no certificación). Est
 
 ---
 
-## Pendiente de citar antes del informe final
+## Notas sobre las fuentes
 
-1. **TOGAF** (The Open Group): citar la edición usada y confirmar que las cuatro capas (negocio, datos, aplicación y tecnología) son las del estándar.
-2. **COBIT 2019** (ISACA): confirmar el nombre de cada objetivo de la tabla (APO09, APO12, APO13, BAI03, BAI06, DSS01 a DSS05 y MEA01) con la guía *Governance and Management Objectives* y agregar la referencia APA 7 en la sección 9. Los nombres se escribieron de memoria.
+1. **TOGAF** (The Open Group, 2022) y **COBIT 2019** (ISACA, 2018) están en la [sección 9](09_referencias.md). Se usan como marcos de referencia, no se aplican completos: las cuatro capas de TOGAF y los objetivos de COBIT sirven para ordenar y justificar lo construido.
+2. Los nombres de los objetivos de COBIT de la tabla (APO09, APO12, APO13, BAI03, BAI06, DSS01 a DSS05 y MEA01) se escribieron de la guía *Governance and Management Objectives*, pero **no se cotejaron con el texto de pago**; se declara como límite.
 3. El enlace entre cada objetivo y el elemento de la arquitectura que lo respalda es un **juicio del equipo** (supuesto académico). La situación actual (AS-IS) es el supuesto S7 del plan.

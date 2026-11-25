@@ -26,7 +26,7 @@ rectangle "ERP D'Onofrio (Odoo 19 Community)" {
   usecase "CU010\nAnalizar ventas por línea,\ncanal y temporada" as CU010
   usecase "Aplicar vista pivote o gráfico\nguardado (ir.filters)" as PIV
   usecase "Exportar a Excel" as EXP
-  usecase "Tablero OWL propio\n(propuesto, Fase 2 · M4)" as OWL #FFF3CD
+  usecase "Tablero OWL propio\n(implementado, Fase 2 · M4)" as OWL #FFF3CD
 }
 
 GER --> CU009

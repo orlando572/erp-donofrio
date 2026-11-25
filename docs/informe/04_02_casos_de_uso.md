@@ -1,6 +1,6 @@
 # 4.2.4 Diagramas de casos de uso y fichas (tabla 4)
 
-> **Estado:** borrador del Sprint 1 · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [04 §4.2 y §4.4](../plan/04_scrum_pmbok.md), [03 §3.3](../plan/03_modulos_odoo.md)
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [04 §4.2 y §4.4](../plan/04_scrum_pmbok.md), [03 §3.3](../plan/03_modulos_odoo.md)
 >
 > Los diagramas están en PlantUML (`docs/diagramas/cu/*.puml`, con su PNG). Aquí van los de **ventas, heladeros y gerencia** (Evelyn, Sprint 1) y los de **logística y producción** (CU005 a CU008, Orlando, Sprint 2), con la misma plantilla. Los wireframes y mockups de cada CU están en [4.4](04_04_prototipos.md) (Sprint 2). En el Sprint 2 se agregaron CU011 (compras) y CU012 (facturación).
 
@@ -12,16 +12,16 @@
 | CU002 | Cotizar y confirmar pedido con lista de precios | Ventas | RF002 | HU-09 | F1 | Implementado | Evelyn |
 | CU003 | Vender en el punto de venta con boleta | Ventas | RF003 | HU-10 | F1 | Implementado | Evelyn |
 | CU004 | Liquidar al heladero del día | Heladeros | RF004 | HU-20, HU-21 | **F2** (M2) | **Implementado** (24/11/2026) | Evelyn |
-| CU005 | Recibir, almacenar y despachar con lotes y FEFO | Logística | RF005, RF006, RF007 | HU-06, HU-11, HU-12 | F1 | Planificado | Orlando |
+| CU005 | Recibir, almacenar y despachar con lotes y FEFO | Logística | RF005, RF006, RF007 | HU-06, HU-11, HU-12 | F1 | Implementado | Orlando |
 | CU006 | Registrar temperaturas y alertar (cadena de frío) | Logística | RF008 | HU-19 | **F2** (M3) | **Implementado** (24/11/2026) | Orlando |
-| CU007 | Planificar y ejecutar una orden de producción con lote | Producción | RF009, RF010 | HU-07, HU-14 | F1 | Planificado | Orlando |
+| CU007 | Planificar y ejecutar una orden de producción con lote | Producción | RF009, RF010 | HU-07, HU-14 | F1 | Implementado | Orlando |
 | CU008 | Inspeccionar la calidad y liberar el lote | Producción | RF011, RF012 | HU-17, HU-18 | **F2** (M1) | **Implementado** (24/11/2026) | Orlando |
 | CU009 | Consultar el tablero gerencial de KPIs | Gerencia | RF013 | HU-23 (F1), HU-22 (F2) | F1 (estándar) y F2 (M4) | Implementado (el tablero OWL, 24/11/2026) | Evelyn |
 | CU010 | Analizar ventas por línea, canal y temporada | Gerencia | RF014 | HU-23 | F1 | Implementado | Evelyn |
 | CU011 | Comprar insumos con reabastecimiento mín./máx. | Compras | RF015 | HU-13 | F1 | Implementado | Evelyn |
 | CU012 | Facturar con IGV (factura 01 o boleta 03) | Facturación | RF016 | HU-15 | F1 | Implementado | Evelyn |
 
-**Estados:** *Implementado* = su HU está fusionada en `develop`, con tests y capturas; *Planificado* = su HU está en un sprint de la F1; *Propuesto* = depende de un módulo de la Fase 2 y queda como «Diseñado – trabajo futuro» si no se construye ([02 §2.3](../plan/02_mapeo_plantilla.md)).
+**Estado al cierre (25/11/2026): los 12 CU están *Implementados*.** *Implementado* = su HU está fusionada en `develop` (y en `main` con el [PR #229](https://github.com/orlando572/erp-donofrio/pull/229)), con pruebas y capturas. Los CU de la Fase 2 son CU004 (M2, `v1.2.0`), CU006 (M3, `v1.3.0`), CU008 (M1, `v1.1.0`) y la parte propia de CU009 (M4, `v1.4.0`).
 
 ---
 
@@ -35,7 +35,7 @@
 
 ![Casos de uso de Heladeros](../diagramas/cu/cu_heladeros.png)
 
-El verde es la variante estándar de la Fase 1 (pedido de venta al heladero con la lista «Heladero» más la devolución de lo no vendido). El amarillo es el módulo propio de la Fase 2.
+El verde es la variante estándar de la Fase 1 (pedido de venta al heladero con la lista «Heladero» más la devolución de lo no vendido). El amarillo es el módulo propio de la Fase 2 (M2, ya implementado). *Los diagramas conservan los colores de cuando se diseñaron.*
 
 ### Logística y Producción
 
@@ -113,11 +113,11 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Descripción** | Al terminar la jornada, el liquidador registra lo que se despachó al heladero, lo que devolvió y la merma, calcula lo vendido y su importe y entrega el PDF firmado |
 | **Precondiciones** | Heladero registrado como contacto concesionario; despacho del día cargado |
 | **Flujo principal** | 1. El liquidador abre una liquidación para el heladero y la fecha.<br>2. Registra por producto lo despachado, lo devuelto y la merma.<br>3. El sistema calcula **vendido = despachado − devuelto − merma** (no puede ser negativo), el importe y la comisión.<br>4. Confirma la liquidación.<br>5. El sistema crea y confirma el pedido de venta correspondiente.<br>6. Imprime el PDF con el detalle y las firmas |
-| **Flujos alternos** | A1. Si lo devuelto más la merma supera lo despachado, el sistema rechaza la línea.<br>A2. Si el efectivo no cuadra con el importe, la diferencia queda registrada en la liquidación.<br>A3. **Sin la Fase 2:** se usa la variante estándar (CU004-F1): pedido de venta con la lista «Heladero» y devolución de lo no vendido |
+| **Flujos alternos** | A1. Si lo devuelto más la merma supera lo despachado, el sistema rechaza la línea.<br>A2. Si el efectivo no cuadra con el importe, la diferencia queda registrada en la liquidación.<br>A3. **Sin el módulo M2 (solo núcleo):** se usa la variante estándar (CU004-F1): pedido de venta con la lista «Heladero» y devolución de lo no vendido |
 | **Postcondiciones** | Liquidación confirmada, pedido creado y devolución al almacén registrada |
 | **Reglas de negocio** | El heladero es concesionario (supuesto S4): compra a precio de heladero y liquida cada día; no es empleado |
 | **Estado** | **Implementado** en `donofrio_heladeros` (M2) el 24/11/2026, con la confirmación de Evelyn: modelo y flujo en HU-20 (PR #223) y PDF en HU-21. La diferencia de efectivo es positiva cuando el heladero entregó de más (a su favor) y negativa cuando debe |
-| **Evidencia / prueba** | [Wireframe y mockup](04_04_prototipos.md) (Sprint 2); 14 pruebas de `donofrio_heladeros`; capturas `HU-20_*` y `HU-21_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
+| **Evidencia / prueba** | [Wireframe y mockup](04_04_prototipos.md) (Sprint 2); 15 pruebas de `donofrio_heladeros`; capturas `HU-20_*` y `HU-21_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
 
 ### CU005: Recibir, almacenar y despachar con lotes y FEFO
 
@@ -146,11 +146,11 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Descripción** | El operario registra la temperatura de cada cámara en cada lectura; si sale del rango de la ubicación, el sistema avisa y deja historial |
 | **Precondiciones** | Ubicaciones de frío con su rango (`temp_min` y `temp_max`, que en la Fase 1 solo van en el nombre de la ubicación) y «Controlar temperatura» marcado; `donofrio_calidad` instalado |
 | **Flujo principal** | 1. El operario abre la cámara y registra la lectura (valor y hora).<br>2. El sistema compara con el rango de la ubicación.<br>3. Si está dentro del rango, la lectura queda en el historial.<br>4. Si está fuera, marca la lectura como «Fuera de rango» y crea una actividad para el jefe de almacén (no marca la ubicación) |
-| **Flujos alternos** | A1. Si hay lotes en la cámara afectada, el jefe de almacén los revisa y decide su destino.<br>A2. **Sin la Fase 2:** la temperatura se anota en planilla de papel y el rango queda solo como texto en el nombre de la ubicación |
+| **Flujos alternos** | A1. Si hay lotes en la cámara afectada, el jefe de almacén los revisa y decide su destino.<br>A2. **Antes de M3 (solo Fase 1):** la temperatura se anotaba en planilla de papel y el rango queda solo como texto en el nombre de la ubicación |
 | **Postcondiciones** | Historial de temperaturas por ubicación y alerta registrada |
 | **Reglas de negocio** | Congelación: −25 °C (se exige −18 °C o menos en el producto terminado); refrigerado: 2-6 °C. Rangos cargados: −30 a −18 °C y 2 a 6 °C |
 | **Estado** | **Implementado** en `donofrio_calidad` (M3) el 24/11/2026, con la confirmación de Orlando: lecturas, alerta fuera de rango y cron diario de lotes por vencer ([5.5d](05_05_modulo_donofrio_frio.md)). Lo que hace el código y difiere del diseño: la alerta es una actividad al jefe de almacén y **marca la lectura**, no la ubicación; el menú es Calidad › Cadena de frío |
-| **Evidencia / prueba** | [Wireframe y mockup](04_04_prototipos.md) (Sprint 2); 29 pruebas en `tests/test_frio.py` (44 en `donofrio_calidad`); capturas `HU-19_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
+| **Evidencia / prueba** | [Wireframe y mockup](04_04_prototipos.md) (Sprint 2); 29 pruebas en `tests/test_frio.py` (45 en `donofrio_calidad`); capturas `HU-19_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
 
 ### CU007: Planificar y ejecutar una orden de producción con lote
 
@@ -168,7 +168,7 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Datos de apoyo** | 12 recetas y 188 órdenes históricas con lote, generadas por `cargar_transacciones.py` |
 | **Evidencia / prueba** | `test_produccion.py` en `donofrio_base/tests`; capturas en `docs/capturas/sprint-2/` |
 
-### CU008: Inspeccionar la calidad y liberar el lote (propuesto, Fase 2)
+### CU008: Inspeccionar la calidad y liberar el lote (implementado, Fase 2)
 
 | Campo | Contenido |
 |---|---|
@@ -178,11 +178,11 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 | **Descripción** | Al terminar una orden de producción, el inspector mide los puntos de control del lote y lo aprueba o lo rechaza; si lo aprueba, emite el certificado de calidad |
 | **Precondiciones** | Orden de producción terminada con su lote; puntos de control definidos (pasteurización 80-85 °C, endurecimiento a −18 °C o menos, peso neto ±2 %, análisis microbiológico, humedad del panetón) |
 | **Flujo principal** | 1. Al terminar la orden, el sistema crea la inspección ligada a la orden y al lote.<br>2. El inspector registra la medición de cada punto de control.<br>3. Aprueba el lote si todos cumplen.<br>4. El sistema emite el certificado de calidad del lote (PDF).<br>5. El lote queda liberado para el despacho FEFO |
-| **Flujos alternos** | A1. Si algún punto no cumple, el inspector rechaza el lote: el sistema **bloquea su despacho** y avisa al jefe de producción, que decide reproceso o descarte con el motivo.<br>A2. **Sin la Fase 2:** el control es documental, con las instrucciones de cada operación y la nota en la orden |
+| **Flujos alternos** | A1. Si algún punto no cumple, el inspector rechaza el lote: el sistema **bloquea su despacho** y avisa al jefe de producción, que decide reproceso o descarte con el motivo.<br>A2. **Antes de M1 (solo Fase 1):** el control era documental, con las instrucciones de cada operación y la nota en la orden |
 | **Postcondiciones** | Lote liberado con certificado, o rechazado y bloqueado, con su historial de mediciones |
 | **Reglas de negocio** | Un lote rechazado no se despacha (RNF005); un lote liberado conserva su trazabilidad a la orden y a los insumos |
 | **Estado** | **Implementado** en `donofrio_calidad` (M1) el 24/11/2026, con la confirmación de Evelyn tras el Gate 0 (PR #219 y #220). El flujo A1 avisa con un mensaje y una actividad al responsable de la orden |
-| **Evidencia / prueba** | Wireframe y mockup de la inspección (Sprint 2); 12 pruebas de `donofrio_calidad`; capturas `HU-17_*` y `HU-18_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
+| **Evidencia / prueba** | Wireframe y mockup de la inspección (Sprint 2); 13 pruebas de inspección y 2 del PdV en `donofrio_calidad` (45 en el módulo con las de M3); capturas `HU-17_*` y `HU-18_*` en [`docs/capturas/sprint-4/`](../capturas/sprint-4/) |
 
 ### CU009: Consultar el tablero gerencial de KPIs
 
@@ -246,7 +246,8 @@ Todo con Odoo estándar de la Fase 1. CU011 y CU012 se agregaron en el Sprint 2 
 
 ---
 
-## Pendiente
+## Estado de las verificaciones
 
-- ~~Wireframes y mockups de cada CU, incluidos los de la Fase 2~~: hechos en el Sprint 2, ver [4.4](04_04_prototipos.md).
-- Pasar cada CU a «Implementado» cuando se verifique en la UI, y los de la F2 a «Diseñado – trabajo futuro» o «Implementado» según el Gate 0 ([02 §2.3](../plan/02_mapeo_plantilla.md)).
+- Los wireframes y mockups de cada CU, incluidos los de la Fase 2, se hicieron en el Sprint 2 ([4.4](04_04_prototipos.md)).
+- Los 12 CU están implementados y verificados con pruebas automáticas y capturas con datos de demostración (HU-16, [PR #230](https://github.com/orlando572/erp-donofrio/pull/230) y [#231](https://github.com/orlando572/erp-donofrio/pull/231)).
+- **[PENDIENTE: demo cruzada y video de la demo, a cargo del equipo en el Cierre]**: recorrerán los CU de punta a punta con la otra persona del equipo; hasta entonces la evidencia son las pruebas y las capturas.

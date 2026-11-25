@@ -1,8 +1,8 @@
 # 10.1 Fichas de requerimientos funcionales (tabla 39)
 
-> **Estado:** borrador del Sprint 3 · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [4.2.2](04_02_requerimientos_funcionales.md) (tabla 2), [casos de uso](04_02_casos_de_uso.md), [matriz de trazabilidad](trazabilidad.md), [04 §4.4 del plan](../plan/04_scrum_pmbok.md) (criterios de aceptación) y las pruebas de `addons/donofrio_base/tests/`
+> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn · **Revisa:** Orlando · **Fuente:** [4.2.2](04_02_requerimientos_funcionales.md) (tabla 2), [casos de uso](04_02_casos_de_uso.md), [matriz de trazabilidad](trazabilidad.md), [04 §4.4 del plan](../plan/04_scrum_pmbok.md) (criterios de aceptación) y las pruebas de `addons/donofrio_base/tests/`
 >
-> Una ficha por RF, con el mismo formato. Los 14 RF de la **Fase 1**, los 2 de **M1** (RF011 y RF012), el de **M2** (RF004) el de **M3** (RF008) y el tablero OWL de **M4** (parte propia de RF013), desde el 24/11/2026, están *Implementados*: ya no queda ningún RF de la Fase 2 como *Diseñado – trabajo futuro*. El estado es el real al 23/11/2026 y cambia si el Gate 0 aprueba algún módulo.
+> Una ficha por RF, con el mismo formato. Los 14 RF de la **Fase 1**, los 2 de **M1** (RF011 y RF012), el de **M2** (RF004) el de **M3** (RF008) y el tablero OWL de **M4** (parte propia de RF013), desde el 24/11/2026, están *Implementados*: ya no queda ningún RF de la Fase 2 como *Diseñado – trabajo futuro*. El estado es el real al 25/11/2026, con los cuatro módulos en `main` ([PR #229](https://github.com/orlando572/erp-donofrio/pull/229)) y las releases `v1.1.0` a `v1.4.0`.
 
 ## Resumen
 
@@ -27,7 +27,18 @@
 | [RF017](#rf017) | Gestionar el organigrama, empleados y puestos | F1 | HU-05 | Implementado |
 | [RF018](#rf018) | Gestionar usuarios y roles por área | F1 | HU-04 | Implementado |
 
-**Pruebas:** `donofrio_base` tiene 136 pruebas (`scripts/test.sh`) que corren en el CI de cada PR. Las capturas están en `docs/capturas/sprint-N/`.
+**Pruebas:** el repositorio tiene **218 pruebas** (137 de `donofrio_base`, 45 de `donofrio_calidad`, 15 de `donofrio_heladeros` y 21 de `donofrio_tablero`; `scripts/test.sh`) que corren en el CI de cada PR; la última corrida, sobre `develop` `339c907` (25/11/2026), terminó con `0 failed, 0 error(s) of 218 tests`. Las capturas están en `docs/capturas/sprint-N/`.
+
+**RF de la Fase 2: HU, PR y release.**
+
+| RF | Módulo | HU | PR fusionados | Release |
+|---|---|---|---|---|
+| RF011, RF012 | M1 `donofrio_calidad` | HU-17, HU-18 | [#219](https://github.com/orlando572/erp-donofrio/pull/219), [#220](https://github.com/orlando572/erp-donofrio/pull/220), [#221](https://github.com/orlando572/erp-donofrio/pull/221) | [`v1.1.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.1.0) |
+| RF004 | M2 `donofrio_heladeros` | HU-20, HU-21 | [#223](https://github.com/orlando572/erp-donofrio/pull/223), [#225](https://github.com/orlando572/erp-donofrio/pull/225) | [`v1.2.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.2.0) |
+| RF008 | M3 cadena de frío (en `donofrio_calidad`) | HU-19 | [#226](https://github.com/orlando572/erp-donofrio/pull/226) | [`v1.3.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.3.0) |
+| RF013 (parte propia) | M4 `donofrio_tablero` | HU-22, HU-24 | [#227](https://github.com/orlando572/erp-donofrio/pull/227), [#228](https://github.com/orlando572/erp-donofrio/pull/228) | [`v1.4.0`](https://github.com/orlando572/erp-donofrio/releases/tag/v1.4.0) |
+
+Los cuatro módulos llegaron a `main` juntos con el [PR #229](https://github.com/orlando572/erp-donofrio/pull/229) (*merge commit*). Los datos de demostración de todas las vistas (3/8 al 22/11/2026) son de la HU-16 ([PR #230](https://github.com/orlando572/erp-donofrio/pull/230)) y las capturas en PNG, del [PR #231](https://github.com/orlando572/erp-donofrio/pull/231).
 
 ## RF001
 
@@ -116,7 +127,7 @@
 | **Reglas de negocio y limitaciones** | El heladero es concesionario (supuesto S4) y no empleado. Sin el módulo se cubre en parte con un pedido de venta con la lista «Heladero» y la devolución estándar (BPMN TO-BE 11). |
 | **Implementación y evidencia** | `addons/donofrio_heladeros` ([5.5c](05_05_modulo_donofrio_heladeros.md)); `tests/test_liquidacion.py`; `docs/capturas/sprint-4/HU-20_*` y `HU-21_*` |
 | **Diseño disponible** | `docs/diagramas/pantallas/mk_cu004_liquidacion.png`<br>`docs/diagramas/pantallas/mk_rp_liquidacion_heladero.png`<br>`docs/diagramas/bpmn/to-be_heladero_m2.png` |
-| **Lo que falta** | Nada de lo diseñado para M2. Límites: el pedido solo mueve stock por lo vendido y la vista móvil no se probó en un celular real. |
+| **Lo que falta** | Nada de lo diseñado para M2. Límites: el pedido solo mueve stock por lo vendido y la vista móvil no se probó en un celular real **[PENDIENTE: prueba en un celular real]**. |
 | **Estado** | **Implementado** (M2, 24/11/2026) |
 
 ## RF005
@@ -314,10 +325,10 @@
 | **Criterios de aceptación** | F1: dashboards de Community activos y vistas guardadas por código. F2: acción OWL con hasta 6 tarjetas y un gráfico mensual, filtro por almacén, carga en menos de 3 s (medido: 30 a 57 ms la consulta y 177 ms la página, en una PC). |
 | **Reglas de negocio y limitaciones** | Solo lectura en Community; el panel de ventas carga en menos de 3 s (RNF008). El rendimiento del backend es 59 frente a la meta de 80 (limitación declarada). Los títulos de algunos gráficos salen en inglés. |
 | **Implementación** | `addons/donofrio_base/data/vistas_gerencia_data.xml` (F1) y `addons/donofrio_tablero` (M4, [5.5e](05_05_modulo_donofrio_tablero.md)) |
-| **Pruebas** | `addons/donofrio_base/tests/test_gerencia.py (5)` y `addons/donofrio_tablero/tests/test_tablero.py (17)` |
+| **Pruebas** | `addons/donofrio_base/tests/test_gerencia.py (5)` y `addons/donofrio_tablero/tests/test_tablero.py (21)` |
 | **Evidencia** | `docs/capturas/sprint-3/HU-23_* (5)` y `docs/capturas/sprint-4/HU-22_*` |
-| **PR fusionados** | [#188](https://github.com/orlando572/erp-donofrio/pull/188) |
-| **Lo que falta** | Nada de lo diseñado para M4. Límites: el tablero no se midió con Lighthouse, la tarjeta de cumplimiento cuenta las OP del mes que ya empezaron y el filtro de almacén no aplica a las liquidaciones ([5.5e.8](05_05_modulo_donofrio_tablero.md)). |
+| **PR fusionados** | [#188](https://github.com/orlando572/erp-donofrio/pull/188), [#227](https://github.com/orlando572/erp-donofrio/pull/227), [#228](https://github.com/orlando572/erp-donofrio/pull/228) |
+| **Lo que falta** | Nada de lo diseñado para M4. Límites: Lighthouse del tablero da **76** en escritorio (meta 80) y 39 en móvil, declarado como **límite conocido** (LCP de 2.11 s, cumple los 3 s; [4.6.4](04_06_wpo.md)); la prueba en un celular real está **[PENDIENTE: prueba del tablero en un celular real]**; la tarjeta de cumplimiento cuenta las OP del mes que ya empezaron y el filtro de almacén no aplica a las liquidaciones ([5.5e.8](05_05_modulo_donofrio_tablero.md)). |
 | **Prototipo** | `docs/diagramas/pantallas/mk_cu009_tablero.png` |
 | **Estado** | **Implementado** (dashboards estándar en F1; tablero OWL en M4, 24/11/2026) |
 

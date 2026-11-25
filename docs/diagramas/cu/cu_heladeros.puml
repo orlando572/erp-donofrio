@@ -1,5 +1,5 @@
 @startuml cu_heladeros
-' Casos de uso de Heladeros (CU004). RF004 es Fase 2 (donofrio_heladeros, M2): propuesto.
+' Casos de uso de Heladeros (CU004). RF004 es Fase 2 (donofrio_heladeros, M2): implementado.
 ' Sin la Fase 2 se cubre con la variante estándar: pedido de venta al heladero + devolución.
 left to right direction
 skinparam shadowing false
@@ -21,7 +21,7 @@ actor "Heladero\n(concesionario)" as HEL
 
 rectangle "ERP D'Onofrio (Odoo 19 Community)" {
   usecase "CU004-F1\nVender al heladero y recibir\nla devolución (estándar)" as F1 #E8F5E9
-  usecase "CU004\nLiquidar al heladero del día\n(propuesto, Fase 2 · M2)" as CU004 #FFF3CD
+  usecase "CU004\nLiquidar al heladero del día\n(implementado, Fase 2 · M2)" as CU004 #FFF3CD
   usecase "Registrar despachado,\ndevuelto y merma" as REG #FFF3CD
   usecase "Calcular vendido, importe\ny comisión" as CAL #FFF3CD
   usecase "Emitir PDF de liquidación\ncon firmas" as PDF #FFF3CD
@@ -40,7 +40,7 @@ CU004 ..> F1 : reemplaza el cálculo\nmanual de la devolución
 
 legend right
   Verde: implementable con Odoo estándar (Fase 1).
-  Amarillo: módulo propio donofrio_heladeros, solo si el
-  equipo lo confirma tras el Gate 0 (trabajo futuro si no).
+  Amarillo: módulo propio donofrio_heladeros (M2),
+  implementado (release v1.2.0).
 endlegend
 @enduml
