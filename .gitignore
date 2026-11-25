@@ -4,6 +4,8 @@ docs/TEMPLATE - INFORME PROYECTO FINAL.docx
 docs/*.pdf
 docs/*.docx
 docs/~$*
+# El DOCX del informe deriva de la plantilla del docente: solo se sube el PDF
+docs/informe/entrega/*.docx
 
 # Secretos y entorno local
 .env
