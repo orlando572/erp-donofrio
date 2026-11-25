@@ -355,7 +355,7 @@ PANTALLAS = [
 ]
 
 
-# Reportes en PDF (QWeb) de la Fase 2: se diseñan en la F1 aunque no se construyan (4.6.3). Hoja A4 sin barra de la aplicación.
+# Reportes en PDF (QWeb) de la Fase 2: se diseñaron en la F1 y se implementaron en la F2 (4.6.3). Hoja A4 sin barra de la aplicación.
 REPORTES = [
     Pantalla('rp_certificado_calidad', 'CU008', 'Certificado de calidad del lote', 'Calidad (M1)',
              'Calidad › Inspecciones › INS/00018 › Imprimir', hu='HU-18', f2=True, reporte=True, ancho=794, partes=[

@@ -14,13 +14,15 @@ El registro tiene **15 riesgos de la etapa de desarrollo** (R1 a R6, R10, R12, R
 | **Media** (3 a 5) | R3 (3, cerrado); R16, R18, R19, R20 y RS-07 (4) | 6 |
 | **Baja** (1 a 2) | R10 y R12 (2) | 2 |
 
-**Lectura de la situación real.**
+**Lectura de la situación real al 23/11/2026** (antes de construir la Fase 2; el estado al 25/11 está en 4.5.2.6).
 - **1 cerrado** (R3) y **2 mitigados** con evidencia (R2 y R18).
 - **1 se materializó en parte y se aceptó** (R6): en Community no hay calidad ni envío a SUNAT; se declaró como limitación.
-- **El riesgo dominante es el plazo (R1)**, que condiciona a R15, R17, R19 y R20: la Fase 1 se terminó en unas 21 horas, pero la Fase 2 y las pruebas con usuarios dependen del tiempo que queda hasta el viernes 27/11 a las 14:30.
+- **El riesgo dominante es el plazo (R1)**, que condiciona a R15, R17, R19 y R20: la Fase 1 se terminó en unas 21 horas; entonces la Fase 2 y las pruebas con usuarios dependían del tiempo que quedaba hasta el viernes 27/11 a las 14:30. La Fase 2 se completó después (4.5.2.6); las pruebas con usuarios siguen pendientes.
 - Los demás siguen abiertos con acciones concretas (ver la tabla).
 
 ## 4.5.2.2 Tabla de riesgos de desarrollo
+
+> Las filas son la foto del **23/11/2026**, antes de construir la Fase 2: donde dicen que «no se empezó ningún módulo» o que depende del Gate 0, la actualización del 25/11 (todos los módulos construidos) está en [4.5.2.6](#4526-actualización-al-cierre-de-la-fase-2-25112026).
 
 | Id | Tipo | Riesgo | I | P | Nivel | Prioridad | Estrategia y control | Resp. | Situación real al 23/11/2026 | Estado |
 |---|---|---|---|---|---|---|---|---|---|---|

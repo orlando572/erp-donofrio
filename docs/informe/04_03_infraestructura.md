@@ -77,7 +77,7 @@ Odoo extiende por **herencia**, sin modificar el código de origen. Así se apli
 | **I**: segregación de interfaces | Cada módulo declara solo las dependencias que usa en su `__manifest__.py`, y los usuarios reciben los grupos mínimos de su rol (10 roles en HU-04) |
 | **D**: inversión de dependencias | Los módulos dependen de modelos y estrategias abstractas del registro (`env['stock.lot']`, la estrategia de retiro `product_expiry.removal_fefo`) y no de implementaciones concretas ni de SQL |
 
-Limitación declarada: en la Fase 1 el proyecto **no define modelos nuevos**: configura y verifica Odoo por datos, *hooks* y pruebas, y extiende cuatro modelos existentes con `_inherit` (`sale.order`, `res.users`, `project.task`, que agrega el campo `sla_estado`, y `auditlog.rule`; ver [5.5.5](05_01_a_05_06_backend.md)). Los modelos propios (con su ACL y sus pruebas) aparecen si se construyen los módulos de la Fase 2. Qué patrones se aplicaron de verdad, y por qué no se afirma TDD estricto: [5.6](05_01_a_05_06_backend.md).
+Limitación declarada: en la Fase 1 el proyecto **no define modelos nuevos**: configura y verifica Odoo por datos, *hooks* y pruebas, y extiende cuatro modelos existentes con `_inherit` (`sale.order`, `res.users`, `project.task`, que agrega el campo `sla_estado`, y `auditlog.rule`; ver [5.5.5](05_01_a_05_06_backend.md)). Los modelos propios (con su ACL y sus pruebas) son los de los módulos de la Fase 2 (M1 a M4, ya implementados; ver [5.5b a 5.5e](05_05_modulo_donofrio_calidad.md)). Qué patrones se aplicaron de verdad, y por qué no se afirma TDD estricto: [5.6](05_01_a_05_06_backend.md).
 
 ## 4.3.3 Configuración de herramientas: desarrollo, despliegue, mantenimiento y monitoreo
 

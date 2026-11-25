@@ -1,6 +1,6 @@
 @startuml cu_gerencia
 ' Casos de uso de Gerencia (CU009 y CU010). Fase 1: dashboards estándar y vistas pivote.
-' El tablero OWL propio (F2 · M4) sería una mejora de CU009.
+' El tablero OWL propio (F2 · M4) está implementado como mejora de CU009 (v1.4.0).
 left to right direction
 skinparam shadowing false
 skinparam defaultFontName DejaVu Sans
