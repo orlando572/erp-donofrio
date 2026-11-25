@@ -293,7 +293,7 @@
 | **Criterios de aceptación** | Reporte QWeb con mediciones, responsable y logo; solo para inspecciones aprobadas. |
 | **Reglas de negocio y limitaciones** | Depende de RF011. |
 | **Diseño disponible** | `docs/diagramas/pantallas/mk_rp_certificado_calidad.png` |
-| **Implementación y evidencia** | `report/calidad_report.xml`; `docs/capturas/sprint-4/HU-18_certificado_pdf.jpg` |
+| **Implementación y evidencia** | `report/calidad_report.xml`; `docs/capturas/sprint-4/HU-18_certificado_pdf.png` |
 | **Lo que falta** | Nada de lo diseñado para M1. |
 | **Estado** | **Implementado** (M1, 24/11/2026) |
 

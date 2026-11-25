@@ -106,15 +106,15 @@ stock_location 1───* donofrio_temperatura *───1 res_users
 
 Corrida del 24/11/2026 sobre una base nueva con el código de la rama: `44 post-tests`, `0 failed, 0 error(s) of 44 tests`, sin `ERROR`, `CRITICAL` ni `WARNING` en el registro. `scripts/check_legacy.sh`: «sin patrones legacy». **Actualización (`-u`):** se instaló M1 (código del commit anterior) sobre una base nueva con los datos de `donofrio_base` y se actualizó con el código de M3, sin `ERROR` ni `WARNING`; las cuatro cámaras quedaron con su rango y el cron y el parámetro (7) existen. No se probó sobre la base de desarrollo `donofrio`.
 
-Capturas (base nueva con `donofrio_base`, `donofrio_calidad` y `donofrio_heladeros`, más datos ficticios cargados por script; usuario «Jefe de Almacén», 24/11/2026; PNG de 800 × 500):
+Capturas (base nueva con `donofrio_base`, `donofrio_calidad` y `donofrio_heladeros`, más datos ficticios cargados por script; usuario «Jefe de Almacén»; capturas rehechas el 25/11/2026 con los datos de demostración de la HU-16; PNG de 1600 × 900):
 
 | Qué se verificó en la pantalla de Odoo | Captura |
 |---|---|
-| Lista de lecturas: una fuera de rango (9.5 °C en la cámara de 2 a 6 °C), en rojo y con la casilla marcada | [`HU-19_lista_lecturas.png`](../capturas/sprint-4/HU-19_lista_lecturas.png) |
-| Lectura **dentro** de rango (3 °C): sin cinta y sin actividades | [`HU-19_lectura_dentro_de_rango.png`](../capturas/sprint-4/HU-19_lectura_dentro_de_rango.png) |
+| Lista de lecturas: una fuera de rango (7.3 °C en la cámara de insumos de 2 a 6 °C, el 21/11), en rojo y con la casilla marcada | [`HU-19_lista_lecturas.png`](../capturas/sprint-4/HU-19_lista_lecturas.png) |
+| Lectura **dentro** de rango (3.9 °C): sin cinta y sin actividades | [`HU-19_lectura_dentro_de_rango.png`](../capturas/sprint-4/HU-19_lectura_dentro_de_rango.png) |
 | Lectura **fuera** de rango: cinta «Fuera de rango» y la actividad «Temperatura fuera de rango» para el jefe de almacén | [`HU-19_lectura_fuera_de_rango.png`](../capturas/sprint-4/HU-19_lectura_fuera_de_rango.png) |
 | Rango de temperatura en la ubicación (grupo «Cadena de frío»: 2.00 a 6.00 °C) | [`HU-19_rango_en_ubicacion.png`](../capturas/sprint-4/HU-19_rango_en_ubicacion.png) |
-| Actividad del cron en un lote que vence en 3 días, junto a la alerta estándar de Odoo | [`HU-19_cron_lote_por_vencer.png`](../capturas/sprint-4/HU-19_cron_lote_por_vencer.png) |
+| Actividad del cron en un lote que vence en 4 días (INI-P02-A, vence el 29/11), junto a la alerta estándar de Odoo | [`HU-19_cron_lote_por_vencer.png`](../capturas/sprint-4/HU-19_cron_lote_por_vencer.png) |
 
 ## 5.5d.8 Límites
 

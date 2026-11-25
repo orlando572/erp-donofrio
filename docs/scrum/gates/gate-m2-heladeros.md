@@ -21,7 +21,7 @@
 | Tests y ACL de cada modelo nuevo | **Cumple** | 14 pruebas sin errores (`scripts/test.sh donofrio_heladeros`); `security/ir.model.access.csv` con las dos tablas |
 | Actualización (`-u`) sin errores sobre una base con datos | **Cumple** | Instalado y actualizado varias veces sobre la base `donofrio`, sin errores ni avisos |
 | Criterios verificados en la pantalla | **Cumple, salvo la vista móvil** | Crear, despachar, confirmar con pedido, error de cantidades, precio con tres decimales, botón «Imprimir» y PDF. **La vista móvil no se pudo probar** (ver sección 3) |
-| Capturas | **Cumple** | [`docs/capturas/sprint-4/`](../../capturas/sprint-4/): 5 de HU-20 y 2 de HU-21 (JPG, resolución reducida) |
+| Capturas | **Cumple** | [`docs/capturas/sprint-4/`](../../capturas/sprint-4/): 4 de HU-20 y 2 de HU-21 rehechas el 25/11 en PNG de 1600 × 900 con los datos de demostración de la HU-16 (queda en JPG `HU-20_error_devuelto_mas_merma`: reproducirla exige crear una liquidación) |
 | Checklist de la épica #145 | **Parcial** | HU-20 y HU-21 enlazadas a su PR; queda sin marcar el criterio «vista móvil usable» de HU-21, así que la épica sigue abierta |
 | Sección del informe | **Cumple** | [5.5c](../../informe/05_05_modulo_donofrio_heladeros.md); RF004 en 4.2.2 y 10.1; CU004; 4.4; 4.2.5 |
 | ER y diccionario extraídos de nuevo | **Cumple** | `diagrama_er.py` y `diccionario_datos.py` con el área «Heladeros (M2)»: 41 tablas, 96 relaciones, Tablas 4.2.8-40 y 4.2.8-41 |
@@ -37,7 +37,7 @@
 | Tag de release de M2 | Orlando | Con el merge `develop` → `main`; el primero fue *squash* y `main` quedó con un solo commit, así que el siguiente PR a `main` puede dar conflictos |
 | Marcar la tarjeta de #145 en el Project | Orlando | Evelyn solo tiene lectura |
 | Filas del diccionario con datos de prueba | — | La columna sale de la base `donofrio` y no de `donofrio_perf` (ya no existe); difiere en una o dos filas por los datos de prueba |
-| Capturas en PNG y a mayor resolución | Evelyn | Las actuales son JPG a escala reducida |
+| ~~Capturas en PNG y a mayor resolución~~ | **Resuelto** (25/11) | PNG de 1600 × 900 (HU-20 y HU-21). Única excepción: `HU-20_error_devuelto_mas_merma.jpg` (primera entrega), porque reproducir el error de validación exige crear datos |
 
 ## 4. Recomendación
 
