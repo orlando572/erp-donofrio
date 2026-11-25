@@ -157,3 +157,14 @@ class TestPdfLiquidacion(TestLiquidacionHeladero):
         reporte = self.env.ref('donofrio_heladeros.action_report_liquidacion')
         with self.assertRaises(UserError):
             reporte._render_qweb_html(reporte.report_name, liq.ids)
+
+
+@tagged('post_install', '-at_install')
+class TestAdministradorHeladeros(TransactionCase):
+    """El administrador tiene el grupo de jefatura de Heladeros (incluye al liquidador)."""
+
+    def test_admin_tiene_el_grupo(self):
+        admin = self.env.ref('base.user_admin')
+        self.assertTrue(admin.has_group('donofrio_heladeros.group_heladeros_jefe'))
+        self.assertTrue(admin.has_group('donofrio_heladeros.group_heladeros_liquidador'))
+        self.env['donofrio.liquidacion'].with_user(admin).search([], limit=1)

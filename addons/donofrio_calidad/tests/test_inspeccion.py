@@ -176,3 +176,16 @@ class TestCertificadoCalidad(TestInspeccionCalidad):
         inspeccion.action_rechazar()
         with self.assertRaises(UserError):
             reporte._render_qweb_html(reporte.report_name, inspeccion.ids)
+
+
+@tagged('post_install', '-at_install')
+class TestAdministradorCalidad(DonofrioStockCase):
+    """El administrador tiene el grupo de jefatura de Calidad: lee los puntos de control e imprime el certificado."""
+
+    def test_admin_tiene_el_grupo_y_lee_los_puntos_de_control(self):
+        admin = self.env.ref('base.user_admin')
+        self.assertTrue(admin.has_group('donofrio_calidad.group_calidad_jefe'))
+        self.assertTrue(admin.has_group('donofrio_calidad.group_calidad_inspector'))
+        puntos = self.env['donofrio.calidad.punto'].with_user(admin).search([])
+        self.assertTrue(puntos)
+        self.assertTrue(puntos.mapped('name'))

@@ -46,5 +46,11 @@
         <field name="lang">es_PE</field>
         <field name="tz">America/Lima</field>
     </record>
+    <!-- Su contacto y su ficha de empleado salen en inglés de fábrica (funciones: esos registros son noupdate en base y
+         un <record> no se aplicaría al actualizar el módulo en una base ya instalada) -->
+    <data noupdate="0">
+        <function model="res.partner" name="write" eval="([ref('base.partner_admin')], {'name': 'Administrador'})"/>
+        <function model="hr.employee" name="write" eval="([ref('hr.employee_admin')], {'name': 'Administrador'})"/>
+    </data>
 
 </odoo>
