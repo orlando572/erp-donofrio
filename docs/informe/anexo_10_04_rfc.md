@@ -9,7 +9,7 @@ Todos los tipos usan el mismo formato de RFC (el PR con su plantilla); cambian l
 | Tipo de cambio | Qué se cambia | Verificación | Reversa |
 |---|---|---|---|
 | Infraestructura | El archivo de Docker Compose, Nginx, imagen de Odoo, scripts de despliegue | Pruebas automáticas de réplica, respaldo y despliegue protegido; el script de verificación del despliegue | Revertir el PR y volver a levantar con el tag anterior |
-| Aplicaciones | Módulos de D'Onofrio (datos, pantallas, seguridad y reportes) | 218 pruebas automáticas, actualización sobre una base con datos y revisión en pantalla | Imagen y zip del tag anterior |
+| Aplicaciones | Módulos de D'Onofrio (datos, pantallas, seguridad y reportes) | 224 pruebas automáticas, actualización sobre una base con datos y revisión en pantalla | Imagen y zip del tag anterior |
 | Base de datos | Modelos (esquema por el ORM) y datos XML | Instalación limpia y actualización en el CI; el script de verificación de la réplica | Respaldo previo con los scripts de respaldo y restauración en una base nueva |
 | Documentación | Informe, manuales y diagramas | Revisión del otro integrante (cambio estándar) | Revertir el PR |
 | Configuración | Archivo de parámetros, configuración de Odoo y parámetros del sistema cargados por código | El script de verificación del despliegue (modo producción y gestor de bases cerrado) | Revertir el PR y reiniciar el servicio |

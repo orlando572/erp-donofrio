@@ -25,7 +25,7 @@ El pipeline de integración y entrega continuas (CI/CD) automatiza el camino de 
 
 | Flujo | Cuándo corre | Qué hace |
 |---|---|---|
-| Integración continua | En cada cambio propuesto, al fusionar en develop y main, cada lunes a las 06:00 de Lima y a pedido | Revisa el estilo y el código obsoleto (11 s), instala los módulos en una base nueva y corre las 218 pruebas (199 s), y prueba la réplica (24 s), el respaldo (65 s) y el despliegue protegido (105 s). Las dos primeras son obligatorias para fusionar |
+| Integración continua | En cada cambio propuesto, al fusionar en develop y main, cada lunes a las 06:00 de Lima y a pedido | Revisa el estilo y el código obsoleto (11 s), instala los módulos en una base nueva y corre todas las pruebas (199 s), y prueba la réplica (24 s), el respaldo (65 s) y el despliegue protegido (105 s). Las dos primeras son obligatorias para fusionar |
 | Rendimiento | A pedido | Carga los datos, levanta el despliegue protegido, mide la carga con k6 y la seguridad con ZAP, y guarda los reportes |
 | Publicación | Al crear una versión (v1.x.y) | Construye y prueba la imagen, arma el zip del código y publica ambos en GitHub |
 

@@ -83,7 +83,7 @@ Las ramas develop y main exigen los controles de estilo (lint) y de pruebas, una
 | GitHub Issues y Projects | Registro y planificación | HU con criterios de aceptación, sprint y puntos |
 | PR con plantilla | Evaluación | Descripción, HU, pruebas, capturas y lista de la definición de terminado |
 | Protección de ramas | Autorización | Una aprobación del otro integrante y controles obligatorios |
-| GitHub Actions | Prueba | Revisión de estilo, 218 pruebas y pruebas de réplica, respaldo y despliegue protegido |
+| GitHub Actions | Prueba | Revisión de estilo, 224 pruebas y pruebas de réplica, respaldo y despliegue protegido |
 | Los scripts de verificación | Verificación | Comprobaciones sobre el entorno desplegado y sobre la imagen |
 | Versiones etiquetadas, GitHub Releases y GHCR | Cierre y reversa | Versión inmutable (imagen y zip) para volver al tag anterior |
 | Los scripts de respaldo y restauración | Reversa de datos | Respaldo previo y restauración en una base nueva |

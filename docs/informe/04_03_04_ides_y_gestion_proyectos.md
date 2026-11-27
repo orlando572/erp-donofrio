@@ -10,7 +10,7 @@ El entorno de desarrollo es el editor Visual Studio Code (con la extensión WSL 
 
 | Lenguaje o formato | Dónde se usa |
 |---|---|
-| Python 3.12 | La lógica de los cuatro módulos y sus 218 pruebas automáticas, los scripts de carga de datos y de medición, y los generadores de diagramas |
+| Python 3.12 | La lógica de los cuatro módulos y sus 224 pruebas automáticas, los scripts de carga de datos y de medición, y los generadores de diagramas |
 | XML y CSV | Datos y configuración del ERP, pantallas, reportes impresos, permisos de acceso y diagramas de procesos |
 | JavaScript (OWL) y SCSS | El Tablero gerencial (con los gráficos de Chart.js que trae Odoo) y la marca visual de D'Onofrio (barra superior amarilla) |
 | Bash, YAML, PlantUML y Markdown | Scripts de pruebas, respaldo y despliegue; configuración de Docker y de GitHub Actions; diagramas; informe y manuales |

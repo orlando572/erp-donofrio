@@ -2,7 +2,7 @@
 
 ## 7.1 Conclusión general
 
-El proyecto cumple su meta principal: un ERP sobre Odoo 19 Community y PostgreSQL 16, sin licencias Enterprise, donde cada lote se puede seguir desde el insumo hasta el cliente, la calidad y la temperatura dejan rastro ligado al lote, el heladero liquida con un documento firmable y la gerencia ve datos consolidados. El núcleo (módulo de configuración base) se entregó configurado por código y los cuatro módulos desarrollados para D'Onofrio (calidad, liquidación de heladeros, cadena de frío y tablero) se construyeron uno a uno. En cifras: 115 puntos de historias de usuario completados, 218 pruebas automáticas en verde en el CI, 82 PR fusionados, cinco versiones (v1.0.0 a v1.4.0), un despliegue protegido y respaldado, y una restauración de 31 s.
+El proyecto cumple su meta principal: un ERP sobre Odoo 19 Community y PostgreSQL 16, sin licencias Enterprise, donde cada lote se puede seguir desde el insumo hasta el cliente, la calidad y la temperatura dejan rastro ligado al lote, el heladero liquida con un documento firmable y la gerencia ve datos consolidados. El núcleo (módulo de configuración base) se entregó configurado por código y los cuatro módulos desarrollados para D'Onofrio (calidad, liquidación de heladeros, cadena de frío y tablero) se construyeron uno a uno. En cifras: 115 puntos de historias de usuario completados, 224 pruebas automáticas en verde, 82 PR fusionados, cinco versiones (v1.0.0 a v1.4.0), un despliegue protegido y respaldado, y una restauración de 31 s.
 
 ## 7.2 Una conclusión por problema del caso
 
@@ -24,7 +24,7 @@ Marketing y ventas: el embudo CRM, las listas de precios por canal, el punto de 
 
 ## 7.4 Una conclusión por requerimiento no funcional
 
-Los 13 requerimientos no funcionales tienen su métrica, su prueba y su evidencia (anexo 10.2): rendimiento (p95 de 11.6 ms con 20 usuarios y 0 % de errores), continuidad (restauración en 31 s y réplica con retraso de 2.3 ms), trazabilidad de los lotes, mantenibilidad (218 pruebas en el CI), seguridad (10 roles, TLS, 2FA y 0 alertas altas en ZAP), auditoría de precios, pedidos y compras, y un entorno que se levanta con un comando.
+Los 13 requerimientos no funcionales tienen su métrica, su prueba y su evidencia (anexo 10.2): rendimiento (p95 de 11.6 ms con 20 usuarios y 0 % de errores), continuidad (restauración en 31 s y réplica con retraso de 2.3 ms), trazabilidad de los lotes, mantenibilidad (224 pruebas automáticas), seguridad (10 roles, TLS, 2FA y 0 alertas altas en ZAP), auditoría de precios, pedidos y compras, y un entorno que se levanta con un comando.
 
 
 ## 7.5 Conclusión sobre la gestión del proyecto

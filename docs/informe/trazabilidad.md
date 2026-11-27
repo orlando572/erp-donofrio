@@ -1,6 +1,6 @@
 # Matriz de trazabilidad: requisito → HU → prueba
 
-Los 18 requisitos funcionales y los 13 no funcionales se relacionan con su historia de usuario y con las pruebas que los verifican (entre paréntesis, la cantidad de pruebas del archivo). Todos los RF están implementados; el repositorio tiene 218 pruebas.
+Los 18 requisitos funcionales y los 13 no funcionales se relacionan con su historia de usuario y con las pruebas que los verifican (entre paréntesis, la cantidad de pruebas del archivo). Todos los RF están implementados; el repositorio tiene 224 pruebas.
 
 ### Tabla 41. Matriz de trazabilidad
 
@@ -26,7 +26,7 @@ Los 18 requisitos funcionales y los 13 no funcionales se relacionan con su histo
 | RF018 Gestionar usuarios y roles por área | HU-04 | Pruebas de permisos (9) | Cumple |
 | RNF001 Portabilidad: navegador de escritorio y vista adaptable | HU-09, HU-10 | revisión en ventana angosta | Cumple |
 | RNF002 Rendimiento: p95 < 2 s con 20 usuarios (k6) | HU-28 | k6 (carga normal y de esfuerzo) | Cumple |
-| RNF003 Usabilidad: español y tareas en ≤ 3 pasos | HU-03, HU-24 | revisión por roles y evaluación heurística | Cumple |
+| RNF003 Usabilidad: español y tareas en ≤ 3 pasos | HU-03, HU-06, HU-24 | Pruebas de idioma (6), revisión por roles y evaluación heurística | Cumple |
 | RNF004 Trazabilidad del 100 % de los lotes (de la OP al cliente) | HU-14, HU-33 | Prueba del flujo de compra y producción (1), pruebas de producción (1) | Cumple |
 | RNF005 Integridad: no se despacha un lote vencido ni uno rechazado por calidad | HU-11, HU-17 | Pruebas de salida por vencimiento (2), prueba del flujo de venta (1), pruebas de inspección (1), pruebas del punto de venta (1) | Cumple |
 | RNF006 Respaldo diario (RPO 24 h), réplica (RPO de segundos) y RTO ≤ 2 h | HU-25, HU-26 | restauración cronometrada y el script de verificación de la réplica | Cumple |

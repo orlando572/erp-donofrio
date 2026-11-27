@@ -33,4 +33,4 @@ GitHub tiene 22 issues: 15 épicas (11 cerradas) y 7 de gestión (2 cerradas). L
 
 Cada PR indica a qué épica pertenece: 51 la citan como parte de ella y 5, los últimos de cada épica, la cierran al fusionarse; los otros 26 son documentación, capturas y actas. Ningún issue es de tipo bug: los defectos hallados en las pruebas de pantalla de M1 y M4 se corrigieron dentro de sus PR y quedaron documentados en 3.1.4.2 y 3.1.4.5.
 
-La prevención de defectos se apoya en la plantilla de PR con la definición de terminado, la plantilla de bug, el CI obligatorio (estilo (lint) y pruebas), la revisión del otro integrante en todos los PR y las 218 pruebas automáticas.
+La prevención de defectos se apoya en la plantilla de PR con la definición de terminado, la plantilla de bug, el CI obligatorio (estilo (lint) y pruebas), la revisión del otro integrante en todos los PR y las 224 pruebas automáticas.

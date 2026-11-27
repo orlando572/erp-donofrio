@@ -12,7 +12,7 @@ Cada RNF se asigna a una característica del modelo ISO/IEC 25010:2023 (ISO/IEC,
 | RNF004 | Trazabilidad del 100 % de los lotes (adecuación funcional) | Pruebas de integración de compra a factura | Cumple |
 | RNF005 | No se despacha un lote vencido ni rechazado (seguridad) | FEFO y bloqueo por calidad probados | Cumple |
 | RNF006 | Respaldo diario, réplica y RTO ≤ 2 h (fiabilidad) | RTO de 31 s; réplica con retraso de 2.3 ms | Cumple |
-| RNF007 | Módulos versionados, lint y pruebas en CI (mantenibilidad) | 218 pruebas en verde | Cumple |
+| RNF007 | Módulos versionados, lint y pruebas en CI (mantenibilidad) | 224 pruebas en verde | Cumple |
 | RNF008 | Tablero en < 3 s y Lighthouse ≥ 80 en el login (eficiencia) | Tablero en 2.11 s; login 100 | Cumple |
 | RNF009 | Permisos por rol (RBAC), HTTPS, segundo factor de autenticación (2FA) y gestor de bases de datos deshabilitado (seguridad) | Diez roles, TLS, 2FA; ZAP sin alertas altas | Cumple |
 | RNF010 | Auditoría de datos sensibles (seguridad) | El registro de auditoría en precios y pedidos; el resto usa el historial | Cumple |
