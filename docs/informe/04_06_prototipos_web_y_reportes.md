@@ -10,7 +10,53 @@ Contraste y adaptabilidad. El contraste de los pares de color de los mockups cum
 
 ## 2.6.2 Propuesta de prototipos web
 
-Cada caso de uso tiene su mockup y su pantalla real configurada. Las de la Fase 1 son pantallas estándar de Odoo; las de la Fase 2 se desarrollaron para D'Onofrio y se muestran en 3.1.4 (inspección de calidad, liquidación del heladero y tablero gerencial). La estructura es la del mockup; cambian el color (el mockup usa el amarillo de marca) y algunos nombres de campo.
+Cada mockup de 2.4.2 se convirtió en una pantalla del sistema. Las figuras siguientes son pantallas reales del sistema implementado, tomadas con los usuarios de cada rol y los datos de demostración, en el mismo orden de los mockups. X
+
+Ventas.
+
+![Pantalla real del embudo CRM por etapa](../capturas/informe/01_crm_embudo_por_etapa.png)
+
+*Figura 2.6.2-a. Pantalla real del embudo de oportunidades por etapa en el CRM (CU001).*
+
+![Pantalla real del punto de venta](../capturas/informe/02_pdv_heladeria.png)
+
+*Figura 2.6.2-b. Pantalla real del punto de venta de la heladería (CU003).*
+
+Heladeros.
+
+![Pantalla real de la liquidación despachada](../capturas/informe/03_liquidacion_despachada.png)
+
+*Figura 2.6.2-c. Pantalla real de la liquidación del heladero despachada (CU004).*
+
+Logística.
+
+![Pantalla real de la recepción con lote y vencimiento](../capturas/informe/04_recepcion_lote_vencimiento.png)
+
+*Figura 2.6.2-d. Pantalla real de la recepción de insumos con lote y fecha de caducidad (CU005).*
+
+Producción y calidad.
+
+![Pantalla real de la orden de producción terminada](../capturas/informe/05_orden_produccion_terminada.png)
+
+*Figura 2.6.2-e. Pantalla real de la orden de producción terminada con su lote (CU007).*
+
+![Pantalla real de la inspección en medición](../capturas/informe/06_inspeccion_en_medicion.png)
+
+*Figura 2.6.2-f. Pantalla real de la inspección de calidad del lote en medición (CU008).*
+
+![Pantalla real de las lecturas de temperatura](../capturas/informe/07_lecturas_temperatura.png)
+
+*Figura 2.6.2-g. Pantalla real de las lecturas de temperatura con una fuera de rango (CU006).*
+
+Gerencia y facturación.
+
+![Pantalla real del tablero gerencial](../capturas/informe/08_tablero_gerencial.png)
+
+*Figura 2.6.2-h. Pantalla real del tablero gerencial de KPI (CU009).*
+
+![Pantalla real de la factura con IGV](../capturas/informe/09_factura_igv.png)
+
+*Figura 2.6.2-i. Pantalla real de la factura (01) con IGV (CU012).*
 
 ## 2.6.3 Prototipos de informes y reportes
 
