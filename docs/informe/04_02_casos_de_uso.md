@@ -1,6 +1,6 @@
 # 2.2.1.3 Diagramas de casos de uso
 
-Se definieron doce casos de uso (CU), uno o más por requerimiento, que cubren ventas, heladeros, logística, producción, gerencia, compras y facturación. Todos están implementados y verificados con pruebas automáticas y capturas con datos de demostración. Los de la Fase 2 son CU004 (M2), CU006 (M3), CU008 (M1) y la parte propia de CU009 (M4).
+Se definieron doce casos de uso (CU), uno o más por requerimiento, que cubren ventas, heladeros, logística, producción, gerencia, compras y facturación. Todos están implementados y verificados con pruebas automáticas y capturas. Los de la Fase 2 son CU004 (M2), CU006 (M3), CU008 (M1) y la parte propia de CU009 (M4).
 
 **Tabla 4.8. Lista de casos de uso**
 
@@ -43,9 +43,9 @@ Cada caso de uso tiene una ficha con la misma plantilla (actores, precondiciones
 
 | Campo | Contenido |
 |---|---|
-| **Actores** | Inspector de Calidad (principal), Jefe de Producción, Jefe de Almacén |
-| **Descripción** | Al terminar una orden de producción, el inspector mide los puntos de control del lote y lo aprueba o rechaza; si lo aprueba, emite el certificado de calidad |
-| **Precondiciones** | Orden terminada con su lote; puntos de control definidos (pasteurización 80-85 °C, endurecimiento a −18 °C o menos, peso neto, microbiología) |
-| **Flujo principal** | 1. Al terminar la orden, se crea la inspección ligada a la orden y al lote. 2. El inspector registra cada medición. 3. Aprueba si todos los puntos cumplen. 4. Se emite el certificado en PDF y el lote queda liberado para el despacho FEFO |
-| **Flujos alternos** | A1. Si algún punto no cumple, el lote se rechaza, se bloquea su despacho y el jefe de producción decide reproceso o descarte con el motivo |
-| **Reglas de negocio** | Un lote rechazado no se despacha (RNF005); un lote liberado conserva su trazabilidad a la orden y a los insumos |
+| Actores | Inspector de Calidad (principal), Jefe de Producción, Jefe de Almacén |
+| Descripción | Al terminar una orden de producción, el inspector mide los puntos de control del lote y lo aprueba o rechaza; si lo aprueba, emite el certificado de calidad |
+| Precondiciones | Orden terminada con su lote; puntos de control definidos (pasteurización 80-85 °C, endurecimiento a −18 °C o menos, peso neto, microbiología) |
+| Flujo principal | 1. Al terminar la orden, se crea la inspección ligada a la orden y al lote. 2. El inspector registra cada medición. 3. Aprueba si todos los puntos cumplen. 4. Se emite el certificado en PDF y el lote queda liberado para el despacho FEFO |
+| Flujos alternos | A1. Si algún punto no cumple, el lote se rechaza, se bloquea su despacho y el jefe de producción decide reproceso o descarte con el motivo |
+| Reglas de negocio | Un lote rechazado no se despacha (RNF005); un lote liberado conserva su trazabilidad a la orden y a los insumos |

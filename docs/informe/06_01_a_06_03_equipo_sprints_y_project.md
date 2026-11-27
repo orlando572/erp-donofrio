@@ -1,7 +1,5 @@
 # 6.1 a 6.3 Equipo Scrum, cuadro de sprints y GitHub Projects
 
-Las cifras salen de GitHub al 25/11/2026 y se pueden repetir en cualquier momento con el script del burndown del repositorio.
-
 ## 6.1 Descripción del Scrum Team
 
 El equipo tiene dos personas que comparten los roles de desarrollo. La Guía Scrum permite que el Product Owner y el Scrum Master también sean Developers; en un equipo de dos es la única opción realista, y las responsabilidades se reparten para que quien hace algo no sea quien lo controla (el PR de cada uno lo aprueba el otro).
@@ -26,7 +24,7 @@ Los sprints duran un día porque el plazo es único y fijo (entrega del viernes 
 | S3 Calidad del núcleo | Núcleo v1.0.0 seguro, replicado, probado, desplegado y documentado | 27 | 23/11 |
 | S4 Módulos de D'Onofrio (Fase 2) | M1, M2, M3 y M4 uno a uno | 34 | 24/11 a 25/11 |
 | Cierre | Informe, manuales, presentación y entrega | 0 | hasta 27/11 |
-| **Total** | | **115** | |
+| Total | | 115 | |
 
 La velocidad fue de 24, 30, 27 y 34 puntos por sprint, con un promedio de 29.
 

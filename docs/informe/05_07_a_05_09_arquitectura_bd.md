@@ -30,7 +30,7 @@ Los canales son: navegador → Nginx por HTTPS (cifrado TLS 1.2 y 1.3; una direc
 
 ## 3.1.8 Gestión de replicación
 
-**Estrategia.** La base principal envía cada cambio a la réplica en tiempo real (replicación en *streaming*), sin esperar su confirmación (asíncrona), y la réplica queda disponible para consultas de solo lectura. Es la replicación propia de PostgreSQL y basta porque Odoo escribe en una sola base. La réplica se conecta con un usuario exclusivo para replicar, con contraseña cifrada, y la base principal limita a 1 GB los cambios que guarda para ella. Todo está en el repositorio y se verifica con un script y en las pruebas automáticas.
+Estrategia. La base principal envía cada cambio a la réplica en tiempo real (replicación en *streaming*), sin esperar su confirmación (asíncrona), y la réplica queda disponible para consultas de solo lectura. Es la replicación propia de PostgreSQL y basta porque Odoo escribe en una sola base. La réplica se conecta con un usuario exclusivo para replicar, con contraseña cifrada, y la base principal limita a 1 GB los cambios que guarda para ella. Todo está en el repositorio y se verifica con un script y en las pruebas automáticas.
 
 | Comprobación (23/11/2026) | Resultado |
 |---|---|
@@ -39,11 +39,11 @@ Los canales son: navegador → Nginx por HTTPS (cifrado TLS 1.2 y 1.3; una direc
 | Dato escrito en el primario y leído en la réplica | Llegó; las tablas de control coinciden |
 | Intento de escribir en la réplica | Rechazado: la réplica es de solo lectura |
 
-**Operación.** La replicación es asíncrona (en la medición, el retraso fue de milisegundos) y la réplica se puede convertir en base principal con un solo comando de PostgreSQL.
+Operación. La replicación es asíncrona (en la medición, el retraso fue de milisegundos) y la réplica se puede convertir en base principal con un solo comando de PostgreSQL.
 
 ## 3.1.9 Gestión de administración de la base de datos
 
-**Respaldo y restauración (HU-26).** El script de respaldo genera en cada corrida una copia comprimida de la base, otra de los archivos adjuntos y un archivo de sumas de control (SHA-256) para detectar alteraciones, y borra los respaldos con más de 7 días. El script de restauración restaura en una base nueva (nunca sobrescribe), verifica las sumas y mide el tiempo de recuperación (RTO). El script de verificación del respaldo, que también corre en las pruebas automáticas, ejecuta el ciclo completo: respaldo, restauración, comparación, rechazo de un respaldo alterado y retención.
+Respaldo y restauración (HU-26). El script de respaldo genera en cada corrida una copia comprimida de la base, otra de los archivos adjuntos y un archivo de sumas de control (SHA-256) para detectar alteraciones, y borra los respaldos con más de 7 días. El script de restauración restaura en una base nueva (nunca sobrescribe), verifica las sumas y mide el tiempo de recuperación (RTO). El script de verificación del respaldo, que también corre en las pruebas automáticas, ejecuta el ciclo completo: respaldo, restauración, comparación, rechazo de un respaldo alterado y retención.
 
 | Medida | Valor |
 |---|---|
@@ -51,4 +51,4 @@ Los canales son: navegador → Nginx por HTTPS (cifrado TLS 1.2 y 1.3; una direc
 | Restauración | RTO medido de 31 s (objetivo RNF006: 2 h); 105 módulos, 14 usuarios y 751 adjuntos |
 | Pérdida máxima de datos (RPO) | Hasta 24 h con el respaldo diario; segundos con la réplica |
 
-**Usuarios, cifrado y mantenimiento.** Odoo se conecta con un usuario sin permisos de administrador; la base principal y la réplica solo aceptan conexiones desde el propio equipo, y el gestor de bases de datos de Odoo está deshabilitado (Nginx responde «no encontrado» a esa dirección). El tráfico del navegador va cifrado y el de Odoo, PostgreSQL y la réplica circula por la red interna de Docker; los respaldos llevan su suma de control. La limpieza automática de PostgreSQL ya actuó sobre las tablas más escritas. Odoo crea los índices (1 651 sobre 665 tablas) y los módulos de D'Onofrio indexan los campos que más se buscan; con 143 MB no hizo falta ningún ajuste y las listas responden en 12 ms.
+Usuarios, cifrado y mantenimiento. Odoo se conecta con un usuario sin permisos de administrador; la base principal y la réplica solo aceptan conexiones desde el propio equipo, y el gestor de bases de datos de Odoo está deshabilitado (Nginx responde «no encontrado» a esa dirección). El tráfico del navegador va cifrado y el de Odoo, PostgreSQL y la réplica circula por la red interna de Docker; los respaldos llevan su suma de control. La limpieza automática de PostgreSQL ya actuó sobre las tablas más escritas. Odoo crea los índices (1 651 sobre 665 tablas) y los módulos de D'Onofrio indexan los campos que más se buscan; con 143 MB no hizo falta ningún ajuste y las listas responden en 12 ms.

@@ -1,7 +1,5 @@
 # 4. Gestión del servicio
 
-La gestión del servicio sigue las prácticas de ITIL 4 y los requisitos de ISO/IEC 20000-1 como referencia, sin certificación. Las tres prácticas de este capítulo (solicitudes, cambios y capacidad y rendimiento) se apoyan en los acuerdos de servicio de 2.7 y usan las herramientas del propio proyecto: la «Mesa de Servicios TI» de Odoo para las solicitudes, GitHub para los cambios, y k6, Lighthouse y el monitor de recursos de Docker para la capacidad y el rendimiento.
-
 ## 4.1 GESTIÓN DE SOLICITUDES
 
 Las solicitudes llegan a la «Mesa de Servicios TI», un proyecto de la aplicación Proyecto de Odoo que el módulo de configuración base crea por código con cinco etapas (Nuevo, En análisis, En atención, Resuelto y Cerrado) y tres tipos de ticket: incidente, solicitud de servicio y solicitud de acceso. Al crear un ticket, su fecha límite sale de la prioridad (P1: 4 h; P2: 8 h; P3: 3 días; P4: 5 días) y, al cerrarlo, el campo «Cumplimiento del SLA» lo marca como cumplido o incumplido. La mesa trae cinco tickets de ejemplo que recorren los tres tipos y los tres estados del SLA.
@@ -141,10 +139,10 @@ Se usaron pruebas de carga con k6 en dos escenarios (normal y de esfuerzo) sobre
 
 ### 4.3.4 Planificación
 
-- **Escalar Odoo primero:** si la CPU de Odoo pasa del 80 % de forma sostenida o el p95 supera 1 s, aumentar los procesos de trabajo (Odoo recomienda unos 2 por CPU disponible, más 1) antes que la base de datos.
-- **Repetir la medición antes de cada temporada alta:** antes del verano, con los heladeros y liquidadores previstos como usuarios virtuales en k6, y comparar con la línea base de la Tabla 4.3-b.
-- **Lecturas en la réplica:** las consultas de análisis externas (por ejemplo, desde DBeaver) se hacen sobre la réplica de solo lectura, para no cargar el primario.
-- **Crecimiento de datos:** vigilar el tamaño de la base y de los respaldos (retención de 7 días) en cada versión.
+- Escalar Odoo primero: si la CPU de Odoo pasa del 80 % de forma sostenida o el p95 supera 1 s, aumentar los procesos de trabajo (Odoo recomienda unos 2 por CPU disponible, más 1) antes que la base de datos.
+- Repetir la medición antes de cada temporada alta: antes del verano, con los heladeros y liquidadores previstos como usuarios virtuales en k6, y comparar con la línea base de la Tabla 4.3-b.
+- Lecturas en la réplica: las consultas de análisis externas (por ejemplo, desde DBeaver) se hacen sobre la réplica de solo lectura, para no cargar el primario.
+- Crecimiento de datos: vigilar el tamaño de la base y de los respaldos (retención de 7 días) en cada versión.
 
 ### 4.3.5 Herramientas y usos
 

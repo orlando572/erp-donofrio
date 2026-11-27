@@ -20,4 +20,4 @@ Cada RNF se asigna a una característica del modelo ISO/IEC 25010:2023 (ISO/IEC,
 | RNF012 | Entorno completo con un comando (flexibilidad) | Reproducido en dos PC y en el CI | Cumple |
 | RNF013 | Ley 29733 con datos ficticios (seguridad) | Todos los datos de personas y RUC son ficticios | Cumple |
 
-Los 13 RNF tienen su métrica, su prueba y su evidencia; las mediciones se hicieron sobre una instancia local con datos de demostración.
+Los 13 RNF tienen su métrica, su prueba y su evidencia.

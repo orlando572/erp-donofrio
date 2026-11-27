@@ -1,6 +1,6 @@
 # 5.10 a 5.12 Gestión de seguridad de la información: riesgos, controles, ataques y defensa
 
-El proyecto se alinea con ISO 27001 (ISO/IEC, 2022), ISO 31000 (ISO, 2018), OWASP (OWASP Foundation, 2021) e ISO 22301 (ISO, 2019) como buenas prácticas de referencia; no es una implementación certificada ni auditada (la declaración de aplicabilidad está en el anexo 10.7). Los riesgos se evalúan con las escalas del plan de riesgos (2.5.1): impacto (I) y probabilidad (P) de 1 a 3, nivel = I × P, con prioridad Alta (6 a 9), Media (3 a 5) o Baja (1 a 2). Los activos son los datos del negocio, las cuentas, la base con su archivos adjuntos, el servicio web y el código. Las mediciones son del 23/11/2026; los módulos de la Fase 2 no cambiaron estos controles y sus permisos están en 3.1.4.2 a 3.1.4.5.
+El proyecto se alinea con ISO 27001 (ISO/IEC, 2022), ISO 31000 (ISO, 2018), OWASP (OWASP Foundation, 2021) e ISO 22301 (ISO, 2019) (la declaración de aplicabilidad está en el anexo 10.7). Los riesgos se evalúan con las escalas del plan de riesgos (2.5.1): impacto (I) y probabilidad (P) de 1 a 3, nivel = I × P, con prioridad Alta (6 a 9), Media (3 a 5) o Baja (1 a 2). Los activos son los datos del negocio, las cuentas, la base con su archivos adjuntos, el servicio web y el código. Las mediciones son del 23/11/2026; los módulos de la Fase 2 no cambiaron estos controles y sus permisos están en 3.1.4.2 a 3.1.4.5.
 
 ## 3.2.1 Identificación de riesgos de seguridad
 

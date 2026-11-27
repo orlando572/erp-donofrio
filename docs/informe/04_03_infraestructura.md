@@ -10,26 +10,26 @@ El ERP corre en contenedores de Docker en la PC de cada integrante (Ubuntu o Win
 
 La infraestructura tiene cuatro contenedores:
 
-- **Odoo:** el ERP, al que se entra con el navegador; solo acepta conexiones desde el propio equipo.
-- **Base de datos (PostgreSQL 16):** guarda toda la información, con un usuario que no tiene permisos de administrador.
-- **Réplica:** una segunda base de datos de solo lectura que copia a la principal en tiempo real, para no perder datos si la principal falla.
-- **Nginx:** la puerta de entrada segura; cifra la conexión (HTTPS), comprime las páginas y guarda en caché los archivos de la interfaz.
+- Odoo: el ERP, al que se entra con el navegador; solo acepta conexiones desde el propio equipo.
+- Base de datos (PostgreSQL 16): guarda toda la información, con un usuario que no tiene permisos de administrador.
+- Réplica: una segunda base de datos de solo lectura que copia a la principal en tiempo real, para no perder datos si la principal falla.
+- Nginx: la puerta de entrada segura; cifra la conexión (HTTPS), comprime las páginas y guarda en caché los archivos de la interfaz.
 
 En la nube, GitHub guarda el código con las ramas protegidas, GitHub Actions ejecuta las pruebas en cada cambio y GHCR guarda una copia instalable de cada versión (v1.0.0 a v1.4.0). Las contraseñas están en un archivo de configuración que nunca se sube al repositorio.
 
 ## 2.3.2 Plataforma tecnológica
 
-El ERP usa **Odoo 19.0 Community**, escrito en Python, con la base de datos **PostgreSQL 16**. Odoo separa los datos, las pantallas y la lógica (patrón Modelo-Vista-Controlador) y se encarga él mismo de leer y escribir en la base de datos.
+El ERP usa Odoo 19.0 Community, escrito en Python, con la base de datos PostgreSQL 16. Odoo separa los datos, las pantallas y la lógica (patrón Modelo-Vista-Controlador) y se encarga él mismo de leer y escribir en la base de datos.
 
 **Tabla 4.8. Patrones de la plataforma y su uso en el proyecto**
 
 | Concepto | Cómo lo hace Odoo | Ejemplo en el proyecto |
 |---|---|---|
-| **Modelo (datos)** | Cada tipo de dato (producto, lote, pedido) es una clase de Python que Odoo convierte en una tabla; el código nunca escribe consultas SQL a mano | Lotes de producto y órdenes de producción |
-| **Vista (pantallas)** | Listas, formularios, tableros kanban y tablas dinámicas descritos en XML, y componentes de interfaz en OWL | Pantallas de Inventario y Fabricación; Tablero gerencial |
-| **Controlador (acciones)** | Los botones y menús llaman a funciones del modelo | Validar una recepción de mercadería |
+| Modelo (datos) | Cada tipo de dato (producto, lote, pedido) es una clase de Python que Odoo convierte en una tabla; el código nunca escribe consultas SQL a mano | Lotes de producto y órdenes de producción |
+| Vista (pantallas) | Listas, formularios, tableros kanban y tablas dinámicas descritos en XML, y componentes de interfaz en OWL | Pantallas de Inventario y Fabricación; Tablero gerencial |
+| Controlador (acciones) | Los botones y menús llaman a funciones del modelo | Validar una recepción de mercadería |
 
-**Principios de diseño (SOLID).** Cada módulo tiene una sola responsabilidad (el módulo de configuración base solo configura y carga datos), los módulos estándar de Odoo se amplían sin modificarlos y cada usuario recibe solo los permisos de su rol.
+Principios de diseño (SOLID). Cada módulo tiene una sola responsabilidad (el módulo de configuración base solo configura y carga datos), los módulos estándar de Odoo se amplían sin modificarlos y cada usuario recibe solo los permisos de su rol.
 
 ## 2.3.3 Configuración de herramientas
 

@@ -1,7 +1,5 @@
 # 7. Conclusiones
 
-Las conclusiones son las del proyecto con la Fase 2 completa (módulos M1 a M4 en main, versiones v1.1.0 a v1.4.0). Los datos de D'Onofrio son ficticios y las mediciones salen de una sola PC.
-
 ## 7.1 Conclusión general
 
 El proyecto cumple su meta principal: un ERP sobre Odoo 19 Community y PostgreSQL 16, sin licencias Enterprise, donde cada lote se puede seguir desde el insumo hasta el cliente, la calidad y la temperatura dejan rastro ligado al lote, el heladero liquida con un documento firmable y la gerencia ve datos consolidados. El núcleo (módulo de configuración base) se entregó configurado por código y los cuatro módulos desarrollados para D'Onofrio (calidad, liquidación de heladeros, cadena de frío y tablero) se construyeron uno a uno. En cifras: 115 puntos de historias de usuario completados, 218 pruebas automáticas en verde en el CI, 82 PR fusionados, cinco versiones (v1.0.0 a v1.4.0), un despliegue protegido y respaldado, y una restauración de 31 s.
@@ -18,11 +16,11 @@ El proyecto cumple su meta principal: un ERP sobre Odoo 19 Community y PostgreSQ
 | 6 | Cada área digita por separado | Resuelto: un solo ERP probado de punta a punta |
 | 7 | Gerencia sin reportes a tiempo | Resuelto: el tablero carga en 2.11 s |
 
-Los siete problemas se resuelven: cuatro con la Fase 1 (2, 5, 6 y 7) y tres con los módulos de la Fase 2 (1, 3 y 4). Resuelto significa que el sistema lo cubre y se verificó con datos de demostración.
+Los siete problemas se resuelven: cuatro con la Fase 1 (2, 5, 6 y 7) y tres con los módulos de la Fase 2 (1, 3 y 4). Resuelto significa que el sistema lo cubre y se verificó con pruebas.
 
 ## 7.3 Una conclusión por área
 
-**Marketing y ventas:** el embudo CRM, las listas de precios por canal, el punto de venta con boleta, la facturación con IGV y la liquidación del heladero cubren el flujo de venta. **Logística y producción:** lotes con vencimiento, FEFO, despacho en dos pasos, reposición a Arequipa y órdenes de producción con costo y, con M1, inspección del lote. **Gerencia:** dashboards, vistas guardadas y el tablero de M4. **Compras, RR. HH. y TI:** reabastecimiento mín./máx., usuarios por rol y mesa de servicios con SLA. **Infraestructura y seguridad:** réplica, respaldos, Nginx con TLS, segundo factor y auditoría, verificados.
+Marketing y ventas: el embudo CRM, las listas de precios por canal, el punto de venta con boleta, la facturación con IGV y la liquidación del heladero cubren el flujo de venta. Logística y producción: lotes con vencimiento, FEFO, despacho en dos pasos, reposición a Arequipa y órdenes de producción con costo y, con M1, inspección del lote. Gerencia: dashboards, vistas guardadas y el tablero de M4. Compras, RR. HH. y TI: reabastecimiento mín./máx., usuarios por rol y mesa de servicios con SLA. Infraestructura y seguridad: réplica, respaldos, Nginx con TLS, segundo factor y auditoría, verificados.
 
 ## 7.4 Una conclusión por requerimiento no funcional
 

@@ -10,7 +10,7 @@ Los commits siguen Conventional Commits en español con la etiqueta de la histor
 |---|---|---|---|---|---|
 | Orlando | 52 | 44 387 | 802 | 43 | 180 (58 %) |
 | Evelyn | 39 | 13 108 | 257 | 39 | 132 (42 %) |
-| **Total** | **91** | 57 495 | 1 059 | **82** | **312** |
+| Total | 91 | 57 495 | 1 059 | 82 | 312 |
 
 Las líneas incluyen datos, pruebas, documentación y diagramas; miden volumen, no esfuerzo. Por tipo, los 312 commits dentro de los PR son 185 de documentación (59 %), 82 de funcionalidad nueva (26 %), 14 correcciones, 13 de pruebas, 9 de mantenimiento, 3 de integración continua y 3 de rendimiento: el proyecto es sobre todo documentación y configuración.
 

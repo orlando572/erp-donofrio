@@ -4,16 +4,16 @@
 
 ## 2.3.4.1 IDEs y lenguajes de programación
 
-El entorno de desarrollo es el editor **Visual Studio Code** (con la extensión WSL en Windows), **Git** y su herramienta de línea de comandos para GitHub, **Docker y Compose** para levantar el sistema y **DBeaver** para consultar la base de datos.
+El entorno de desarrollo es el editor Visual Studio Code (con la extensión WSL en Windows), Git y su herramienta de línea de comandos para GitHub, Docker y Compose para levantar el sistema y DBeaver para consultar la base de datos.
 
 **Tabla 4.10. Lenguajes y formatos del proyecto**
 
 | Lenguaje o formato | Dónde se usa |
 |---|---|
-| **Python** 3.12 | La lógica de los cuatro módulos y sus 218 pruebas automáticas, los scripts de carga de datos y de medición, y los generadores de diagramas |
-| **XML y CSV** | Datos y configuración del ERP, pantallas, reportes impresos, permisos de acceso y diagramas de procesos |
-| **JavaScript (OWL) y SCSS** | El Tablero gerencial (con los gráficos de Chart.js que trae Odoo) y la marca visual de D'Onofrio (barra superior amarilla) |
-| **Bash, YAML, PlantUML y Markdown** | Scripts de pruebas, respaldo y despliegue; configuración de Docker y de GitHub Actions; diagramas; informe y manuales |
+| Python 3.12 | La lógica de los cuatro módulos y sus 218 pruebas automáticas, los scripts de carga de datos y de medición, y los generadores de diagramas |
+| XML y CSV | Datos y configuración del ERP, pantallas, reportes impresos, permisos de acceso y diagramas de procesos |
+| JavaScript (OWL) y SCSS | El Tablero gerencial (con los gráficos de Chart.js que trae Odoo) y la marca visual de D'Onofrio (barra superior amarilla) |
+| Bash, YAML, PlantUML y Markdown | Scripts de pruebas, respaldo y despliegue; configuración de Docker y de GitHub Actions; diagramas; informe y manuales |
 
 La calidad del código se verifica en cada cambio con tres controles automáticos: el revisor de estilo de Python (ruff), el control de instrucciones de Odoo 16 o anteriores y la instalación del módulo con sus pruebas. El tablero se verificó además en pantalla.
 
@@ -34,6 +34,6 @@ El proyecto se apoya en el framework de Odoo y en componentes que la propia plat
 
 ## 2.3.4.6 Plataformas de gestión de proyectos de software
 
-Se usó **GitHub Projects** porque es gratuito, está integrado con issues, PR y *commits*, y el docente lo ve sin invitación. Es un único Project, «Scrum ERP D'Onofrio», con 22 ítems (15 épicas y 7 de gestión). Las historias de usuario (HU) se agrupan en épicas, una por área y responsable en cada sprint, y cada HU queda ligada a su rama, a sus commits y a su *pull request*. Cada tarjeta registra estado, sprint, puntos, responsable, fase, tipo y prioridad, y hay tres vistas: *Product Backlog* (tabla por fase), *Sprint actual* (tablero por estado) y *Roadmap* (línea de tiempo). En la Planning se asignan sprint y puntos; la Daily se registra como comentario; y en la Review se marca cada HU terminada con el enlace a su cambio.
+Se usó GitHub Projects porque es gratuito, está integrado con issues, PR y *commits*, y el docente lo ve sin invitación. Es un único Project, «Scrum ERP D'Onofrio», con 22 ítems (15 épicas y 7 de gestión). Las historias de usuario (HU) se agrupan en épicas, una por área y responsable en cada sprint, y cada HU queda ligada a su rama, a sus commits y a su *pull request*. Cada tarjeta registra estado, sprint, puntos, responsable, fase, tipo y prioridad, y hay tres vistas: *Product Backlog* (tabla por fase), *Sprint actual* (tablero por estado) y *Roadmap* (línea de tiempo). En la Planning se asignan sprint y puntos; la Daily se registra como comentario; y en la Review se marca cada HU terminada con el enlace a su cambio.
 
 El burndown por puntos se calcula con un script que lee el Project.

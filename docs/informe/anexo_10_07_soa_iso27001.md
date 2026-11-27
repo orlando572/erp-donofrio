@@ -1,20 +1,20 @@
 # Anexo 10.7 Declaración de Aplicabilidad (SoA) ISO/IEC 27001:2022 y política de seguridad
 
-El proyecto se alinea con ISO/IEC 27001:2022 como buena práctica de referencia; no es una implementación certificada ni auditada, y la declaración tiene fines académicos. Este anexo resume la política de seguridad y la declaración de aplicabilidad por tema; los riesgos y los controles técnicos que la sustentan están en 3.2.1 a 3.2.3.
+El proyecto se alinea con ISO/IEC 27001:2022 (ISO/IEC, 2022). Este anexo resume la política de seguridad y la declaración de aplicabilidad por tema; los riesgos y los controles técnicos que la sustentan están en 3.2.1 a 3.2.3.
 
 ## Parte A. Política de seguridad de la información
 
-**Organización:** equipo del ERP académico «D'Onofrio» · Versión 1.0 · 23/11/2026 · Aprueban Orlando (Scrum Master) y Evelyn (Product Owner).
+Organización: equipo del ERP académico «D'Onofrio» · Versión 1.0 · 23/11/2026 · Aprueban Orlando (Scrum Master) y Evelyn (Product Owner).
 
-**Objetivo y alcance.** Proteger la confidencialidad, integridad y disponibilidad de la información del ERP (Odoo 19.0 Community y PostgreSQL 16 en Docker), de su código y de su infraestructura como código en GitHub. Quedan fuera las instalaciones físicas, los equipos personales y los datos reales de D'Onofrio, porque todos los datos son ficticios.
+Objetivo y alcance. Proteger la confidencialidad, integridad y disponibilidad de la información del ERP (Odoo 19.0 Community y PostgreSQL 16 en Docker), de su código y de su infraestructura como código en GitHub. Quedan fuera las instalaciones físicas, los equipos personales y los datos reales de D'Onofrio.
 
-**Roles.** Orlando es el responsable de seguridad y de TI: mantiene los controles técnicos, la declaración de aplicabilidad y la gestión de cambios, y es el único administrador del repositorio. Evelyn es la responsable de la información: decide quién accede a qué, acepta los riesgos residuales y revisa los cambios del otro integrante. Los usuarios (10 roles) usan la información para su función y no comparten su contraseña.
+Roles. Orlando es el responsable de seguridad y de TI: mantiene los controles técnicos, la declaración de aplicabilidad y la gestión de cambios, y es el único administrador del repositorio. Evelyn es la responsable de la información: decide quién accede a qué, acepta los riesgos residuales y revisa los cambios del otro integrante. Los usuarios (10 roles) usan la información para su función y no comparten su contraseña.
 
-**Principios.** Mínimo privilegio; defensa en profundidad (TLS, cabeceras, 2FA, bloqueo de intentos, gestor de BD cerrado); todo por código y revisado por el otro integrante con el CI en verde; rastro de los cambios en precios, pedidos y compras; recuperabilidad (respaldo diario, réplica y restauración en 31 s); privacidad con datos ficticios (Ley 29733); y sin credenciales en el repositorio. Los incidentes y solicitudes se registran en la mesa de servicios con su SLA, los cambios como PR, y la política se revisa al cierre de cada sprint.
+Principios. Mínimo privilegio; defensa en profundidad (TLS, cabeceras, 2FA, bloqueo de intentos, gestor de BD cerrado); todo por código y revisado por el otro integrante con el CI en verde; rastro de los cambios en precios, pedidos y compras; recuperabilidad (respaldo diario, réplica y restauración en 31 s); privacidad con datos ficticios (Ley 29733); y sin credenciales en el repositorio. Los incidentes y solicitudes se registran en la mesa de servicios con su SLA, los cambios como PR, y la política se revisa al cierre de cada sprint.
 
 ## Parte B. Declaración de Aplicabilidad
 
-Los 93 controles del Anexo A de ISO/IEC 27001:2022 están en cuatro temas. Cada control **aplica** (con su mecanismo y su evidencia) o está **excluido** (no aplica, con su justificación). Los controles que aplican son coherentes con 3.2.2.
+Los 93 controles del Anexo A de ISO/IEC 27001:2022 están en cuatro temas. Cada control aplica (con su mecanismo y su evidencia) o está excluido (no aplica, con su justificación). Los controles que aplican son coherentes con 3.2.2.
 
 ### Resumen por tema
 
@@ -24,9 +24,9 @@ Los 93 controles del Anexo A de ISO/IEC 27001:2022 están en cuatro temas. Cada 
 | 6 Personas | 8 | 4 | 4 |
 | 7 Físicos | 14 | 0 | 14 |
 | 8 Tecnológicos | 34 | 28 | 6 |
-| **Total** | **93** | **65** | **28** |
+| Total | 93 | 65 | 28 |
 
-**Controles excluidos (28).** Los 14 físicos (7.x) no aplican porque el proyecto no tiene instalaciones propias: el sistema corre en las PC de los integrantes y la seguridad física depende del *host*. De personas no aplican 6.1, 6.2, 6.4 y 6.5 (contratación y cese) porque el equipo son dos estudiantes. Tampoco aplican 5.5, 5.11, 5.12, 5.13, 8.1, 8.11, 8.12, 8.17, 8.23 y 8.30, por tener datos ficticios, sin empleados, sin desarrollo externalizado y sin equipos de usuario final en el alcance.
+Controles excluidos (28). Los 14 físicos (7.x) no aplican porque el proyecto no tiene instalaciones propias: el sistema corre en las PC de los integrantes y la seguridad física depende del *host*. De personas no aplican 6.1, 6.2, 6.4 y 6.5 (contratación y cese) porque el equipo son dos estudiantes. Tampoco aplican 5.5, 5.11, 5.12, 5.13, 8.1, 8.11, 8.12, 8.17, 8.23 y 8.30, por tener datos ficticios, sin empleados, sin desarrollo externalizado y sin equipos de usuario final en el alcance.
 
 ### Controles clave por tema
 

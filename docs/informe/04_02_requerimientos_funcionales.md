@@ -2,11 +2,11 @@
 
 ## 2.2.1 Gestión de requerimientos
 
-Cada requerimiento sigue una cadena de trazabilidad: **necesidad del negocio → requerimiento funcional (RF) o no funcional (RNF) → historia de usuario (HU) → épica (issue de GitHub) → prueba**. Las HU están en el Product Backlog del GitHub Project con sus criterios de aceptación; cada épica agrupa las HU de un área y un dueño, y cada prueba vive en las pruebas automáticas de los módulos o en las pruebas no funcionales (k6, ZAP y Lighthouse). La matriz completa de trazabilidad está en el anexo 10.8 y las fichas detalladas, en los anexos 10.1 y 10.2.
+Cada requerimiento sigue una cadena de trazabilidad: necesidad del negocio → requerimiento funcional (RF) o no funcional (RNF) → historia de usuario (HU) → épica (issue de GitHub) → prueba. Las HU están en el Product Backlog del GitHub Project con sus criterios de aceptación; cada épica agrupa las HU de un área y un dueño, y cada prueba vive en las pruebas automáticas de los módulos o en las pruebas no funcionales (k6, ZAP y Lighthouse). La matriz completa de trazabilidad está en el anexo 10.8 y las fichas detalladas, en los anexos 10.1 y 10.2.
 
 ## 2.2.1.1 Requerimientos funcionales
 
-Los 18 requerimientos funcionales están **implementados**: los 14 del núcleo con Odoo estándar configurado por el módulo de configuración base (versión v1.0.0) y los de la Fase 2 con los módulos desarrollados para D'Onofrio, publicados en las versiones v1.1.0 (M1), v1.2.0 (M2), v1.3.0 (M3) y v1.4.0 (M4). Todos tienen prioridad *Must*.
+Los 18 requerimientos funcionales están implementados: los 14 del núcleo con Odoo estándar configurado por el módulo de configuración base (versión v1.0.0) y los de la Fase 2 con los módulos desarrollados para D'Onofrio, publicados en las versiones v1.1.0 (M1), v1.2.0 (M2), v1.3.0 (M3) y v1.4.0 (M4). Todos tienen prioridad *Must*.
 
 **Tabla 4.6. Requerimientos funcionales**
 

@@ -1,6 +1,6 @@
 # 4.7 Acuerdos de niveles de servicio (ANS)
 
-Las mediciones salen de corridas reales (k6, Lighthouse, respaldos, réplica y pruebas) sobre una PC con Docker y datos de demostración. Las metas son supuestos del proyecto: D'Onofrio es un caso académico y no firmó ningún ANS real.
+Las mediciones salen de corridas reales (k6, Lighthouse, respaldos, réplica y pruebas).
 
 ## 2.7.1 Identificación de métricas clave
 
@@ -8,13 +8,11 @@ Las mediciones salen de corridas reales (k6, Lighthouse, respaldos, réplica y p
 
 | Tipo | Métrica | Medición |
 |---|---|---|
-| **Técnica** | Tiempo de respuesta p95 (k6, 20 usuarios) | 9 a 18 ms en listas, formularios y tablero; 342 ms en el login |
+| Técnica | Tiempo de respuesta p95 (k6, 20 usuarios) | 9 a 18 ms en listas, formularios y tablero; 342 ms en el login |
 | | Rendimiento web (Lighthouse) | Login 100; dashboard 80; backend 59 |
-| **De negocio** | Ventas, producción e inventario | S/ 7.7 M vendidos de agosto a noviembre; 3 405 000 unidades en 188 órdenes; inventario de S/ 4.44 M |
+| De negocio | Ventas, producción e inventario | S/ 7.7 M vendidos de agosto a noviembre; 3 405 000 unidades en 188 órdenes; inventario de S/ 4.44 M |
 | | Calidad, heladeros y frío (M1 a M3) | 94,9 % de lotes aprobados (169 de 178); merma de heladeros de 0,27 %; 7 de 896 lecturas fuera de rango |
-| **Otras** | Pruebas y entrega | 218 de 218 pruebas en verde; 24, 30, 27 y 34 puntos por sprint |
-
-Las cifras de negocio son de los datos de demostración.
+| Otras | Pruebas y entrega | 218 de 218 pruebas en verde; 24, 30, 27 y 34 puntos por sprint |
 
 ## 2.7.2 Definición de KPI
 

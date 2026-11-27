@@ -20,12 +20,12 @@ Todos los tipos usan el mismo formato de RFC (el PR con su plantilla); cambian l
 
 | Campo | Contenido |
 |---|---|
-| ID, fecha y solicitante | **RFC-001** · PR #189 · 23/11/2026 · Orlando |
+| ID, fecha y solicitante | RFC-001 · PR #189 · 23/11/2026 · Orlando |
 | Descripción y motivo | Poner Odoo detrás de Nginx con TLS 1.2 y 1.3 y HSTS; modo producción (2 procesos de trabajo y gestor de bases de datos cerrado); 2FA para administrador y gerente; contraseña mínima de 12 caracteres y bloqueo tras 5 intentos por 60 s; el registro de auditoría en precios, pedidos y compras. Origen: HU-27, RNF009 y RNF010, y los riesgos RSI-02 a 05, 07, 08, 11 y 15 de 3.2.1 |
-| Tipo y componentes | **Normal.** Servicio Nginx nuevo, imagen de Odoo con el registro de auditoría, módulo de configuración base (grupo 2FA, política de contraseñas, auditoría), scripts de despliegue y verificación, prueba automática del despliegue protegido y manual: 23 archivos, +659 y −8 líneas |
+| Tipo y componentes | Normal. Servicio Nginx nuevo, imagen de Odoo con el registro de auditoría, módulo de configuración base (grupo 2FA, política de contraseñas, auditoría), scripts de despliegue y verificación, prueba automática del despliegue protegido y manual: 23 archivos, +659 y −8 líneas |
 | Impacto | Solo en el despliegue protegido, administrador y gerente piden un código TOTP o por correo; el resto inicia sesión igual. No modifica datos de negocio; en desarrollo no cambia |
 | Riesgo | Bloquear a todos los usuarios por el 2FA (2 × 3 = 6, Alta). Se presentó en la primera versión (el inicio de sesión devolvía un error de acceso), se detectó al probar en el despliegue real y se corrigió con una prueba que evita que vuelva a pasar; un parámetro del sistema permite desactivar el segundo factor sin tocar el código |
 | Plan de implementación y pruebas | Fusionar develop en la rama, construir la imagen, actualizar la configuración base, el script de arranque del despliegue protegido y el script de verificación del despliegue. Pruebas: 12 nuevas de endurecimiento, la prueba automática del despliegue protegido y la verificación manual de que se pide el segundo factor |
 | Plan de reversa | Revertir el commit de fusión con un PR (sin reescribir el historial); apagar el despliegue protegido devuelve el modo de desarrollo; respaldo previo con el script de respaldo y restauración en una base nueva (31 s). No fue necesario |
-| Resultado | **Exitoso, con observaciones.** La prueba automática del despliegue protegido falló 2 veces antes de la fusión (el chequeo de TLS y del bloqueo contaba mal) y se corrigió en el mismo PR. Después, ZAP dio 0 alertas altas y k6 un p95 de 12 ms. Lección: probar la autenticación contra el despliegue real y no solo con el ORM |
+| Resultado | Exitoso, con observaciones. La prueba automática del despliegue protegido falló 2 veces antes de la fusión (el chequeo de TLS y del bloqueo contaba mal) y se corrigió en el mismo PR. Después, ZAP dio 0 alertas altas y k6 un p95 de 12 ms. Lección: probar la autenticación contra el despliegue real y no solo con el ORM |
 

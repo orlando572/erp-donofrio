@@ -1,7 +1,5 @@
 # 9. Referencias y bibliografía
 
-Las referencias siguen el formato APA 7.ª edición.
-
 AXELOS. (2019). *ITIL® Foundation: ITIL 4 edition*. TSO (The Stationery Office).
 
 Codex Alimentarius Commission. (2020). *Principios generales de higiene de los alimentos* (CXC 1-1969, rev. 2020; incluye el sistema HACCP). FAO y OMS.
