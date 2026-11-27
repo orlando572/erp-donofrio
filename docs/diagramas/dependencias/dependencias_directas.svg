@@ -386,8 +386,8 @@
 <!-- leyenda_propio -->
 <g id="node21" class="node">
 <title>leyenda_propio</title>
-<path fill="#ffe08a" stroke="#8a6d00" d="M180.52,-536C180.52,-536 35.68,-536 35.68,-536 29.68,-536 23.68,-530 23.68,-524 23.68,-524 23.68,-512 23.68,-512 23.68,-506 29.68,-500 35.68,-500 35.68,-500 180.52,-500 180.52,-500 186.52,-500 192.52,-506 192.52,-512 192.52,-512 192.52,-524 192.52,-524 192.52,-530 186.52,-536 180.52,-536"/>
-<text xml:space="preserve" text-anchor="middle" x="108.1" y="-515" font-family="DejaVu Sans" font-size="10.00">Módulo propio (donofrio_base)</text>
+<path fill="#ffe08a" stroke="#8a6d00" d="M177.66,-536C177.66,-536 38.53,-536 38.53,-536 32.53,-536 26.53,-530 26.53,-524 26.53,-524 26.53,-512 26.53,-512 26.53,-506 32.53,-500 38.53,-500 38.53,-500 177.66,-500 177.66,-500 183.66,-500 189.66,-506 189.66,-512 189.66,-512 189.66,-524 189.66,-524 189.66,-530 183.66,-536 177.66,-536"/>
+<text xml:space="preserve" text-anchor="middle" x="108.1" y="-515" font-family="DejaVu Sans" font-size="10.00">Configuración base D&#39;Onofrio</text>
 </g>
 <!-- leyenda_oca -->
 <g id="node22" class="node">

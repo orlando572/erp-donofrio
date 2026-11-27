@@ -14,7 +14,7 @@ Container_Boundary(odoo, "odoo · Odoo 19.0 Community") {
     Component(orm, "ORM y registro de modelos", "odoo.models · odoo.api", "Mapea modelos a tablas, aplica ACL (ir.model.access) y reglas de registro (ir.rule), tracking en el chatter. No se escribe SQL a mano")
     Component(estandar, "Módulos estándar de negocio", "sale, purchase, purchase_stock, stock, product_expiry, mrp, point_of_sale, crm, hr, project, l10n_pe", "Ventas, compras, inventario con lotes y FEFO, producción, PdV, CRM, RR. HH., mesa de servicios y facturación con IGV")
     Component(seg, "Módulos de seguridad", "auth_totp_mail, auth_password_policy, auditlog (OCA)", "2FA, política de 12 caracteres y bitácora de cambios (quién, cuándo, antes y después)")
-    Component(base, "donofrio_base", "Módulo propio (LGPL-3)", "Extiende sale.order, res.users, project.task y auditlog.rule; 13 archivos de datos por área; security/ con grupos, 4 ir.rule y 1 ACL; post_init_hook; 20 archivos de pruebas")
+    Component(base, "donofrio_base", "Configuración base (LGPL-3)", "Extiende sale.order, res.users, project.task y auditlog.rule; 13 archivos de datos por área; security/ con grupos, 4 ir.rule y 1 ACL; post_init_hook; 20 archivos de pruebas")
     Component(cron, "Tareas programadas", "ir.cron", "Alertas de vencimiento de lotes (product_expiry) y planificador de reabastecimiento")
 }
 

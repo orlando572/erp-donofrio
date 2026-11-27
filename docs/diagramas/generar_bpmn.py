@@ -561,10 +561,6 @@ def a_svg(p):
     else:
         s.append(f'<rect x="{X0}" y="{ly - 12}" width="16" height="14" rx="3" fill="#f4f7fb" stroke="#222"/>'
                  f'<text x="{X0 + 24}" y="{ly}" font-size="11">Tarea con Odoo estándar (Fase 1)</text>')
-        if any(n.f2 for n in p.nodos.values()):
-            s.append(f'<rect x="{X0 + 230}" y="{ly - 12}" width="16" height="14" rx="3" fill="#fff3c4" stroke="#b7950b"/>'
-                     f'<text x="{X0 + 254}" y="{ly}" font-size="11">Depende del módulo propio de la Fase 2 '
-                     '(implementado: M1, M2 y M3)</text>')
     s.append('</svg>')
     return '\n'.join(s)
 

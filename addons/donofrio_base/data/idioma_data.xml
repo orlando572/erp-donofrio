@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Textos que Odoo crea en inglés al instalar (tipos de operación, rutas, reglas, ubicaciones, etapas…):
+     se completan en español. Sin noupdate para que también corra en cada actualización (-u). Ver models/idioma.py -->
+<odoo>
+    <function model="res.lang" name="_donofrio_completar_espanol"/>
+</odoo>

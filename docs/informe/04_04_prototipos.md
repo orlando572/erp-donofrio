@@ -1,159 +1,103 @@
 # 4.4 Diseño de prototipos: wireframes y mockups
 
-> **Estado:** versión final del Cierre (25/11/2026) · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md) (4.4.1 y 4.4.2), [03 §3.3](../plan/03_modulos_odoo.md), [04 §4.4](../plan/04_scrum_pmbok.md)
->
-> Los datos que aparecen en las pantallas son ficticios y verosímiles (supuesto S7).
+Los prototipos se hicieron con un generador propio en Python: es gratuito, deja el diseño versionado y revisable en un PR, y de una sola descripción de cada pantalla salen el wireframe y el mockup, de modo que no se desfasan.
 
-## 4.4.0 Cómo se hicieron
+- Wireframes (2.4.1). Escala de grises y sin marca, para acordar la estructura: qué campos, tabla y acciones tiene cada pantalla. Hay uno por caso de uso.
+- Mockups (2.4.2). Alta fidelidad con la paleta de marca: el amarillo de los carritos (`#F7C60A`, desde 1919) como color de acción y de cabecera, tinta oscura para el texto, y verde, rojo y azul solo para alertas.
+- Pantallas de la Fase 2. Las de liquidación, inspección, temperaturas y tablero se diseñaron antes de implementarse y hoy tienen su pantalla real. Las pantallas estándar son una propuesta de cómo se vería Odoo configurado con la marca.
+- Vista móvil. Solo la liquidación del heladero la necesita, porque el liquidador la usa de pie, junto al despacho.
 
-La plantilla sugiere Excalidraw o Figma. Aquí se usó un **generador propio** ([`generar_pantallas.py`](../diagramas/generar_pantallas.py)) por tres razones: es gratuito y funciona sin cuenta, deja el diseño **versionado en el repositorio** y revisable en un PR, y de **una sola descripción** de cada pantalla sale el wireframe y el mockup, así que no se desfasan. Como el generador se parece al de los BPMN, cualquiera del equipo puede cambiar una pantalla editando unas líneas y volviendo a generar:
+**Tabla 4.22. Resumen de pantallas diseñadas**
 
-```bash
-python3 docs/diagramas/generar_pantallas.py        # escribe .svg en docs/diagramas/pantallas/
-```
+| CU | Pantalla | Módulo de Odoo | Estado |
+|---|---|---|---|
+| CU001 | Embudo CRM por canal | CRM | Implementada (estándar) |
+| CU002 | Cotización con lista de precios | Ventas | Implementada (estándar) |
+| CU003 | Punto de venta con boleta | Punto de venta | Implementada (estándar) |
+| CU004 | Liquidación diaria del heladero (y vista móvil) | Heladeros (M2) | Implementada; móvil revisada en 375 × 812 |
+| CU005 | Recepción de insumos con lote y vencimiento | Inventario | Implementada (estándar) |
+| CU006 | Registro de temperaturas de las cámaras | Cadena de frío (M3) | Implementada |
+| CU007 | Orden de producción con lote | Fabricación | Implementada (estándar) |
+| CU008 | Inspección de calidad del lote | Calidad (M1) | Implementada |
+| CU009 | Tablero gerencial de KPI | Tablero (M4) | Implementada |
+| CU010 | Análisis de ventas por línea, canal y temporada | Ventas | Implementada (estándar) |
+| CU011 | Solicitud de cotización por regla mín./máx. | Compras | Implementada (estándar) |
+| CU012 | Factura (01) o boleta (03) con IGV | Facturación | Implementada (estándar) |
 
-El PNG sale del SVG con el mismo comando de Docker de [`docs/diagramas/README.md`](../diagramas/README.md).
+## 2.4.1 Wireframes
 
-- **Wireframes (4.4.1):** escala de grises, sin marca, para acordar la **estructura**: qué campos, qué tabla y qué acciones tiene cada pantalla. Uno por caso de uso.
-- **Mockups (4.4.2):** alta fidelidad con la paleta de marca: **amarillo de los carritos** (`#F7C60A`, desde 1919) como color de acción y de cabecera, tinta oscura para el texto y verde, rojo y azul solo para alertas.
-- **Pantallas de la Fase 2:** las de liquidación, inspección, temperaturas y tablero se diseñaron en la Fase 1 (etiqueta «Módulo propio de la Fase 2») y **se implementaron en la Fase 2**: ahora cada una tiene su pantalla real en `docs/capturas/sprint-4/` (con los datos de demostración de la HU-16) y su estado en la tabla de abajo. Los wireframes y mockups se conservan como el diseño original ([02 §2.3](../plan/02_mapeo_plantilla.md)).
-- **Pantallas estándar de la Fase 1:** muestran lo que ya existe en Odoo configurado; el mockup es una **propuesta de cómo se vería con la marca**, no una pantalla nueva por construir. Las capturas reales de la interfaz están en `docs/capturas/sprint-2/`.
-- **Vista móvil:** solo la liquidación del heladero (CU004) la necesita, porque el liquidador la usa de pie, junto al despacho.
+Se muestran los wireframes de las pantallas desarrolladas para D'Onofrio más representativas: la liquidación diaria del heladero (CU004) y la inspección de calidad del lote (CU008).
 
-## 4.4.0b Resumen de pantallas
+![Wireframe de la liquidación diaria del heladero](../diagramas/pantallas/wf_cu004_liquidacion.png)
 
-| CU | Pantalla | Módulo de Odoo | HU | Estado |
-|---|---|---|---|---|
-| CU001 | Embudo CRM por canal | CRM | HU-08 | Implementada (CRM estándar, HU-08) |
-| CU002 | Cotización con lista de precios | Ventas | HU-09 | Implementada (Ventas estándar, HU-09) |
-| CU003 | Punto de venta con boleta | Punto de venta | HU-10 | Implementada (PdV, HU-10) |
-| CU004 | Liquidación diaria del heladero | Heladeros (M2) | HU-20, HU-21 | Implementada |
-| CU004 | Liquidación (vista móvil) | Heladeros (M2) | HU-21 | Implementada (probada en un emulador de 375 × 812; **[PENDIENTE: prueba en un celular real]**) |
-| CU005 | Recepción de insumos con lote y vencimiento | Inventario | HU-11, HU-12 | Implementada (Inventario estándar, HU-11, HU-12) |
-| CU006 | Registro de temperaturas de las cámaras | Cadena de frío (M3) | HU-19 | Implementada |
-| CU007 | Orden de producción con lote | Fabricación | HU-14 | Implementada (Fabricación estándar, HU-14) |
-| CU008 | Inspección de calidad del lote | Calidad (M1) | HU-17, HU-18 | Implementada |
-| CU009 | Tablero gerencial de KPIs | Tablero (M4) | HU-22, HU-23 | Implementada |
-| CU010 | Análisis de ventas por línea, canal y temporada | Ventas | HU-23 | Estándar; capturas en el Sprint 3 (HU-23) |
-| CU011 | Solicitud de cotización generada por la regla mín./máx. | Compras | HU-13 | Implementada (Compras estándar, HU-13) |
-| CU012 | Factura (01) o boleta (03) con IGV | Facturación | HU-15 | Implementada (Facturación estándar, HU-15) |
+*Figura 4.17. Wireframe de la liquidación diaria del heladero (CU004).*
 
-## 4.4.1 y 4.4.2 Wireframes y mockups por caso de uso
+![Wireframe de la inspección de calidad del lote](../diagramas/pantallas/wf_cu008_inspeccion.png)
 
-### CU001 · Embudo CRM por canal
+*Figura 4.19. Wireframe de la inspección de calidad del lote (CU008).*
 
-**Estado de la pantalla:** Implementada (CRM estándar, HU-08). **Ruta:** CRM › Canal Tradicional.
+## 2.4.2 MockUps
 
-| Wireframe (4.4.1) | Mockup (4.4.2) |
-|---|---|
-| ![Wireframe CU001](../diagramas/pantallas/wf_cu001_embudo_crm.png) | ![Mockup CU001](../diagramas/pantallas/mk_cu001_embudo_crm.png) |
+Los mockups muestran las pantallas principales de cada área con la paleta de marca: venta, liquidación del heladero, recepción, producción, calidad, temperaturas, tablero gerencial, facturación y los dos reportes impresos.
 
-### CU002 · Cotización con lista de precios
+Ventas.
 
-**Estado de la pantalla:** Implementada (Ventas estándar, HU-09). **Ruta:** Ventas › Cotizaciones › S00015.
+![Mockup del embudo CRM por canal](../diagramas/pantallas/mk_cu001_embudo_crm.png)
 
-| Wireframe (4.4.1) | Mockup (4.4.2) |
-|---|---|
-| ![Wireframe CU002](../diagramas/pantallas/wf_cu002_cotizacion.png) | ![Mockup CU002](../diagramas/pantallas/mk_cu002_cotizacion.png) |
+*Figura 4.22. Mockup del embudo de oportunidades por canal de venta (CU001).*
 
-### CU003 · Punto de venta con boleta
+![Mockup del punto de venta con boleta](../diagramas/pantallas/mk_cu003_pdv.png)
 
-**Estado de la pantalla:** Implementada (PdV, HU-10). **Ruta:** PdV › Heladería Av. Venezuela.
+*Figura 4.23. Mockup del punto de venta de la heladería con boleta (CU003).*
 
-| Wireframe (4.4.1) | Mockup (4.4.2) |
-|---|---|
-| ![Wireframe CU003](../diagramas/pantallas/wf_cu003_pdv.png) | ![Mockup CU003](../diagramas/pantallas/mk_cu003_pdv.png) |
+Heladeros.
 
-### CU004 · Liquidación diaria del heladero
+![Mockup de la liquidación diaria del heladero](../diagramas/pantallas/mk_cu004_liquidacion.png)
 
-**Estado de la pantalla:** Implementada (`donofrio_heladeros`, HU-20 y HU-21); capturas reales en `docs/capturas/sprint-4/HU-20_*`. **Ruta:** Heladeros › Liquidaciones › LIQ/2026/00001.
+*Figura 4.18. Mockup de la liquidación diaria del heladero (CU004).*
 
-| Wireframe (4.4.1) | Mockup (4.4.2) |
-|---|---|
-| ![Wireframe CU004](../diagramas/pantallas/wf_cu004_liquidacion.png) | ![Mockup CU004](../diagramas/pantallas/mk_cu004_liquidacion.png) |
+![Mockup de la liquidación en el celular](../diagramas/pantallas/mk_cu004_liquidacion_movil.png)
 
-### CU004 · Liquidación (vista móvil)
+*Figura 4.24. Mockup de la liquidación diaria del heladero en el celular (CU004).*
 
-**Estado de la pantalla:** Implementada con el formulario responsive de Odoo (no se probó en un celular real; ver [5.5c](05_05_modulo_donofrio_heladeros.md)). **Ruta:** Heladeros › Liquidaciones › LIQ/2026/00001.
+Logística.
 
-| Wireframe (4.4.1) | Mockup (4.4.2) |
-|---|---|
-| ![Wireframe CU004](../diagramas/pantallas/wf_cu004_liquidacion_movil.png) | ![Mockup CU004](../diagramas/pantallas/mk_cu004_liquidacion_movil.png) |
+![Mockup de la recepción de insumos](../diagramas/pantallas/mk_cu005_recepcion_lote.png)
 
-### CU005 · Recepción de insumos con lote y vencimiento
+*Figura 4.25. Mockup de la recepción de insumos con lote y vencimiento (CU005).*
 
-**Estado de la pantalla:** Implementada (Inventario estándar, HU-11, HU-12). **Ruta:** Inventario › Recepciones › LIM/IN/00007.
+Producción y calidad.
 
-| Wireframe (4.4.1) | Mockup (4.4.2) |
-|---|---|
-| ![Wireframe CU005](../diagramas/pantallas/wf_cu005_recepcion_lote.png) | ![Mockup CU005](../diagramas/pantallas/mk_cu005_recepcion_lote.png) |
+![Mockup de la orden de producción](../diagramas/pantallas/mk_cu007_orden_produccion.png)
 
-### CU006 · Registro de temperaturas de las cámaras
+*Figura 4.26. Mockup de la orden de producción con lote (CU007).*
 
-**Estado de la pantalla:** Implementada (`donofrio_calidad`, HU-19); capturas reales en `docs/capturas/sprint-4/HU-19_*`. **Ruta:** Calidad › Cadena de frío › Lecturas de temperatura (el wireframe decía Inventario › Cadena de frío).
+![Mockup de la inspección de calidad del lote](../diagramas/pantallas/mk_cu008_inspeccion.png)
 
-| Wireframe (4.4.1) | Mockup (4.4.2) |
-|---|---|
-| ![Wireframe CU006](../diagramas/pantallas/wf_cu006_temperaturas.png) | ![Mockup CU006](../diagramas/pantallas/mk_cu006_temperaturas.png) |
+*Figura 4.20. Mockup de la inspección de calidad del lote (CU008).*
 
-### CU007 · Orden de producción con lote
+![Mockup del registro de temperaturas](../diagramas/pantallas/mk_cu006_temperaturas.png)
 
-**Estado de la pantalla:** Implementada (Fabricación estándar, HU-14). **Ruta:** Fabricación › Órdenes › LIM/MO/00012.
+*Figura 4.27. Mockup del registro de temperaturas de las cámaras de frío (CU006).*
 
-| Wireframe (4.4.1) | Mockup (4.4.2) |
-|---|---|
-| ![Wireframe CU007](../diagramas/pantallas/wf_cu007_orden_produccion.png) | ![Mockup CU007](../diagramas/pantallas/mk_cu007_orden_produccion.png) |
+Gerencia y facturación.
 
-### CU008 · Inspección de calidad del lote
+![Mockup del tablero gerencial de KPI](../diagramas/pantallas/mk_cu009_tablero.png)
 
-**Estado de la pantalla:** Implementada (`donofrio_calidad`, HU-17 y HU-18); capturas reales en `docs/capturas/sprint-4/`. **Ruta:** Calidad › Inspecciones › INS/00003.
+*Figura 4.21. Mockup del tablero gerencial de KPI (CU009).*
 
-| Wireframe (4.4.1) | Mockup (4.4.2) |
-|---|---|
-| ![Wireframe CU008](../diagramas/pantallas/wf_cu008_inspeccion.png) | ![Mockup CU008](../diagramas/pantallas/mk_cu008_inspeccion.png) |
+![Mockup de la factura con IGV](../diagramas/pantallas/mk_cu012_factura.png)
 
-### CU009 · Tablero gerencial de KPIs
+*Figura 4.28. Mockup de la factura (01) o boleta (03) con IGV (CU012).*
 
-**Estado de la pantalla:** Implementada (`donofrio_tablero`, HU-22); capturas reales en `docs/capturas/sprint-4/HU-22_*`. **Ruta:** Tablero › Gerencia.
+Reportes impresos.
 
-| Wireframe (4.4.1) | Mockup (4.4.2) |
-|---|---|
-| ![Wireframe CU009](../diagramas/pantallas/wf_cu009_tablero.png) | ![Mockup CU009](../diagramas/pantallas/mk_cu009_tablero.png) |
+![Mockup del certificado de calidad](../diagramas/pantallas/mk_rp_certificado_calidad.png)
 
-### CU010 · Análisis de ventas por línea, canal y temporada
+*Figura 4.29. Mockup del certificado de calidad del lote en PDF.*
 
-**Estado de la pantalla:** Estándar; capturas en el Sprint 3 (HU-23). **Ruta:** Ventas › Informes › Análisis de ventas.
+![Mockup de la liquidación del heladero impresa](../diagramas/pantallas/mk_rp_liquidacion_heladero.png)
 
-| Wireframe (4.4.1) | Mockup (4.4.2) |
-|---|---|
-| ![Wireframe CU010](../diagramas/pantallas/wf_cu010_ventas_pivote.png) | ![Mockup CU010](../diagramas/pantallas/mk_cu010_ventas_pivote.png) |
+*Figura 4.30. Mockup de la liquidación del heladero en PDF, con firmas.*
 
-### CU011 · Solicitud de cotización generada por la regla mín./máx.
-
-**Estado de la pantalla:** Implementada (Compras estándar, HU-13). **Ruta:** Compras › Solicitudes de cotización › P00001.
-
-| Wireframe (4.4.1) | Mockup (4.4.2) |
-|---|---|
-| ![Wireframe CU011](../diagramas/pantallas/wf_cu011_rfq.png) | ![Mockup CU011](../diagramas/pantallas/mk_cu011_rfq.png) |
-
-### CU012 · Factura (01) o boleta (03) con IGV
-
-**Estado de la pantalla:** Implementada (Facturación estándar, HU-15). **Ruta:** Facturación › Clientes › Facturas › F 00000001.
-
-| Wireframe (4.4.1) | Mockup (4.4.2) |
-|---|---|
-| ![Wireframe CU012](../diagramas/pantallas/wf_cu012_factura.png) | ![Mockup CU012](../diagramas/pantallas/mk_cu012_factura.png) |
-
-## Decisiones de diseño
-
-- **Una acción principal por pantalla**, en amarillo y a la izquierda (confirmar, validar, cobrar), con las secundarias en blanco.
-- **La barra de estado** muestra el ciclo del documento (borrador → confirmado → hecho), igual que en Odoo, para no cambiar los hábitos del usuario.
-- **Contraste:** texto oscuro sobre amarillo y blanco; los colores de alerta siempre llevan un texto, nunca se usan solos.
-- **Etiquetas en español** y montos en soles (`S/`), con el IGV a la vista cuando aplica.
-- **Consistencia con Odoo:** la rejilla de productos del PdV, el kanban del CRM y la tabla de líneas siguen la estructura de Odoo 19, así el wireframe sirve también como guía de configuración.
-
-## Pendiente
-
-- Las pruebas de usabilidad de los prototipos con personas (SUS, HU-30): **[PENDIENTE: resultados de HU-30]**.
-- Probar las pantallas móviles (liquidación y tablero) en un celular real: **[PENDIENTE: prueba en un celular real]**.
-- ~~Reemplazar el mockup por la pantalla real en 4.6.2~~: hecho; ver [4.6.2](04_06_prototipos_web_y_reportes.md).
+Decisiones de diseño. Una acción principal por pantalla, en amarillo y a la izquierda, con las secundarias en blanco. La barra de estado muestra el ciclo del documento (borrador → confirmado → hecho), como en Odoo, para no cambiar los hábitos del usuario. Los colores de alerta siempre llevan un texto y el contraste cumple el mínimo de 4.5 (2.6.1). Las etiquetas están en español y los montos en soles (`S/`), con el IGV a la vista cuando aplica. La rejilla de productos del punto de venta, el kanban del CRM y la tabla de líneas siguen la estructura de Odoo 19, por lo que el wireframe sirve también como guía de configuración.

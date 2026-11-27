@@ -112,6 +112,8 @@ def _programar_plan_contable(env):
         _configurar_cuentas_de_valoracion(env)
         crear_punto_de_venta(env)
         configurar_facturacion(env)
+        # Los impuestos, cuentas y tipos de operación del PdV nacen recién aquí: se completan en español
+        env['res.lang']._donofrio_completar_espanol()
 
     env.registry._auto_install_template = cargar_plan_contable
 

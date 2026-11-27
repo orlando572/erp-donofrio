@@ -1,45 +1,30 @@
-# 6.12 Pruebas de usabilidad
+# 6.5.3 Pruebas de usabilidad
 
-> **Estado al 25/11/2026:** método e instrumentos listos; **[PENDIENTE: resultados de HU-30]**: faltan la revisión por Orlando y Evelyn, el piloto y la iteración del plan, y después las mediciones con las 5 personas, que el equipo hace en el Cierre · **Autora:** Evelyn (PO) · **Revisa:** Orlando · **Fuente:** [02 §2.2](../plan/02_mapeo_plantilla.md), [04 §4.4](../plan/04_scrum_pmbok.md) (HU-30) · **Requisito:** RNF003
+La usabilidad (RNF003: interfaz en español y tareas clave en tres pasos o menos) se evaluó con tres técnicas aplicadas por el equipo sobre el sistema con los datos de demostración: el contraste de color (WCAG 2.1, calculado en 2.6.1), una revisión pantalla por pantalla por roles del 25/11/2026 (administrador, inspector de calidad, vendedor y gerente) y una evaluación heurística de M1 a M4 con las 10 heurísticas de Nielsen (Nielsen, 1994).
 
-## Método
+## 6.5.3.1 Desarrollo
 
-Prueba de usabilidad con **5 participantes** sin experiencia previa en Odoo, **cuatro tareas cronometradas** de los procesos estándar y el cuestionario **SUS** (*System Usability Scale*, de 10 preguntas). Se eligió el SUS porque es corto, es un estándar reconocido y da un número comparable (68 es el promedio de la industria; el proyecto fija la meta en **70**, RNF003).
+Las pantallas desarrolladas para D'Onofrio se diseñaron como wireframe y mockup antes de programarse (2.4), con una acción principal por pantalla, términos del negocio y textos en español. Los pares de texto y fondo de las pantallas cumplen el contraste mínimo de 4.5 de WCAG 2.1. El amarillo de marca no se usa como color de texto (contraste 1.61) y los colores de alerta van siempre acompañados de un texto, como «Cumple» y «No cumple» en la inspección.
 
-El detalle (participantes, entorno, consignas, criterios de éxito y limitaciones) está en [`docs/usabilidad/plan_de_pruebas.md`](../usabilidad/plan_de_pruebas.md); el cuestionario, en [`formulario_sus.md`](../usabilidad/formulario_sus.md).
+## 6.5.3.2 Despliegue
 
-| # | Tarea | Caso de uso | Usuario | Tiempo objetivo |
-|---|---|---|---|---|
-| T1 | Registrar una oportunidad de venta con la etiqueta «Bodega» | CU001 | Vendedor | 120 s |
-| T2 | Preparar y confirmar un pedido con la lista de precios del cliente | CU002 | Vendedor | 180 s |
-| T3 | Cobrar una venta en efectivo en el punto de venta | CU003 | Cajero | 150 s |
-| T4 | Ver los lotes que vencen en 30 días | CU010 (vista guardada de HU-23) | Jefe de almacén | 90 s |
+Sobre el sistema levantado con los datos de demostración se hicieron la revisión por roles y la evaluación heurística. La revisión por roles encontró cuatro tipos de problemas, todos corregidos: el administrador recibía un error 403 al imprimir el certificado de calidad y tenía textos en inglés (contacto, empleado, diario «Punto de venta»); y varios roles veían fechas y plazos de tickets fuera de la ventana de datos de demostración (3/8 al 22/11/2026). El vendedor, sin acceso a Inventario, recibe en el tablero un aviso claro que dice qué falta y a quién pedirlo.
 
-## Cómo se procesan los datos
+**Tabla 6.5.3-a. Evaluación heurística de M1 a M4**
 
-`scripts/usabilidad_sus.py` lee el CSV de resultados y calcula el SUS de cada persona (de 0 a 100), el promedio y la mediana, la tasa de éxito y el tiempo mediano de cada tarea frente a su objetivo. La fórmula está verificada con casos conocidos (`--autotest`: todo 3 da 50; la mejor respuesta, 100; la peor, 0).
+| Heurística de Nielsen | Qué se observa en las pantallas |
+|---|---|
+| Visibilidad del estado | Barra de estado en inspección y liquidación; sello «Fuera de rango» en la lectura |
+| Mundo real | Términos del negocio e importes en soles |
+| Control y libertad | «Volver a borrador» en la liquidación despachada |
+| Consistencia | Barra superior amarilla de la marca en todas las aplicaciones y patrones estándar de Odoo |
+| Prevención de errores | Un punto sin medir no deja aprobar, rechazar exige motivo y un lote rechazado no se despacha |
+| Reconocer, no recordar | Insignia de estado, filtro «Por medir» y datos del heladero visibles |
+| Flexibilidad | Selector de almacén en el tablero y botón «Imprimir» |
+| Diseño minimalista | Seis tarjetas, un gráfico mensual y una tabla por canal |
+| Recuperarse de errores | El aviso «Sin permiso» dice qué acceso falta y a quién pedirlo |
+| Ayuda | Ayuda emergente en campos clave y manuales por caso de uso |
 
-## Revisión e iteración antes de las pruebas
+## 6.5.3.3 Mantenimiento y monitoreo
 
-Antes de llamar a las 5 personas, el plan pasa por una revisión cruzada (Orlando y Evelyn), una prueba piloto de las cuatro tareas con la interfaz real y una iteración que corrige lo encontrado. El detalle está en [`plan_de_pruebas.md`](../usabilidad/plan_de_pruebas.md). Los datos del piloto no se cuentan en los resultados.
-
-## Resultados
-
-**[PENDIENTE: resultados de HU-30]** Se llenan cuando se hagan las pruebas con las 5 personas; no hay ningún dato inventado en esta tabla:
-
-| Participante | T1 | T2 | T3 | T4 | SUS |
-|---|---|---|---|---|---|
-| P1 | | | | | |
-| P2 | | | | | |
-| P3 | | | | | |
-| P4 | | | | | |
-| P5 | | | | | |
-| **Promedio** | | | | | |
-
-RNF003 se cumple si el SUS promedio es **≥ 70**. Con los resultados se agregan aquí: los problemas que aparecieron (con la frase de la persona), qué se cambiaría y la conclusión.
-
-## Limitaciones
-
-- Cinco personas dan una idea y no una estadística firme.
-- Son voluntarios y no los usuarios reales de D'Onofrio (distribuidores, heladeros, cajeros).
-- Las cuatro tareas son de las pantallas del núcleo (Fase 1). Las pantallas de los módulos de la Fase 2 (liquidación, inspección, temperaturas y tablero) están implementadas, pero **no entran en las tareas cronometradas**, así que el SUS no las mide.
+Cada hallazgo de usabilidad se corrige como cualquier cambio (issue, rama y PR con revisión cruzada) y se vuelve a revisar en pantalla con el rol afectado. Así se corrigieron el error 403 del certificado de calidad, los textos en inglés y el aviso de permisos del tablero, que dice qué acceso pedir y a quién.

@@ -1,195 +1,70 @@
-# 4.3 Back-end y despliegue: infraestructura y contenedores
+# 2.3 Gestión de desarrollo de software, infraestructura y plataforma
 
-> **Estado:** versión final del Cierre (25/11/2026; estados verificados con `gh` y `git` ese día) · **Autor:** Orlando (SM) · **Revisa:** Evelyn · **Fuente:** [06 §6.5](../plan/06_github_ci_infra.md), [02 §2.2](../plan/02_mapeo_plantilla.md)
->
-> Aquí van 4.3.1 y 4.3.7 (Sprint 1), 4.3.2 y 4.3.3 (Sprint 2) y 4.3.6 y 4.3.8 (Sprint 3). La sección 4.3.4 es de Evelyn. La 4.3.5 (paquetes, librerías y dependencias) está en [5.2 a 5.4](05_01_a_05_06_backend.md). Las ramas, la estrategia de fusión y el pipeline están en [6.4 a 6.6](06_04_a_06_06_repositorio.md) y [5.15](05_15_despliegue.md).
+## 2.3.1 Infraestructura tecnológica
 
-## 4.3.1 Infraestructura tecnológica
-
-El ERP corre sobre contenedores en la PC de cada integrante (Ubuntu o Ubuntu dentro de WSL2). El mismo `docker-compose.yml` y la misma imagen de Odoo con etiqueta fechada (`odoo:19.0-20261112`) se usan en las dos PC y en el CI de GitHub, de modo que el entorno es reproducible con un solo comando (RNF012).
+El ERP corre en contenedores de Docker en la PC de cada integrante (Ubuntu o Windows con WSL2). Las dos PC y el servidor de pruebas automáticas de GitHub usan la misma configuración y la misma versión de Odoo (imagen del 12/11/2026), de modo que el sistema completo se levanta con un solo comando (RNF012).
 
 ![Infraestructura tecnológica](../diagramas/arquitectura/infraestructura.png)
 
-*Figura 4.3.1-a. Infraestructura tecnológica al 25/11/2026. Línea continua: ya existe y está publicado. Línea punteada: opcional (VM en la nube, no implementada). Se genera con [`generar_arquitectura.py`](../diagramas/generar_arquitectura.py). Los diagramas C4 de contexto, contenedores y componentes están en [5.7 y 5.8](05_07_a_05_09_arquitectura_bd.md).*
+*Figura 4.7. Infraestructura tecnológica: PC de desarrollo, contenedores, GitHub, Actions y GHCR.*
 
-| Elemento | Qué es | Estado |
-|---|---|---|
-| **PC de desarrollo** | Ubuntu nativo o WSL2 con Docker Engine y el plugin Compose; unos 4 GB de RAM libres. Una por integrante | En uso |
-| **Contenedor `odoo`** | Imagen propia (`docker/odoo/Dockerfile`) sobre `odoo:19.0-20261112`; HTTP en 8069 y *websocket* en 8072, solo en `127.0.0.1`; monta `./addons` en modo lectura | En uso |
-| **Contenedor `db`** | `postgres:16` con el rol `odoo` sin superusuario; puerto 5432 solo en `127.0.0.1` para DBeaver | En uso |
-| **Contenedor `db-replica`** | Segundo `postgres:16` en *hot standby* de solo lectura, en *streaming* asíncrono con el primario (perfil `replica`, `127.0.0.1:5433`) | **En uso** (HU-25): [evidencia](../capturas/sprint-3/HU-25_evidencia_replica.txt) y [5.9](05_07_a_05_09_arquitectura_bd.md) |
-| **Contenedor `nginx`** | Proxy inverso con TLS 1.2/1.3, HSTS, CSP, gzip y caché de *assets* (perfil `proxy`, puertos 8080 y 8443 del anfitrión) | **En uso** (HU-27): [evidencia](../capturas/sprint-3/HU-27_evidencia_seguridad.txt) y [5.11](05_10_a_05_12_seguridad.md) |
-| **GitHub** | Repositorio público, Projects e Issues; ramas `main`, `develop` y `feature/HU-xx` con protección | En uso |
-| **GitHub Actions** | *Runner* `ubuntu-24.04` efímero; `ci.yml` con los jobs `lint` (`check_legacy.sh` y `ruff`), `test` (`scripts/test.sh`), `replica`, `backup` y `proxy` en cada PR; `perf.yml` (k6 y ZAP, solo manual) y `release.yml` | En uso (HU-02, HU-25 a HU-29); detalle en [5.15](05_15_despliegue.md) |
-| **GHCR** | Registro de imágenes (`ghcr.io/orlando572/erp-donofrio`); una imagen y un zip del código por cada tag `v*` | **En uso** (HU-29): el flujo `release.yml` publicó las imágenes de `v1.0.0` a `v1.4.0` (24 y 25/11/2026; [evidencia del ensayo](../capturas/sprint-3/HU-29_evidencia_release.txt) y capturas de [6.4](06_04_a_06_06_repositorio.md)) |
-| **VM en la nube** | Oracle Free u otra, con Compose, Nginx y Let's Encrypt; despliegue por SSH desde Actions | **No implementada** (era opcional; ver [4.3.8](#438-plataformas-cloud)) |
+La infraestructura tiene cuatro contenedores:
 
-**Protección de la rama `develop`** (verificada en la configuración del repositorio el 23/11/2026):
+- Odoo: el ERP, al que se entra con el navegador; solo acepta conexiones desde el propio equipo.
+- Base de datos (PostgreSQL 16): guarda toda la información, con un usuario que no tiene permisos de administrador.
+- Réplica: una segunda base de datos de solo lectura que copia a la principal en tiempo real, para no perder datos si la principal falla.
+- Nginx: la puerta de entrada segura; cifra la conexión (HTTPS), comprime las páginas y guarda en caché los archivos de la interfaz.
 
-| Regla | Valor |
-|---|---|
-| Aprobaciones requeridas en el PR | 1, y se descartan si el código cambia o el PR cambia de rama base |
-| Checks obligatorios | `lint` y `test` (CI de GitHub Actions) |
-| Conversaciones resueltas | Obligatorio |
-| *Force push* y borrado de la rama | Prohibidos |
-| Aplica a administradores | **No** (`enforce_admins` desactivado): quien tiene rol de administrador puede saltarse las reglas |
+En la nube, GitHub guarda el código con las ramas protegidas, GitHub Actions ejecuta las pruebas en cada cambio y GHCR guarda una copia instalable de cada versión (v1.0.0 a v1.4.0). Las contraseñas están en un archivo de configuración que nunca se sube al repositorio.
 
-La rama `main` exige 1 aprobación y conversaciones resueltas, prohíbe el *force push* y tampoco aplica a administradores; el 25/11/2026 la API de GitHub la muestra con los checks obligatorios `lint` y `test`, igual que `develop` (el 23/11 no tenía ninguno, porque no había nada que probar en ella).
+## 2.3.2 Plataforma tecnológica
 
-**Excepciones en el Sprint 1.** El CI llegó con la HU-02, así que los PR #152 y #153, abiertos antes, no podían reportar `lint` ni `test` y se fusionaron como administrador con la aprobación de Evelyn. Los PR #154, #155 y #156 se apilaron sobre el #153 y, al cambiar su base a `develop`, GitHub descartó sus aprobaciones; se fusionaron como administrador con el código ya revisado y los checks en verde. Los PR #157 y #158 esperaron una nueva aprobación. A partir del Sprint 2, los PR se abren directos contra `develop` para no repetir esas excepciones.
+El ERP usa Odoo 19.0 Community, escrito en Python, con la base de datos PostgreSQL 16. Odoo separa los datos, las pantallas y la lógica (patrón Modelo-Vista-Controlador) y se encarga él mismo de leer y escribir en la base de datos.
 
-**Seguridad de la infraestructura ya aplicada:** los puertos de Odoo y PostgreSQL solo escuchan en `127.0.0.1` (Nginx publica 8080 y 8443); el gestor de bases de datos de Odoo está deshabilitado (`list_db = False`) y Nginx responde 404 a `/web/database/`; la contraseña maestra y las claves de PostgreSQL salen de `.env`, que no se sube al repositorio, y en el modo protegido Odoo exige una contraseña maestra de 16 caracteres o más; el rol de la aplicación no es superusuario de PostgreSQL; TLS 1.2 y 1.3 con HSTS en Nginx; 2FA para el administrador y el gerente. Riesgos, controles y pruebas: [5.10 a 5.12](05_10_a_05_12_seguridad.md).
-
-## 4.3.2 Plataforma tecnológica
-
-El ERP se construye sobre **Odoo 19.0 Community** (Python 3.12) con **PostgreSQL 16**. Odoo sigue el patrón **Modelo-Vista-Controlador** y deja el acceso a datos en su ORM. Esta sección explica cómo se aplica cada concepto en el proyecto.
-
-```mermaid
-flowchart LR
-    N[Navegador<br/>cliente OWL] -- "JSON-RPC / HTTP" --> C[Controlador<br/>http.Controller y acciones]
-    C --> M[Modelo<br/>ORM: models.Model]
-    M -- "SQL (psycopg2)" --> P[(PostgreSQL 16)]
-    V[Vistas XML y plantillas OWL] --> N
-    M -. "reglas de acceso<br/>ir.model.access, ir.rule" .- C
-```
-
-*Figura 4.3.2-a. Capas de Odoo 19 y su relación con el proyecto.*
+**Tabla 4.8. Patrones de la plataforma y su uso en el proyecto**
 
 | Concepto | Cómo lo hace Odoo | Ejemplo en el proyecto |
 |---|---|---|
-| **Modelo (M)** | Una clase `models.Model` por entidad. Los campos son atributos y la tabla de PostgreSQL se crea sola | `stock.lot` (lote con vencimiento), `mrp.production` (orden de producción), `mrp.bom` (receta) |
-| **ORM como DAO / Active Record** | El registro es un objeto con sus operaciones: `create`, `write`, `search`, `unlink`. El código nunca escribe SQL: usa `self.env['stock.lot'].search([...])`. El ORM abre, consulta y cierra la conexión | `post_init_hook` de `donofrio_base` y las pruebas de `donofrio_base/tests` consultan y crean registros solo con el ORM |
-| **Vista (V)** | Archivos XML que declaran cómo se ve un modelo (`list`, `form`, `kanban`, `pivot`) y plantillas OWL (componentes JavaScript) para pantallas propias | Las vistas estándar de Inventario y Fabricación; en la Fase 2, el tablero OWL (`donofrio_tablero`) |
-| **Controlador (C)** | Tres piezas: las acciones de ventana (`ir.actions.act_window`) que abren una vista con un filtro, los **métodos de negocio** que llaman los botones (`button_validate`, `button_mark_done`) y los controladores HTTP (`http.Controller`, rutas `type='jsonrpc'`) | Validar una recepción o terminar una orden de producción llama a métodos del modelo; la ruta `/web/health` sirve al *healthcheck* |
-| **DTO** | Odoo mueve datos entre capas como **diccionarios**: `vals` en `create`/`write`, la lista de diccionarios que devuelve `read()` y el cuerpo JSON de las llamadas JSON-RPC. No hay clases DTO propias | El script `cargar_transacciones.py` arma diccionarios `vals` para crear recepciones, órdenes y lotes |
-| **Seguridad** | Permisos por modelo (`ir.model.access.csv`), reglas por registro (`ir.rule`) y grupos | La regla que limita al liquidador al almacén de Arequipa (HU-04) |
-| **Persistencia** | PostgreSQL 16 por `psycopg2`; adjuntos en el *filestore* de Odoo | Volúmenes `pgdata` y `odoo-data` (4.3.7) |
+| Modelo (datos) | Cada tipo de dato (producto, lote, pedido) es una clase de Python que Odoo convierte en una tabla; el código nunca escribe consultas SQL a mano | Lotes de producto y órdenes de producción |
+| Vista (pantallas) | Listas, formularios, tableros kanban y tablas dinámicas descritos en XML, y componentes de interfaz en OWL | Pantallas de Inventario y Fabricación; Tablero gerencial |
+| Controlador (acciones) | Los botones y menús llaman a funciones del modelo | Validar una recepción de mercadería |
 
-### SOLID aplicado a los módulos y la herencia
+Principios de diseño (SOLID). Cada módulo tiene una sola responsabilidad (el módulo de configuración base solo configura y carga datos), los módulos estándar de Odoo se amplían sin modificarlos y cada usuario recibe solo los permisos de su rol.
 
-Odoo extiende por **herencia**, sin modificar el código de origen. Así se aplican los principios en el proyecto:
+## 2.3.3 Configuración de herramientas
 
-| Principio | Cómo se aplica |
+### 2.3.3.1 Desarrollo de software
+
+Se usan Ubuntu o WSL2, el editor VS Code, Docker Compose, DBeaver (para consultar la base de datos) y Git, más un control automático que rechaza instrucciones de versiones antiguas de Odoo. Los datos y la configuración se cargan siempre por código y la interfaz solo se usa para verificar.
+
+### 2.3.3.2 Despliegue de software
+
+El despliegue usa una versión fija de Odoo, la configuración se genera desde un archivo de parámetros, las pruebas corren en cada cambio y el código pasa por tres ramas (trabajo → integración → entrega) con revisión del otro integrante, más Nginx con HTTPS y la réplica de la base de datos (3.4).
+
+### 2.3.3.3 Mantenimiento y monitoreo de software
+
+El mantenimiento actualiza los módulos sobre una base con datos y las pruebas automáticas se repiten cada semana. El monitoreo usa los chequeos de salud de la base de datos y de Odoo, el reinicio automático de los contenedores y respaldos cuya restauración se midió en 31 s.
+
+## 2.3.4.3 Controles de versionamiento
+
+Todo el trabajo (código, datos, scripts, documentación e informe) está en un solo repositorio de Git en GitHub, público y con licencia LGPL-3.0.
+
+**Tabla 4.9. Controles de versionamiento**
+
+| Control | Implementación y qué previene |
 |---|---|
-| **S**: responsabilidad única | Un módulo por área de negocio: `donofrio_base` solo configura y carga datos; cada módulo de la Fase 2 (`donofrio_calidad`, `donofrio_heladeros`, `donofrio_tablero`) tendrá una sola responsabilidad. Un archivo de datos por área |
-| **O**: abierto/cerrado | Se extiende con `_inherit` y con datos XML sin tocar los módulos estándar (`stock`, `mrp`, `product_expiry`). Por ejemplo, FEFO es solo configurar `removal_strategy_id` en las categorías |
-| **L**: sustitución de Liskov | Un modelo heredado sigue cumpliendo el contrato del original: los métodos sobreescritos llaman a `super()` y mantienen firma y resultado |
-| **I**: segregación de interfaces | Cada módulo declara solo las dependencias que usa en su `__manifest__.py`, y los usuarios reciben los grupos mínimos de su rol (10 roles en HU-04) |
-| **D**: inversión de dependencias | Los módulos dependen de modelos y estrategias abstractas del registro (`env['stock.lot']`, la estrategia de retiro `product_expiry.removal_fefo`) y no de implementaciones concretas ni de SQL |
+| Ramas con propósito | main (lo entregado, una versión por entrega), develop (integración) y una rama corta por historia de usuario; evita mezclar trabajos |
+| Convención de commits | Mensajes con un formato común en español y el código de la historia de usuario; deja un historial legible |
+| Revisión cruzada | Cada cambio se propone como *pull request* (PR) con pruebas y capturas, y lo aprueba el otro integrante; si el código cambia, se aprueba de nuevo |
+| Protección de ramas | Las pruebas automáticas deben pasar y las observaciones deben estar resueltas; no se puede reescribir el historial |
+| Freno al código obsoleto | Un control automático con 17 instrucciones de Odoo 16 o anteriores que no se aceptan |
 
-Limitación declarada: en la Fase 1 el proyecto **no define modelos nuevos**: configura y verifica Odoo por datos, *hooks* y pruebas, y extiende cuatro modelos existentes con `_inherit` (`sale.order`, `res.users`, `project.task`, que agrega el campo `sla_estado`, y `auditlog.rule`; ver [5.5.5](05_01_a_05_06_backend.md)). Los modelos propios (con su ACL y sus pruebas) son los de los módulos de la Fase 2 (M1 a M4, ya implementados; ver [5.5b a 5.5e](05_05_modulo_donofrio_calidad.md)). Qué patrones se aplicaron de verdad, y por qué no se afirma TDD estricto: [5.6](05_01_a_05_06_backend.md).
+El paso de develop a main se hizo dos veces: al cerrar el núcleo (v1.0.0) y al completar los módulos de D'Onofrio (v1.4.0).
 
-## 4.3.3 Configuración de herramientas: desarrollo, despliegue, mantenimiento y monitoreo
+## 2.3.4.4 Máquinas virtuales y contenedores
 
-Lineamientos breves; el detalle de cada comando está en el README del repositorio y en el [**Manual de instalación y configuración de las herramientas**](../manuales/manual_herramientas.md) (borrador del Sprint 3; se exporta a PDF en el Cierre), que para cada herramienta explica el uso en este proyecto, la versión, la instalación en Ubuntu y WSL2, la comprobación y los problemas frecuentes, y dice cuáles del plan no se usaron (SchemaSpy, draw.io, Camunda Modeler). El ERP se instala con el [Manual de instalación](../manuales/manual_instalacion.md).
+No se usan máquinas virtuales: todo corre en contenedores de Docker Compose. Odoo y la base de datos se reinician solos si fallan; la réplica y Nginx se activan solo cuando se necesitan (Nginx atiende en los puertos 8080 y 8443). Los datos se guardan en volúmenes de Docker, que sobreviven aunque se borre un contenedor, y los contenedores se comunican por una red interna.
 
-| Etapa | Herramientas y configuración | Lineamiento |
-|---|---|---|
-| **Desarrollo** | Ubuntu o WSL2, VS Code y Claude Code (con el hook que bloquea código legacy de Odoo); `docker compose` para levantar Odoo y PostgreSQL; DBeaver contra `localhost:5432`; Git y GitHub. Comandos: `scripts/init_db.sh` (BD nueva), `scripts/test.sh` (instala y prueba en una BD temporal), `scripts/check_legacy.sh` (patrones de versiones anteriores), `odoo shell` para el script de datos de demostración | Datos y configuración **siempre por código** en `donofrio_base`; la interfaz web solo para verificar. Antes de usar una API se consulta la ficha de cambios de Odoo 19 y el código fuente de 19.0 |
-| **Despliegue** | Imagen propia de Odoo con la etiqueta fechada fija (`odoo:19.0-20261112`), la misma en las dos PC y en el CI; configuración generada al arrancar desde `.env`. GitHub Actions corre en cada PR el job `lint` (`check_legacy.sh` y `ruff`) y el job `test` (instalación limpia y pruebas). Ramas `feature/HU-xx` → `develop` → `main`, con revisión del otro integrante | Un PR por HU directo a `develop`, con CI en verde. Nginx con TLS (`scripts/levantar_prod.sh`, HU-27) y la réplica de PostgreSQL (HU-25) ya existen; la imagen en GHCR queda lista en `release.yml` (HU-29) y se publica con el primer tag. Procedimiento completo y rollback en [5.15](05_15_despliegue.md) |
-| **Mantenimiento** | Actualización de módulos con `-u` sobre una BD con datos; datos de configuración con `noupdate` (para cambiarlos hay que recrear la BD); ficha `odoo19_cambios.md` que se amplía con cada diferencia encontrada; ejecución semanal del CI (regresión) | Cada cambio pasa por PR y por pruebas; un dato con `noupdate` que cambia exige avisar al equipo y recrear la BD |
-| **Monitoreo** | `healthcheck` de PostgreSQL (`pg_isready`) y de Odoo (`/web/health`); `docker compose ps` y `docker compose logs -f odoo`; reinicio automático (`restart: unless-stopped`) | Respaldos con `backup.sh` y restauración con `restore.sh` (HU-26, RTO medido de 31 s; el *cron* diario está documentado, no instalado). **Uptime Kuma no se implementó**: no hay medición continua de disponibilidad |
+## 2.3.4.5 Plataformas cloud
 
-## 4.3.6 Controles de versionamiento
-
-Todo el trabajo del proyecto (código, datos, scripts, documentación e informe) está en **un solo repositorio de Git** alojado en GitHub (<https://github.com/orlando572/erp-donofrio>, público, licencia LGPL-3.0). Esta sección resume **qué controles hay y qué hacen**; el estado medido del repositorio (PR, ejecuciones, ramas), el flujograma de ramas y la estrategia de fusión están en [6.4, 6.5 y 6.6](06_04_a_06_06_repositorio.md) y no se repiten aquí. Las cifras de esta sección son del **23/11/2026** y salen de `git` y `gh` en solo lectura.
-
-### Tabla 4.3.6-a. Controles de versionamiento, qué previene cada uno y su estado
-
-| Control | Cómo está implementado | Qué previene | Estado | Dónde se ve |
-|---|---|---|---|---|
-| **Ramas con un propósito** | `main` (entregado, con un tag por entrega) y `develop` (integración); `feature/HU-xx-*` para cada historia, `docs/*` para el informe y Scrum, `fix/*` y `chore/*`. Ninguna rama vive más de unas horas | Trabajo mezclado, cambios sin historia asociada | **Implementado** | 6.5 |
-| **Convención de commits** | *Conventional Commits* en español con la HU entre corchetes: `tipo(alcance): descripción [HU-xx]` (en la documentación del sprint, `[S3]`). De los 68 commits sin fusión de `develop`: 37 `docs`, 23 `feat`, 3 `test`, 2 `chore`, 1 `perf`, 1 `fix` y 1 `ci`; **67 de 68 llevan la etiqueta** `[HU-xx]` o `[Sn]` | Historial ilegible y cambios que no se pueden rastrear hasta su HU | **Implementado por convención** (no hay *hook* `commit-msg` que la haga cumplir) | `git log origin/develop --no-merges` |
-| **PR con plantilla y DoD** | `.github/pull_request_template.md`: HU y «Parte de #n» (el último PR de la épica cierra con `Closes #n`), qué cambia, cómo probar, capturas y la lista del revisor (otro integrante, CI en verde, sin patrones legacy, ACL y pruebas, `-u` sin errores, textos en español, capturas, Project y borrador de la sección del informe) | PR sin criterios de aceptación ni evidencia | **Implementado** | Plantilla del repositorio; [5.15.6](05_15_despliegue.md) |
-| **Revisión cruzada** | Cada PR lo revisa el **otro** integrante (Evelyn revisa los de Orlando y viceversa) y GitHub exige 1 aprobación; la aprobación se descarta si el código cambia (`dismiss_stale_reviews`) | Código sin segundo par de ojos; cambios posteriores a la aprobación | **Implementado** con una limitación (`enforce_admins`) | 6.6: 46 de 49 PR con aprobación vigente; los otros 3 se explican allí |
-| **Protección de ramas** | `develop`: 1 aprobación, checks obligatorios **`lint` y `test`**, conversaciones resueltas, sin *force push* ni borrado. `main`: lo mismo, con los checks `lint` y `test` desde que recibió el primer PR de release | Fusionar sin revisión o sin CI; reescribir la historia | **Implementado** en las dos ramas (verificado el 25/11/2026) | `gh api repos/orlando572/erp-donofrio/branches/{rama}/protection` (6.4, Tabla 27) |
-| **Aplicar las reglas a los administradores (`enforce_admins`)** | **Desactivado** en `develop` y en `main` (verificado con la API el 23/11/2026). Orlando es el único administrador; Evelyn tiene rol *write* y sí queda sujeta a las reglas | Que el administrador se salte la revisión | **No implementado, decisión del PO** | Retro del Sprint 2: Evelyn decidió el 23/11/2026 dejarlo desactivado como salida de emergencia y compensarlo cumpliendo siempre la revisión cruzada. Se vuelve a evaluar en la Retro del Sprint 3 |
-| **Método de fusión** | El repositorio permite *squash* y *merge commit* (el *rebase* está desactivado). Los PR a `develop` se fusionan con *squash* (el del Sprint 3 es el plan); `develop` → `main` con *merge commit* y tag | Historial con commits intermedios; pérdida de las ramas en la entrega | **Implementado**; el paso a `main` se hizo el 24/11 (PR #222) y el 25/11 (PR #229) | 6.6 |
-| **Ramas fusionadas se borran** | `delete_branch_on_merge = true` en el repositorio | Acumulación de ramas muertas | **Implementado** | 6.5 |
-| **Normalización de saltos de línea** | `.gitattributes`: `* text=auto eol=lf` (todo el repositorio en LF, también en Windows) y los binarios (`png`, `jpg`, `jpeg`, `gif`, `ico`, `pdf`, `docx`, `xlsx`, `pptx`, `zip`) marcados como `binary` | Scripts de `bash` y archivos de Docker con CRLF que fallan en el contenedor o en el CI cuando alguien trabaja desde Windows | **Implementado** | `.gitattributes` |
-| **Archivos que no se versionan** | `.gitignore`: `.env`, `*.pem`, `*.key`, `secrets/`, `.claude/settings.local.json`, `backups/`, `*.dump`, `filestore/`, `docker/nginx/certs/`, resultados de pruebas y el material del docente (`docs/*.pdf`, `docs/*.docx`) | Secretos, respaldos y material con derechos de otro en un repositorio público | **Implementado** | `.gitignore`; riesgo RS-02 en [4.5.3](04_05_riesgos_despliegue_y_mantenimiento.md) |
-| **Análisis de secretos** | *Secret scanning* y *push protection* **activos** (`gh api repos/orlando572/erp-donofrio`, `security_and_analysis`); *Dependabot security updates* **desactivado** | Subir una llave o una contraseña | **Implementado** (Dependabot, no) | 6.4, Tabla 26 |
-| **Freno al código obsoleto de Odoo** | `.claude/hooks/bloquear_legacy.py`: *hook* `PreToolUse` de Claude Code (`.claude/settings.json`, para `Edit`, `Write` y `MultiEdit`) que **bloquea** la edición si el texto nuevo contiene alguno de los **17 patrones** de Odoo 16 o anterior (`attrs`, `<tree>`, `_sql_constraints`, `name_get`, `read_group(`, `odoo.define`…). El mismo listado lo usa `scripts/check_legacy.sh`, que es el paso `lint` del CI | Que el asistente de IA o un tutorial viejo introduzcan API que no existe en 19.0 (riesgo R2) | **Implementado** (el *hook* actúa en el equipo de quien usa el asistente; el CI actúa sobre cada PR) | `docs/dev/odoo19_cambios.md`; 4.3.3 |
-| **CI obligatorio** | `lint` (`check_legacy.sh` y `ruff` 0.8.4) y `test` (instalación y 218 pruebas) en cada PR y en cada *push* a `develop` y `main`; más `replica`, `backup` y `proxy` | Que un PR rompa la instalación o las pruebas | **Implementado** (`lint` y `test` son obligatorios en `develop` y en `main`) | 6.4, Tabla 28 |
-| **Release por tag** | `release.yml` publica la imagen en GHCR y el zip en GitHub Releases con cada tag `vX.Y.Z`; el tag va sobre `main` | Entregar algo distinto de lo probado | **Implementado:** tags `v1.0.0` a `v1.4.0` publicados el 24 y 25/11/2026, cada uno con su imagen, su zip y su GitHub Release | [`docs/dev/release.md`](../dev/release.md) |
-
-**Qué no hay (plan frente a realidad).**
-
-- **No hay un *hook* de Git local** (`pre-commit`, `commit-msg`): `.git/hooks` solo trae los ejemplos de Git y no existe `.pre-commit-config.yaml`. El encabezado de `scripts/check_legacy.sh` habla de «pre-commit y CI», pero el control efectivo es el CI y, para quien usa el asistente, el *hook* de Claude Code. La convención de commits se cumple por revisión, no por una herramienta.
-- **No hay `CODEOWNERS`, ni `dependabot.yml`, ni commits firmados ni historial lineal obligatorio.** La revisión la exige la protección de ramas, no un propietario por carpeta.
-- **No se usan *rulesets*** de GitHub; solo la protección clásica de ramas.
-
-**Lo que más importa para defender el control.** (1) El paso `develop` → `main` **ya ocurrió dos veces**: el PR #222 (24/11, núcleo, `v1.0.0`) y el PR #229 (25/11, Fase 2 completa, `v1.4.0`); `main` ya tiene `lint` y `test` como checks obligatorios y el CI está en verde sobre ella. (2) `enforce_admins` desactivado es una **decisión documentada**, con la revisión cruzada como compensación y la excepción usada solo en el Sprint 1 (PR #152 a #156). (3) Los controles técnicos (`lint`, `test`, protección de ramas, análisis de secretos) son **verificables con la API de GitHub**, no solo declarados.
-
-## 4.3.7 Máquinas virtuales y contenedores
-
-La plataforma de contenedores es **Docker Compose** (un archivo `docker-compose.yml` en la raíz del repositorio). No se usan máquinas virtuales en desarrollo; la VM en la nube es opcional (4.3.8).
-
-### Servicios
-
-| Servicio | Imagen | Perfil | Puertos publicados | Volumen | Salud y reinicio |
-|---|---|---|---|---|---|
-| `db` | `postgres:16` | (siempre) | `127.0.0.1:5432` → 5432 | `pgdata` → `/var/lib/postgresql/data` | `pg_isready` cada 5 s, 10 reintentos · `restart: unless-stopped` |
-| `odoo` | `erp-donofrio/odoo:19.0` (construida desde `docker/odoo`) | (siempre) | `127.0.0.1:8069` → 8069 · `127.0.0.1:8072` → 8072 | `odoo-data` → `/var/lib/odoo` · `./addons` → `/mnt/extra-addons` (solo lectura) | `GET /web/health` cada 15 s, inicio con 30 s de gracia · `depends_on: db` (saludable) · `restart: unless-stopped` |
-| `db-replica` | `postgres:16` | `replica` | `127.0.0.1:5433` → 5432 | `pgdata-replica` → `/var/lib/postgresql/data` | `pg_isready` cada 5 s, 20 reintentos · `restart: unless-stopped` · **En uso** (HU-25) |
-| `nginx` | `nginx:stable` | `proxy` | 8080 → 80 y 8443 → 443 | configuración de `docker/nginx/` (solo lectura) y certificado local | `depends_on: odoo` (saludable) · `restart: unless-stopped` · **En uso** (HU-27) |
-| `schemaspy` | — | `tools` | — | — | **No implementado:** el ER se genera con `scripts/diagrama_er.py` y PlantUML ([4.2.6](04_02_modelo_de_datos.md)) |
-
-### Volúmenes y red
-
-| Recurso | Tipo | Contenido | Cómo se borra |
-|---|---|---|---|
-| `erp-donofrio_pgdata` | Volumen local | Base de datos PostgreSQL | `docker compose down -v` |
-| `erp-donofrio_pgdata-replica` | Volumen local | Datos de la réplica (solo con el perfil `replica`) | `docker compose down -v` |
-| `erp-donofrio_odoo-data` | Volumen local | *Filestore* de Odoo (adjuntos, sesiones) | `docker compose down -v` |
-| `erp-donofrio_default` | Red `bridge` | Red interna; los servicios se ven por nombre (`db`, `odoo`) | `docker compose down` |
-
-### Configuración
-
-- **Variables de entorno:** `.env` (copia de `.env.example`; no se versiona) define la base de datos, las contraseñas de prueba y los puertos. Compose las inyecta y el `entrypoint.sh` de la imagen genera `odoo.conf` a partir de `docker/odoo/odoo.conf.template`.
-- **Primer arranque:** `scripts/init_db.sh` crea la base de datos `donofrio` e instala `donofrio_base`; es idempotente.
-- **Base de datos:** el rol `odoo` lo crea `docker/postgres/primary/init-usuario-odoo.sh` solo la primera vez que se crea el volumen.
-
-### Evidencia
-
-![docker compose ps](../capturas/sprint-1/S1_docker_compose_ps.png)
-
-*Figura 4.3.7-a. Servicios, volúmenes, red e imágenes del proyecto, con ambos contenedores en estado `healthy`.*
-
-```text
-$ docker compose ps
-NAME                  IMAGE                    SERVICE   STATUS                 PORTS
-erp-donofrio-db-1     postgres:16              db        Up 2 hours (healthy)   127.0.0.1:5432->5432/tcp
-erp-donofrio-odoo-1   erp-donofrio/odoo:19.0   odoo      Up 2 hours (healthy)   127.0.0.1:8069->8069/tcp, 127.0.0.1:8072->8072/tcp, 8071/tcp
-```
-
-> La captura y la salida son del Sprint 1 (solo `db` y `odoo`); la salida de `docker compose --profile replica ps` y la del perfil `proxy` están en [`HU-25_evidencia_replica.txt`](../capturas/sprint-3/HU-25_evidencia_replica.txt) y [`HU-27_evidencia_seguridad.txt`](../capturas/sprint-3/HU-27_evidencia_seguridad.txt). El tamaño de las imágenes y el tiempo de arranque dependen de la PC; la primera vez se descargan unos 900 MB.
-
-## 4.3.8 Plataformas cloud
-
-**El proyecto no usa ninguna máquina virtual en la nube.** El ERP se ejecuta en la PC de cada integrante y la demostración «en producción» se hace en la PC de la exposición con el perfil `proxy` de Compose (Nginx con TLS en `https://localhost:8443`, ver [5.15.1](05_15_despliegue.md)). Las únicas plataformas cloud que se usan son las de **GitHub**, que es lo que el plan ([06 §6.4 a §6.6](../plan/06_github_ci_infra.md)) consideraba obligatorio; la VM, Let's Encrypt y el despliegue por SSH eran **opcionales** en el plan y **no se hicieron**.
-
-### Tabla 4.3.8-a. Plataformas cloud: lo previsto y lo real (23/11/2026)
-
-| Plataforma o servicio | Qué se previó | Qué hay realmente | Estado |
-|---|---|---|---|
-| **GitHub** (repositorio, Issues, Projects) | Repositorio público con ramas protegidas, issues y un Project | Repositorio público `orlando572/erp-donofrio`; ramas `main` y `develop` protegidas; GitHub Project «Scrum ERP D'Onofrio» (de Evelyn, 3.9 y 6.3); secret scanning y push protection activos | **En uso** |
-| **GitHub Actions** | `ci.yml`, `release.yml` y, si hubiera VM, `cd.yml` | **3 flujos**: `ci.yml` (5 jobs), `perf.yml` (manual) y `release.yml`; todos sobre *runners* **`ubuntu-24.04`** alojados por GitHub, con permisos de solo lectura (`release.yml` pide `contents: write` y `packages: write`) y sin más secreto que `GITHUB_TOKEN`. Hay `schedule` semanal (lunes 11:00 UTC). **No existe `cd.yml`** | **En uso** (sin despliegue automático) |
-| **GitHub Releases** | Release con el zip del código fuente por cada tag | Publicadas las releases `v1.0.0` a `v1.4.0` (cada una con su `erp-donofrio-vX.Y.Z.zip`, de 23,5 a 26,1 MiB) | **En uso** |
-| **GHCR** (`ghcr.io/orlando572/erp-donofrio`) | Imagen de Odoo con los módulos dentro, por cada tag `v*` | Flujo listo y probado en ensayo (imagen de 3.25 GB, `scripts/probar_imagen.sh` correcto); el paquete existe y es público, con las etiquetas `v1.0.0` y `latest` (verificado en el navegador sin sesión el 24/11; la CLI no pudo listar las versiones por falta del permiso `read:packages`) | **En uso** |
-| **VM en la nube** (Oracle Free u otra) con Docker Compose, Nginx y **Let's Encrypt** | Opcional, «decisión abierta» | **No se hizo.** El certificado TLS es **autofirmado** (`scripts/levantar_prod.sh` lo genera) y el sitio solo existe mientras la PC lo levanta | **No implementado** |
-| **Despliegue por SSH desde Actions** (`cd.yml`, llave en GitHub Secrets) | Opcional, solo con VM | **No se hizo**; tampoco hay `scripts/deploy.sh`. El despliegue y el *rollback* son manuales (5.15.1) | **No implementado** |
-| **Monitoreo externo** (Uptime Kuma) | Medir la disponibilidad | **No se hizo**; solo *healthchecks* de Docker (RNF011 «Parcial») | **No implementado** |
-| **Kubernetes y otros servicios gestionados** | No aplica | No se usan | **No aplica** |
-
-### Por qué no se usó una VM en la nube
-
-1. **Presupuesto y alcance:** el proyecto es académico y de costo cero (S/ 0, sin proveedores; ver la estrategia «Transferir» de [4.5.1](../pm/plan_riesgos.md)). Una VM gratuita exige una cuenta con tarjeta, aprobación del proveedor y disponibilidad de capacidad, y no es un entregable de los lineamientos.
-2. **Plazo único:** todo se entrega el viernes 27/11 a las 14:30 y el Cierre está reservado (R1). El tiempo se invirtió en lo que sí pide la plantilla: réplica, respaldos, seguridad, pruebas y despliegue **reproducible** (HU-25 a HU-29).
-3. **Reproducibilidad (RNF012):** el mismo `docker-compose.yml` y la misma imagen corren en la PC de Orlando, en la de Evelyn y en el CI; la demostración local con el perfil `proxy` cubre TLS, cabeceras, gzip, *websocket* y el modo producción (`verificar_despliegue.sh`), que es lo que una VM habría agregado salvo el dominio y el certificado público.
-4. **Superficie de ataque y datos:** el sitio queda en la PC; no hay un servicio expuesto a Internet con el sitio web público de Odoo (`/web/signup`, `/contactus`) que revisar (5.14), ni un dominio que se pueda confundir con la marca (riesgo R11).
-5. **Menos piezas que fallar en la demo:** una VM agrega red, DNS y un certificado que dependen de terceros justo el día de la exposición (R14).
-
-**Consecuencia.** El criterio «URL pública» de la plantilla se cubre con las URL de [5.15.5](05_15_despliegue.md) (repositorio, Actions, Releases, imagen GHCR y `https://localhost:8443`); las del ERP **solo responden en la PC que lo levanta**. Si más adelante se quisiera publicar, el camino ya está documentado como recomendación técnica en [8.2](08_recomendaciones.md): VM con Compose y el perfil `proxy`, Let's Encrypt en lugar del certificado autofirmado, un `cd.yml` por SSH con *rollback* a la imagen del tag anterior y monitoreo con Uptime Kuma.
-
-Evidencia: [`HU-27_evidencia_seguridad.txt`](../capturas/sprint-3/HU-27_evidencia_seguridad.txt) (despliegue protegido), [`HU-29_evidencia_release.txt`](../capturas/sprint-3/HU-29_evidencia_release.txt) (ensayo de la release), [6.4](06_04_a_06_06_repositorio.md) (Actions, Releases y GHCR) y [5.15](05_15_despliegue.md).
+El ERP se ejecuta en la PC de cada integrante y la demostración protegida se abre en `https://localhost:8443`. Las plataformas en la nube son las de GitHub: el repositorio, GitHub Projects para el backlog, GitHub Actions para las pruebas automáticas (tres flujos: integración continua, rendimiento y publicación), Releases para las versiones v1.0.0 a v1.4.0 (un zip de unos 25 MiB cada una) y GHCR para la imagen instalable de cada versión (unos 3.25 GB).

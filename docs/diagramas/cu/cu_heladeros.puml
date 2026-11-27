@@ -40,7 +40,7 @@ CU004 ..> F1 : reemplaza el cálculo\nmanual de la devolución
 
 legend right
   Verde: implementable con Odoo estándar (Fase 1).
-  Amarillo: módulo propio donofrio_heladeros (M2),
-  implementado (release v1.2.0).
+  Amarillo: Liquidación de heladeros (M2),
+  implementado (versión v1.2.0).
 endlegend
 @enduml
