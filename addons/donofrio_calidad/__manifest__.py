@@ -19,6 +19,7 @@ Todos los datos son ficticios.
         'data/calidad_data.xml',
         'views/calidad_views.xml',
         'report/calidad_report.xml',
+        'data/idioma_data.xml',
     ],
     'installable': True,
     'application': True,
