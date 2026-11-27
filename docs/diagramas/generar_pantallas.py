@@ -427,10 +427,6 @@ def dibujar(pantalla, mockup):
     s = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{alto_total:.0f}" '
          f'viewBox="0 0 {w} {alto_total:.0f}" font-family="{e.fuente}">',
          f'<rect width="{w}" height="{alto_total:.0f}" fill="{fondo}"/>'] + cabecera
-    if pantalla.f2:
-        s.append(f'<rect x="{margen}" y="110" width="250" height="20" rx="10" '
-                 f'fill="{AMARILLO_CLARO if mockup else "#EEEEEE"}" stroke="{e.tinta}" stroke-dasharray="3 2"/>'
-                 + t(margen + 125, 124, 'Módulo propio de la Fase 2 (implementado)', e, 10, ancla='middle'))
     s += cuerpo
     s.append(t(w - margen, alto_total - 8, 'Wireframe' if not mockup else 'Mockup', e, 9, color=e.gris, ancla='end'))
     s.append('</svg>')

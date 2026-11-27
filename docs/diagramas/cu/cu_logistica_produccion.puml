@@ -54,7 +54,7 @@ BLO ..> DES : impide el despacho
 
 legend right
   Verde: implementable con Odoo estándar (Fase 1).
-  Amarillo: módulos propios donofrio_calidad (M1) y
-  cadena de frío (M3), implementados (v1.1.0 y v1.3.0).
+  Amarillo: Calidad (M1) y cadena de frío (M3),
+  implementados (v1.1.0 y v1.3.0).
 endlegend
 @enduml

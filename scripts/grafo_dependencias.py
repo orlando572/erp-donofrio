@@ -61,7 +61,7 @@ ESTILO = {
     'odoo': ('#e8f1fb', '#2c5282'),
 }
 ETIQUETA_ORIGEN = {
-    'propio': 'Módulo propio (donofrio_base)',
+    'propio': "Configuración base D'Onofrio",
     'oca': 'OCA (auditlog, fijado por commit)',
     'odoo': 'Odoo 19.0 Community',
     'base': 'Núcleo (base)',

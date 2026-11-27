@@ -179,7 +179,7 @@ digraph dependencias_completo {
   "web_hierarchy" -> "web";
   "web_tour" -> "web";
   subgraph cluster_leyenda { label="Origen del módulo"; fontsize=11; color="#999999"; style=rounded;
-    "leyenda_propio" [label="Módulo propio (donofrio_base)", shape=box, style="filled,rounded", fillcolor="#ffe08a", color="#8a6d00", fontsize=10];
+    "leyenda_propio" [label="Configuración base D'Onofrio", shape=box, style="filled,rounded", fillcolor="#ffe08a", color="#8a6d00", fontsize=10];
     "leyenda_oca" [label="OCA (auditlog, fijado por commit)", shape=box, style="filled,rounded", fillcolor="#d7f0d2", color="#1e7e34", fontsize=10];
     "leyenda_odoo" [label="Odoo 19.0 Community", shape=box, style="filled,rounded", fillcolor="#e8f1fb", color="#2c5282", fontsize=10];
     "leyenda_base" [label="Núcleo (base)", shape=box, style="filled,rounded", fillcolor="#e0e0e0", color="#555555", fontsize=10];
