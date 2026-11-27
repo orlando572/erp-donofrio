@@ -32,6 +32,7 @@ Todos los datos (RUC, clientes, empleados, precios) son ficticios.
         'data/vistas_gerencia_data.xml',
         'data/mesa_servicios_data.xml',
         'data/seguridad_data.xml',
+        'data/idioma_data.xml',
     ],
     'post_init_hook': 'post_init_hook',
     'installable': True,

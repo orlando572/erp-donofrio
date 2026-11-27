@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Los estados de actividad de las lecturas de temperatura (mail.activity.mixin) no salen en el .po del módulo:
+     se completan en español con la función de donofrio_base (models/idioma.py), también en cada -u. -->
+<odoo>
+    <function model="res.lang" name="_donofrio_completar_espanol"/>
+</odoo>

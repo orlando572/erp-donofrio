@@ -1,0 +1,507 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* donofrio_heladeros
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20261112\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-27 07:00+0000\n"
+"PO-Revision-Date: 2026-11-27 07:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: donofrio_heladeros
+#: model:ir.actions.report,print_report_name:donofrio_heladeros.action_report_liquidacion
+msgid "'Liquidación - %s' % (object.name or '')"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid ""
+"<br/>\n"
+"                                <strong>Liquidador:</strong>"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid ""
+"<br/>\n"
+"                                <strong>Lista de precios:</strong>"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "<strong>Fecha:</strong>"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "<strong>Heladero:</strong>"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:res.groups,comment:donofrio_heladeros.group_heladeros_jefe
+msgid "Además del liquidador, puede borrar liquidaciones."
+msgstr ""
+
+#. module: donofrio_heladeros
+#. odoo-python
+#: code:addons/donofrio_heladeros/models/liquidacion.py:0
+msgid "Agrega al menos un producto despachado."
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields.selection,name:donofrio_heladeros.selection__donofrio_liquidacion__state__borrador
+msgid "Borrador"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__total_comision
+msgid "Comisión"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__porcentaje_comision
+msgid "Comisión (%)"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__company_id
+msgid "Company"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.view_liquidacion_form
+msgid "Confirmar liquidación"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__create_uid
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion_linea__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__create_date
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion_linea__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__currency_id
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion_linea__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion_linea__despachado
+#: model:ir.model.fields.selection,name:donofrio_heladeros.selection__donofrio_liquidacion__state__despachado
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "Despachado"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion_linea__devuelto
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "Devuelto"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__diferencia_efectivo
+msgid "Diferencia de efectivo"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__display_name
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion_linea__display_name
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_report_donofrio_heladeros_report_liquidacion__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__efectivo_entregado
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "Efectivo entregado"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,help:donofrio_heladeros.field_donofrio_liquidacion__diferencia_efectivo
+msgid ""
+"Efectivo entregado menos el importe vendido. Positivo: el heladero entregó "
+"de más (a su favor). Negativo: entregó de menos y debe la diferencia."
+msgstr ""
+
+#. module: donofrio_heladeros
+#. odoo-python
+#: code:addons/donofrio_heladeros/models/report_liquidacion.py:0
+msgid "El PDF se imprime cuando la liquidación está despachada o liquidada."
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.constraint,message:donofrio_heladeros.constraint_donofrio_liquidacion_comision_valida
+msgid "El porcentaje de comisión debe estar entre 0 y 100."
+msgstr ""
+
+#. module: donofrio_heladeros
+#. odoo-python
+#: code:addons/donofrio_heladeros/models/liquidacion.py:0
+msgid ""
+"En %(producto)s, lo devuelto más la merma (%(suma)g) supera lo despachado "
+"(%(desp)g)."
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__state
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.view_liquidacion_search
+msgid "Estado"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__fecha
+msgid "Fecha"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "Firma del heladero<br/>"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "Firma del liquidador<br/>"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__partner_id
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.view_liquidacion_search
+msgid "Heladero"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.ui.menu,name:donofrio_heladeros.menu_heladeros_root
+msgid "Heladeros"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:res.groups,name:donofrio_heladeros.group_heladeros_jefe
+msgid "Heladeros: jefatura"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:res.groups,name:donofrio_heladeros.group_heladeros_liquidador
+msgid "Heladeros: liquidador"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__id
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion_linea__id
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_report_donofrio_heladeros_report_liquidacion__id
+msgid "ID"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,help:donofrio_heladeros.field_donofrio_liquidacion__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,help:donofrio_heladeros.field_donofrio_liquidacion__message_has_error
+#: model:ir.model.fields,help:donofrio_heladeros.field_donofrio_liquidacion__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion_linea__importe
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "Importe"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__total_importe
+msgid "Importe vendido"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.view_liquidacion_form
+msgid "Imprimir"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.constraint,message:donofrio_heladeros.constraint_donofrio_liquidacion_linea_cantidades_positivas
+msgid "Las cantidades no pueden ser negativas."
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__write_uid
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion_linea__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__write_date
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion_linea__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion_linea__liquidacion_id
+msgid "Liquidacion"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.actions.act_window,name:donofrio_heladeros.action_liquidacion
+#: model:ir.ui.menu,name:donofrio_heladeros.menu_heladeros_liquidaciones
+msgid "Liquidaciones"
+msgstr ""
+
+#. module: donofrio_heladeros
+#. odoo-python
+#: code:addons/donofrio_heladeros/models/liquidacion.py:0
+msgid "Liquidación confirmada: pedido %s."
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.actions.report,name:donofrio_heladeros.action_report_liquidacion
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "Liquidación del heladero"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model,name:donofrio_heladeros.model_report_donofrio_heladeros_report_liquidacion
+msgid "Liquidación del heladero (PDF)"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model,name:donofrio_heladeros.model_donofrio_liquidacion
+msgid "Liquidación diaria del heladero"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields.selection,name:donofrio_heladeros.selection__donofrio_liquidacion__state__liquidado
+msgid "Liquidado"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__liquidador_id
+msgid "Liquidador"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__pricelist_id
+msgid "Lista de precios"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model,name:donofrio_heladeros.model_donofrio_liquidacion_linea
+msgid "Línea de la liquidación del heladero"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.view_liquidacion_form
+msgid "Marcar despachado"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion_linea__merma
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "Merma"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: donofrio_heladeros
+#. odoo-python
+#: code:addons/donofrio_heladeros/models/liquidacion.py:0
+msgid "No hay unidades vendidas: no se crea ningún pedido."
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,help:donofrio_heladeros.field_donofrio_liquidacion__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,help:donofrio_heladeros.field_donofrio_liquidacion__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__name
+msgid "Número"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__order_id
+msgid "Pedido de venta"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,help:donofrio_heladeros.field_donofrio_liquidacion__porcentaje_comision
+msgid ""
+"Porcentaje del importe vendido que se queda el heladero. Valor supuesto del "
+"caso."
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion_linea__precio_unitario
+msgid "Precio"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion_linea__product_id
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "Producto"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__linea_ids
+msgid "Productos"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:res.groups,comment:donofrio_heladeros.group_heladeros_liquidador
+msgid ""
+"Registra y confirma la liquidación diaria de los heladeros concesionarios."
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.view_liquidacion_search
+msgid "Sin liquidar"
+msgstr ""
+
+#. module: donofrio_heladeros
+#. odoo-python
+#: code:addons/donofrio_heladeros/models/liquidacion.py:0
+msgid "Solo se puede confirmar una liquidación despachada."
+msgstr ""
+
+#. module: donofrio_heladeros
+#. odoo-python
+#: code:addons/donofrio_heladeros/models/liquidacion.py:0
+msgid "Solo se puede despachar una liquidación en borrador."
+msgstr ""
+
+#. module: donofrio_heladeros
+#. odoo-python
+#: code:addons/donofrio_heladeros/models/liquidacion.py:0
+msgid "Solo se puede volver a borrador una liquidación despachada."
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.view_liquidacion_list
+msgid "Total"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__total_vendido
+msgid "Unidades vendidas"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion_linea__vendido
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "Vendido"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.view_liquidacion_form
+msgid "Volver a borrador"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,field_description:donofrio_heladeros.field_donofrio_liquidacion__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.fields,help:donofrio_heladeros.field_donofrio_liquidacion__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model:ir.model.constraint,message:donofrio_heladeros.constraint_donofrio_liquidacion_unica_por_dia
+msgid "Ya existe una liquidación de ese heladero para esa fecha."
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "diferencia a favor del heladero:"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "el heladero debe:"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "sin diferencia"
+msgstr ""
+
+#. module: donofrio_heladeros
+#: model_terms:ir.ui.view,arch_db:donofrio_heladeros.report_liquidacion
+msgid "· Comisión ("
+msgstr ""
