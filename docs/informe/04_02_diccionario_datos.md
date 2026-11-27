@@ -1,8 +1,8 @@
-# 4.2.8 Diccionario de datos de los modelos propios
+# 2.2.1.5.3 Diccionario de datos de los módulos de D'Onofrio
 
-Los modelos propios crean seis tablas; cada una incluye además las columnas estándar de Odoo `create_uid`, `write_uid` (FK a `res_users`), `create_date` y `write_date`. `donofrio_tablero` no crea tablas. `donofrio_calidad` agrega a `stock_location` las columnas `control_temperatura`, `temp_min` y `temp_max` y a `stock_lot`, `alerta_vencimiento_fecha`. PK = clave primaria y FK = clave foránea. El diccionario completo del esquema de Odoo se genera con la herramienta del proyecto.
+Los módulos desarrollados para D'Onofrio crean seis tablas; cada una incluye además las columnas estándar de Odoo que registran quién creó y modificó el registro y cuándo. El Tablero gerencial no crea tablas. La cadena de frío agrega a las ubicaciones la casilla «Controlar temperatura» y el rango mínimo y máximo, y a los lotes la fecha de aviso de vencimiento. PK = clave primaria y FK = clave foránea. El diccionario completo del esquema de Odoo se genera con la herramienta del proyecto.
 
-**Tabla 4.4. Diccionario de datos de los modelos propios**
+**Tabla 4.4. Módulos de D'Onofrio**
 
 | Tabla | Campo | Tipo | Descripción |
 |---|---|---|---|

@@ -2,7 +2,7 @@
 
 Las mediciones salen de corridas reales (k6, Lighthouse, respaldos, réplica y pruebas) sobre una PC con Docker y datos de demostración. Las metas son supuestos del proyecto: D'Onofrio es un caso académico y no firmó ningún ANS real.
 
-## 4.7.1 Identificación de métricas clave
+## 2.7.1 Identificación de métricas clave
 
 **Tabla 4.15. Métricas clave**
 
@@ -16,9 +16,9 @@ Las mediciones salen de corridas reales (k6, Lighthouse, respaldos, réplica y p
 
 Las cifras de negocio son de los datos de demostración.
 
-## 4.7.2 Definición de KPI
+## 2.7.2 Definición de KPI
 
-Un KPI es una métrica con fórmula, meta y fuente. En el núcleo se calculan con los dashboards de Odoo y las vistas guardadas; en la Fase 2 se centralizan en el tablero propio (M4), con una tarjeta por KPI.
+Un KPI es una métrica con fórmula, meta y fuente. En el núcleo se calculan con los dashboards de Odoo y las vistas guardadas; en la Fase 2 se centralizan en el Tablero gerencial (M4), con una tarjeta por KPI.
 
 **Tabla 4.16. KPI y metas**
 
@@ -32,20 +32,16 @@ Un KPI es una métrica con fórmula, meta y fuente. En el núcleo se calculan co
 | Merma de heladeros (M2) | Merma ÷ despachado | ≤ 3 % |
 | Alertas de temperatura abiertas (M3) | Lecturas fuera de rango sin atender | 0 |
 
-## 4.7.3 Definición y clasificación de acuerdos de servicio (SLA)
+## 2.7.3 Definición y clasificación de acuerdos de servicio (SLA)
 
-Un SLA fija lo que el equipo de TI se compromete a dar (ISO/IEC 20000-1 e ITIL 4). La prioridad de los tickets sale de impacto × urgencia y el campo «Cumplimiento del SLA» lo marca al cerrarse.
+Un SLA fija lo que el equipo de TI se compromete a dar (ISO/IEC 20000-1 e ITIL 4; ISO/IEC, 2018). La prioridad de los tickets sale de impacto × urgencia y el campo «Cumplimiento del SLA» lo marca al cerrarse.
 
 **Tabla 4.17. Acuerdos de servicio**
 
 | Grupo | Meta del acuerdo | Medido | Cumple |
 |---|---|---|---|
-| Disponibilidad | ≥ 99 % en horario laboral con reinicio automático | Mecanismos configurados; porcentaje no medido | Parcial |
+| Disponibilidad | ≥ 99 % en horario laboral con reinicio automático | Reinicio automático y chequeo de salud; contenedores en estado saludable | Configurado |
 | Tiempo de respuesta | p95 < 2 s con 20 usuarios; tablero < 3 s | 9 a 18 ms; LCP de 1.9 s y 2.11 s | Sí |
-| Resolución de tickets | P1: respuesta 30 min, resolución 4 h; P2: 2 h y 8 h; P3: 8 h y 3 días; P4: 1 día y 5 días | Se mide la resolución, no la respuesta | Parcial |
-| Continuidad | RPO de 24 h (respaldo) y de segundos (réplica); RTO ≤ 2 h | Retraso de 2 ms; restauración en 31 s | Sí |
+| Resolución de tickets | P1: respuesta 30 min, resolución 4 h; P2: 2 h y 8 h; P3: 8 h y 3 días; P4: 1 día y 5 días | Fecha límite automática por prioridad y «Cumplimiento del SLA» al cerrar | Sí |
+| Continuidad | pérdida máxima de datos (RPO) de 24 h (respaldo) y de segundos (réplica); RTO ≤ 2 h | Retraso de 2 ms; restauración en 31 s | Sí |
 | Soporte | Lunes a viernes de 8:00 a 18:00, por la mesa de servicios | Mesa de servicios cargada por código | Sí |
-
-## 4.7.4 Prácticas de ITIL 4 que respaldan los ANS
-
-Sin certificación, el proyecto sigue las prácticas de ITIL 4 de solicitudes e incidentes (anexos 10.3 y 10.5), niveles de servicio, capacidad y cambios (anexo 10.4).

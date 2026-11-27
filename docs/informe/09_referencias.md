@@ -1,38 +1,16 @@
 # 9. Referencias y bibliografía
 
-Las referencias siguen el formato APA 7.ª edición. America Retail. (s. f.). *Nestlé impulsa icónicas marcas peruanas hacia Estados Unidos*. https://americaretail-malls.com/paises/peru/nestle-impulsa-iconicas-marcas-peruanas-hacia-estados-unidos/
+Las referencias siguen el formato APA 7.ª edición.
 
 AXELOS. (2019). *ITIL® Foundation: ITIL 4 edition*. TSO (The Stationery Office).
 
 Codex Alimentarius Commission. (2020). *Principios generales de higiene de los alimentos* (CXC 1-1969, rev. 2020; incluye el sistema HACCP). FAO y OMS.
 
-Congreso de la República del Perú. (2010). *Ley N.° 29571, Código de Protección y Defensa del Consumidor*. Diario Oficial El Peruano, 2 de septiembre de 2010. https://busquedas.elperuano.pe/dispositivo/NL/538113-1
-
 Congreso de la República del Perú. (2011). *Ley N.° 29733, Ley de Protección de Datos Personales*. Diario Oficial El Peruano, 3 de julio de 2011. https://www.gob.pe/institucion/anpd/normas-legales/2018346-29733-2011
-
-Congreso de la República del Perú. (2013). *Ley N.° 30021, Ley de promoción de la alimentación saludable para niños, niñas y adolescentes*. Diario Oficial El Peruano, 17 de mayo de 2013. https://leap.unep.org/en/countries/pe/national-legislation/ley-no-30021-ley-de-promocion-de-la-alimentacion-saludable-para
-
-Conventional Commits. (2019). *Conventional Commits 1.0.0*. https://www.conventionalcommits.org/es/v1.0.0/
-
-Docker, Inc. (s. f.). *Docker documentation*. https://docs.docker.com/
-
-El Comercio. (s. f.). *Mercado de panetones mueve unos US$125 millones al año*. https://elcomercio.pe/economia/negocios/mercado-panetones-mueve-us-125-millones-ano-peru-150832-noticia/
-
-El Comercio. (2026). *Nestlé sobre venta de su negocio global de helados…*. https://elcomercio.pe/economia/negocios/nestle-sobre-venta-de-su-negocio-global-de-helados-estamos-evaluando-detalles-y-proximos-pasos-en-peru-donofrio-noticia/
 
 El Popular. (2022, 31 de julio). *D'Onofrio: de vender helados en una carretilla…*. https://elpopular.pe/actualidad/2022/07/31/donofrio-historia-como-pasaron-vender-helados-carretilla-madera-ser-empresa-exitosa-peru-142580
 
-Gestión. (s. f.-a). *D'Onofrio: de una carretilla a ser vendida a Nestlé…*. https://gestion.pe/economia/empresas/donofrio-de-una-carretilla-a-ser-vendida-a-nestle-y-competir-con-alicorp-helados-grupo-romero-lamborgini-noticia/
-
-Gestión. (s. f.-b). *Nestlé Perú y su fórmula… chocolates*. https://gestion.pe/economia/empresas/nestle-peru-y-su-formula-para-lograr-crecimiento-a-doble-digito-en-la-linea-de-chocolates-consumidores-sublime-kit-kat-puntos-de-venta-marketing-noticia/
-
-Gestión. (2026). *¿D'Onofrio dejará de ser de Nestlé? Froneri ya dio su primer paso en Perú*. https://gestion.pe/economia/empresas/donofrio-dejara-de-ser-de-nestle-froneri-ya-dio-su-primer-paso-en-peru-noticia/
-
-GitHub, Inc. (s. f.). *About Projects*. GitHub Docs. https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects
-
-Google. (s. f.). *Lighthouse overview*. Chrome for Developers. https://developer.chrome.com/docs/lighthouse/overview
-
-Grafana Labs. (s. f.). *Grafana k6 documentation*. https://grafana.com/docs/k6/
+Gestión. (2025, 26 de enero). *D'Onofrio: el helado peruano que nació en una carretilla y atrajo a Nestlé*. https://gestion.pe/economia/empresas/donofrio-de-una-carretilla-a-ser-vendida-a-nestle-y-competir-con-alicorp-helados-grupo-romero-lamborgini-noticia/
 
 Infobae. (2026, 20 de febrero). *Multinacional Nestlé abandona el negocio heladero…*. https://www.infobae.com/peru/2026/02/20/multinacional-nestle-abandona-el-negocio-heladero-en-todo-el-mundo-helados-donofrio-se-van-de-peru/
 
@@ -48,37 +26,23 @@ ISO. (2019). *ISO 22301:2019. Security and resilience — Business continuity ma
 
 ISO/IEC. (2018). *ISO/IEC 20000-1:2018. Information technology — Service management — Part 1: Service management system requirements*. International Organization for Standardization.
 
-ISO/IEC. (2022a). *ISO/IEC 27001:2022. Information security, cybersecurity and privacy protection — Information security management systems — Requirements*. International Organization for Standardization.
-
-ISO/IEC. (2022b). *ISO/IEC 27002:2022. Information security, cybersecurity and privacy protection — Information security controls*. International Organization for Standardization.
+ISO/IEC. (2022). *ISO/IEC 27001:2022. Information security, cybersecurity and privacy protection — Information security management systems — Requirements*. International Organization for Standardization.
 
 ISO/IEC. (2023). *ISO/IEC 25010:2023. Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Product quality model*. International Organization for Standardization.
 
-La República. (2026, 18 de noviembre). *Panetón D'Onofrio: Delicia Bites…*. https://larepublica.pe/publirreportajes/2026/11/18/paneton-donofrio-conoce-delicia-bites-y-delicia-doble-tentacion-826146
-
-Mercado Negro. (s. f.). *D'Onofrio: la exitosa compañía que inició con una carretilla de helados*. https://mercadonegro.pe/marketing/marcas/donofrio-la-exitosa-compania-que-inicio-con-una-carretilla-de-helados
-
-Mercado Negro. (2026, 24 de junio). *Nestlé negocia la venta global de su negocio de helados y abre interrogantes sobre D'Onofrio en Perú*. https://www.mercadonegro.pe/actualidad/nestle-negocia-la-venta-global-de-su-negocio-de-helados-y-abre-interrogantes-sobre-donofrio-en-peru/
-
 Ministerio de Salud. (1998). *Decreto Supremo N.° 007-98-SA, Reglamento sobre Vigilancia y Control Sanitario de Alimentos y Bebidas*. Diario Oficial El Peruano. https://leap.unep.org/en/countries/pe/national-legislation/decreto-supremo-no-007-98-sa-reglamento-sobre-vigilancia-y
-
-Nestlé India. (s. f.). *Our purpose*. https://www.nestle.in/about-us/our-purpose
-
-Object Management Group. (2011). *Business Process Model and Notation (BPMN), versión 2.0*. https://www.omg.org/spec/BPMN/2.0/
 
 Nielsen, J. (1994). *10 usability heuristics for user interface design*. Nielsen Norman Group. https://www.nngroup.com/articles/ten-usability-heuristics/
 
-Odoo S. A. (s. f.-a). *Odoo 19.0 documentation*. https://www.odoo.com/documentation/19.0/
+Object Management Group. (2011). *Business Process Model and Notation (BPMN), versión 2.0*. https://www.omg.org/spec/BPMN/2.0/
 
-Odoo S. A. (s. f.-b). *odoo/odoo, rama 19.0* [Código fuente]. GitHub. https://github.com/odoo/odoo/tree/19.0
+Odoo S. A. (2025). *Odoo 19.0 documentation*. https://www.odoo.com/documentation/19.0/
 
 OWASP Foundation. (2021). *OWASP Top 10:2021*. https://owasp.org/Top10/
 
-Peru Retail. (s. f.). *D'Onofrio: ¿cuántos millones pagó Nestlé…?* https://www.peru-retail.com/donofrio-cuantos-millones-pago-nestle-por-la-tradicional-marca-peruana-de-helados/
+Peru Retail. (2026, 2 de marzo). *D'Onofrio: ¿Cuántos millones pagó Nestlé por la marca peruana hace casi 30 años?* https://www.peru-retail.com/donofrio-cuantos-millones-pago-nestle-por-la-tradicional-marca-peruana-de-helados/
 
-Peru Retail. (2026, 16 de junio). *¿D'Onofrio cambiará de dueño? Froneri registra su marca en Perú*. https://www.peru-retail.com/donofrio-cambiara-de-dueno-froneri-registra-su-marca-en-peru-y-crecen-senales-de-una-transicion/
-
-PostgreSQL Global Development Group. (s. f.). *PostgreSQL 16 documentation*. https://www.postgresql.org/docs/16/
+PostgreSQL Global Development Group. (2023). *PostgreSQL 16 documentation*. https://www.postgresql.org/docs/16/
 
 Project Management Institute. (2021). *Guía de los fundamentos para la dirección de proyectos (Guía del PMBOK®)* (7.ª ed.). PMI.
 
@@ -88,8 +52,6 @@ Superintendencia Nacional de Aduanas y de Administración Tributaria. (s. f.). *
 
 The Open Group. (2022). *The TOGAF® Standard, 10th Edition*. The Open Group.
 
-Wikipedia. (s. f.). *D'Onofrio (brand)*. En *Wikipedia*. https://en.wikipedia.org/wiki/D%27Onofrio_(brand)
+Wikipedia. (2026, 10 de noviembre). *D'Onofrio (brand)*. En *Wikipedia*. https://en.wikipedia.org/w/index.php?title=D%27Onofrio_(brand)&oldid=1384829791
 
 World Wide Web Consortium. (2018). *Web Content Accessibility Guidelines (WCAG) 2.1*. https://www.w3.org/TR/WCAG21/
-
-ZAP. (s. f.). *ZAP documentation*. https://www.zaproxy.org/docs/

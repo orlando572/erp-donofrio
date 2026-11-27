@@ -1,4 +1,4 @@
-# 4.2.4 Diagramas de casos de uso y fichas
+# 2.2.1.3 Diagramas de casos de uso
 
 Se definieron doce casos de uso (CU), uno o más por requerimiento, que cubren ventas, heladeros, logística, producción, gerencia, compras y facturación. Todos están implementados y verificados con pruebas automáticas y capturas con datos de demostración. Los de la Fase 2 son CU004 (M2), CU006 (M3), CU008 (M1) y la parte propia de CU009 (M4).
 
@@ -19,7 +19,7 @@ Se definieron doce casos de uso (CU), uno o más por requerimiento, que cubren v
 | CU011 | Comprar insumos con reabastecimiento mín./máx. | Compras | RF015 | F1 |
 | CU012 | Facturar con IGV (factura 01 o boleta 03) | Facturación | RF016 | F1 |
 
-Los diagramas se agrupan por área. En ellos el verde es la variante estándar de la Fase 1 y el amarillo, el módulo propio de la Fase 2.
+Los diagramas se agrupan por área. En ellos el verde es la variante estándar de la Fase 1 y el amarillo, el módulo desarrollado para D'Onofrio.
 
 ![Casos de uso de Marketing y Ventas](../diagramas/cu/cu_ventas.png)
 

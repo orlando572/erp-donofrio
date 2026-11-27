@@ -1,6 +1,6 @@
 # 8. Recomendaciones
 
-Cada recomendación sale de una limitación que el propio proyecto documentó. Con la Fase 2 completa (releases `v1.1.0` a `v1.4.0`) ya no hay módulos propios por construir, así que las recomendaciones apuntan a operar, medir y mejorar lo construido. Las de negocio están en 8.1 y las técnicas en 8.2.
+Con los cuatro módulos desarrollados para D'Onofrio completos (versiones v1.1.0 a v1.4.0), las recomendaciones apuntan a operar, medir y ampliar lo construido. Las de negocio están en 8.1 y las técnicas en 8.2.
 
 ## 8.1 Recomendaciones de negocio y gestión
 
@@ -12,18 +12,18 @@ Se ordenan por prioridad para una puesta en producción real.
 
 ### Tabla 8.2-a. Recomendaciones técnicas
 
-| # | Recomendación | Qué la respalda |
+| # | Recomendación | Para qué sirve |
 |---|---|---|
-| T1 | Instalar el *cron* de respaldos, cifrarlos y sacarlos del equipo | El *cron* diario está documentado y no instalado; los respaldos viven en el mismo equipo y sin cifrar |
-| T2 | Medir la disponibilidad con un registro continuo de `/web/health` (por ejemplo Uptime Kuma) | RNF011 parcial: sin medición no se puede afirmar el 99 % |
-| T3 | Probar los casos de uso principales, el tablero y la liquidación en Chrome, Firefox y Edge y en ventana angosta | RNF001 parcial: la revisión usó Chrome y una ventana de 375 × 812 |
-| T4 | Desplegar en una VM con dominio y Let's Encrypt, con un flujo de despliegue por SSH y *rollback* a la imagen del tag anterior | El sistema solo corre en la PC que lo levanta, con certificado autofirmado y despliegue manual |
-| T5 | Configurar un servidor de correo saliente | El código de 2FA por correo lo necesita; sin él no hay recuperación si se pierde la app TOTP |
-| T6 | Activar `pg_stat_statements` | Disponible en la imagen y no activado; k6 mide la aplicación, no las consultas |
-| T7 | Reducir el JavaScript del backend y del tablero para subir Lighthouse (59 y 76) hacia 80 | RNF008 parcial: límite conocido que no se corrige con configuración del servidor |
-| T8 | Activar `enforce_admins` en `develop` y `main` | Las reglas de protección no aplican al único administrador |
-| T9 | Completar la seguridad: probar la promoción de la réplica, ZAP activo y autenticado, Dependabot, una prueba de actualización en el CI, TLS entre servicios y vencimiento en el punto de venta | Controles parciales de 5.11 y límites de 5.14 |
-| T10 | Mejorar los módulos de la Fase 2: sensores y alerta por lecturas que faltan, `auditlog` en liquidaciones, inspecciones y lecturas, pruebas de JavaScript del tablero, merma con salida de inventario y app móvil del heladero | Límites declarados en 5.5b a 5.5e |
-| T11 | Envío electrónico de comprobantes a SUNAT mediante un OSE | `l10n_pe_edi` es Enterprise: fuera del alcance |
+| T1 | Programar la tarea programada de respaldos, cifrarlos y guardar una copia fuera del equipo | Proteger los respaldos, cuya restauración ya se midió en 31 s |
+| T2 | Registrar de forma continua la página de estado de Odoo (por ejemplo, con Uptime Kuma) | Medir en el tiempo la disponibilidad que aseguran el reinicio automático y los chequeos de salud |
+| T3 | Probar los casos de uso principales, el tablero y la liquidación en Chrome, Firefox y Edge | Extender a más navegadores la revisión hecha en Chrome y en 375 × 812 |
+| T4 | Desplegar en una VM con dominio y Let's Encrypt, con despliegue por SSH y *rollback* a la imagen del tag anterior | Llevar a un servidor el despliegue protegido que ya funciona en local |
+| T5 | Configurar un servidor de correo saliente | Habilitar el envío del código de 2FA por correo |
+| T6 | Activar la estadística de consultas de PostgreSQL | Medir las consultas, además de la aplicación que mide k6 |
+| T7 | Reducir el JavaScript del backend y del tablero | Subir el puntaje de Lighthouse de esas vistas |
+| T8 | Activar la protección también para administradores en develop y main | Aplicar las reglas de protección también al administrador |
+| T9 | Ampliar la seguridad: promoción de la réplica, ZAP activo y autenticado, Dependabot, prueba de actualización en el CI y TLS entre servicios | Extender las pruebas de 3.2.2 y 3.3.2 |
+| T10 | Ampliar los módulos desarrollados para D'Onofrio: sensores de temperatura, el registro de auditoría en liquidaciones, inspecciones y lecturas, pruebas de JavaScript del tablero y app móvil del heladero | Crecer sobre los módulos de 3.1.4.2 a 3.1.4.5 |
+| T11 | Envío electrónico de comprobantes a SUNAT mediante un OSE | Completar el ciclo de facturación electrónica |
 
-Antes de la VM (T4) conviene tener los respaldos fuera del equipo (T1), el monitoreo (T2), el correo para el 2FA (T5) y `enforce_admins` (T8); antes de activar `pg_stat_statements` (T6), un respaldo reciente, porque exige reiniciar PostgreSQL. Toda mejora entra por una rama `feature/HU-xx-*` y un PR a `develop`, con su prueba.
+Antes de la VM (T4) conviene tener los respaldos fuera del equipo (T1), el monitoreo (T2), el correo para el 2FA (T5) y la protección también para administradores (T8); antes de activar la estadística de consultas (T6), un respaldo reciente, porque exige reiniciar PostgreSQL. Toda mejora entra por una rama `feature/HU-xx-*` y un PR a develop, con su prueba.
